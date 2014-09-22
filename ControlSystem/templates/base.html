@@ -1,0 +1,59 @@
+{% load staticfiles %}
+{% csrf_token %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Librería jQuery requerida por los plugins de JavaScript -->
+    <script type="text/javascript" src="{% static 'js/jquery-1.7.2.js' %}"></script>
+    <!-- Todos los plugins JavaScript de Bootstrap (también puedes
+         incluir archivos JavaScript individuales de los únicos
+         plugins que utilices) -->
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.ajax.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.ajax-plugin.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.dajax.core.js' %}"></script>
+
+
+    <title>
+        {% block title %}
+            P&#225;gina Sin T&#237;tulo
+        {% endblock %}
+    </title>
+
+
+    <!-- CSS de Bootstrap -->
+    <link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/bootstrap-theme.min.css'%}" rel="stylesheet" media="screen">
+
+    <!-- CSS Personal -->
+    <link href="{% static 'css/jhonsson.css'%}" rel="stylesheet" media="screen">
+
+    <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+
+
+    {% block content %}
+        <h1>Contenido</h1>
+    {% endblock %}
+
+
+    <footer class="panel-footer footer">
+        {% block footer %}
+            <p>Gracias por tu Visita.</p>
+        {% endblock %}
+    </footer>
+
+
+</body>
+</html>

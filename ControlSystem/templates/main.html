@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+ 
+    <a href="{% url 'signup' %}">Sign Up</a>
+    <a href="{% url 'login' %}">Login</a>
+
+    <br>
+    <br>
+
+    <input type="text" value="5" id="a"> x
+    <input type="text" value="6" id="b"> =
+    <input type="text" value="" id="result">
+    <input type="button" value="Multiply!" onclick="calculate();">
+
+    <script type="text/javascript">
+    function calculate()
+    {
+        ajaxPost('/multiply', {'a':$('#a').val(),'b':$('#b').val()}, function(content){
+            //onSuccess
+            castear(content);
+            //alert(content[0]);
+        });
+    }
+    </script>
+ 
+{% endblock %}

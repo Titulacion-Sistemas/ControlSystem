@@ -34,9 +34,11 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    #'django.contrib.messages',
+    'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'django_ajax',
+    'actividades',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -64,7 +66,7 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'CS',
+        'NAME': 'Coniel',
         'USER': 'postgres',
         'PASSWORD': 'root123',
         'HOST': '127.0.0.1',
@@ -90,3 +92,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#Add
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
+# Redirect when login is correct.
+LOGIN_REDIRECT_URL = "/home"
+
+# Redirect when login is not correct.
+LOGIN_URL = '/'
+
+TEMPLATE_DIRS = (
+    os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/'),
+)
