@@ -7,35 +7,36 @@
 
 
 {% block content %}
-  <div class="container">
-    {% if form.errors %}
-        <p class="text-warning">Su Usuario o Contrase&#241;a no es correcto, Intentelo otra vez.</p>
+
+    {% if errors %}
+        <p class="text-warning">Su Usuario o Contrase&#241;a no es correcto, Intentelo nuevamente.</p>
     {% endif %}
- 
+
     <form role="form" class="form-signin" method="post" action="/login">
 
             {% csrf_token %}
-
+        <h2 class="text-center"> Inicio se Sesi&oacute;n </h2>
         <div class="form-group">
-            <label class="control-label" for="username">Usuario</label>
+            <label class="control-label" for="username"><h4>Usuario</h4></label>
             <div class="controls">
-                <input type="text" class="form-control" id="username" name="username"  placeholder="Usuario">
+                <input type="text" class="form-control" id="username" name="username">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="password">Contrase&#241;a</label>
+            <label class="control-label" for="password"><h4>Contrase&#241;a</h4></label>
             <div class="controls">
-                <input type="password" class="form-control" name="password" id="password" placeholder="Contrase&#241;a">
+                <input type="password" class="form-control" name="password" id="password">
             </div>
         </div>
-
+        <br>
         <input type="submit" class="btn btn-lg btn-primary btn-block" value="Ingresar"/>
-
+        <br>
+        <br>
+        <br>
         <input type="hidden" name="next" value="{{ next }}"/>
 
-
     </form>
-  </div>
+
 {% endblock %}
 
 

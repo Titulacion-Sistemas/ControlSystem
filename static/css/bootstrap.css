@@ -21,7 +21,7 @@ figure,
 footer,
 header,
 hgroup,
-main,
+.main,
 nav,
 section,
 summary {
@@ -39,7 +39,7 @@ audio:not([controls]) {
   height: 0;
 }
 [hidden],
-template {
+.template {
   display: none;
 }
 a {

@@ -55,6 +55,7 @@ def main(request):
     return ingreso(request)
 
 def ingreso(request):
+    error = None
     try:
         logout(request)
     except:
@@ -64,23 +65,27 @@ def ingreso(request):
         username = request.POST['username']
         password = request.POST['password']
 
+
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect('/home')
-    return render_to_response('login.html', context_instance=RequestContext(request))
+        elif username and password:
+            error = 1
+
+    return render_to_response('login.html', {'errors': error}, context_instance=RequestContext(request))
 
 @login_required()
 def home(request):
     pythoncom.CoInitialize()
-    conn = iSeries.ConnectionManager()
-    #print request.user.usuario_sico
-    #print request.user.contrasenia_sico
-    availableConnection = conn.getAvailableConnection()
-    conn.openSession(availableConnection, request.user.usuario_sico, request.user.contrasenia_sico)
-    conn.setActiveSession(availableConnection)
-    return render_to_response('home.html', {'user': request.user, 'conn': conn}, context_instance=RequestContext(request))
+    #conn = iSeries.ConnectionManager()
+    print request.user.usuario_sico
+    print request.user.contrasenia_sico
+    #availableConnection = conn.getAvailableConnection()
+    #conn.openSession(availableConnection, request.user.usuario_sico, request.user.contrasenia_sico)
+    #conn.setActiveSession(availableConnection)
+    return render_to_response('home.html', {'user': request.user, 'conn': None}, context_instance=RequestContext(request))
 
 @ajax
 def multiply(request):

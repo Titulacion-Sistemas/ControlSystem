@@ -42,16 +42,22 @@
 </head>
 <body>
 
+    <div id="wrap">
+        <div class="container">
+            {% block content %}
+                <h1>Contenido</h1>
+            {% endblock %}
+        </div>
+        <div id="push"></div>
+    </div>
 
-    {% block content %}
-        <h1>Contenido</h1>
-    {% endblock %}
 
-
-    <footer class="panel-footer footer">
-        {% block footer %}
-            <p>Gracias por tu Visita.</p>
-        {% endblock %}
+    <footer id="footer" class="footer">
+        <div class="container">
+            {% block footer %}
+                <p>Gracias por tu Visita.</p>
+            {% endblock %}
+        </div>
     </footer>
 
 

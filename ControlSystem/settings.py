@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django_ajax',
     'actividades',
+    'usuarios',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -2,44 +2,41 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a00e047-e965-4656-a541-b5f54dea118e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/usuarios/iSeries/sico/CNEL.OWS" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/usuarios/iSeries/sico/CNEL.WS" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/usuarios/iSeries/Proxy.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/usuarios/iSeries/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ControlSystem/templates/base.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ControlSystem/templates/home.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ControlSystem/templates/login.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ControlSystem/templates/main.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ControlSystem/templates/signup.html" />
+      <change type="DELETED" beforePath="D:\Datos\Documents\GitHub\ControlSystem\Gestion_de_Actividades\__init__.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Datos\Documents\GitHub\ControlSystem\Gestion_de_Actividades\admin.py" afterPath="" />
       <change type="DELETED" beforePath="D:\Datos\Documents\GitHub\ControlSystem\Gestion_de_Actividades\models.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
+      <change type="DELETED" beforePath="D:\Datos\Documents\GitHub\ControlSystem\Gestion_de_Actividades\tests.py" afterPath="" />
+      <change type="DELETED" beforePath="D:\Datos\Documents\GitHub\ControlSystem\Gestion_de_Actividades\views.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ControlSystem/templates/base.html" afterPath="$PROJECT_DIR$/ControlSystem/templates/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/bootstrap.css" afterPath="$PROJECT_DIR$/static/css/bootstrap.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/jhonsson.css" afterPath="$PROJECT_DIR$/static/css/jhonsson.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ControlSystem/templates/login.html" afterPath="$PROJECT_DIR$/ControlSystem/templates/login.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ControlSystem/settings.py" afterPath="$PROJECT_DIR$/ControlSystem/settings.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ControlSystem/urls.py" afterPath="$PROJECT_DIR$/ControlSystem/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/usuarios/views.py" afterPath="$PROJECT_DIR$/usuarios/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="D:\Datos\Documents\GitHub\ControlSystem\Gestion_de_Actividades\__init__.py" afterPath="$PROJECT_DIR$/actividades/__init__.py" />
-      <change type="MOVED" beforePath="D:\Datos\Documents\GitHub\ControlSystem\Gestion_de_Actividades\admin.py" afterPath="$PROJECT_DIR$/actividades/admin.py" />
-      <change type="MOVED" beforePath="D:\Datos\Documents\GitHub\ControlSystem\Gestion_de_Actividades\tests.py" afterPath="$PROJECT_DIR$/actividades/tests.py" />
-      <change type="MOVED" beforePath="D:\Datos\Documents\GitHub\ControlSystem\Gestion_de_Actividades\views.py" afterPath="$PROJECT_DIR$/actividades/views.py" />
     </list>
     <ignored path="ControlSystem.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411341667603" ignored="false" />
+    <file path="/Dummy.txt" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412222355533" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios_logueados/urls.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411195993897" ignored="false" />
     <file path="/urls.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411195992776" ignored="false" />
-    <file path="/base.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411376207721" ignored="false" />
+    <file path="/base.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411973987298" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios_logueados/templates/base.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411364217354" ignored="false" />
-    <file path="/login.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411376287943" ignored="false" />
+    <file path="/login.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411967082944" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios_logueados/templates/login.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411197253082" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios/models.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411355217847" ignored="false" />
     <file path="/models.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411355215985" ignored="false" />
     <file path="C:/Python27/Lib/site-packages/django/contrib/auth/forms.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411194351108" ignored="false" />
-    <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios/views.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411196021392" ignored="false" />
-    <file path="/views.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411362145670" ignored="false" />
+    <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios/views.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412226315035" ignored="false" />
+    <file path="/views.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412227854429" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/static/css/jhonsson.css" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411196759627" ignored="false" />
-    <file path="/settings.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411362396393" ignored="false" />
+    <file path="/settings.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412222643243" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios_logueados/settings.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411362894328" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios/templates/base.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411362857766" ignored="false" />
-    <file path="/jhonsson.css" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411375763428" ignored="false" />
+    <file path="/jhonsson.css" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411973354135" ignored="false" />
+    <file path="/bootstrap.css" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411964529605" ignored="false" />
+    <file path="/temp.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411965216585" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +68,7 @@
       <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ControlSystem/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="109" column="1" selection-start="2584" selection-end="2584" vertical-scroll-proportion="0.0">
+            <state line="41" column="15" selection-start="1096" selection-end="1096" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -80,7 +77,7 @@
       <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/usuarios/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="29" selection-start="214" selection-end="214" vertical-scroll-proportion="0.0">
+            <state line="8" column="17" selection-start="282" selection-end="294" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#27#51#0" expanded="true" />
               </folding>
@@ -91,16 +88,16 @@
       <file leaf-file-name="base.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ControlSystem/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="38" selection-start="1765" selection-end="1765" vertical-scroll-proportion="-8.038462">
+            <state line="54" column="37" selection-start="1895" selection-end="1895" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bootstrap.css" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://C:/Python27/Lib/site-packages/django_admin_bootstrapped/bootstrap3/static/bootstrap/css/bootstrap.css">
+      <file leaf-file-name="jhonsson.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/css/jhonsson.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5023" column="6" selection-start="103905" selection-end="103910" vertical-scroll-proportion="-47.545918">
+            <state line="7" column="8" selection-start="100" selection-end="100" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -109,7 +106,7 @@
       <file leaf-file-name="login.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ControlSystem/templates/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="29" selection-start="1207" selection-end="1207" vertical-scroll-proportion="-11.961538">
+            <state line="11" column="32" selection-start="158" selection-end="158" vertical-scroll-proportion="-7.1923075">
               <folding />
             </state>
           </provider>
@@ -118,7 +115,7 @@
       <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ControlSystem/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="43" selection-start="466" selection-end="473" vertical-scroll-proportion="0.0">
+            <state line="6" column="43" selection-start="200" selection-end="205" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -127,12 +124,30 @@
         </entry>
       </file>
       <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://C:/Python27/Lib/site-packages/django/contrib/auth/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="51" column="20" selection-start="2188" selection-end="2192" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/usuarios/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="71" column="36" selection-start="2588" selection-end="2593" vertical-scroll-proportion="0.0">
+            <state line="57" column="4" selection-start="2148" selection-end="2148" vertical-scroll-proportion="0.17336152">
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="__init__.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://C:/Python27/Lib/site-packages/django/contrib/auth/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="86" column="27" selection-start="3095" selection-end="3095" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -161,12 +176,13 @@
         <option value="$PROJECT_DIR$/static/js/bootstrap.js" />
         <option value="$PROJECT_DIR$/usuarios/models.py" />
         <option value="$PROJECT_DIR$/actividades/models.py" />
-        <option value="$PROJECT_DIR$/ControlSystem/urls.py" />
-        <option value="$PROJECT_DIR$/usuarios/views.py" />
-        <option value="$PROJECT_DIR$/ControlSystem/settings.py" />
-        <option value="$PROJECT_DIR$/ControlSystem/templates/base.html" />
-        <option value="$PROJECT_DIR$/ControlSystem/templates/login.html" />
+        <option value="$PROJECT_DIR$/static/css/bootstrap.css" />
         <option value="$PROJECT_DIR$/static/css/jhonsson.css" />
+        <option value="$PROJECT_DIR$/ControlSystem/templates/base.html" />
+        <option value="$PROJECT_DIR$/ControlSystem/settings.py" />
+        <option value="$PROJECT_DIR$/ControlSystem/urls.py" />
+        <option value="$PROJECT_DIR$/ControlSystem/templates/login.html" />
+        <option value="$PROJECT_DIR$/usuarios/views.py" />
       </list>
     </option>
   </component>
@@ -202,6 +218,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -238,73 +255,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -313,7 +265,7 @@
     <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
     <property name="ChangesBrowser.SHOW_FLATTEN" value="false" />
-    <property name="last_opened_file_path" value="C:/Users/Jhonsson/AppData/Local/GitHub/PortableGit_69703d1db91577f4c666e767a6ca5ec50a48d243/bin/git.exe" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados" />
     <property name="FullScreen" value="false" />
     <property name="dynamic.classpath" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
@@ -487,7 +439,7 @@
     </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
       <JSDebuggerConfigurationSettings>
-        <option name="engineId" />
+        <option name="engineId" value="embedded" />
         <option name="fileUrl" />
       </JSDebuggerConfigurationSettings>
       <method />
@@ -587,12 +539,12 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20194986" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14736165" sideWeight="0.7311978" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13320464" sideWeight="0.6713092" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18018018" sideWeight="0.6713092" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.129375" sideWeight="0.6716016" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1775" sideWeight="0.6716016" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26880223" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286908" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32839838" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32963988" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -667,121 +619,107 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/usuarios/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Python27/Lib/site-packages/django/db/models/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="441" column="8" selection-start="19510" selection-end="19510" vertical-scroll-proportion="0.33182845">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/actividades/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="58" selection-end="58" vertical-scroll-proportion="0.1491228">
-          <folding />
-        </state>
+        <state line="4" column="0" selection-start="58" selection-end="58" vertical-scroll-proportion="0.1491228" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/actividades/admin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ControlSystem/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="43" selection-start="466" selection-end="473" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usuarios/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="36" selection-start="2588" selection-end="2593" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ControlSystem/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="109" column="1" selection-start="2584" selection-end="2584" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Python27/Lib/site-packages/django_admin_bootstrapped/bootstrap3/static/bootstrap/css/bootstrap.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="85542" selection-start="85707" selection-end="85707" vertical-scroll-proportion="0.15349887">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/bootstrap.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5023" column="0" selection-start="103904" selection-end="103904" vertical-scroll-proportion="0.33182845">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/css/bootstrap-theme.css.map">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/css/bootstrap-theme.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="169" selection-end="169" vertical-scroll-proportion="-16.956633">
-          <folding />
-        </state>
+        <state line="5" column="0" selection-start="169" selection-end="169" vertical-scroll-proportion="-16.956633" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/usuarios/models.py">
+    <entry file="file://C:/Python27/Lib/site-packages/django_admin_bootstrapped/bootstrap3/static/bootstrap/css/bootstrap.min.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="29" selection-start="214" selection-end="214" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#27#51#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="4" column="18707" selection-start="18872" selection-end="18872" vertical-scroll-proportion="0.09985316" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/login.html">
+    <entry file="file://$PROJECT_DIR$/static/css/bootstrap.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="29" selection-start="1207" selection-end="1207" vertical-scroll-proportion="-11.961538">
-          <folding />
-        </state>
+        <state line="31" column="9" selection-start="501" selection-end="501" vertical-scroll-proportion="0.09090909" />
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/django_admin_bootstrapped/bootstrap3/static/bootstrap/css/bootstrap.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1399" column="2" selection-start="22779" selection-end="22779" vertical-scroll-proportion="0.3326087" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="38" selection-start="1765" selection-end="1765" vertical-scroll-proportion="-8.038462">
+        <state line="54" column="37" selection-start="1895" selection-end="1895" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/css/jhonsson.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="7" column="8" selection-start="100" selection-end="100" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Python27/Lib/site-packages/django_admin_bootstrapped/bootstrap3/static/bootstrap/css/bootstrap.css">
+    <entry file="file://C:/Python27/Lib/site-packages/django/contrib/auth/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5023" column="6" selection-start="103905" selection-end="103910" vertical-scroll-proportion="-47.545918">
+        <state line="86" column="27" selection-start="3095" selection-end="3095" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="15" selection-start="1096" selection-end="1096" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/django/contrib/auth/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="20" selection-start="2188" selection-end="2192" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/usuarios/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="17" selection-start="282" selection-end="294" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#27#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="43" selection-start="200" selection-end="205" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="32" selection-start="158" selection-end="158" vertical-scroll-proportion="-7.1923075">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/usuarios/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="4" selection-start="2148" selection-end="2148" vertical-scroll-proportion="0.17336152">
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
