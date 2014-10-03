@@ -8,30 +8,40 @@
 
 {% block content %}
 
-    {% if errors %}
-        <p class="text-warning">Su Usuario o Contrase&#241;a no es correcto, Intentelo nuevamente.</p>
-    {% endif %}
-
     <form role="form" class="form-signin" method="post" action="/login">
 
             {% csrf_token %}
-        <h2 class="text-center"> Inicio se Sesi&oacute;n </h2>
-        <div class="form-group">
-            <label class="control-label" for="username"><h4>Usuario</h4></label>
-            <div class="controls">
-                <input type="text" class="form-control" id="username" name="username">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="text-center"> Inicio se Sesi&oacute;n </h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="control-label" for="username"><h4>Usuario</h4></label>
+                    <div class="controls">
+                        <input type="text" class="form-control" id="username" name="username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="password"><h4>Contrase&#241;a</h4></label>
+                    <div class="controls">
+                        <input type="password" class="form-control" name="password" id="password">
+                    </div>
+                </div>
+                <br>
+                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Ingresar"/>
+                <br>
+                {% if errors %}
+                    <br>
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <label class="control-label" for="inputError">
+                            Su Usuario o Contrase&#241;a <strong>no son correctos</strong>, Intentelo nuevamente.
+                        </label>
+                    </div>
+                {% endif %}
             </div>
         </div>
-        <div class="form-group">
-            <label class="control-label" for="password"><h4>Contrase&#241;a</h4></label>
-            <div class="controls">
-                <input type="password" class="form-control" name="password" id="password">
-            </div>
-        </div>
-        <br>
-        <input type="submit" class="btn btn-lg btn-primary btn-block" value="Ingresar"/>
-        <br>
-        <br>
         <br>
         <input type="hidden" name="next" value="{{ next }}"/>
 

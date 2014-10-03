@@ -23,4 +23,4 @@ CuaKeyboard=2
 Language=Latin-America(Spanish)
 IBMDefaultKeyboard=Y
 [LastExitView]
-A=2 35 41 976 742 3 12 24 400 0 IBM3270— 284
+A=3 78 78 910 512 3 12 14 400 0 IBM3270— 284
