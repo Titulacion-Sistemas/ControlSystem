@@ -4,10 +4,10 @@
     <list default="true" id="4a00e047-e965-4656-a541-b5f54dea118e" name="Default" comment="" />
     <ignored path="ControlSystem.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412654769551" ignored="false" />
+    <file path="/Dummy.txt" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412808355114" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios_logueados/urls.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411195993897" ignored="false" />
     <file path="/urls.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412313543911" ignored="false" />
-    <file path="/base.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412674145269" ignored="false" />
+    <file path="/base.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412697849329" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios_logueados/templates/base.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411364217354" ignored="false" />
     <file path="/login.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412317729052" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios_logueados/templates/login.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411197253082" ignored="false" />
@@ -24,6 +24,7 @@
     <file path="/bootstrap.css" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412665146873" ignored="false" />
     <file path="/temp.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411965216585" ignored="false" />
     <file path="/home.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412661531841" ignored="false" />
+    <file path="/bootstrap.min.css" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412807921495" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,44 +62,37 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="base.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ControlSystem/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="25" selection-start="3167" selection-end="3167" vertical-scroll-proportion="0.5405405">
+            <state line="59" column="96" selection-start="2870" selection-end="2870" vertical-scroll-proportion="0.0">
               <folding />
             </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/css/bootstrap.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3929" column="13" selection-start="76947" selection-end="76965" vertical-scroll-proportion="-11.44">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap.min.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/css/bootstrap.min.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="60278" selection-start="60443" selection-end="60443" vertical-scroll-proportion="-2.72">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="logo.png" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/static/logo.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="jhonsson.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/css/jhonsson.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="15" selection-start="344" selection-end="344" vertical-scroll-proportion="0.0">
+            <state line="27" column="1" selection-start="353" selection-end="353" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bootstrap.min.css" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/static/css/bootstrap.min.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="66285" selection-start="66450" selection-end="66450" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bootstrap-theme.min.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/css/bootstrap-theme.min.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="2255" selection-start="2420" selection-end="2420" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -107,18 +101,8 @@
       <file leaf-file-name="home.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ControlSystem/templates/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="37" selection-start="82" selection-end="82" vertical-scroll-proportion="-1.9615384">
-              <folding>
-                <marker date="1412661558954" expanded="true" signature="132:1076" placeholder="..." />
-                <marker date="1412661558954" expanded="true" signature="145:251" placeholder="..." />
-                <marker date="1412661558954" expanded="true" signature="266:366" placeholder="..." />
-                <marker date="1412661558954" expanded="true" signature="381:491" placeholder="..." />
-                <marker date="1412661558954" expanded="true" signature="506:614" placeholder="..." />
-                <marker date="1412661558954" expanded="true" signature="628:742" placeholder="..." />
-                <marker date="1412661558954" expanded="true" signature="757:869" placeholder="..." />
-                <marker date="1412661558954" expanded="true" signature="884:994" placeholder="..." />
-                <marker date="1412661558954" expanded="true" signature="1008:1061" placeholder="..." />
-              </folding>
+            <state line="7" column="1" selection-start="121" selection-end="121" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -126,19 +110,8 @@
       <file leaf-file-name="login.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ControlSystem/templates/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="12" selection-start="1875" selection-end="1875" vertical-scroll-proportion="-34.653847">
-              <folding>
-                <marker date="1412318051266" expanded="true" signature="177:1824" placeholder="..." />
-                <marker date="1412318051266" expanded="true" signature="249:1736" placeholder="..." />
-                <marker date="1412318051266" expanded="true" signature="289:379" placeholder="..." />
-                <marker date="1412318051266" expanded="true" signature="416:1721" placeholder="..." />
-                <marker date="1412318051266" expanded="true" signature="457:734" placeholder="..." />
-                <marker date="1412318051266" expanded="true" signature="589:711" placeholder="..." />
-                <marker date="1412318051266" expanded="true" signature="775:1064" placeholder="..." />
-                <marker date="1412318051266" expanded="true" signature="915:1041" placeholder="..." />
-                <marker date="1412318051266" expanded="true" signature="1331:1674" placeholder="..." />
-                <marker date="1412318051266" expanded="true" signature="1500:1647" placeholder="..." />
-              </folding>
+            <state line="53" column="12" selection-start="1875" selection-end="1875" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -183,16 +156,17 @@
         <option value="$PROJECT_DIR$/ControlSystem/templates/home.html" />
         <option value="$PROJECT_DIR$/static/css/jhonsson.css" />
         <option value="$PROJECT_DIR$/static/css/bootstrap.css" />
-        <option value="$PROJECT_DIR$/static/css/bootstrap.min.css" />
         <option value="$PROJECT_DIR$/ControlSystem/templates/base.html" />
+        <option value="$PROJECT_DIR$/static/css/bootstrap-theme.min.css" />
+        <option value="$PROJECT_DIR$/static/css/bootstrap.min.css" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1616" />
-    <option name="height" value="876" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -220,6 +194,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -318,7 +293,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -602,14 +576,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20194986" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14736165" sideWeight="0.7311978" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12805663" sideWeight="0.67235494" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18854569" sideWeight="0.67235494" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12708333" sideWeight="0.67235494" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18802084" sideWeight="0.67235494" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26880223" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
@@ -705,9 +679,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/main.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/settings.py">
@@ -719,16 +691,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/usuarios/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="17" selection-start="282" selection-end="294" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="8" column="17" selection-start="282" selection-end="294" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="51" selection-start="593" selection-end="593" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="18" column="51" selection-start="593" selection-end="593" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/usuarios/views.py">
@@ -738,77 +706,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="12" selection-start="1875" selection-end="1875" vertical-scroll-proportion="-34.653847">
-          <folding>
-            <marker date="1412318051266" expanded="true" signature="177:1824" placeholder="..." />
-            <marker date="1412318051266" expanded="true" signature="249:1736" placeholder="..." />
-            <marker date="1412318051266" expanded="true" signature="289:379" placeholder="..." />
-            <marker date="1412318051266" expanded="true" signature="416:1721" placeholder="..." />
-            <marker date="1412318051266" expanded="true" signature="457:734" placeholder="..." />
-            <marker date="1412318051266" expanded="true" signature="589:711" placeholder="..." />
-            <marker date="1412318051266" expanded="true" signature="775:1064" placeholder="..." />
-            <marker date="1412318051266" expanded="true" signature="915:1041" placeholder="..." />
-            <marker date="1412318051266" expanded="true" signature="1331:1674" placeholder="..." />
-            <marker date="1412318051266" expanded="true" signature="1500:1647" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="37" selection-start="82" selection-end="82" vertical-scroll-proportion="-1.9615384">
-          <folding>
-            <marker date="1412661558954" expanded="true" signature="132:1076" placeholder="..." />
-            <marker date="1412661558954" expanded="true" signature="145:251" placeholder="..." />
-            <marker date="1412661558954" expanded="true" signature="266:366" placeholder="..." />
-            <marker date="1412661558954" expanded="true" signature="381:491" placeholder="..." />
-            <marker date="1412661558954" expanded="true" signature="506:614" placeholder="..." />
-            <marker date="1412661558954" expanded="true" signature="628:742" placeholder="..." />
-            <marker date="1412661558954" expanded="true" signature="757:869" placeholder="..." />
-            <marker date="1412661558954" expanded="true" signature="884:994" placeholder="..." />
-            <marker date="1412661558954" expanded="true" signature="1008:1061" placeholder="..." />
-          </folding>
+        <state line="7" column="1" selection-start="121" selection-end="121" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/css/jhonsson.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="15" selection-start="344" selection-end="344" vertical-scroll-proportion="0.0">
+        <state line="27" column="1" selection-start="353" selection-end="353" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/logo.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/bootstrap-theme.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="357" column="112" selection-start="16102" selection-end="16104" vertical-scroll-proportion="0.33333334">
+        <state line="357" column="112" selection-start="16102" selection-end="16104" vertical-scroll-proportion="0.33333334" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="12" selection-start="1875" selection-end="1875" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/css/bootstrap.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3929" column="13" selection-start="76947" selection-end="76965" vertical-scroll-proportion="-11.44">
+        <state line="3929" column="13" selection-start="76947" selection-end="76965" vertical-scroll-proportion="0.02972028" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="96" selection-start="2870" selection-end="2870" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/bootstrap-theme.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="2255" selection-start="2420" selection-end="2420" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/css/bootstrap.min.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="60278" selection-start="60443" selection-end="60443" vertical-scroll-proportion="-2.72">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="25" selection-start="3167" selection-end="3167" vertical-scroll-proportion="0.5405405">
+        <state line="4" column="66285" selection-start="66450" selection-end="66450" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
