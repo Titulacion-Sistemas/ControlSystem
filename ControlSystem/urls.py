@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     url(r'^$', 'usuarios.views.main', name='main'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login$', "usuarios.views.ingreso", name='login'),
-    url(r'^logout$', logout, {'template_name': 'login.html', }, name="logout"),
+    url(r'^logout$', logout, {'template_name': 'usuarios/login.html', }, name="logout"),
     url(r'^home$', 'usuarios.views.home', name='home'),
     url(r'^multiply', multiply),
 )

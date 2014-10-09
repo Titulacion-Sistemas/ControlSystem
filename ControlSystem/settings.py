@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django_ajax',
-    'actividades',
+    'bootstrap3',
+    'busqueda',
     'usuarios',
 )
 

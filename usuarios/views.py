@@ -74,7 +74,7 @@ def ingreso(request):
         elif username and password:
             error = 1
 
-    return render_to_response('login.html', {'errors': error}, context_instance=RequestContext(request))
+    return render_to_response('usuarios/login.html', {'errors': error}, context_instance=RequestContext(request))
 
 @login_required()
 def home(request):
@@ -85,7 +85,7 @@ def home(request):
     #availableConnection = conn.getAvailableConnection()
     #conn.openSession(availableConnection, request.user.usuario_sico, request.user.contrasenia_sico)
     #conn.setActiveSession(availableConnection)
-    return render_to_response('home.html', {'user': request.user, 'conn': None}, context_instance=RequestContext(request))
+    return render_to_response('usuarios/home.html', {'user': request.user, 'conn': None}, context_instance=RequestContext(request))
 
 @ajax
 def multiply(request):
