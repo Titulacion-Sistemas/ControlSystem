@@ -38,6 +38,7 @@
         <script type="text/javascript" src="{% static 'js/jquery.ajax.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/jquery.ajax-plugin.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/jquery.dajax.core.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/jhonsson.js' %}"></script>
 
         <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
         <!--[if lt IE 9]>
@@ -58,7 +59,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                      <a  href="#"><img src="{% static 'logo2.png' %}" height="69px" width="240px"></a>
+                      <a  href="{% url 'home' %}"><img src="{% static 'logo2.png' %}" height="69px" width="240px"></a>
                     </div>
                     <div class="collapse navbar-collapse">
                         {% block nav %}
@@ -77,8 +78,8 @@
 
         <footer id="footer" class="footer">
             <div class="container text-center">
-                <p>Coniel System V1.0 - 2014.<br>
-                    <a href="#Acercade">Acerca de</a></p>
+                <p>Coniel System V 1.0 - 2014.<br>
+                    <a href="#Acercade" class="text-info">Acerca de</a></p>
                 {% block footer %}
 
                 {% endblock %}

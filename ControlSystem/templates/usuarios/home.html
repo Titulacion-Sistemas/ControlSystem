@@ -1,54 +1,104 @@
 {% extends 'usuarios/base.html' %}
 
+{% load staticfiles %}
+
 {% block title %}
-    Bienvenido(a) {{ user.username }}
+    {{ user.first_name }} {{ user.last_name }}
 {% endblock %}
  
 {% block content %}
- 
+
+    <div class="row" style="margin-top: 30px">
+        <div class="col-md-4 text-center">
+            <button type="button" class="btn btn-default btn-lg" onclick="newUrl('{% url 'buscar' %}')">
+                <img class="img-responsive" src="{% static 'icons/Light_Search.png' %}"><h4>Buscar</h4>
+            </button>
+        </div>
+        <div class="col-md-4 text-center">
+            <button type="button" class="btn btn-default btn-lg">
+                <img class="img-responsive" src="{% static 'icons/Light_Search.png' %}"><h4>Buscar</h4>
+            </button>
+        </div>
+        <div class="col-md-4 text-center">
+            <button type="button" class="btn btn-default btn-lg">
+                <img class="img-responsive" src="{% static 'icons/Light_Search.png' %}"><h4>Buscar</h4>
+            </button>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 50px">
+        <div class="col-md-4 text-center">
+            <button type="button" class="btn btn-default btn-lg">
+                <img class="img-responsive" src="{% static 'icons/Light_Search.png' %}"><h4>Buscar</h4>
+            </button>
+        </div>
+        <div class="col-md-4 text-center">
+            <button type="button" class="btn btn-default btn-lg">
+                <img class="img-responsive" src="{% static 'icons/Light_Search.png' %}"><h4>Buscar</h4>
+            </button>
+        </div>
+        <div class="col-md-4 text-center">
+            <button type="button" class="btn btn-default btn-lg">
+                <img class="img-responsive" src="{% static 'icons/Light_Search.png' %}"><h4>Buscar</h4>
+            </button>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 50px">
+        <div class="col-md-4 text-center">
+            <button type="button" class="btn btn-default btn-lg">
+                <img class="img-responsive" src="{% static 'icons/Light_Search.png' %}"><h4>Buscar</h4>
+            </button>
+        </div>
+        <div class="col-md-4 text-center">
+            <button type="button" class="btn btn-default btn-lg">
+                <img class="img-responsive" src="{% static 'icons/Light_Search.png' %}"><h4>Buscar</h4>
+            </button>
+        </div>
+        <div class="col-md-4 text-center">
+            <button type="button" class="btn btn-default btn-lg">
+                <img class="img-responsive" src="{% static 'icons/Light_Search.png' %}"><h4>Buscar</h4>
+            </button>
+        </div>
+    </div>
+
+
+    {% comment %}
     <table>
         <tr>
             <td>{{ user.username.label_tag }}</td>
             <td>{{ user.username }}</td>
         </tr>
- 
         <tr>
             <td>{{ user.email.label_tag }}</td>
             <td>{{ user.email }}</td>
         </tr>
- 
         <tr>
             <td>{{ user.first_name.label_tag }}</td>
             <td>{{ user.first_name }}</td>
         </tr>
- 
         <tr>
             <td>{{ user.last_name.label_tag }}</td>
             <td>{{ user.last_name }}</td>
         </tr>
-
         <tr>
             <td>{{ user.usuario_sico.label_tag }}</td>
             <td>{{ user.usuario_sico }}</td>
         </tr>
- 
         <tr>
             <td>{{ user.date_joined.label_tag }}</td>
             <td>{{ user.date_joined }}</td>
         </tr>
- 
         <tr>
             <td>{{ user.last_login.label_tag }}</td>
             <td>{{ user.last_login }}</td>
         </tr>
-
         <tr>
             <td>{{ conn.estado }}</td>
         </tr>
- 
     </table>
- 
     <a href="{% url 'logout' %}">Logout</a>
+    {% endcomment %}
  
 {% endblock %}
 

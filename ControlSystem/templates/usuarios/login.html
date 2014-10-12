@@ -8,7 +8,7 @@
 
 {% block content %}
 
-    <form role="form" class="form-signin" method="post" action="/login">
+    <form role="form" class="form-signin" method="post" action="{% url 'login' %}">
 
             {% csrf_token %}
         <div class="panel panel-primary">

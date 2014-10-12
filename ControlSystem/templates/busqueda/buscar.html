@@ -1,0 +1,49 @@
+{% extends 'usuarios/base.html' %}
+{% load bootstrap3 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block title %}
+    Buscar
+{% endblock %}
+
+{% block content %}
+ 
+    {% if form.errors %}
+        <p>{{ form.errors }}</p>
+    {% endif %}
+ 
+    <form name="b" method="post" action=""
+        onsubmit="
+            ajax
+            (
+                '{% url 'busqueda' %}',
+                {
+                    'tipo': $('#id_tipoBusq').val(),
+                    'dato': $('#id_consulta').val(),
+                    'u': {{ user.id }}
+                }
+            );
+            return false;"
+        >
+        {% csrf_token %}
+        <div class="row" >
+            <div class="col-md-4 table-bordered" style="padding-top: 30px">
+                {% bootstrap_form form %}
+                {% buttons %}
+                    <button type="submit" class="btn btn-primary">
+                        {% bootstrap_icon "search" %} Buscar
+                    </button>
+                {% endbuttons %}
+            </div>
+        </div>
+    </form>
+
+    <div id="result"></div>
+ 
+{% endblock %}
