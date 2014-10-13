@@ -4,7 +4,7 @@
     <data-source source="LOCAL" name="Django default" product="PostgreSQL" version="9.1.10" jdbc-version="4.0" driver-name="PostgreSQL Native Driver" driver-version="PostgreSQL 9.3 JDBC4 (build 1100)" uuid="f0ec78b4-ac4b-4e92-8357-0bd0493d46e5">
       <identifier-quote-string>&quot;</identifier-quote-string>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://127.0.0.1:5432/CS</jdbc-url>
+      <jdbc-url>jdbc:postgresql://127.0.0.1:5432/Coniel</jdbc-url>
       <user-name>postgres</user-name>
       <user-password>dfd8dfc5dfc5dfdedf9bdf98df99</user-password>
       <libraries>

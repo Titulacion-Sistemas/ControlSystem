@@ -7,6 +7,7 @@ from django.db import models
 #EDICION DE MODELO USER
 User.add_to_class('usuario_sico', models.CharField(max_length=10, null=False, blank=False))
 User.add_to_class('contrasenia_sico', models.CharField(max_length=10, null=False, blank=False))
+User.add_to_class('sesion_sico', models.CharField(max_length=2, null=True, blank=True))
 #User.add_to_class('amigos', models.ManyToManyField('self', symmetrical=True,  blank=True))
 
 #FORMULARIOS

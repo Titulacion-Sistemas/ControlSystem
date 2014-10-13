@@ -8,18 +8,34 @@ from django.template import RequestContext
 from django_ajax.decorators import ajax
 from busqueda.models import BusquedaForm, VitacoraBusquedas
 
+@login_required()
+def cuenta(request):
+    return buscar(request, 1)
 
 @login_required()
-def buscar(request):
+def medidor(request):
+    return buscar(request, 2)
+
+@login_required()
+def nombre(request):
+    return buscar(request, 3)
+
+@login_required()
+def geocodigo(request):
+    return buscar(request, 4)
+
+def buscar(request, tipo):
 
     form = BusquedaForm()
 
     data = {
         'form': form,
+        'tipo': tipo,
+        'nav': 'busqueda'
     }
     return render_to_response('busqueda/buscar.html', data, context_instance=RequestContext(request))
 
-@ajax
+@ajax()
 def busqueda(request):
     dajax = Dajax()
     if request.method == 'POST':
@@ -37,7 +53,12 @@ def busqueda(request):
     #
         Vitacora.save()
 
-        dajax.append('#result', 'innerHTML', 'ok')
+        form = BusquedaForm()
+        data = {
+            'formulario': form,
+        }
+
+        dajax.append('#listaResultados', 'innerHTML', render_to_response('busqueda/form.html', data))
         return dajax.calls
 
     else:

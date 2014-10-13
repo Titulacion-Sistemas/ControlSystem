@@ -12,10 +12,10 @@
             <ul class="dropdown-menu" role="menu">
                 {#<li class="divider"></li>#}
                 <li class="dropdown-header">Por: </li>
-                <li><a href="#">Cuenta</a></li>
-                <li><a href="#">Medidor</a></li>
-                <li><a href="#">Nombre</a></li>
-                <li><a href="#">Geocodigo</a></li>
+                <li><a href="{% url 'buscarCuenta' %}">Cuenta</a></li>
+                <li><a href="{% url 'buscarMedidor' %}">Medidor</a></li>
+                <li><a href="{% url 'buscarNombre' %}">Nombre</a></li>
+                <li><a href="{% url 'buscarGeocodigo' %}">Geocodigo</a></li>
             </ul>
         </li>
 

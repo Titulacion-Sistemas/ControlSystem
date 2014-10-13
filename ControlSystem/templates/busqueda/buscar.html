@@ -9,7 +9,74 @@
 {% bootstrap_messages %}
 
 {% block title %}
-    Buscar
+    {{ tipo }}
+{% endblock %}
+
+{% block jquery %}
+    <script>
+
+        var dx=$('document');
+        dx.ready(inicializarBuscar);
+
+        function inicializarBuscar()
+        {
+            var y = $("#id_tipoBusq");
+            y.find("option[value='1']").attr("selected",false);
+            y.find("option[value="+ {{ tipo }} +"]").attr("selected",true);
+            seleccion();
+        }
+
+        function seleccion()
+        {
+            var y = $("#id_tipoBusq");
+            y.change
+            (
+                function ()
+                {
+                    var m = '';
+                    $( "#id_tipoBusq").find("option:selected").each
+                    (
+                        function()
+                        {
+                            m = $( this ).val()+'';
+                        }
+                    );
+
+                    cambiar(m,$("#title"),$("#id_consulta"));
+                }
+            ).change();
+        }
+
+        function cambiar(m, x, z)
+        {
+            switch (m)
+            {
+                case '1':
+                    x.html('Búsqueda por número de Cuenta');
+                    z.attr('placeholder', 'Escriba un número de cuenta');
+                    break;
+
+                case '2':
+                    x.html('Búsqueda por numero de Medidor');
+                    z.attr('placeholder', 'Escriba un número de medidor');
+                    break;
+
+                case '3':
+                    x.html('Búsqueda por Nombre de abonado');
+                    z.attr('placeholder', 'Escriba apellidos del abonado');
+                    break;
+
+                case '4':
+                    x.html('Búsqueda por Ruta de Lectura');
+                    z.attr('placeholder', 'Escriba un geocodigo');
+                    break;
+
+                default:
+                break;
+            }
+        }
+
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -17,33 +84,47 @@
     {% if form.errors %}
         <p>{{ form.errors }}</p>
     {% endif %}
- 
-    <form name="b" method="post" action=""
-        onsubmit="
-            ajax
-            (
-                '{% url 'busqueda' %}',
-                {
-                    'tipo': $('#id_tipoBusq').val(),
-                    'dato': $('#id_consulta').val(),
-                    'u': {{ user.id }}
-                }
-            );
-            return false;"
-        >
-        {% csrf_token %}
+    <div class="container-fluid">
         <div class="row" >
-            <div class="col-md-4 table-bordered" style="padding-top: 30px">
-                {% bootstrap_form form %}
-                {% buttons %}
-                    <button type="submit" class="btn btn-primary">
-                        {% bootstrap_icon "search" %} Buscar
-                    </button>
-                {% endbuttons %}
+            <div class="col-md-4" >
+                <div class="table-bordered margen">
+                    <form role="form" class="form-group" name="b" method="post" action=""
+                    onsubmit="
+                        envioRecepcionAjax
+                        (
+                            '{% url 'busqueda' %}',
+                            {
+                                'tipo': $('#id_tipoBusq').val(),
+                                'dato': $('#id_consulta').val(),
+                                'u': {{ user.id }}
+                            }
+                        );
+                        return false;"
+                    >
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        {% buttons %}
+                            <button type="submit" class="btn btn-primary">
+                                {% bootstrap_icon "search" %} Buscar
+                            </button>
+                        {% endbuttons %}
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div id="listaResultados" class="table-bordered margen">
+
+                </div>
             </div>
         </div>
-    </form>
 
-    <div id="result"></div>
+        <div id="result"></div>
+    </div>
  
+{% endblock %}
+
+{% block jqueryfooter %}
+    <script>
+        seleccion();
+    </script>
 {% endblock %}

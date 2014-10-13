@@ -1,3 +1,4 @@
+import user
 from dajax.core import Dajax
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -54,6 +55,12 @@ def main(request):
     #return render_to_response('main.html', {}, context_instance=RequestContext(request))
     return ingreso(request)
 
+def salir(request):
+    request.user.sesion_sico=''
+    request.user.save()
+    logout(request)
+    return HttpResponseRedirect('/login')
+
 def ingreso(request):
     error = None
     try:
@@ -64,7 +71,6 @@ def ingreso(request):
     if request.POST:
         username = request.POST['username']
         password = request.POST['password']
-
 
         user = authenticate(username=username, password=password)
         if user is not None:
@@ -78,14 +84,17 @@ def ingreso(request):
 
 @login_required()
 def home(request):
-    pythoncom.CoInitialize()
-    #conn = iSeries.ConnectionManager()
-    print request.user.usuario_sico
-    print request.user.contrasenia_sico
-    #availableConnection = conn.getAvailableConnection()
-    #conn.openSession(availableConnection, request.user.usuario_sico, request.user.contrasenia_sico)
-    #conn.setActiveSession(availableConnection)
-    return render_to_response('usuarios/home.html', {'user': request.user, 'conn': None}, context_instance=RequestContext(request))
+    availableConnection = ''
+    if not request.user.sesion_sico:
+        pythoncom.CoInitialize()
+        conn = iSeries.ConnectionManager()
+        availableConnection = conn.getAvailableConnection()
+        conn.openSession(availableConnection, request.user.usuario_sico, request.user.contrasenia_sico)
+        conn.setActiveSession(availableConnection)
+        request.user.id = availableConnection
+        request.user.save()
+
+    return render_to_response('usuarios/home.html', {'user': request.user, 'conn': availableConnection}, context_instance=RequestContext(request))
 
 @ajax
 def multiply(request):

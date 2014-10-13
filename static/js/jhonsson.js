@@ -8,13 +8,13 @@
 
 
 function newUrl(url) {
-    window.location.assign(url)
+    window.location.assign(url);
 }
 
-function ajax(url, params)
-    {
-        ajaxPost(url, params, function(content){
-            //onSuccess
-            castear(content);
-        });
-    }
+function envioRecepcionAjax(url, params)
+{
+    ajaxPost(url, params, function(content){
+        //onSuccess
+        castear(content);
+    });
+}
