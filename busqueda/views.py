@@ -31,7 +31,7 @@ def buscar(request, tipo):
     data = {
         'form': form,
         'tipo': tipo,
-        'nav': 'busqueda'
+        'nav': 'buscar'
     }
     return render_to_response('busqueda/buscar.html', data, context_instance=RequestContext(request))
 
@@ -42,6 +42,8 @@ def busqueda(request):
 
         tipo = int(request.POST['tipo'])
         dato = str(request.POST['dato'])
+        print tipo
+        print dato
         u = int(request.POST['u'])
 
 

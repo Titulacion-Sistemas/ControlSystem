@@ -13,9 +13,10 @@
 {% endblock %}
 
 {% block jquery %}
+    {{ block.super }}
     <script>
 
-        var dx=$('document');
+        //var dx=$('document');
         dx.ready(inicializarBuscar);
 
         function inicializarBuscar()

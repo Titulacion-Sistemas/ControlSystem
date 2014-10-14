@@ -1,4 +1,4 @@
-import user
+# coding=utf-8
 from dajax.core import Dajax
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django_ajax.decorators import ajax
 import pythoncom
-from usuarios import iSeries
+from ControlSystem.pComm.conexion import manejadorDeConexion
 from usuarios.models import SignUpForm
 
 # Create your views here.
@@ -56,6 +56,9 @@ def main(request):
     return ingreso(request)
 
 def salir(request):
+    pythoncom.CoInitialize()
+    c = manejadorDeConexion()
+    c.closeProgram(request.user.sesion_sico)
     request.user.sesion_sico=''
     request.user.save()
     logout(request)
@@ -75,26 +78,31 @@ def ingreso(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect('/home')
+                if user.sesion_sico:
+                    error = "El Usuario especificado ya esta en uso."
+                    try:
+                        logout(request)
+                    except:
+                        pass
+                else:
+                    login(request, user)
+                    return HttpResponseRedirect('/home')
         elif username and password:
-            error = 1
+            error = "Su Usuario o Contraseña no son correctos, Intentelo nuevamente."
 
     return render_to_response('usuarios/login.html', {'errors': error}, context_instance=RequestContext(request))
 
 @login_required()
 def home(request):
-    availableConnection = ''
+    conn = ''
     if not request.user.sesion_sico:
         pythoncom.CoInitialize()
-        conn = iSeries.ConnectionManager()
-        availableConnection = conn.getAvailableConnection()
-        conn.openSession(availableConnection, request.user.usuario_sico, request.user.contrasenia_sico)
-        conn.setActiveSession(availableConnection)
-        request.user.id = availableConnection
+        conn = manejadorDeConexion()
+        conn.openSession(usuario=request.user.usuario_sico, contrasenia=request.user.contrasenia_sico)
+        request.user.sesion_sico = conn.activeConnection
         request.user.save()
 
-    return render_to_response('usuarios/home.html', {'user': request.user, 'conn': availableConnection}, context_instance=RequestContext(request))
+    return render_to_response('usuarios/home.html', {'user': request.user, 'conn': conn}, context_instance=RequestContext(request))
 
 @ajax
 def multiply(request):

@@ -4,18 +4,18 @@
     <list default="true" id="4a00e047-e965-4656-a541-b5f54dea118e" name="Default" comment="" />
     <ignored path="ControlSystem.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413157555396" ignored="false" />
+    <file path="/Dummy.txt" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413249747728" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios_logueados/urls.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411195993897" ignored="false" />
     <file path="/urls.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413196312800" ignored="false" />
-    <file path="/base.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413183867354" ignored="false" />
+    <file path="/base.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413278948586" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios_logueados/templates/base.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411364217354" ignored="false" />
-    <file path="/login.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413170843090" ignored="false" />
+    <file path="/login.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413265208238" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios_logueados/templates/login.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411197253082" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios/models.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411355217847" ignored="false" />
     <file path="/models.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413193091546" ignored="false" />
     <file path="C:/Python27/Lib/site-packages/django/contrib/auth/forms.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411194351108" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios/views.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412226315035" ignored="false" />
-    <file path="/views.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413196308783" ignored="false" />
+    <file path="/views.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413280839397" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/static/css/jhonsson.css" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411196759627" ignored="false" />
     <file path="/settings.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412222643243" ignored="false" />
     <file path="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados/usuarios_logueados/settings.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411362894328" ignored="false" />
@@ -25,11 +25,14 @@
     <file path="/temp.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1411965216585" ignored="false" />
     <file path="/home.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413165140868" ignored="false" />
     <file path="/bootstrap.min.css" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1412827673354" ignored="false" />
-    <file path="/navegacion.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413165221790" ignored="false" />
+    <file path="/navegacion.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413278000223" ignored="false" />
     <file path="/jhonsson.js" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413175163989" ignored="false" />
-    <file path="/buscar.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413191554927" ignored="false" />
+    <file path="/buscar.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413278255652" ignored="false" />
     <file path="/form.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413160849185" ignored="false" />
     <file path="/a.dummy" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413195165364" ignored="false" />
+    <file path="/__init__.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413279754903" ignored="false" />
+    <file path="/connectionManager.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413280430391" ignored="false" />
+    <file path="/conexion.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413282406241" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,8 +61,8 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Proxy.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/usuarios/iSeries/Proxy.py">
+      <file leaf-file-name="scripts.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/scripts.py">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
@@ -70,7 +73,7 @@
       <file leaf-file-name="login.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ControlSystem/templates/usuarios/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="40" selection-start="796" selection-end="796" vertical-scroll-proportion="-11.769231">
+            <state line="38" column="37" selection-start="1559" selection-end="1559" vertical-scroll-proportion="-13.076923">
               <folding />
             </state>
           </provider>
@@ -79,7 +82,7 @@
       <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ControlSystem/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="42" selection-start="620" selection-end="620" vertical-scroll-proportion="0.0">
+            <state line="11" column="26" selection-start="297" selection-end="297" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -87,12 +90,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="buscar.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ControlSystem/templates/busqueda/buscar.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="10" selection-start="334" selection-end="334" vertical-scroll-proportion="-4.6923075">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/usuarios/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="41" selection-start="2271" selection-end="2271" vertical-scroll-proportion="0.38636363">
+            <state line="10" column="16" selection-start="460" selection-end="460" vertical-scroll-proportion="-6.8">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="conexion.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/conexion.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="97" column="60" selection-start="3412" selection-end="3412" vertical-scroll-proportion="0.6806358">
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#24#46#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="navegacion.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ControlSystem/templates/usuarios/navegacion.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="39" selection-start="170" selection-end="170" vertical-scroll-proportion="-3.9230769">
+              <folding>
+                <element signature="n#style#0;n#li#2;n#ul#1;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -118,30 +150,30 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/ControlSystem/templates/navegacion.html" />
-        <option value="$PROJECT_DIR$/ControlSystem/settings.py" />
-        <option value="$PROJECT_DIR$/busqueda/models.py" />
-        <option value="$PROJECT_DIR$/ControlSystem/templates/busqueda/form.html" />
-        <option value="$PROJECT_DIR$/static/css/jhonsson.css" />
-        <option value="$PROJECT_DIR$/ControlSystem/templates/usuarios/home.html" />
-        <option value="$PROJECT_DIR$/ControlSystem/templates/usuarios/navegacion.html" />
-        <option value="$PROJECT_DIR$/busqueda/views.py" />
         <option value="$PROJECT_DIR$/ControlSystem/templates/usuarios/login.html" />
-        <option value="$PROJECT_DIR$/static/js/jhonsson.js" />
-        <option value="$PROJECT_DIR$/ControlSystem/templates/usuarios/base.html" />
-        <option value="$PROJECT_DIR$/static/js/jquery-1.7.2.js" />
+        <option value="$PROJECT_DIR$/usuarios/iSeries/__init__.py" />
+        <option value="$PROJECT_DIR$/busqueda/views.py" />
         <option value="$PROJECT_DIR$/ControlSystem/templates/busqueda/buscar.html" />
-        <option value="$PROJECT_DIR$/usuarios/models.py" />
+        <option value="$PROJECT_DIR$/ControlSystem/templates/usuarios/navegacion.html" />
+        <option value="$PROJECT_DIR$/ControlSystem/templates/usuarios/base.html" />
+        <option value="$PROJECT_DIR$/ControlSystem/iSeries/Proxy.py" />
+        <option value="$PROJECT_DIR$/ControlSystem/iSeries/__init__.py" />
+        <option value="$PROJECT_DIR$/ControlSystem/pComm/sico/ConnectionManager.py" />
+        <option value="$PROJECT_DIR$/ControlSystem/pComm/__init__.py" />
+        <option value="$PROJECT_DIR$/ControlSystem/pComm/ConnectionManager.py" />
+        <option value="$PROJECT_DIR$/ControlSystem/pComm/connectionManager.py" />
         <option value="$PROJECT_DIR$/ControlSystem/urls.py" />
+        <option value="$PROJECT_DIR$/ControlSystem/pComm/scripts.py" />
         <option value="$PROJECT_DIR$/usuarios/views.py" />
+        <option value="$PROJECT_DIR$/ControlSystem/pComm/conexion.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="width" value="1616" />
+    <option name="height" value="876" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -188,6 +220,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -216,52 +249,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="usuarios" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="usuarios" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="iSeries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="busqueda" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="ControlSystem" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -280,71 +267,26 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="usuarios" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ControlSystem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="busqueda" />
+              <option name="myItemId" value="pComm" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="ChangesBrowser.SHOW_FLATTEN" value="false" />
-    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
     <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
+    <property name="ChangesBrowser.SHOW_FLATTEN" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../PracticasDjango/usuarios_logueados" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -363,10 +305,11 @@
       <recent name="D:\Datos\Documents\GitHub\ControlSystem\usuarios" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Datos\Documents\GitHub\ControlSystem\ControlSystem\pComm" />
+      <recent name="D:\Datos\Documents\GitHub\ControlSystem\ControlSystem" />
       <recent name="D:\Datos\Documents\GitHub\ControlSystem\ControlSystem\templates\usuarios" />
       <recent name="D:\Datos\Documents\GitHub\ControlSystem\static\favicon" />
       <recent name="D:\Datos\Documents\GitHub\ControlSystem\ControlSystem\templates" />
-      <recent name="D:\Datos\Documents\GitHub\ControlSystem" />
     </key>
   </component>
   <component name="RunManager" selected="Django server.ControlSystem">
@@ -454,29 +397,6 @@
       <option name="PARAMETERS" value="" />
       <method />
     </configuration>
-    <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="ControlSystem" />
-      <option name="launchJavascriptDebuger" value="false" />
-      <option name="port" value="8000" />
-      <option name="host" value="" />
-      <option name="additionalOptions" value="" />
-      <option name="browserUrl" value="" />
-      <option name="runTestServer" value="false" />
-      <option name="runNoReload" value="false" />
-      <option name="useCustomRunCommand" value="false" />
-      <option name="customRunCommand" value="" />
-      <method />
-    </configuration>
     <configuration default="true" type="tests" factoryName="Unittests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -498,6 +418,29 @@
       <option name="PUREUNITTEST" value="true" />
       <option name="PARAMS" value="" />
       <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="ControlSystem" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -616,19 +559,19 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20194986" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289689" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286908" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14736165" sideWeight="0.7311978" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12664714" sideWeight="0.6710311" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19253294" sideWeight="0.6710311" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.11776062" sideWeight="0.6713092" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1949807" sideWeight="0.6713092" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1898527" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1898527" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18941504" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32963988" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -699,107 +642,63 @@
     <MESSAGE value="control en oficina" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/busqueda/models.py">
+    <entry file="file://$PROJECT_DIR$/usuarios/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="27" selection-start="1256" selection-end="1264" vertical-scroll-proportion="0.92410713">
+        <state line="21" column="0" selection-start="879" selection-end="879" vertical-scroll-proportion="0.9296875" />
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/django/contrib/auth/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="4" selection-start="1302" selection-end="1302" vertical-scroll-proportion="1.2841727">
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.28417265">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/busqueda/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="17" selection-start="930" selection-end="935" vertical-scroll-proportion="0.0953271">
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/busqueda/buscar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="9" selection-start="630" selection-end="630" vertical-scroll-proportion="-7.769231">
+        <state line="18" column="10" selection-start="334" selection-end="334" vertical-scroll-proportion="-4.6923075">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Python27/Lib/site-packages/django/contrib/auth/models.py">
+    <entry file="file://$PROJECT_DIR$/static/js/jquery.dajax.core.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="447" column="6" selection-start="16363" selection-end="16363" vertical-scroll-proportion="2.267857">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usuarios/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usuarios/tests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/usuarios/home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="96" selection-start="349" selection-end="349" vertical-scroll-proportion="0.4604966">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usuarios/iSeries/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="13" selection-start="2982" selection-end="2983" vertical-scroll-proportion="0.42447916">
-          <folding>
-            <element signature="e#24#46#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/bootstrap.css.map">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="148887" selection-start="148887" selection-end="148887" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="22" column="23" selection-start="574" selection-end="579" vertical-scroll-proportion="0.58093524">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/usuarios/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="26" selection-start="1080" selection-end="1082" vertical-scroll-proportion="0.33333334">
+        <state line="55" column="55" selection-start="2494" selection-end="2494" vertical-scroll-proportion="1.764151">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/usuarios/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="0" selection-start="879" selection-end="879" vertical-scroll-proportion="0.9296875">
-          <folding>
-            <element signature="e#27#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Python27/Lib/site-packages/django/contrib/auth/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="4" selection-start="3203" selection-end="3203" vertical-scroll-proportion="0.12587413">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ControlSystem/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="42" selection-start="620" selection-end="620" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usuarios/iSeries/Proxy.py">
+    <entry file="file://$PROJECT_DIR$/ControlSystem/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
@@ -808,16 +707,62 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/usuarios/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="40" selection-start="796" selection-end="796" vertical-scroll-proportion="-11.769231">
+        <state line="38" column="37" selection-start="1559" selection-end="1559" vertical-scroll-proportion="-13.076923">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python27/Lib/site-packages/dajax/core.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="40" selection-start="510" selection-end="515" vertical-scroll-proportion="0.59322035">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/usuarios/navegacion.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="39" selection-start="170" selection-end="170" vertical-scroll-proportion="-3.9230769">
+          <folding>
+            <element signature="n#style#0;n#li#2;n#ul#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="26" selection-start="297" selection-end="297" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/usuarios/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="41" selection-start="2271" selection-end="2271" vertical-scroll-proportion="0.38636363">
+        <state line="10" column="16" selection-start="460" selection-end="460" vertical-scroll-proportion="-6.8">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/scripts.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/conexion.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="97" column="60" selection-start="3412" selection-end="3412" vertical-scroll-proportion="0.6806358">
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#24#46#0" expanded="true" />
           </folding>
         </state>
       </provider>

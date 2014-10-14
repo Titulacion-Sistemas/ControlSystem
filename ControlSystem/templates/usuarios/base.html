@@ -48,7 +48,13 @@
 
         {% block jquery %}
             <script>
+                var dx=$('document');
+                dx.ready(navegacion);
 
+                function navegacion()
+                {
+                    $('#{{ nav }}').addClass('active');
+                }
             </script>
         {% endblock %}
 
