@@ -3,24 +3,7 @@ from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
-from django.forms import ModelForm, forms
-
-
-class TipoBusqueda(models.Model):
-
-    TIPOSBUSQUEDA = (
-        ('1', 'Cuenta'),
-        ('2', 'Medidor'),
-        ('3', 'Nombre'),
-        ('4', 'Geocodigo'),
-    )
-
-    id = models.PositiveSmallIntegerField(primary_key=True)
-    descripcion = models.CharField(max_length=1, choices=TIPOSBUSQUEDA)
-
-    def __str__(self):
-        return self.id
-
+from django.forms import ModelForm
 
 class VitacoraBusquedas(models.Model):
 
@@ -41,9 +24,10 @@ class VitacoraBusquedas(models.Model):
         return 'Busqueda por :{0}, ({1})'.format(self.get_TipoBusq_display(), self.consulta)
 
 
-
 #FORMULARIOS
 class BusquedaForm(ModelForm):
     class Meta:
         model = VitacoraBusquedas
         fields = ['tipoBusq','consulta']
+
+

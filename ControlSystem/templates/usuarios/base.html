@@ -63,7 +63,7 @@
 
         <div id="wrap" >
             <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-                <div class="">
+                <div style="padding-right: 20px">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                             <span class="sr-only">Toggle navigation</span>
@@ -71,9 +71,9 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                      <a  href="{% url 'home' %}"><img src="{% static 'logo2.png' %}" height="69px" width="240px"></a>
+                      <a href="{% url 'home' %}"><img src="{% static 'logo2.png' %}" height="69px" width="240px"></a>
                     </div>
-                    <div class="collapse navbar-collapse">
+                    <div class="navbar-collapse collapse">
                         {% block nav %}
                             {% include "usuarios/navegacion.html" %}
                         {% endblock %}

@@ -39,8 +39,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django_ajax',
     'bootstrap3',
-    'busqueda',
+    'busquedas',
     'usuarios',
+    'ingresos',
 )
 
 MIDDLEWARE_CLASSES = (
