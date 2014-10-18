@@ -22,9 +22,9 @@ PrinterType=IBM3812
 CuaKeyboard=2
 Language=Latin-America(Spanish)
 IBMDefaultKeyboard=N
-DefaultKeyboard=C:\Users\Jhonsson\AppData\Roaming\IBM\Client Access\Emulator\private\AS400.KMP
+DefaultKeyboard=.\AS400.KMP
 [LastExitView]
-A=3 78 78 910 512 3 12 14 400 0 IBM3270— 284
+A=4 104 104 976 492 3 12 24 400 0 IBM3270— 284
 [Window]
 ViewFlags=CE00
 RuleLinePos=0 0

@@ -1,0 +1,53 @@
+{% load bootstrap3 %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+<div class=" panel panel-default">
+    <div class="panel-heading text-center">
+        <h7>Coincidencias</h7>
+    </div>
+    <table class="table">
+        <thead>
+            <td>
+                Cliente
+            </td>
+            <td>
+                Nombres Del Cliente
+            </td>
+            <td>
+                Direcci&oacute;n
+            </td>
+            <td>
+                Deuda
+            </td>
+            <td>
+                Pendiente
+            </td>
+        </thead>
+        {% for c in coincidencias %}
+            <tr>
+                <td>
+                    {{ c.cuenta }}
+                </td>
+                <td>
+                    {{ c.nombre }}
+                </td>
+                <td>
+                    {{ c.direccion }}
+                </td>
+                <td>
+                    {{ c.deuda }}
+                </td>
+                <td>
+                    {{ c.meses }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <div class="panel-body">
+        {% bootstrap_form formulario %}
+    </div>
+
+</div>
+

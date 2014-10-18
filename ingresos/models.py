@@ -1,30 +1,102 @@
+# coding=utf-8
 from django.db import models
 
 # Create your models here.
 
-class marca(models.Model):
-    pass
-
-class medidor(models.Model):
-    pass
-
-class detalleClienteMedidor(models.Model):
-    pass
-
-class cliente(models.Model):
-    pass
-
-class secuencia(models.Model):
-    pass
-
-class ruta(models.Model):
-    pass
-
-class sector(models.Model):
-    pass
-
-class canton(models.Model):
-    pass
 
 class provincia(models.Model):
-    pass
+    id = models.PositiveSmallIntegerField(primary_key=True, max_length=2)
+    descirpcion = models.CharField(max_length=20, verbose_name='Nombre de Provincia', blank=True, null=True, default='')
+
+    def __str__(self):
+        return self.descirpcion
+
+
+class canton(models.Model):
+    id = models.PositiveSmallIntegerField(primary_key=True, max_length=2)
+    descirpcion = models.CharField(max_length=30, verbose_name='Nombre de Cantón', blank=True, null=True, default='')
+    provincia = models.ForeignKey(provincia, verbose_name='Nombre de Provincia')
+
+    def __str__(self):
+        return self.descirpcion
+
+
+class sector(models.Model):
+    id = models.PositiveSmallIntegerField(primary_key=True, max_length=2)
+    descirpcion = models.CharField(max_length=30, verbose_name='Nombre de Sector', blank=True, null=True, default='')
+    canton = models.ForeignKey(canton, verbose_name='Nombre de Cantón')
+
+    def __str__(self):
+        return self.descirpcion
+
+
+class ruta(models.Model):
+    id = models.PositiveSmallIntegerField(primary_key=True, max_length=3)
+    descirpcion = models.CharField(max_length=30, verbose_name='Nombre de Ruta', blank=True, null=True, default='')
+    sector = models.ForeignKey(sector, verbose_name='Nombre de Sector')
+
+    def __str__(self):
+        return self.descirpcion
+
+
+class secuencia(models.Model):
+    id = models.PositiveSmallIntegerField(primary_key=True, max_length=2)
+    descirpcion = models.CharField(max_length=30, verbose_name='Nombre de Secuencia', blank=True, null=True, default='')
+    ruta = models.ForeignKey(ruta, verbose_name='Nombre de Ruta')
+
+    def __str__(self):
+        return self.descirpcion
+
+
+class marca(models.Model):
+    id = models.CharField(max_length=3, primary_key=True, verbose_name='Abreviatura')
+    descripcion = models.CharField(max_length=25, verbose_name="Nombre")
+
+    def __str__(self):
+        return self.descripcion
+
+
+class medidor(models.Model):
+
+    VOLT = (
+        (120, 120),
+        (240, 240),
+    )
+
+    fabrica = models.CharField(max_length=11, verbose_name='Número de fábrica')
+    serie = models.CharField(max_length=9, verbose_name='Numero de serie')
+    marca = models.ForeignKey(marca, verbose_name='Marca')
+    voltaje = models.PositiveSmallIntegerField(choices=VOLT)
+    est = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.fabrica
+
+class cliente(models.Model):
+    PERSONA = (
+        ('N', 'Persona Natural'),
+        ('J', 'Persona Jurídica'),
+    )
+    ci_ruc = models.CharField(max_length=13, verbose_name='Ruc / Cédula')
+    cuenta = models.CharField(max_length=7, null=False)
+    nombre = models.CharField(max_length=50, verbose_name='Abonado')
+    deuda = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Deuda del abonado')
+    meses = models.PositiveSmallIntegerField(verbose_name='Meses adeudados')
+    geocodigo = models.ForeignKey(secuencia, verbose_name='Geocódigo')
+    direccion = models.CharField(max_length=50)
+    tipo = models.CharField(max_length=1, choices=PERSONA, default='N')
+
+    def __str__(self):
+        return self.cuenta
+
+
+class detalleClienteMedidor(models.Model):
+    lectura_instalacion = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Lectura de instalación')
+    lectura_desinstalacion = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Lectura de desinstalación')
+    fecha_instalacion = models.DateField(verbose_name='Fecha de instalación')
+    fecha_desinstalacion = models.DateField(verbose_name='Fecha de desinstalación')
+    medidor = models.ForeignKey(medidor, verbose_name='Medidor')
+    cliente = models.ForeignKey(cliente, verbose_name='Cliente')
+
+    def __str__(self):
+        return '%s - %s' % (self.cliente, self.medidor)

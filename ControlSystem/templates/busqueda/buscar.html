@@ -1,5 +1,6 @@
 {% extends 'usuarios/base.html' %}
 {% load bootstrap3 %}
+{% load static %}
 
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
@@ -100,6 +101,7 @@
                                 'u': {{ user.id }}
                             }
                         );
+                        $('#cargando').show();
                         return false;"
                     >
                         {% csrf_token %}
@@ -112,7 +114,13 @@
                     </form>
                 </div>
             </div>
+            <div id="cargando" class="text-center">
+                <img src="{% static 'cargando.gif' %}" height="100px" width="100px" style="margin-top: 40px;">
+            </div>
             <div id="listaResultados" class="col-md-8">
+
+            </div>
+            <div id="resultado" class="col-md-12">
 
             </div>
         </div>
@@ -125,5 +133,6 @@
 {% block jqueryfooter %}
     <script>
         seleccion();
+        $('#cargando').hide();
     </script>
 {% endblock %}

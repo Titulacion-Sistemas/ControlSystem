@@ -1,12 +1,15 @@
 from dajax.core import Dajax
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render_to_response
 
 # Create your views here.
 from django.template import RequestContext
 from django_ajax.decorators import ajax
+import pythoncom
 from busquedas.models import BusquedaForm, VitacoraBusquedas
+from ControlSystem.pComm.scripts import buscar as b
+
 
 @login_required()
 def cuenta(request):
@@ -49,18 +52,18 @@ def busqueda(request):
 
         Vitacora = VitacoraBusquedas(consulta=dato, tipoBusq=tipo)
 
-        Vitacora.usuario = User.objects.get(id = u)
-    #
-    #     #Vitacora.estadoRetorno = BusquedaEnSico(tipoBusq, consulta)
-    #
+        usuario = User.objects.get(id = u)
+
+        Vitacora.usuario = usuario
         Vitacora.save()
 
-        form = BusquedaForm()
-        data = {
-            'formulario': form,
-        }
-
-        dajax.append('#listaResultados', 'innerHTML', render_to_response('busqueda/form.html', data))
+        pythoncom.CoInitialize()
+        print usuario.sesion_sico
+        if tipo == 1:
+            buscando = b()
+            dajax.clear('#listaResultados', 'innerHTML')
+            dajax.script("$('#cargando').hide();")
+            dajax.append('#listaResultados', 'innerHTML', buscando.porCuenta(usuario.sesion_sico, dato))
         return dajax.calls
 
     else:

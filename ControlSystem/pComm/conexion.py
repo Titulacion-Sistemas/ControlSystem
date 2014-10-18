@@ -6,10 +6,6 @@ import win32com.client
 
 class manejadorDeConexion:
     def __init__(self):
-        """
-
-        :rtype : object
-        """
         self.PCommConnMgr = win32com.client.Dispatch('PCOMM.autECLConnMgr')
         self.connList = self.PCommConnMgr.autECLConnList
         self.activeSession = None
