@@ -89,7 +89,7 @@ class cliente(models.Model):
     deuda = models.DecimalField(max_digits=12, decimal_places=2, verbose_name='Deuda del abonado')
     meses = models.PositiveSmallIntegerField(verbose_name='Meses adeudados')
     geocodigo = models.OneToOneField(secuencia, verbose_name='Geocódigo')
-    direccion = models.CharField(max_length=50)
+    direccion = models.CharField(max_length=50, verbose_name='Dirección')
     tipo = models.CharField(max_length=1, choices=PERSONA, default='N')
     estado = models.CharField(max_length=20, verbose_name="Estado")
 

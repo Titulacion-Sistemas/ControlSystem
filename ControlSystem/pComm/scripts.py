@@ -36,7 +36,7 @@ def llenarCliente(sesion, cli):
                 )
             )
         )
-        print(cli.geocodigo)
+        #print(cli.geocodigo)
         sesion.autECLPS.SendKeys('[pf2]')
         sesion.autECLOIA.WaitForAppAvailable()
         sesion.autECLOIA.WaitForInputReady()
@@ -108,13 +108,13 @@ class buscar:
 
         titulo = sesion.autECLPS.GetText(9, 16, 20)
         while titulo != 'CONSULTA DE CLIENTES':
-            print titulo
             sesion.autECLPS.SendKeys('[pf12]')
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
             titulo = sesion.autECLPS.GetText(9, 16, 20)
 
-        form = Buscado(instance=coincidencias[0])
+        #print coincidencias[0].geocodigo
+        form = Buscado(coincidencias[0].geocodigo, instance=coincidencias[0])
 
         data = {
             'formulario': form,

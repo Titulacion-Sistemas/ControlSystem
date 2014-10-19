@@ -7,44 +7,46 @@
     <div class="panel-heading text-center">
         <h7>Coincidencias</h7>
     </div>
-    <table class="table">
-        <thead>
-            <td>
-                <b>Cliente</b>
-            </td>
-            <td>
-                <b>Nombres Del Cliente</b>
-            </td>
-            <td>
-                <b>Direcci&oacute;n</b>
-            </td>
-            <td>
-                <b>Deuda</b>
-            </td>
-            <td>
-                <b>Pendiente</b>
-            </td>
-        </thead>
-        {% for c in coincidencias %}
-            <tr>
+    <div class="table-responsive">
+        <table class="table table-striped table-condensed table-hover">
+            <thead>
                 <td>
-                    {{ c.cuenta }}
+                    <b>Cliente</b>
                 </td>
                 <td>
-                    {{ c.nombre }}
+                    <b>Nombres Del Cliente</b>
                 </td>
                 <td>
-                    {{ c.direccion }}
+                    <b>Direcci&oacute;n</b>
                 </td>
-                <td class="text-right">
-                    {{ c.deuda }}
+                <td>
+                    <b>Deuda</b>
                 </td>
-                <td class="text-right">
-                    {{ c.meses }}
+                <td>
+                    <b>Pendiente</b>
                 </td>
-            </tr>
-        {% endfor %}
-    </table>
+            </thead>
+            {% for c in coincidencias %}
+                <tr>
+                    <td>
+                        {{ c.cuenta }}
+                    </td>
+                    <td>
+                        {{ c.nombre }}
+                    </td>
+                    <td>
+                        {{ c.direccion }}
+                    </td>
+                    <td class="text-right">
+                        {{ c.deuda }}
+                    </td>
+                    <td class="text-right">
+                        {{ c.meses }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
     <div id="r">
         <div class="panel panel-default">
             <div class="panel-body form-horizontal">

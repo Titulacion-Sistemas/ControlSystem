@@ -29,7 +29,7 @@ def geocodigo(request):
 
 def buscar(request, tipo):
 
-    form = BusquedaForm()
+    form = BusquedaForm(request.user)
 
     data = {
         'form': form,
@@ -51,21 +51,18 @@ def busqueda(request):
 
 
         Vitacora = vitacoraBusquedas(consulta=dato, tipoBusq=tipo)
-
-        usuario = User.objects.get(id = u)
-
-        Vitacora.usuario = usuario
+        Vitacora.usuario = User.objects.get(id=u)
         Vitacora.save()
 
         pythoncom.CoInitialize()
-        print usuario.sesion_sico
+
         if tipo == 1:
             buscando = b()
             dajax.clear('#listaResultados', 'innerHTML')
             dajax.script("$('#cargando').hide();")
             dajax.script("$('#listaResultados').show();")
             dajax.script("$('#resultado').show();")
-            dajax.append('#listaResultados', 'innerHTML', buscando.porCuenta(usuario.sesion_sico, dato))
+            dajax.append('#listaResultados', 'innerHTML', buscando.porCuenta(User.objects.get(id=u).sesion_sico, dato))
             dajax.script("$('#resultado').html($('#r').html());")
             dajax.script("$('#r').empty();")
         return dajax.calls
