@@ -10,19 +10,19 @@
     <table class="table">
         <thead>
             <td>
-                Cliente
+                <b>Cliente</b>
             </td>
             <td>
-                Nombres Del Cliente
+                <b>Nombres Del Cliente</b>
             </td>
             <td>
-                Direcci&oacute;n
+                <b>Direcci&oacute;n</b>
             </td>
             <td>
-                Deuda
+                <b>Deuda</b>
             </td>
             <td>
-                Pendiente
+                <b>Pendiente</b>
             </td>
         </thead>
         {% for c in coincidencias %}
@@ -36,18 +36,21 @@
                 <td>
                     {{ c.direccion }}
                 </td>
-                <td>
+                <td class="text-right">
                     {{ c.deuda }}
                 </td>
-                <td>
+                <td class="text-right">
                     {{ c.meses }}
                 </td>
             </tr>
         {% endfor %}
     </table>
-    <div class="panel-body">
-        {% bootstrap_form formulario %}
+    <div id="r">
+        <div class="panel panel-default">
+            <div class="panel-body form-horizontal">
+                {% bootstrap_form formulario layout="horizontal" %}
+            </div>
+        </div>
     </div>
-
 </div>
 

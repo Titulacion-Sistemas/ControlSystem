@@ -102,6 +102,8 @@
                             }
                         );
                         $('#cargando').show();
+                        $('#listaResultados').hide();
+                        $('#resultado').hide();
                         return false;"
                     >
                         {% csrf_token %}
@@ -117,15 +119,9 @@
             <div id="cargando" class="text-center">
                 <img src="{% static 'cargando.gif' %}" height="100px" width="100px" style="margin-top: 40px;">
             </div>
-            <div id="listaResultados" class="col-md-8">
-
-            </div>
-            <div id="resultado" class="col-md-12">
-
-            </div>
+            <div id="listaResultados" class="col-md-8"></div>
+            <div id="resultado" class="col-md-12"></div>
         </div>
-
-        <div id="result"></div>
     </div>
  
 {% endblock %}

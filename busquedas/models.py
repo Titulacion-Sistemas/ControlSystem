@@ -3,10 +3,11 @@ from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
-from django.forms import ModelForm
+from django.forms import ModelForm, model_to_dict
+from ingresos.models import cliente, secuencia
 
-class VitacoraBusquedas(models.Model):
 
+class vitacoraBusquedas(models.Model):
     TIPOSBUSQUEDA = (
         ('1', 'Cuenta'),
         ('2', 'Medidor'),
@@ -27,7 +28,30 @@ class VitacoraBusquedas(models.Model):
 #FORMULARIOS
 class BusquedaForm(ModelForm):
     class Meta:
-        model = VitacoraBusquedas
-        fields = ['tipoBusq','consulta']
+        model = vitacoraBusquedas
+        fields = ['tipoBusq', 'consulta']
+
+
+class CustomModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return '%02d.%02d.%02d.%03d.%07d' % (
+            obj.ruta.sector.canton.provincia_id,
+            obj.ruta.sector.canton.num,
+            obj.ruta.sector.num,
+            obj.ruta.num,
+            obj.num
+        )
+
+
+class Buscado(ModelForm):
+
+    class Meta:
+        model = cliente
+
+        fields = ['cuenta', 'nombre', 'ci_ruc', 'geocodigo', 'direccion', 'estado', 'deuda', 'meses']
+        widgets = {
+            'deuda': forms.TextInput,
+            'meses': forms.TextInput,
+        }
 
 

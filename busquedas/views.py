@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django_ajax.decorators import ajax
 import pythoncom
-from busquedas.models import BusquedaForm, VitacoraBusquedas
+from busquedas.models import BusquedaForm, vitacoraBusquedas
 from ControlSystem.pComm.scripts import buscar as b
 
 
@@ -50,7 +50,7 @@ def busqueda(request):
         u = int(request.POST['u'])
 
 
-        Vitacora = VitacoraBusquedas(consulta=dato, tipoBusq=tipo)
+        Vitacora = vitacoraBusquedas(consulta=dato, tipoBusq=tipo)
 
         usuario = User.objects.get(id = u)
 
@@ -63,7 +63,11 @@ def busqueda(request):
             buscando = b()
             dajax.clear('#listaResultados', 'innerHTML')
             dajax.script("$('#cargando').hide();")
+            dajax.script("$('#listaResultados').show();")
+            dajax.script("$('#resultado').show();")
             dajax.append('#listaResultados', 'innerHTML', buscando.porCuenta(usuario.sesion_sico, dato))
+            dajax.script("$('#resultado').html($('#r').html());")
+            dajax.script("$('#r').empty();")
         return dajax.calls
 
     else:
