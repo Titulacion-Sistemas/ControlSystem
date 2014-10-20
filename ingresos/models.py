@@ -69,9 +69,13 @@ class medidor(models.Model):
         (240, 240),
     )
 
-    fabrica = models.CharField(max_length=11, verbose_name='Número de fábrica')
-    serie = models.CharField(max_length=9, verbose_name='Numero de serie')
+    fabrica = models.CharField(max_length=11, verbose_name='Número de Fábrica')
+    serie = models.CharField(max_length=9, verbose_name='Numero de Serie')
     marca = models.ForeignKey(marca, verbose_name='Marca')
+    tipo = models.CharField(max_length=15, verbose_name='Tipo de Medidor')
+    digitos = models.PositiveSmallIntegerField(verbose_name='Dígitos')
+    hilos = models.PositiveSmallIntegerField(verbose_name='Hilos')
+    fases = models.PositiveSmallIntegerField(verbose_name='Fases')
     voltaje = models.PositiveSmallIntegerField(choices=VOLT)
     est = models.BooleanField(default=True)
 
@@ -90,6 +94,8 @@ class cliente(models.Model):
     meses = models.PositiveSmallIntegerField(verbose_name='Meses adeudados')
     geocodigo = models.OneToOneField(secuencia, verbose_name='Geocódigo')
     direccion = models.CharField(max_length=50, verbose_name='Dirección')
+    interseccion = models.CharField(max_length=50, verbose_name='Intersección')
+    urbanizacion = models.CharField(max_length=50, verbose_name='Urbanización')
     tipo = models.CharField(max_length=1, choices=PERSONA, default='N')
     estado = models.CharField(max_length=20, verbose_name="Estado")
 

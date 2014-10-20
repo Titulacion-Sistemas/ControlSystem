@@ -36,7 +36,7 @@
                 function ()
                 {
                     var m = '';
-                    $( "#id_tipoBusq").find("option:selected").each
+                    $("#id_tipoBusq").find("option:selected").each
                     (
                         function()
                         {
@@ -78,6 +78,23 @@
             }
         }
 
+        function buscarAjax(tipo, valorBuscado){
+            //$('#id_consulta').val(valorBuscado)
+            envioRecepcionAjax
+            (
+                '{% url 'busqueda' %}',
+                {
+                    'tipo': tipo,
+                    'dato': valorBuscado,
+                    'u': {{ user.id }}
+                }
+            );
+            $('#cargando').show();
+            $('#listaResultados').hide();
+            $('#resultado').hide();
+            return false;
+        }
+
     </script>
 {% endblock %}
 
@@ -88,32 +105,30 @@
     {% endif %}
     <div class="container-fluid">
         <div class="row" >
-            <div class="col-md-4 panel panel-default" >
-                <div class="panel-body">
-                    <form role="form" class="form-group" name="b" method="post" action=""
-                    onsubmit="
-                        envioRecepcionAjax
-                        (
-                            '{% url 'busqueda' %}',
-                            {
-                                'tipo': $('#id_tipoBusq').val(),
-                                'dato': $('#id_consulta').val(),
-                                'u': {{ user.id }}
-                            }
-                        );
-                        $('#cargando').show();
-                        $('#listaResultados').hide();
-                        $('#resultado').hide();
-                        return false;"
-                    >
-                        {% csrf_token %}
-                        {% bootstrap_form form %}
-                        {% buttons %}
-                            <button type="submit" class="btn btn-primary">
-                                {% bootstrap_icon "search" %} Buscar
-                            </button>
-                        {% endbuttons %}
-                    </form>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="panel panel-info">
+                        <div class="panel-body">
+                            <form role="form" class="form-group" name="b" method="post" action=""
+                            onsubmit="return buscarAjax(($('#id_tipoBusq').val()), ($('#id_consulta').val()))"
+                            >
+                                {% csrf_token %}
+                                {% bootstrap_form form %}
+                                {% buttons %}
+                                    <button type="submit" class="btn btn-primary">
+                                        {% bootstrap_icon "search" %} Buscar
+                                    </button>
+                                {% endbuttons %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row hide">
+                    <div class="panel panel-info">
+                        <div class="panel-body">
+
+                        </div>
+                    </div>
                 </div>
             </div>
             <div id="cargando" class="text-center">

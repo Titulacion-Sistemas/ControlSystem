@@ -42,29 +42,25 @@ def buscar(request, tipo):
 def busqueda(request):
     dajax = Dajax()
     if request.method == 'POST':
-
         tipo = int(request.POST['tipo'])
         dato = str(request.POST['dato'])
-        print tipo
-        print dato
         u = int(request.POST['u'])
-
 
         Vitacora = vitacoraBusquedas(consulta=dato, tipoBusq=tipo)
         Vitacora.usuario = User.objects.get(id=u)
         Vitacora.save()
 
         pythoncom.CoInitialize()
-
+        buscando = b(User.objects.get(id=u).sesion_sico)
+        dajax.clear('#listaResultados', 'innerHTML')
+        dajax.script("$('#cargando').hide();")
+        dajax.script("$('#listaResultados').show();")
+        dajax.script("$('#resultado').show();")
         if tipo == 1:
-            buscando = b()
-            dajax.clear('#listaResultados', 'innerHTML')
-            dajax.script("$('#cargando').hide();")
-            dajax.script("$('#listaResultados').show();")
-            dajax.script("$('#resultado').show();")
-            dajax.append('#listaResultados', 'innerHTML', buscando.porCuenta(User.objects.get(id=u).sesion_sico, dato))
-            dajax.script("$('#resultado').html($('#r').html());")
-            dajax.script("$('#r').empty();")
+            dajax.append('#listaResultados', 'innerHTML', buscando.porCuenta(dato))
+
+        dajax.script("$('#resultado').html($('#r').html());")
+        dajax.script("$('#r').empty();")
         return dajax.calls
 
     else:
