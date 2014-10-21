@@ -83,11 +83,7 @@
             envioRecepcionAjax
             (
                 '{% url 'busqueda' %}',
-                {
-                    'tipo': tipo,
-                    'dato': valorBuscado,
-                    'u': {{ user.id }}
-                }
+                $('#b').serialize()
             );
             $('#cargando').show();
             $('#listaResultados').hide();
@@ -109,7 +105,7 @@
                 <div class="row">
                     <div class="panel panel-info">
                         <div class="panel-body">
-                            <form role="form" class="form-group" name="b" method="post" action=""
+                            <form role="form" class="form-group" id="b" name="b" method="post" action=""
                             onsubmit="return buscarAjax(($('#id_tipoBusq').val()), ($('#id_consulta').val()))"
                             >
                                 {% csrf_token %}

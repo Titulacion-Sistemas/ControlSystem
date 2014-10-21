@@ -1,4 +1,5 @@
 # coding=utf-8
+import user
 from django import forms
 from django.contrib.auth.models import User
 from django.db import models
@@ -20,7 +21,7 @@ class vitacoraBusquedas(models.Model):
     fechaHora = models.DateTimeField(auto_now=True)
     consulta = models.CharField(max_length=17, null=False, verbose_name='')
     usuario = models.ForeignKey(User)
-    estadoRetorno = models.BooleanField(default=False)
+    estadoRetorno = models.BooleanField(default=True)
 
     def __str__(self):
         return 'Busqueda por :{0}, ({1})'.format(self.get_TipoBusq_display(), self.consulta)
@@ -28,17 +29,20 @@ class vitacoraBusquedas(models.Model):
 
 #FORMULARIOS
 class BusquedaForm(ModelForm):
+    usuario = forms.ModelChoiceField(queryset=User.objects.all(), widget=forms.HiddenInput())
+    estadoRetorno = forms.BooleanField(widget=forms.HiddenInput())
     class Meta:
         model = vitacoraBusquedas
-        fields = ['tipoBusq', 'consulta']
+        fields = ['usuario', 'tipoBusq', 'consulta', 'estadoRetorno']
 
-    def __init__(self, usuario, *args, **kwargs):
-        super(BusquedaForm, self).__init__(*args, **kwargs)
-        self.usuario = usuario
+    # def __init__(self, usuario=None, *args, **kwargs):
+    #     super(BusquedaForm, self).__init__(*args, **kwargs)
+    #     if usuario is not None:
+    #         self.usuario = usuario
 
-    def save(self, commit=True):
+    def save(self, retorno=True, commit=True):
         vitacoraBusquedas = super(BusquedaForm, self).save(commit=False)
-        vitacoraBusquedas.usuario = self.usuario
+        vitacoraBusquedas.estadoRetorno = retorno
         if commit:
             vitacoraBusquedas.save()
         return vitacoraBusquedas

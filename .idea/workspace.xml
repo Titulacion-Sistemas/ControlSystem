@@ -4,13 +4,13 @@
     <list default="true" id="4a00e047-e965-4656-a541-b5f54dea118e" name="Default" comment="" />
     <ignored path="ControlSystem.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413760597632" ignored="false" />
-    <file path="/models.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413815191096" ignored="false" />
-    <file path="/views.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413782379992" ignored="false" />
+    <file path="/Dummy.txt" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413850349095" ignored="false" />
+    <file path="/models.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413870187728" ignored="false" />
+    <file path="/views.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413870361871" ignored="false" />
     <file path="/scripts.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413814271894" ignored="false" />
     <file path="/porCuenta.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413820020536" ignored="false" />
     <file path="/jhonsson.css" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413787294482" ignored="false" />
-    <file path="/buscar.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413818594635" ignored="false" />
+    <file path="/buscar.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413864356079" ignored="false" />
     <file path="/settings.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1413806258720" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,10 +49,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="porCuenta.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="porCuenta.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ControlSystem/templates/busqueda/porCuenta.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="17" selection-start="1857" selection-end="1857" vertical-scroll-proportion="1.8550984">
+            <state line="61" column="17" selection-start="1857" selection-end="1857" vertical-scroll-proportion="-39.884617">
               <folding>
                 <marker date="1413820035928" expanded="true" signature="3285:3304" placeholder="{...}" />
               </folding>
@@ -64,9 +64,7 @@
         <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/scripts.py">
           <provider selected="true" editor-type-id="text-editor">
             <state line="171" column="22" selection-start="6544" selection-end="6544" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#16#30#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -74,27 +72,25 @@
       <file leaf-file-name="buscar.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ControlSystem/templates/busqueda/buscar.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="97" column="0" selection-start="2639" selection-end="2639" vertical-scroll-proportion="-9.769231">
-              <folding>
-                <element signature="e#4135#4160#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/busquedas/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="66" selection-start="1678" selection-end="1686" vertical-scroll-proportion="0.0">
+            <state line="85" column="35" selection-start="2358" selection-end="2358" vertical-scroll-proportion="7.1923075">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ingresos/models.py">
+      <file leaf-file-name="jhonsson.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/js/jhonsson.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="31" selection-start="705" selection-end="705" vertical-scroll-proportion="0.0">
+            <state line="15" column="12" selection-start="260" selection-end="268" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jquery.ajax.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/js/jquery.ajax.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="189" column="9" selection-start="6317" selection-end="6317" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -103,10 +99,19 @@
       <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/busquedas/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="110" column="34" selection-start="3873" selection-end="3873" vertical-scroll-proportion="0.0">
+            <state line="42" column="43" selection-start="1416" selection-end="1416" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="e#15#39#0" expanded="true" />
+                <element signature="e#15#26#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/busquedas/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="60" column="0" selection-start="1746" selection-end="1746" vertical-scroll-proportion="0.6985816">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -142,12 +147,12 @@
         <option value="C:/Python27/Lib/site-packages/bootstrap3/bootstrap.py" />
         <option value="$PROJECT_DIR$/ingresos/models.py" />
         <option value="$PROJECT_DIR$/static/css/jhonsson.css" />
-        <option value="$PROJECT_DIR$/busquedas/views.py" />
         <option value="$PROJECT_DIR$/ControlSystem/settings.py" />
         <option value="$PROJECT_DIR$/ControlSystem/pComm/scripts.py" />
-        <option value="$PROJECT_DIR$/busquedas/models.py" />
-        <option value="$PROJECT_DIR$/ControlSystem/templates/busqueda/buscar.html" />
         <option value="$PROJECT_DIR$/ControlSystem/templates/busqueda/porCuenta.html" />
+        <option value="$PROJECT_DIR$/ControlSystem/templates/busqueda/buscar.html" />
+        <option value="$PROJECT_DIR$/busquedas/models.py" />
+        <option value="$PROJECT_DIR$/busquedas/views.py" />
       </list>
     </option>
   </component>
@@ -205,6 +210,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -313,21 +319,20 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="vcs.Git" />
     <property name="ChangesBrowser.SHOW_FLATTEN" value="false" />
+    <property name="options.lastSelected" value="vcs.Git" />
+    <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../PracticasDjango/demo" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -438,29 +443,6 @@
       <option name="PARAMETERS" value="" />
       <method />
     </configuration>
-    <configuration default="true" type="tests" factoryName="Unittests">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="ControlSystem" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PUREUNITTEST" value="true" />
-      <option name="PARAMS" value="" />
-      <option name="USE_PARAM" value="false" />
-      <method />
-    </configuration>
     <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -482,6 +464,29 @@
       <option name="runNoReload" value="false" />
       <option name="useCustomRunCommand" value="false" />
       <option name="customRunCommand" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="ControlSystem" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -681,55 +686,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://C:/Python27/Lib/site-packages/django/http/request.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="23" selection-start="1268" selection-end="1268" vertical-scroll-proportion="-2.537205">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usuarios/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="38" selection-start="714" selection-end="718" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Python27/Lib/site-packages/bootstrap3/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Python27/Lib/site-packages/bootstrap3/templates.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Python27/Lib/site-packages/bootstrap3/bootstrap.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="39" selection-start="522" selection-end="522" vertical-scroll-proportion="0.4219858">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usuarios/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="6" selection-start="573" selection-end="573" vertical-scroll-proportion="0.2905983">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/jhonsson.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="18" selection-start="696" selection-end="696" vertical-scroll-proportion="0.8138298">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharm20/system/python_stubs/-762174762/__builtin__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="35" column="11" selection-start="1226" selection-end="1226" vertical-scroll-proportion="0.39361703">
@@ -744,9 +700,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/busquedas/views.py">
+    <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/conexion.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="66" selection-start="1678" selection-end="1686" vertical-scroll-proportion="0.0">
+        <state line="13" column="0" selection-start="510" selection-end="524" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/busqueda/porCuenta.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="17" selection-start="1857" selection-end="1857" vertical-scroll-proportion="-39.884617">
+          <folding>
+            <marker date="1413820035928" expanded="true" signature="3285:3304" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/jquery.dajax.core.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="9" selection-start="9" selection-end="9" vertical-scroll-proportion="-1.0797873">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/jquery-1.11.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="282" column="4" selection-start="7023" selection-end="7023" vertical-scroll-proportion="0.3321234">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/jhonsson.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="12" selection-start="260" selection-end="268" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -758,46 +744,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/busquedas/models.py">
+    <entry file="file://C:/Python27/Lib/site-packages/django/forms/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="34" selection-start="3873" selection-end="3873" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#15#39#0" expanded="true" />
-          </folding>
+        <state line="123" column="8" selection-start="4815" selection-end="4815" vertical-scroll-proportion="0.3321234">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/scripts.py">
+    <entry file="file://$PROJECT_DIR$/usuarios/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="171" column="22" selection-start="6544" selection-end="6544" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#16#30#0" expanded="true" />
-          </folding>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/conexion.py">
+    <entry file="file://$PROJECT_DIR$/usuarios/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="510" selection-end="524" vertical-scroll-proportion="0.0">
+        <state line="22" column="52" selection-start="890" selection-end="915" vertical-scroll-proportion="0.24682395">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/jquery.ajax.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="189" column="9" selection-start="6317" selection-end="6317" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/busqueda/buscar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="97" column="0" selection-start="2639" selection-end="2639" vertical-scroll-proportion="-9.769231">
+        <state line="85" column="35" selection-start="2358" selection-end="2358" vertical-scroll-proportion="7.1923075">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/scripts.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="171" column="22" selection-start="6544" selection-end="6544" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/busquedas/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="43" selection-start="1416" selection-end="1416" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#4135#4160#0" expanded="true" />
+            <element signature="e#15#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/busqueda/porCuenta.html">
+    <entry file="file://$PROJECT_DIR$/busquedas/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="17" selection-start="1857" selection-end="1857" vertical-scroll-proportion="1.8550984">
-          <folding>
-            <marker date="1413820035928" expanded="true" signature="3285:3304" placeholder="{...}" />
-          </folding>
+        <state line="60" column="0" selection-start="1746" selection-end="1746" vertical-scroll-proportion="0.6985816">
+          <folding />
         </state>
       </provider>
     </entry>
