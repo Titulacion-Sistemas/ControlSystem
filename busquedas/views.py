@@ -42,30 +42,30 @@ def buscar(request, tipo):
 def busqueda(request):
     dajax = Dajax()
     if request.method == 'POST':
-
-
-        print request.user.username
         form = BusquedaForm(request.POST)
+
+        dajax.clear('#listaResultados', 'innerHTML')
+        dajax.script("$('#cargando').hide();")
+
         if form.is_valid():
-            tipo = int(form.cleaned_data["tipoBusq"])
+            tipo = str(form.cleaned_data["tipoBusq"])
             dato = str(form.cleaned_data["consulta"])
             u = request.user
             pythoncom.CoInitialize()
             buscando = b(u.sesion_sico)
-            dajax.clear('#listaResultados', 'innerHTML')
-            dajax.script("$('#cargando').hide();")
+
             dajax.script("$('#listaResultados').show();")
             dajax.script("$('#resultado').show();")
-            if tipo == 1:
-                dajax.append('#listaResultados', 'innerHTML', buscando.porCuenta(dato))
-
+            dajax.append('#listaResultados', 'innerHTML', buscando.renderBusqueda(tipo, dato))
             dajax.script("$('#resultado').html($('#r').html());")
             dajax.script("$('#r').empty();")
             form.save()
-
         else:
-            print 'No es valido'
-
+            dajax.append(
+                '#err',
+                'innerHTML',
+                render_to_response('busqueda/error.html', {'errors': dict(form.errors)['__all__']})
+            )
 
         return dajax.calls
 

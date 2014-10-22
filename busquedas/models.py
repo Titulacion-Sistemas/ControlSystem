@@ -19,7 +19,7 @@ class vitacoraBusquedas(models.Model):
 
     tipoBusq = models.CharField(max_length=1, choices=TIPOSBUSQUEDA, default='1', verbose_name='Buscar por ')
     fechaHora = models.DateTimeField(auto_now=True)
-    consulta = models.CharField(max_length=17, null=False, verbose_name='')
+    consulta = models.CharField(max_length=20, null=False, verbose_name='')
     usuario = models.ForeignKey(User)
     estadoRetorno = models.BooleanField(default=True)
 
@@ -31,6 +31,7 @@ class vitacoraBusquedas(models.Model):
 class BusquedaForm(ModelForm):
     usuario = forms.ModelChoiceField(queryset=User.objects.all(), widget=forms.HiddenInput())
     estadoRetorno = forms.BooleanField(widget=forms.HiddenInput())
+
     class Meta:
         model = vitacoraBusquedas
         fields = ['usuario', 'tipoBusq', 'consulta', 'estadoRetorno']
@@ -46,6 +47,47 @@ class BusquedaForm(ModelForm):
         if commit:
             vitacoraBusquedas.save()
         return vitacoraBusquedas
+
+    def clean(self):
+        cleaned_data = super(BusquedaForm, self).clean()
+        tb = cleaned_data.get("tipoBusq")
+        c = cleaned_data.get("consulta")
+
+        if c and tb:
+            # Only do something if both fields are valid so far.
+            if tb == '1':
+                if not c.isdigit() or len(c) > 7:
+                    raise forms.ValidationError("Error, Cuenta ingresada no válida.")
+
+            if tb == '2':
+                if not c.isdigit() or len(c) > 11:
+                    raise forms.ValidationError("Error, Número de medidor ingresado no válido.")
+
+            if tb == '3':
+                if c.isdigit():
+                    raise forms.ValidationError("Error, Nombre de ciente no valido.")
+
+            if tb == '4':
+                sp = c.split('.')
+                if len(sp) != 5 \
+                    or (not sp[0].isdigit()) \
+                    or (not sp[1].isdigit()) \
+                    or (not sp[2].isdigit()) \
+                    or (not sp[3].isdigit()) \
+                    or (not sp[4].isdigit()):
+
+                    raise forms.ValidationError("Error, Geocódigo incorrecto.")
+
+                elif len(sp[0]) > 2 or len(sp[0]) < 1 \
+                    or len(sp[1]) > 2 or len(sp[1]) < 1 \
+                    or len(sp[2]) > 2 or len(sp[2]) < 1 \
+                    or len(sp[3]) > 3 or len(sp[3]) < 1 \
+                    or len(sp[4]) > 7 or len(sp[4]) < 1:
+
+                    raise forms.ValidationError("Error, Geocódigo no válido.")
+
+                # Always return the full collection of cleaned data.
+        return cleaned_data
 
 
 class ClienteBuscado(ModelForm):
@@ -68,30 +110,31 @@ class ClienteBuscado(ModelForm):
         ]
 
         widgets = {
-            'cuenta':       forms.TextInput(attrs={'readonly': True}),
-            'nombre':       forms.TextInput(attrs={'readonly': True}),
-            'ci_ruc':       forms.TextInput(attrs={'readonly': True}),
-            'direccion':    forms.TextInput(attrs={'readonly': True}),
+            'cuenta': forms.TextInput(attrs={'readonly': True}),
+            'nombre': forms.TextInput(attrs={'readonly': True}),
+            'ci_ruc': forms.TextInput(attrs={'readonly': True}),
+            'direccion': forms.TextInput(attrs={'readonly': True}),
             'interseccion': forms.TextInput(attrs={'readonly': True}),
             'urbanizacion': forms.TextInput(attrs={'readonly': True}),
-            'estado':       forms.TextInput(attrs={'readonly': True}),
-            'deuda':        forms.TextInput(attrs={'readonly': True}),
-            'meses':        forms.TextInput(attrs={'readonly': True}),
+            'estado': forms.TextInput(attrs={'readonly': True}),
+            'deuda': forms.TextInput(attrs={'readonly': True}),
+            'meses': forms.TextInput(attrs={'readonly': True}),
         }
 
     def __init__(self, geo, *args, **kwargs):
         super(ClienteBuscado, self).__init__(*args, **kwargs)
         self.fields['geo'].initial = str(geo)
 
+
 class MedidorBuscado(ModelForm):
     marc = forms.CharField(label='Marca', widget=forms.TextInput(attrs={'readonly': True}))
     tecnologia = forms.CharField(label='Tecnología', widget=forms.TextInput(attrs={'readonly': True}))
     tension = forms.CharField(label='Tensión', widget=forms.TextInput(attrs={'readonly': True}))
     amperaje = forms.CharField(label='Amperaje', widget=forms.TextInput(attrs={'readonly': True}))
-    fi = forms.CharField(label='Fecha de Instalación', widget=forms.TextInput(attrs={'readonly': True}))
-    fd = forms.CharField(label='Fecha de Desinstalación', widget=forms.TextInput(attrs={'readonly': True}))
-    li = forms.CharField(label='Lectura de Instalación', widget=forms.TextInput(attrs={'readonly': True}))
-    ld = forms.CharField(label='Lectura de Desinstalación', widget=forms.TextInput(attrs={'readonly': True}))
+    fi = forms.CharField(label='Fecha/Inst.', widget=forms.TextInput(attrs={'readonly': True}))
+    fd = forms.CharField(label='Fecha/Desinst.', widget=forms.TextInput(attrs={'readonly': True}))
+    li = forms.CharField(label='Lectura/Inst.', widget=forms.TextInput(attrs={'readonly': True}))
+    ld = forms.CharField(label='Lectura/Desinst.', widget=forms.TextInput(attrs={'readonly': True}))
 
     class Meta:
         model = medidor
@@ -112,20 +155,20 @@ class MedidorBuscado(ModelForm):
         ]
 
         widgets = {
-            'fabrica':      forms.TextInput(attrs={'readonly': True}),
-            'serie':        forms.TextInput(attrs={'readonly': True}),
-            'marc':         forms.TextInput(attrs={'readonly': True}),
-            'tipo':         forms.TextInput(attrs={'readonly': True}),
-            'tecnologia':   forms.TextInput(attrs={'readonly': True}),
-            'tension':      forms.TextInput(attrs={'readonly': True}),
-            'amperaje':     forms.TextInput(attrs={'readonly': True}),
-            'fases':        forms.TextInput(attrs={'readonly': True}),
-            'hilos':        forms.TextInput(attrs={'readonly': True}),
-            'digitos':      forms.TextInput(attrs={'readonly': True}),
-            'fi':           forms.TextInput(attrs={'readonly': True}),
-            'li':           forms.TextInput(attrs={'readonly': True}),
-            'fd':           forms.TextInput(attrs={'readonly': True}),
-            'ld':           forms.TextInput(attrs={'readonly': True}),
+            'fabrica': forms.TextInput(attrs={'readonly': True}),
+            'serie': forms.TextInput(attrs={'readonly': True}),
+            'marc': forms.TextInput(attrs={'readonly': True}),
+            'tipo': forms.TextInput(attrs={'readonly': True}),
+            'tecnologia': forms.TextInput(attrs={'readonly': True}),
+            'tension': forms.TextInput(attrs={'readonly': True}),
+            'amperaje': forms.TextInput(attrs={'readonly': True}),
+            'fases': forms.TextInput(attrs={'readonly': True}),
+            'hilos': forms.TextInput(attrs={'readonly': True}),
+            'digitos': forms.TextInput(attrs={'readonly': True}),
+            'fi': forms.TextInput(attrs={'readonly': True}),
+            'li': forms.TextInput(attrs={'readonly': True}),
+            'fd': forms.TextInput(attrs={'readonly': True}),
+            'ld': forms.TextInput(attrs={'readonly': True}),
         }
 
     def __init__(self, marc, tecnologia, tension, amperaje, fi, fd, li, ld, *args, **kwargs):

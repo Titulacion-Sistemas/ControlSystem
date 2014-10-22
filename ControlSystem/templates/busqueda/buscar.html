@@ -79,7 +79,8 @@
         }
 
         function buscarAjax(tipo, valorBuscado){
-            //$('#id_consulta').val(valorBuscado)
+            $('#id_consulta').val(valorBuscado);
+            $("#id_tipoBusq").val(tipo);
             envioRecepcionAjax
             (
                 '{% url 'busqueda' %}',
@@ -100,30 +101,23 @@
         <p>{{ form.errors }}</p>
     {% endif %}
     <div class="container-fluid">
-        <div class="row" >
-            <div class="col-md-4">
-                <div class="row">
-                    <div class="panel panel-info">
-                        <div class="panel-body">
-                            <form role="form" class="form-group" id="b" name="b" method="post" action=""
-                            onsubmit="return buscarAjax(($('#id_tipoBusq').val()), ($('#id_consulta').val()))"
-                            >
-                                {% csrf_token %}
-                                {% bootstrap_form form %}
-                                {% buttons %}
-                                    <button type="submit" class="btn btn-primary">
-                                        {% bootstrap_icon "search" %} Buscar
-                                    </button>
-                                {% endbuttons %}
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="row hide">
-                    <div class="panel panel-info">
-                        <div class="panel-body">
+        <div class="row">
+            <div class="vcenter col-md-4">
+                <div class="panel panel-info">
+                    <div class="panel-body">
+                        <form role="form" class="form-group" id="b" name="b" method="post" action=""
+                        onsubmit="return buscarAjax(($('#id_tipoBusq').val()), ($('#id_consulta').val()))"
+                        >
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <br><div id="err"></div>
+                            {% buttons %}
+                                <button type="submit" class="btn btn-primary">
+                                    {% bootstrap_icon "search" %} Buscar
+                                </button>
+                            {% endbuttons %}
 
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -131,6 +125,9 @@
                 <img src="{% static 'cargando.gif' %}" height="100px" width="100px" style="margin-top: 40px;">
             </div>
             <div id="listaResultados" class="col-md-8"></div>
+        </div>
+
+        <div class="row">
             <div id="resultado" class="col-md-12"></div>
         </div>
     </div>
@@ -141,5 +138,6 @@
     <script>
         seleccion();
         $('#cargando').hide();
+        //$('#err').hide();
     </script>
 {% endblock %}
