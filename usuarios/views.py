@@ -55,6 +55,7 @@ def main(request):
     #return render_to_response('main.html', {}, context_instance=RequestContext(request))
     return ingreso(request)
 
+@login_required()
 def salir(request):
     pythoncom.CoInitialize()
     c = manejadorDeConexion()
@@ -67,7 +68,10 @@ def salir(request):
 def ingreso(request):
     error = None
     try:
-        logout(request)
+        if request.user.sesion_sico:
+            return home(request)
+        else:
+            salir(request)
     except:
         pass
     username = password = ''

@@ -130,16 +130,17 @@ class buscar:
         coincidencias = []
 
         for i in range(10, 21):
-            coincidencias.append(
-                cliente(
-                    id=i - 9,
-                    cuenta=sesion.autECLPS.GetText(i, 5, 7),
-                    nombre=sesion.autECLPS.GetText(i, 13, 23),
-                    direccion=sesion.autECLPS.GetText(i, 37, 16),
-                    deuda=sesion.autECLPS.GetText(i, 59, 8),
-                    meses=sesion.autECLPS.GetText(i, 68, 4)
+            if sesion.autECLPS.GetText(i, 5, 7).strip() != "":
+                coincidencias.append(
+                    cliente(
+                        id=i - 9,
+                        cuenta=sesion.autECLPS.GetText(i, 5, 7),
+                        nombre=sesion.autECLPS.GetText(i, 13, 23),
+                        direccion=sesion.autECLPS.GetText(i, 37, 16),
+                        deuda=sesion.autECLPS.GetText(i, 59, 8),
+                        meses=sesion.autECLPS.GetText(i, 68, 4)
+                    )
                 )
-            )
 
         sesion.autECLPS.SendKeys('1', 10, 3)
         for j in range(4):
@@ -200,17 +201,18 @@ class buscar:
         coincidencias = []
 
         for i in range(7, 18):
-            coincidencias.append(
-                cliente(
-                    id=i - 9,
-                    urbanizacion=sesion.autECLPS.GetText(i, 8, 11),
-                    estado=sesion.autECLPS.GetText(i, 20, 3),
-                    cuenta=sesion.autECLPS.GetText(i, 24, 7),
-                    nombre=sesion.autECLPS.GetText(i, 32, 25),
-                    direccion=sesion.autECLPS.GetText(i, 58, 20)
+            if sesion.autECLPS.GetText(i, 8, 11).strip() != "":
+                coincidencias.append(
+                    cliente(
+                        id=i - 9,
+                        urbanizacion=sesion.autECLPS.GetText(i, 8, 11),
+                        estado=sesion.autECLPS.GetText(i, 20, 3),
+                        cuenta=sesion.autECLPS.GetText(i, 24, 7),
+                        nombre=sesion.autECLPS.GetText(i, 32, 25),
+                        direccion=sesion.autECLPS.GetText(i, 58, 20)
 
+                    )
                 )
-            )
 
         sesion.autECLPS.SendKeys('2', 7, 4)
         #print 'se pulsoel 2'
@@ -274,16 +276,17 @@ class buscar:
         coincidencias = []
 
         for i in range(9, 21):
-            coincidencias.append(
-                cliente(
-                    id=i - 9,
-                    nombre=sesion.autECLPS.GetText(i, 5, 22),
-                    direccion=sesion.autECLPS.GetText(i, 28, 17),
-                    cuenta=sesion.autECLPS.GetText(i, 46, 7),
-                    deuda=sesion.autECLPS.GetText(i, 59, 8),
-                    meses=sesion.autECLPS.GetText(i, 68, 3)
+            if sesion.autECLPS.GetText(i, 5, 22).strip() != "":
+                coincidencias.append(
+                    cliente(
+                        id=i - 9,
+                        nombre=sesion.autECLPS.GetText(i, 5, 22),
+                        direccion=sesion.autECLPS.GetText(i, 28, 17),
+                        cuenta=sesion.autECLPS.GetText(i, 46, 7),
+                        deuda=sesion.autECLPS.GetText(i, 59, 8),
+                        meses=sesion.autECLPS.GetText(i, 68, 3)
+                    )
                 )
-            )
 
         sesion.autECLPS.SendKeys('1', 9, 3)
         for j in range(4):
@@ -366,21 +369,22 @@ class buscar:
         sesion.autECLPS.SendKeys('[enter]')
         sesion.autECLOIA.WaitForAppAvailable()
         sesion.autECLOIA.WaitForInputReady()
-        ruta=str(sesion.autECLPS.GetText(4, 16, 13)).strip()
+        ruta = str(sesion.autECLPS.GetText(4, 16, 13)).strip()
         coincidencias = []
 
         for i in range(9, 21):
-            coincidencias.append(
-                cliente(
-                    id=i - 9,
-                    interseccion=ruta+'.'+str(sesion.autECLPS.GetText(i, 5, 7)).strip(),
-                    cuenta=sesion.autECLPS.GetText(i, 13, 7),
-                    nombre=sesion.autECLPS.GetText(i, 21, 16),
-                    direccion=sesion.autECLPS.GetText(i, 38, 14),
-                    urbanizacion=sesion.autECLPS.GetText(i, 53, 10),
-                    deuda=sesion.autECLPS.GetText(i, 68, 8)
+            if sesion.autECLPS.GetText(i, 5, 7).strip() != "":
+                coincidencias.append(
+                    cliente(
+                        id=i - 9,
+                        interseccion=ruta+'.'+str(sesion.autECLPS.GetText(i, 5, 7)).strip(),
+                        cuenta=sesion.autECLPS.GetText(i, 13, 7),
+                        nombre=sesion.autECLPS.GetText(i, 21, 16),
+                        direccion=sesion.autECLPS.GetText(i, 38, 14),
+                        urbanizacion=sesion.autECLPS.GetText(i, 53, 10),
+                        deuda=sesion.autECLPS.GetText(i, 68, 8)
+                    )
                 )
-            )
 
         sesion.autECLPS.SendKeys('1', 9, 3)
         for j in range(4):

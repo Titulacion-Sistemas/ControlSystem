@@ -1,16 +1,13 @@
 from dajax.core import Dajax
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
-
-# Create your views here.
 from django.template import RequestContext
 from django_ajax.decorators import ajax
 import pythoncom
-from busquedas.models import BusquedaForm, vitacoraBusquedas
+from busquedas.models import BusquedaForm
 from ControlSystem.pComm.scripts import buscar as b
 
-
+# Create your views here.
 @login_required()
 def cuenta(request):
     return buscar(request, 1)

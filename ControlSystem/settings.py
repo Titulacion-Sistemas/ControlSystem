@@ -51,7 +51,14 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'usuarios.middleware.AutoLogout',
 )
+
+#Handle session is not Json Serializable
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+# Auto logout delay in minutes
+AUTO_LOGOUT_DELAY = 10 #equivalent to 10 minutes
 
 ROOT_URLCONF = 'ControlSystem.urls'
 
