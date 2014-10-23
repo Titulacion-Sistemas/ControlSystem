@@ -57,13 +57,16 @@ def main(request):
 
 @login_required()
 def salir(request):
-    pythoncom.CoInitialize()
-    c = manejadorDeConexion()
-    c.closeProgram(request.user.sesion_sico)
     request.user.sesion_sico = ''
+    cerrarSico(request.user.sesion_sico)
     request.user.save()
     logout(request)
     return HttpResponseRedirect('/login')
+
+def cerrarSico(sesionAct):
+    pythoncom.CoInitialize()
+    c = manejadorDeConexion()
+    c.closeProgram(sesionAct)
 
 
 def ingreso(request):
@@ -100,22 +103,23 @@ def ingreso(request):
 
 @login_required()
 def home(request):
-    return render_to_response('usuarios/home.html', hom(request), context_instance=RequestContext(request))
-
-
-def hom(request):
     conn = ''
     if not request.user.sesion_sico:
-        pythoncom.CoInitialize()
-        conn = manejadorDeConexion()
-        conn.openSession(usuario=request.user.usuario_sico, contrasenia=request.user.contrasenia_sico)
+        conn = integracion(request.user.usuario_sico, request.user.contrasenia_sico)
         request.user.sesion_sico = conn.activeConnection
         request.user.save()
+
     data = {
         'user': request.user,
         'conn': conn
     }
-    return data
+    return render_to_response('usuarios/home.html', data, context_instance=RequestContext(request))
+
+def integracion(u, c):
+    pythoncom.CoInitialize()
+    conn = manejadorDeConexion()
+    conn.openSession(usuario=u, contrasenia=c)
+    return conn
 
 
 @ajax
