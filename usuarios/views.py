@@ -50,20 +50,21 @@ def signup(request):
     return render_to_response('signup.html', data, context_instance=RequestContext(request))
 
 
-
 def main(request):
     #return render_to_response('main.html', {}, context_instance=RequestContext(request))
     return ingreso(request)
+
 
 @login_required()
 def salir(request):
     pythoncom.CoInitialize()
     c = manejadorDeConexion()
     c.closeProgram(request.user.sesion_sico)
-    request.user.sesion_sico=''
+    request.user.sesion_sico = ''
     request.user.save()
     logout(request)
     return HttpResponseRedirect('/login')
+
 
 def ingreso(request):
     error = None
@@ -96,8 +97,13 @@ def ingreso(request):
 
     return render_to_response('usuarios/login.html', {'errors': error}, context_instance=RequestContext(request))
 
+
 @login_required()
 def home(request):
+    return render_to_response('usuarios/home.html', hom(request), context_instance=RequestContext(request))
+
+
+def hom(request):
     conn = ''
     if not request.user.sesion_sico:
         pythoncom.CoInitialize()
@@ -105,8 +111,12 @@ def home(request):
         conn.openSession(usuario=request.user.usuario_sico, contrasenia=request.user.contrasenia_sico)
         request.user.sesion_sico = conn.activeConnection
         request.user.save()
+    data = {
+        'user': request.user,
+        'conn': conn
+    }
+    return data
 
-    return render_to_response('usuarios/home.html', {'user': request.user, 'conn': conn}, context_instance=RequestContext(request))
 
 @ajax
 def multiply(request):

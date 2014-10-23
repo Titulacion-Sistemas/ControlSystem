@@ -1,11 +1,7 @@
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
-from django.contrib.auth.views import logout
-from busquedas.views import busqueda
 from usuarios.views import multiply
-
-from django.contrib.auth.views import login
 
 admin.autodiscover()
 
@@ -13,6 +9,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'ControlSystem.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
+
 
     url(r'^$', 'usuarios.views.main', name='main'),
     url(r'^admin/', include(admin.site.urls)),
@@ -26,4 +23,10 @@ urlpatterns = patterns('',
     url(r'^busqueda$', 'busquedas.views.busqueda', name='busqueda'),
     url(r'^home$', 'usuarios.views.home', name='home'),
     url(r'^multiply', multiply),
+
+    #Servicios Web
+    (r"^hello_world/", 'serviciosWeb.views.hello_world_service'),
+    (r'^hello_world/service.wsdl', 'serviciosWeb.views.hello_world_service'),
+    (r'^sw/usuario', 'serviciosWeb.views.sw_usuario'),
+    (r'^sw/usuario.wsdl', 'serviciosWeb.views.sw_usuario'),
 )
