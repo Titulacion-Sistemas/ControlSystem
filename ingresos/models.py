@@ -80,7 +80,7 @@ class medidor(models.Model):
     est = models.BooleanField(default=True)
 
     def __unicode__(self):
-        return self.fabrica
+        return '%s - %s' % (self.fabrica, self.serie)
 
 class cliente(models.Model):
     PERSONA = (

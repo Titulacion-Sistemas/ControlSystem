@@ -1,3 +1,5 @@
+import pythoncom
+
 __author__ = 'Jhonsson'
 from time import sleep
 import win32com
@@ -6,6 +8,7 @@ import win32com.client
 
 class manejadorDeConexion:
     def __init__(self):
+        pythoncom.CoInitialize()
         self.PCommConnMgr = win32com.client.Dispatch('PCOMM.autECLConnMgr')
         self.connList = self.PCommConnMgr.autECLConnList
         self.activeSession = None
@@ -91,7 +94,8 @@ class manejadorDeConexion:
 
 
     def closeProgram(self, connection):
-        if not connection: connection = self.activeConnection
+        if not connection:
+            connection = self.activeConnection
         try:
             print "Cerrando el Programa, Sesion: {0}".format(connection)
             self.setActiveSession(connection)

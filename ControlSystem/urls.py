@@ -27,6 +27,8 @@ urlpatterns = patterns('',
     #Servicios Web
     (r"^hello_world/", 'serviciosWeb.views.hello_world_service'),
     (r'^hello_world/service.wsdl', 'serviciosWeb.views.hello_world_service'),
-    (r'^sw/usuario', 'serviciosWeb.views.sw_usuario'),
-    (r'^sw/usuario.wsdl', 'serviciosWeb.views.sw_usuario'),
+    (r'^sw/usuarios', 'serviciosWeb.views.sw_usuarios'),
+    (r'^sw/usuarios.wsdl', 'serviciosWeb.views.sw_usuarios'),
+    (r'^sw/busquedas', 'serviciosWeb.views.sw_busquedas'),
+    (r'^sw/busquedas.wsdl', 'serviciosWeb.views.sw_busquedas'),
 )

@@ -36,11 +36,6 @@ class BusquedaForm(ModelForm):
         model = vitacoraBusquedas
         fields = ['usuario', 'tipoBusq', 'consulta', 'estadoRetorno']
 
-    # def __init__(self, usuario=None, *args, **kwargs):
-    #     super(BusquedaForm, self).__init__(*args, **kwargs)
-    #     if usuario is not None:
-    #         self.usuario = usuario
-
     def save(self, retorno=True, commit=True):
         vitacoraBusquedas = super(BusquedaForm, self).save(commit=False)
         vitacoraBusquedas.estadoRetorno = retorno

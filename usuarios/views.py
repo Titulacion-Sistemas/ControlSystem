@@ -57,14 +57,13 @@ def main(request):
 
 @login_required()
 def salir(request):
-    request.user.sesion_sico = ''
     cerrarSico(request.user.sesion_sico)
+    request.user.sesion_sico = ''
     request.user.save()
     logout(request)
     return HttpResponseRedirect('/login')
 
 def cerrarSico(sesionAct):
-    pythoncom.CoInitialize()
     c = manejadorDeConexion()
     c.closeProgram(sesionAct)
 
