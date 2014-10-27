@@ -20,6 +20,9 @@ class canton(models.Model):
     def __unicode__(self):
         return self.descirpcion
 
+    class Meta:
+        verbose_name_plural="Cantones"
+
 
 class sector(models.Model):
     num = models.PositiveSmallIntegerField(max_length=2)
@@ -28,6 +31,9 @@ class sector(models.Model):
 
     def __unicode__(self):
         return self.descirpcion
+
+    class Meta:
+        verbose_name_plural="Sectores"
 
 
 class ruta(models.Model):
@@ -82,6 +88,9 @@ class medidor(models.Model):
     def __unicode__(self):
         return '%s - %s' % (self.fabrica, self.serie)
 
+    class Meta:
+        verbose_name_plural="Medidores"
+
 class cliente(models.Model):
     PERSONA = (
         ('N', 'Persona Natural'),
@@ -113,3 +122,7 @@ class detalleClienteMedidor(models.Model):
 
     def __unicode__(self):
         return '%s - %s' % (self.cliente, self.medidor)
+
+    class Meta:
+        verbose_name_plural="Detalles Cliente-Medidor"
+        verbose_name='Detalle Cliente-Medidor'

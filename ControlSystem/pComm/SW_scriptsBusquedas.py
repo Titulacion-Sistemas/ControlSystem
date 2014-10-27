@@ -1,11 +1,7 @@
 # coding=utf-8
 
 import decimal
-from django.shortcuts import render_to_response
-import pythoncom
 from ControlSystem.pComm.conexion import manejadorDeConexion
-from busquedas.models import ClienteBuscado, MedidorBuscado
-from ingresos.models import cliente, secuencia, ruta, sector, canton, provincia, medidor
 
 
 def llenarCliente(sesion):
@@ -30,7 +26,7 @@ def llenarCliente(sesion):
             )
         )
     )
-        #print(cli.geocodigo)
+    #print(cli.geocodigo)
     sesion.autECLPS.SendKeys('[pf2]')
     sesion.autECLOIA.WaitForAppAvailable()
     sesion.autECLOIA.WaitForInputReady()
@@ -151,14 +147,11 @@ class buscar:
             sesion.autECLOIA.WaitForInputReady()
             titulo = sesion.autECLPS.GetText(9, 16, 20)
 
-
-        data = {
-            'cClientes': coincidencias,
-            'formCliente': cliente,
-            'cMedidores': medidores,
-        }
-
-        return data
+        return [
+            coincidencias,
+            cliente,
+            medidores
+        ]
 
     #busqueda por medidor
     def porMedidor(self, medidor):
@@ -221,13 +214,11 @@ class buscar:
             sesion.autECLOIA.WaitForInputReady()
             titulo = sesion.autECLPS.GetText(9, 16, 20)
 
-        data = {
-            'cClientes': coincidencias,
-            'formCliente': cliente,
-            'cMedidores': medidores,
-        }
-
-        return data
+        return [
+            coincidencias,
+            cliente,
+            medidores
+        ]
 
 
     #busqueda por nombre
@@ -283,13 +274,11 @@ class buscar:
             sesion.autECLOIA.WaitForInputReady()
             titulo = sesion.autECLPS.GetText(9, 16, 20)
 
-        data = {
-            'cClientes': coincidencias,
-            'formCliente': cliente,
-            'cMedidores': medidores,
-        }
-
-        return data
+        return [
+            coincidencias,
+            cliente,
+            medidores
+        ]
 
 
     #busqueda por ruta de lectura
@@ -374,13 +363,11 @@ class buscar:
             sesion.autECLOIA.WaitForInputReady()
             titulo = sesion.autECLPS.GetText(9, 16, 20)
 
-        data = {
-            'cClientes': coincidencias,
-            'formCliente': cliente,
-            'cMedidores': medidores,
-        }
-
-        return data
+        return [
+            coincidencias,
+            cliente,
+            medidores
+        ]
 
     def busquedaIntegrada(self, tipo, data):
         operaciones = {
@@ -389,5 +376,4 @@ class buscar:
             '3': self.porNombre,
             '4': self.porGeocodigo
         }
-
         return operaciones[str(tipo)](data)

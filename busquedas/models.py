@@ -16,7 +16,6 @@ class vitacoraBusquedas(models.Model):
         ('3', 'Nombre'),
         ('4', 'Geocodigo'),
     )
-
     tipoBusq = models.CharField(max_length=1, choices=TIPOSBUSQUEDA, default='1', verbose_name='Buscar por ')
     fechaHora = models.DateTimeField(auto_now=True)
     consulta = models.CharField(max_length=20, null=False, verbose_name='')
@@ -25,6 +24,10 @@ class vitacoraBusquedas(models.Model):
 
     def __str__(self):
         return 'Busqueda por :{0}, ({1})'.format(self.get_TipoBusq_display(), self.consulta)
+
+    class Meta:
+        verbose_name_plural="Búsquedas Realizadas"
+        verbose_name="Registro de Búsqueda"
 
 
 #FORMULARIOS
