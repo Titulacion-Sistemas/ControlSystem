@@ -1,5 +1,6 @@
 {% extends "usuarios/base.html" %}
-
+{% load bootstrap3 %}
+{% load static %}
 
 {% block title %}
     Acceso al Sistema
@@ -20,19 +21,23 @@
             </div>
             <div class="panel-body">
                 <div class="form-row control-group">
-                    Nombre de usuario:
+                    {{ f.usuario.label }}:
                     <div class="controls">
-                        <input type="text" class="form-control" id="username" name="username">
+                        {% bootstrap_field f.usuario layout='inline' %}
                     </div>
                 </div>
-                <br>
                 <div class="form-row control-group">
-                    Contrase&#241;a
+                    {{ f.clave.label }}:
                     <div class="controls">
-                        <input type="password" class="form-control" name="password" id="password">
+                        {% bootstrap_field f.clave layout='inline' %}
                     </div>
                 </div>
-                <br>
+                <div class="form-row control-group">
+                    {{ f.sico.label }}:
+                    <div class="controls">
+                        {% bootstrap_field f.sico layout='inline' %}
+                    </div>
+                </div>
                 <div class="form-row submit-row">
                 <input type="submit" class="btn btn-info" value="Ingresar"/>
                 </div>

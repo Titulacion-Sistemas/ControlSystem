@@ -8,9 +8,8 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django_ajax.decorators import ajax
-import pythoncom
 from ControlSystem.pComm.conexion import manejadorDeConexion
-from usuarios.models import SignUpForm
+from usuarios.models import SignUpForm, LogIn, usuarioSico
 
 # Create your views here.
 
@@ -25,8 +24,8 @@ def signup(request):
             email = form.cleaned_data["email"]
             first_name = form.cleaned_data["first_name"]
             last_name = form.cleaned_data["last_name"]
-            usuario_sico = form.cleaned_data["usuario_sico"]
-            contrasenia_sico = form.cleaned_data["contrasenia_sico"]
+            #usuario_sico = form.cleaned_data["usuario_sico"]
+            #contrasenia_sico = form.cleaned_data["contrasenia_sico"]
 
             # At this point, user is a User object that has already been saved
             # to the database. You can continue to change its attributes
@@ -34,8 +33,8 @@ def signup(request):
             user = User.objects.create_user(username, email, password)
             user.first_name = first_name
             user.last_name = last_name
-            user.usuario_sico = usuario_sico
-            user.contrasenia_sico = contrasenia_sico
+            #user.usuario_sico = usuario_sico
+            #user.contrasenia_sico = contrasenia_sico
 
             # Save new user attributes
             user.save()
@@ -77,45 +76,45 @@ def ingreso(request):
             salir(request)
     except:
         pass
-    username = password = ''
     if request.POST:
-        username = request.POST['username']
-        password = request.POST['password']
+        form = LogIn(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["usuario"]
+            password = form.cleaned_data["clave"]
+            contrato = form.cleaned_data["sico"]
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    if user.sesion_sico:
+                        error = "El Usuario especificado ya esta en uso."
+                        try:
+                            logout(request)
+                        except:
+                            pass
+                    else:
+                        u = usuarioSico.objects.get(user=user, contrato=contrato)
+                        print contrato
+                        if isinstance(u, usuarioSico):
+                            conn = integracion(u.nombre, u.clave)
+                            user.sesion_sico = conn.activeConnection
+                            user.save()
+                            login(request, user)
+                            return HttpResponseRedirect('/home')
+                        else:
+                            error='El Usuario Especificado no cuenta con permisos necesarios para acceder al contarto';
+            elif username and password:
+                error = "Su Usuario o Contraseña no son correctos, Intentelo nuevamente."
 
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                if user.sesion_sico:
-                    error = "El Usuario especificado ya esta en uso."
-                    try:
-                        logout(request)
-                    except:
-                        pass
-                else:
-                    login(request, user)
-                    return HttpResponseRedirect('/home')
-        elif username and password:
-            error = "Su Usuario o Contraseña no son correctos, Intentelo nuevamente."
+    form = LogIn()
 
-    return render_to_response('usuarios/login.html', {'errors': error}, context_instance=RequestContext(request))
+    return render_to_response('usuarios/login.html', {'f': form, 'errors': error}, context_instance=RequestContext(request))
 
 
 @login_required()
 def home(request):
-    conn = ''
-    if not request.user.sesion_sico:
-        conn = integracion(request.user.usuario_sico, request.user.contrasenia_sico)
-        request.user.sesion_sico = conn.activeConnection
-        request.user.save()
-
-    data = {
-        'user': request.user,
-        'conn': conn
-    }
-    return render_to_response('usuarios/home.html', data, context_instance=RequestContext(request))
+    return render_to_response('usuarios/home.html', {}, context_instance=RequestContext(request))
 
 def integracion(u, c):
-    pythoncom.CoInitialize()
     conn = manejadorDeConexion()
     conn.openSession(usuario=u, contrasenia=c)
     return conn
