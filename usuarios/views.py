@@ -101,7 +101,7 @@ def ingreso(request):
                             login(request, user)
                             return HttpResponseRedirect('/home')
                         else:
-                            error='El Usuario Especificado no cuenta con permisos necesarios para acceder al contarto';
+                            error = 'El Usuario Especificado no cuenta con permisos necesarios para acceder al contarto'
             elif username and password:
                 error = "Su Usuario o Contraseña no son correctos, Intentelo nuevamente."
 
@@ -113,6 +113,7 @@ def ingreso(request):
 @login_required()
 def home(request):
     return render_to_response('usuarios/home.html', {}, context_instance=RequestContext(request))
+
 
 def integracion(u, c):
     conn = manejadorDeConexion()

@@ -7,7 +7,7 @@ from django.db import models
 
 class contrato(models.Model):
     num = models.CharField(max_length=10, primary_key=True, verbose_name='Número de Contrato')
-    descripcion = models.CharField(max_length=100, verbose_name='Descripción')
+    descripcion = models.CharField(max_length=150, verbose_name='Descripción')
     codigoInstalador = models.PositiveSmallIntegerField(verbose_name='Código de Instalador')
     inicioVigencia = models.DateField(verbose_name='Vigente Desde')
     finalVigencia = models.DateField(verbose_name='Vigente Hasta')
@@ -19,6 +19,7 @@ class usuarioSico(models.Model):
     nombre = models.CharField(max_length=10, verbose_name='Nombre de Usuario en Sico')
     clave = models.CharField(max_length=10, verbose_name='Contraseña en Sico')
     contrato = models.ForeignKey(contrato)
+
     def __unicode__(self):
         return '%s - %s' % (self.nombre, self.contrato.num)
 
@@ -58,4 +59,8 @@ class LogIn(forms.Form):
         label='Contraseña',
         widget=forms.TextInput(attrs={'placeholder': 'Escriba su contraseña'})
     )
-    sico = forms.ModelChoiceField(queryset=contrato.objects.all(), initial=contrato.objects.first().num, label='Contrato Nro.')
+    sico = forms.ModelChoiceField(
+        queryset=contrato.objects.all(),
+        #initial=contrato.objects.first().num,
+        label='Contrato Nro.'
+    )
