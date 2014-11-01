@@ -1,5 +1,6 @@
 # coding=utf-8
 # Create your views here.
+import datetime
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from soaplib.serializers import primitive
@@ -9,6 +10,7 @@ from ControlSystem.pComm.scriptsBusquedas import buscar
 from ControlSystem.pComm.SW_scriptsBusquedas import buscar as SW_buscar
 from busquedas.models import vitacoraBusquedas
 from handler import DjangoSoapApp
+from usuarios.models import usuarioSico, contrato
 from usuarios.views import integracion, cerrarSico
 
 #servicio web de ejemplo
@@ -25,8 +27,17 @@ hello_world_service = DjangoSoapApp([HelloWorldService], __name__)
 
 
 class SW_Usuarios(DefinitionBase):
-    @rpc(primitive.String, primitive.String, _returns=Array(primitive.String))
-    def login(self, u, p):
+
+    @rpc(_returns=Array(Array(primitive.String)))
+    def getContratos(self):
+        r = contrato.objects.filter(finalVigencia__gte=datetime.date.today())
+        m=[[]]
+        for cont in r:
+            m.append([cont.num, cont.zonas])
+        return m
+
+    @rpc(primitive.String, primitive.String, primitive.String, _returns=Array(primitive.String))
+    def login(self, u, p, c):
         error = []
         user = authenticate(username=u, password=p)
         if user is not None:
@@ -34,17 +45,23 @@ class SW_Usuarios(DefinitionBase):
                 if user.sesion_sico:
                     error = ["El Usuario especificado ya esta en uso."]
                 else:
-                    user.sesion_sico = (integracion(user.usuario_sico, user.contrasenia_sico)).activeConnection
-                    user.save()
-                    error = [
-                        'True',
-                        str(user.id),
-                        str(user.username),
-                        str(user.sesion_sico),
-                        ('%s %s' % (user.first_name, user.last_name)).encode('utf-8')
-                    ]
+                    u = usuarioSico.objects.get(user=user, contrato=c)
+                    if isinstance(u, usuarioSico):
+                        conn = integracion(u.nombre, u.clave)
+                        user.sesion_sico = conn.activeConnection
+                        user.save()
+                        error = [
+                            'True',
+                            str(user.id),
+                            str(user.username),
+                            str(user.sesion_sico),
+                            ('%s %s' % (user.first_name, user.last_name)).encode('utf-8')
+                        ]
+                    else:
+                        error = ['El Usuario Especificado no cuenta con permisos necesarios para acceder al contarto']
+
         elif u and p:
-            error=["Su Usuario o Contraseña no son correctos, Intentelo nuevamente."]
+            error = ["Su Usuario o Contraseña no son correctos, Intentelo nuevamente."]
         return error
 
     @rpc(primitive.Integer, primitive.String, primitive.String, _returns=primitive.Boolean)
@@ -80,7 +97,7 @@ class SW_Busquedas(DefinitionBase):
         res = operaciones[str(tipo)](dato)
         if res:
             busc.save()
-        #return str((((res['cMedidores'])[0]).save(commit=False)).digitos)
+            #return str((((res['cMedidores'])[0]).save(commit=False)).digitos)
         #return str((((res['cMedidores'])[0]).fields['marc'].initial))
         return str(res)
 
@@ -98,5 +115,6 @@ class SW_Busquedas(DefinitionBase):
             busc.save()
             return movilBusqueda.busquedaIntegrada(tipo, dato)
         return ''
+
 
 sw_busquedas = DjangoSoapApp([SW_Busquedas], __name__)

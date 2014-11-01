@@ -26,13 +26,12 @@
     display: block;
 }
 
-#wrap > .container{
+#wrap > .container-fluid{
     padding-top: 80px;
 }
 
 .footer > .container{
     padding-top: 8px;
-    font: bold;
     color: #707070;
     font-size: 15px;
 }
