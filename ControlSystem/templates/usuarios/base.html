@@ -38,6 +38,7 @@
         <script type="text/javascript" src="{% static 'js/jquery.ajax.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/jquery.ajax-plugin.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/jquery.dajax.core.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/bootstrap-hover-dropdown.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/jhonsson.js' %}"></script>
 
         <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
@@ -87,14 +88,13 @@
 
                             {% if user.username %}
 
-                                {#<li class="active"><a href="#about">B&uacute;squeda</a></li>#}
-
                                 <li id="buscar" class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                       data-hover="dropdown" data-delay="1000" data-close-others="true">
                                         Buscar
                                         <span class="caret"></span>
                                     </a>
-                                    <ul class="dropdown-menu" role="menu">
+                                    <ul class="dropdown-menu pull-right" role="menu">
                                         {#<li class="divider"></li>#}
                                         <li class="dropdown-header">Por: </li>
                                         <li><a href="{% url 'buscarCuenta' %}">Cuenta</a></li>
