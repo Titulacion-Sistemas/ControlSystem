@@ -3,7 +3,6 @@
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es-ec">
-
     <head>
 
         <meta charset="utf-8">
@@ -60,23 +59,19 @@
         {% endblock %}
 
     </head>
-    <body>
 
+    <body onLoad="window.setTimeout('hora()',1000);">
         <div id="wrap">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
                 <div style="padding-right: 20px">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                      <a href="{% url 'home' %}"><img src="{% static 'img/logo2.png' %}" height="69px" width="240px"></a>
+                        <a href="{% url 'home' %}">
+                            <img src="{% static 'img/logo2.png' %}" height="69px" width="240px">
+                        </a>
                     </div>
                     <div class="navbar-collapse collapse">
-                        {% block nav %}
-                            {% include "usuarios/navegacion.html" %}
+                        {% block navTop %}
+                            {% include "usuarios/navTop.html" %}
                         {% endblock %}
                     </div><!--/.nav-collapse -->
                 </div>
@@ -84,39 +79,9 @@
             <div class="container-fluid">
                 <div class="row" >
                     <div class="col-sm-3 col-md-2 sidebar">
-                        <ul class="nav nav-sidebar">
-
-                            {% if user.username %}
-
-                                <li id="buscar" class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                                       data-hover="dropdown" data-delay="1000" data-close-others="true">
-                                        Buscar
-                                        <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        {#<li class="divider"></li>#}
-                                        <li class="dropdown-header">Por: </li>
-                                        <li><a href="{% url 'buscarCuenta' %}">Cuenta</a></li>
-                                        <li><a href="{% url 'buscarMedidor' %}">Medidor</a></li>
-                                        <li><a href="{% url 'buscarNombre' %}">Nombre</a></li>
-                                        <li><a href="{% url 'buscarGeocodigo' %}">Geocodigo</a></li>
-                                    </ul>
-                                </li>
-
-                                <li><a href="#">Ingresar</a></li>
-
-                                <li><a href="#">Fotos</a></li>
-
-                                <li><a href="#">Cuadrillas</a></li>
-
-                                <li><a href="#">Reportes</a></li>
-
-                                <li><a href="#">Avance de Obra</a></li>
-
-                                <li><a href="#">Contrato</a></li>
-                        {% endif %}
-                        </ul>
+                        {% block navLeft %}
+                            {% include "usuarios/navLeft.html" %}
+                        {% endblock %}
                     </div>
                     <div class="col-sm-9 col-md-10 main">
                         {% block content %}
@@ -124,27 +89,19 @@
                         {% endblock %}
                     </div>
                 </div>
-
             </div>
             <div id="push"></div>
-
         </div>
-
         <footer id="footer" class="footer">
             <div class="container text-center">
                 <p>Coniel System V 1.0 - 2014.<br>
                     <a href="#Acercade" class="text-info">Acerca de</a></p>
                 {% block footer %}
-
                 {% endblock %}
             </div>
         </footer>
-
         {% block jqueryfooter %}
 
         {% endblock %}
-
     </body>
-
-
 </html>
