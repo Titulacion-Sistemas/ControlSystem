@@ -92,7 +92,10 @@ def ingreso(request):
                         except:
                             pass
                     else:
-                        u = usuarioSico.objects.get(user=user, contrato=contrato)
+                        try:
+                            u = usuarioSico.objects.get(user=user, contrato=contrato)
+                        except:
+                            u = False
                         print contrato
                         if isinstance(u, usuarioSico):
                             conn = integracion(u.nombre, u.clave)

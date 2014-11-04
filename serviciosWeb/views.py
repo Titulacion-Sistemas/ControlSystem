@@ -45,7 +45,10 @@ class SW_Usuarios(DefinitionBase):
                 if user.sesion_sico:
                     error = ["El Usuario especificado ya esta en uso."]
                 else:
-                    u = usuarioSico.objects.get(user=user, contrato=c)
+                    try:
+                        u = usuarioSico.objects.get(user=user, contrato=c)
+                    except:
+                        u = False
                     if isinstance(u, usuarioSico):
                         conn = integracion(u.nombre, u.clave)
                         user.sesion_sico = conn.activeConnection

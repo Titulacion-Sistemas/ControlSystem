@@ -22,12 +22,16 @@
 
     {% if user.username %}
         <li>
-            <span class="glyphicon glyphicon-user"></span>
-            <a href="#">Perfil</a>
+            <a href="#">
+                <span class="glyphicon glyphicon-user"></span>
+                Perfil
+            </a>
         </li>
         <li>
-            <span class="glyphicon glyphicon-log-out"></span>
-            <a href="{% url 'logout' %}">Salir</a>
+            <a href="{% url 'logout' %}">
+                <span class="glyphicon glyphicon-log-out"></span>
+                Salir
+            </a>
         </li>
     {% endif %}
 </ul>
