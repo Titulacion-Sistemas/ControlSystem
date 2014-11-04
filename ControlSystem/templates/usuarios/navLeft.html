@@ -1,9 +1,18 @@
 <ul class="nav nav-sidebar">
     {% if user.username %}
+        <li>
+            <form style="margin-top: 10px; margin-bottom: 10px; margin-left: 10px;">
+                <input type="text" class="form-control" placeholder="Buscar Cta. ingresada...">
+            </form>
+        </li>
+    {% endif %}
+</ul>
+<ul class="nav nav-sidebar">
+    {% if user.username %}
         <li id="buscar" class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                data-hover="dropdown" data-delay="200" data-close-others="true">
-                Buscar
+                Buscar en Sico
                 <span class="caret"></span>
             </a>
             <ul class="dropdown-menu pull-right" role="menu">

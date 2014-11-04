@@ -65,7 +65,7 @@ class LogIn(forms.Form):
         max_length=10,
         required=True,
         label='Contraseña',
-        widget=forms.TextInput(attrs={'placeholder': 'Escriba su contraseña'})
+        widget=forms.PasswordInput(attrs={'placeholder': ''})
     )
     sico = forms.ModelChoiceField(
         queryset=contrato.objects.filter(finalVigencia__gte=datetime.date.today()),

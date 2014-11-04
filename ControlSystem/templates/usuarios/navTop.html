@@ -10,20 +10,24 @@
 
 <ul class="nav navbar-nav navbar-right">
 
+    <li style="padding-top: 24px;" class="hora">
+            <span class="glyphicon glyphicon-time"></span>
+    </li>
+
     <li class="navbar-header hora">
-        <span class="glyphicon glyphicon-time"></span>
         <span id="fecha"></span>
         <br>
         <span id="hora"></span>
     </li>
 
     {% if user.username %}
-        <li style="margin-top: 10px;">
-        <form class="navbar-form navbar-left">
-            <input type="text" class="form-control" placeholder="Buscar...">
-        </form>
+        <li>
+            <span class="glyphicon glyphicon-user"></span>
+            <a href="#">Perfil</a>
         </li>
-        <li><a href="#">Perfil</a></li>
-        <li><a href="{% url 'logout' %}">Salir</a></li>
+        <li>
+            <span class="glyphicon glyphicon-log-out"></span>
+            <a href="{% url 'logout' %}">Salir</a>
+        </li>
     {% endif %}
 </ul>

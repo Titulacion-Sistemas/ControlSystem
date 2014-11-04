@@ -23,7 +23,7 @@ class vitacoraBusquedas(models.Model):
     estadoRetorno = models.BooleanField(default=True)
 
     def __str__(self):
-        return 'Busqueda por :{0}, ({1})'.format(self.get_TipoBusq_display(), self.consulta)
+        return 'Busqueda por %s: %s' % (self.tipoBusq, self.consulta)
 
     class Meta:
         verbose_name_plural="Búsquedas Realizadas"

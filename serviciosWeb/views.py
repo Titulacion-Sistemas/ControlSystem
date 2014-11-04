@@ -29,9 +29,9 @@ hello_world_service = DjangoSoapApp([HelloWorldService], __name__)
 class SW_Usuarios(DefinitionBase):
 
     @rpc(_returns=Array(Array(primitive.String)))
-    def getContratos(self):
+    def getContratos(self, ):
+        m=[]
         r = contrato.objects.filter(finalVigencia__gte=datetime.date.today())
-        m=[[]]
         for cont in r:
             m.append([cont.num, cont.zonas])
         return m
