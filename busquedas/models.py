@@ -54,7 +54,7 @@ class BusquedaForm(ModelForm):
         if c and tb:
             # Only do something if both fields are valid so far.
             if tb == '1':
-                if not c.isdigit() or len(c) > 6:
+                if not c.isdigit() or len(c) > 8:
                     raise forms.ValidationError("Error, Cuenta ingresada no válida.")
 
             if tb == '2':

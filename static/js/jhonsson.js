@@ -42,7 +42,7 @@ function hora()
     }
 
     document.getElementById("hora").
-        innerHTML =  " "  + hora + ":" + minutos + ":" + segundos;
+        innerHTML =  " "  + hora + ":" + minutos;
     document.getElementById("fecha").
         innerHTML =  " "  + diasSemana[dia.getDay()] + ", " + dia.getDate() + ". " + meses[dia.getMonth()]+" "+dia.getFullYear();
 

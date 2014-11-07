@@ -104,20 +104,21 @@ class SW_Busquedas(DefinitionBase):
         #return str((((res['cMedidores'])[0]).fields['marc'].initial))
         return str(res)
 
-    @rpc(primitive.Integer, primitive.String, primitive.Integer, primitive.String,
+    @rpc(primitive.String, primitive.String, primitive.String, primitive.String,
          _returns=Array(Array(primitive.String)))
     def buscarMovil(self, idUsuario, sesion, tipo, dato):
         busc = vitacoraBusquedas(
             tipoBusq=str(tipo),
             consulta=dato,
-            usuario=User.objects.get(id=idUsuario, sesion_sico=sesion),
+            usuario=User.objects.get(id=int(idUsuario), sesion_sico=sesion),
             estadoRetorno=True
         )
+        print 'buscando por %s , %s'%(str(tipo), str(dato))
         movilBusqueda = SW_buscar(sesion)
         if movilBusqueda:
             busc.save()
             return movilBusqueda.busquedaIntegrada(tipo, dato)
-        return ''
+        return None
 
 
 sw_busquedas = DjangoSoapApp([SW_Busquedas], __name__)

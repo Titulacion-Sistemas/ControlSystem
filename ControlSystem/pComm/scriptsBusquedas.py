@@ -14,7 +14,6 @@ def llenarCliente(sesion, cli):
         cli.ci_ruc = sesion.autECLPS.GetText(4, 10, 13)
         cli.cuenta = sesion.autECLPS.GetText(3, 27, 7)
         cli.nombre = sesion.autECLPS.GetText(3, 35, 30)
-        cli.ci_ruc = sesion.autECLPS.GetText(4, 10, 13)
         cli.direccion = sesion.autECLPS.GetText(14, 18, 50)
         cli.interseccion = sesion.autECLPS.GetText(15, 18, 50)
         cli.urbanizacion = sesion.autECLPS.GetText(16, 18, 50)

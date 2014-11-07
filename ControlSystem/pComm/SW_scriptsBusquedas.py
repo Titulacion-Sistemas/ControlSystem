@@ -10,7 +10,6 @@ def llenarCliente(sesion):
     cli.append(sesion.autECLPS.GetText(4, 10, 13))
     cli.append(sesion.autECLPS.GetText(3, 27, 7))
     cli.append(sesion.autECLPS.GetText(3, 35, 30))
-    cli.append(sesion.autECLPS.GetText(4, 10, 13))
     cli.append(sesion.autECLPS.GetText(14, 18, 50))
     cli.append(sesion.autECLPS.GetText(15, 18, 50))
     cli.append(sesion.autECLPS.GetText(16, 18, 50))
