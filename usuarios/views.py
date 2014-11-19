@@ -96,13 +96,14 @@ def ingreso(request):
                             u = usuarioSico.objects.get(user=user, contrato=contrato)
                         except:
                             u = False
-                        print contrato
                         if isinstance(u, usuarioSico):
-                            conn = integracion(u.nombre, u.clave)
-                            user.sesion_sico = conn.activeConnection
-                            user.save()
-                            login(request, user)
-                            return HttpResponseRedirect('/home')
+                            if integracion(u.nombre, u.clave, user):
+                                login(request, user)
+                                return HttpResponseRedirect('/home')
+                            else:
+                                error = 'El Sistema Comercial(Sico Cnel) no esta disponible por el momento...'
+                                user.sesion_sico=''
+                                user.save()
                         else:
                             error = 'El Usuario Especificado no cuenta con permisos necesarios para acceder al contarto'
             elif username and password:
@@ -122,10 +123,11 @@ def home(request):
         pass
     return HttpResponseRedirect('/login')
 
-def integracion(u, c):
+def integracion(u, c, user):
     conn = manejadorDeConexion()
-    conn.openSession(usuario=u, contrasenia=c)
-    return conn
+    user.sesion_sico = str(conn.getAvailableConnection())
+    user.save()
+    return conn.openSession(connectionName=user.sesion_sico, usuario=u, contrasenia=c)
 
 
 @ajax

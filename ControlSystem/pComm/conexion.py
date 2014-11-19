@@ -48,9 +48,10 @@ class manejadorDeConexion:
             else:
                 self.activeSession.autECLPS.SendKeys("%s" % key, row, col)
             if wait:
-                self.activeSession.autECLOIA.WaitForAppAvailable()
-                self.activeSession.autECLOIA.WaitForInputReady()
+                if not self.activeSession.autECLOIA.WaitForAppAvailable(5000): return False
+                if not self.activeSession.autECLOIA.WaitForInputReady(5000): return False
             n += 1
+        return True
 
 
     def getAvailableConnection(self):
@@ -62,6 +63,9 @@ class manejadorDeConexion:
 
 
     def openSession(self, connectionName=None, usuario="none", contrasenia="none"):
+
+        self.estado = False
+
         if connectionName is not None:
             self.setActiveSession(connectionName)
         else:
@@ -76,15 +80,21 @@ class manejadorDeConexion:
             segundos -= 1
 
         if segundos >= 0:
-            self.activeSession.autECLOIA.WaitForAppAvailable()
-            self.activeSession.autECLOIA.WaitForInputReady()
-            print self.getText(22, 50, length=8)
-            print self.getText(21, 50, length=12)
+            if self.activeSession.autECLOIA.WaitForAppAvailable(5000):
+                if self.activeSession.autECLOIA.WaitForInputReady(5000):
+                    print self.getText(22, 50, length=8)
+                    print self.getText(21, 50, length=12)
+
             if self.activeSession.autECLPS.WaitForString('USUARIO', 21, 50, 10000):
-                self.sendKeys(1, usuario, row=21, col=63)
-                self.sendKeys(1, contrasenia, row=22, col=63)
-                self.sendKeys(6, '[enter]')
-                self.estado = True
+                if self.sendKeys(1, usuario, row=21, col=63):
+                    if self.sendKeys(1, contrasenia, row=22, col=63):
+                        if self.sendKeys(6, '[enter]'):
+                            self.estado = True
+                            return self.estado
+
+        self.closeProgram(self.activeConnection)
+
+        return self.estado
 
 
     def openProgram(self):

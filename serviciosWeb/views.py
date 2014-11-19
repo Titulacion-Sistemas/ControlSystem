@@ -50,16 +50,19 @@ class SW_Usuarios(DefinitionBase):
                     except:
                         u = False
                     if isinstance(u, usuarioSico):
-                        conn = integracion(u.nombre, u.clave)
-                        user.sesion_sico = conn.activeConnection
-                        user.save()
-                        error = [
-                            'True',
-                            str(user.id),
-                            str(user.username),
-                            str(user.sesion_sico),
-                            ('%s %s' % (user.first_name, user.last_name)).encode('utf-8')
-                        ]
+                        if integracion(u.nombre, u.clave, user):
+                            error = [
+                                'True',
+                                str(user.id),
+                                str(user.username),
+                                str(user.sesion_sico),
+                                ('%s %s' % (user.first_name, user.last_name)).encode('utf-8')
+                            ]
+                        else:
+                            error = ['El Sistema Comercial(Sico Cnel) no esta disponible por el momento, '
+                                     'intentelo nuevamente mas tarde...']
+                            user.sesion_sico=''
+                            user.save()
                     else:
                         error = ['El Usuario Especificado no cuenta con permisos necesarios para acceder al contarto']
 
