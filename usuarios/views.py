@@ -124,9 +124,14 @@ def home(request):
     return HttpResponseRedirect('/login')
 
 def integracion(u, c, user):
-    conn = manejadorDeConexion()
-    user.sesion_sico = str(conn.getAvailableConnection())
-    user.save()
+    conn=None
+    while True:
+        conn = manejadorDeConexion()
+        user.sesion_sico = str(conn.getAvailableConnection())
+        if not User.objects.filter(sesion_sico=user.sesion_sico):
+            user.save()
+            break
+
     return conn.openSession(connectionName=user.sesion_sico, usuario=u, contrasenia=c)
 
 
