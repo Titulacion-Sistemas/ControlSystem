@@ -6,7 +6,8 @@ from django.db import models
 
 # Create your models here.
 from django.forms import ModelForm
-from ingresos.models import cliente, medidor
+from ingresos.models import cliente
+from inventario.models import medidor
 
 
 class vitacoraBusquedas(models.Model):

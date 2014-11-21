@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 from soaplib.serializers import primitive
 from soaplib.serializers.clazz import Array
 from soaplib.service import DefinitionBase, rpc
-from ControlSystem.pComm.scriptsBusquedas import buscar
-from ControlSystem.pComm.SW_scriptsBusquedas import buscar as SW_buscar
+from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar
+from ControlSystem.pComm.busquedas.SW_scriptsBusquedas import buscar as SW_buscar
 from busquedas.models import vitacoraBusquedas
 from handler import DjangoSoapApp
 from usuarios.models import usuarioSico, contrato

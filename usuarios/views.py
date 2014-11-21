@@ -99,6 +99,7 @@ def ingreso(request):
                         if isinstance(u, usuarioSico):
                             if integracion(u.nombre, u.clave, user):
                                 login(request, user)
+                                request.session['contrato'] = contrato
                                 return HttpResponseRedirect('/home')
                             else:
                                 error = 'El Sistema Comercial(Sico Cnel) no esta disponible por el momento...'

@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'busquedas',
     'usuarios',
     'ingresos',
+    'inventario',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = TC + (

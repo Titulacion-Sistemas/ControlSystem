@@ -2,6 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from ingresos.models import *
+from inventario.models import medidor
 
 admin.site.register(medidor)
 admin.site.register(cliente)

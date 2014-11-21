@@ -5,7 +5,8 @@ from django.shortcuts import render_to_response
 import pythoncom
 from ControlSystem.pComm.conexion import manejadorDeConexion
 from busquedas.models import ClienteBuscado, MedidorBuscado
-from ingresos.models import cliente, secuencia, ruta, sector, canton, provincia, medidor
+from ingresos.models import cliente, secuencia, ruta, sector, canton, provincia
+from inventario.models import medidor
 
 
 def llenarCliente(sesion, cli):

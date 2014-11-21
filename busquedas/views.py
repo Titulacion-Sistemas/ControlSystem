@@ -3,9 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django_ajax.decorators import ajax
-import pythoncom
 from busquedas.models import BusquedaForm
-from ControlSystem.pComm.scriptsBusquedas import buscar as b
+from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar as b
 
 # Create your views here.
 @login_required()
