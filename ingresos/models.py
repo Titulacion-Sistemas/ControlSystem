@@ -24,6 +24,13 @@ class canton(models.Model):
     class Meta:
         verbose_name_plural="Cantones"
 
+class parroquia(models.Model):
+    num = models.PositiveSmallIntegerField(max_length=3)
+    descripcion = models.CharField(max_length=40, verbose_name='Nombre de Parroquia')
+    canton = models.ForeignKey(canton, verbose_name='Nombre de Cantón', blank=True, null=True, default='')
+
+    def __unicode__(self):
+        return self.descirpcion
 
 class sector(models.Model):
     num = models.PositiveSmallIntegerField(max_length=2)
@@ -60,11 +67,9 @@ class secuencia(models.Model):
             self.num
         )
 
-    def __unicode__(self):
-        return '%s - %s' % (self.fabrica, self.serie)
-
     class Meta:
         verbose_name_plural="Geocodigos"
+        verbose_name='Geocódigo'
 
 class cliente(models.Model):
     PERSONA = (
@@ -77,9 +82,10 @@ class cliente(models.Model):
     deuda = models.DecimalField(max_digits=12, decimal_places=2, verbose_name='Deuda del abonado')
     meses = models.PositiveSmallIntegerField(verbose_name='Meses adeudados')
     geocodigo = models.OneToOneField(secuencia, verbose_name='Geocódigo')
-    direccion = models.CharField(max_length=50, verbose_name='Dirección')
-    interseccion = models.CharField(max_length=50, verbose_name='Intersección')
-    urbanizacion = models.CharField(max_length=50, verbose_name='Urbanización')
+    ubicacionGeografica=models.OneToOneField('ubicacion', verbose_name='Ubicación geográfica')
+    #direccion = models.CharField(max_length=50, verbose_name='Dirección')
+    #interseccion = models.CharField(max_length=50, verbose_name='Intersección')
+    #urbanizacion = models.CharField(max_length=50, verbose_name='Urbanización')
     tipo = models.CharField(max_length=1, choices=PERSONA, default='N')
     estado = models.CharField(max_length=20, verbose_name="Estado")
 
@@ -94,6 +100,7 @@ class detalleClienteMedidor(models.Model):
     fecha_desinstalacion = models.DateField(verbose_name='Fecha de desinstalación')
     medidor = models.ForeignKey('inventario.medidor', verbose_name='Medidor')
     cliente = models.ForeignKey(cliente, verbose_name='Cliente')
+    observacion=models.CharField(max_length=50, blank=True, null=True, default='')
 
     def __unicode__(self):
         return '%s - %s' % (self.cliente, self.medidor)
@@ -102,30 +109,27 @@ class detalleClienteMedidor(models.Model):
         verbose_name_plural="Detalles Cliente-Medidor"
         verbose_name='Detalle Cliente-Medidor'
 
-class referencia(models.Model):
-    medidor=models.CharField(max_length=12)
-    geocodigo=models.ForeignKey(secuencia)
-
-    def __unicode__(self):
-        return '%s - %s' % (self.medidor, self.geocodigo)
 
 class detalleClienteReferencia(models.Model):
-    referencia=models.ForeignKey("referencia")
+    cliente=models.ForeignKey('cliente', related_name='cliente')
+    referencia=models.ForeignKey('cliente', related_name='referencia')
+    medidorDeReferencia=models.CharField(max_length=10)
     ubicacion=models.ForeignKey("ubicacion")
-    cliente=models.ForeignKey(cliente)
 
     def __unicode__(self):
-        return '%s - %s' % (self.cliente, self.referencia)
+        return 'C:%s - R:%s' % (self.cliente, self.referencia)
 
 class ubicacion(models.Model):
-    calle=models.ForeignKey("calle", related_name='calle')
-    intersepcion=models.ForeignKey("calle", related_name='intersepcion')
-    urbanizacion=models.ForeignKey("urbanizacion")
-    caserio=models.ForeignKey("caserio")
+    parroquia=models.ForeignKey('parroquia')
+    calle=models.ForeignKey("calle", verbose_name='Dirección o Calle', related_name='calle', blank=True, null=True, default='')
+    intersepcion=models.ForeignKey("calle", related_name='intersepcion', blank=True, null=True, default='')
+    urbanizacion=models.ForeignKey("urbanizacion", blank=True, null=True, default='')
+    caserio=models.ForeignKey("caserio", blank=True, null=True, default='')
 
     def __unicode__(self):
-        return '%s y %s; Urb: %s, Cas: %s' \
-               % (self.calle,
+        return '%s; %s y %s; Urb: %s, Cas: %s' \
+               % (self.parroquia,
+                  self.calle,
                   self.intersepcion,
                   self.urbanizacion,
                   self.caserio
@@ -151,7 +155,7 @@ class calle(models.Model):
         return self.descripcion
 
 class tipoCalle(models.Model):
-    descripcion = models.CharField(max_length=50)
+    descripcion = models.CharField(max_length=50, blank=True, null=True, default='')
 
     def __unicode__(self):
         return self.descripcion
@@ -160,7 +164,26 @@ class tipoCalle(models.Model):
 
 
 class actividad(models.Model):
-    pass
+    numeroDeSolicitud=models.CharField(max_length=10, verbose_name='Número de Solicitud')
+    cliente=models.ForeignKey('cliente')
+    tipoDeConstruccion=models.ForeignKey('tipoDeConstruccion')
+    materialDeRed=models.CharField(max_length=5, blank=True, null=True, default='')
+    instalador=models.ForeignKey('instalador')
+    ubicacionDelMedidor=models.ForeignKey('ubicacionDelMedidor')
+    claseRed=models.ForeignKey('claseRed')
+    nivelSocieconomico=models.ForeignKey('nivelSocieconomico', blank=True, null=True, default='')
+    calibreDeLaRed=models.ForeignKey('calibreDeLaRed')
+    estadoDeLaInstalacion=models.ForeignKey('estadoDeUnaInstalacion')
+    tipoDeAcometidaRed=models.ForeignKey('tipoDeAcometidaRed', verbose_name='Tipo de Acometida o Red')
+    fechaDeActividad=models.DateTimeField(verbose_name='Fecha y Hora de la Actividad', auto_now=True, auto_now_add=True)
+    usoDeEnergia=models.ForeignKey('usoDeEnergia')
+    usoEspecificoDelInmueble=models.ForeignKey('usoEspecificoDelInmueble')
+    formaDeConexion=models.ForeignKey('formaDeConexion')
+    demanda=models.ForeignKey('demanda')
+    motivoDeSolicitud=models.ForeignKey('motivoParaSolicitud')
+    tipoDeSolicitud=models.ForeignKey('tipoDeSolicitud')
+
+
 
 
 
@@ -326,7 +349,7 @@ class ubicacionDelMedidor(models.Model):
 
     class Meta:
         verbose_name_plural="Ubicaciones posibles de Medidor"
-        verbose_name='Ubicación de Medidor'
+        verbose_name='Ubicación del Medidor'
 
 class cuadrilla(models.Model):
     nombre=models.CharField(max_length=50)
@@ -335,23 +358,55 @@ class cuadrilla(models.Model):
     def __unicode__(self):
         return self.nombre
 
+class empleado(models.Model):
+    nombre=models.CharField(max_length=20)
+    apellido=models.CharField(max_length=20)
+    telefono=models.CharField(max_length=10)
+    correo=models.CharField(max_length=20)
+    observacion=models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return '%s %s' % 8(
+            self.nombre,
+            self.apellido
+        )
+
 class instalador(models.Model):
-    nombre=models.CharField(max_length=25)
-    apellido=models.CharField(max_length=25)
+    nombre=models.ForeignKey('empleado')
+    cuadrilla=models.ForeignKey('cuadrilla',blank=True, null=True, default='')
     observacion=models.CharField(max_length=50)
 
     def __unicode__(self):
         return '%s %s' % (self.nombre, self.apellido)
 
-class detalleDeMaterial(models.Model):
-    material=models.ForeignKey('inventario.material')
-    actividad=models.ForeignKey('actividad')
-    cantidad=models.PositiveSmallIntegerField()
-    observacion=models.CharField(max_length=20, blank=True, null=True)
+    class Meta:
+        verbose_name_plural='Instaladores'
 
+class materialDeActividad(models.Model):
+    material=models.ForeignKey('inventario.detalleMaterialContrato')
+    actividad=models.ForeignKey('actividad')
+    cantidad=models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
+    observacion=models.CharField(max_length=50, blank=True, null=True, default='')
+
+    def __unicode__(self):
+        return self.material
+
+    class Meta:
+        verbose_name_plural='Materiales de cada Actividad'
 
 class detalleDeActividad(models.Model):
-    pass
+    rubro=models.ForeignKey('inventario.detalleRubro')
+    actividad=models.ForeignKey('actividad')
+
+    def __unicode__(self):
+        return '%s - %s' % (
+            self.actividad,
+            self.rubro
+        )
+
+    class Meta:
+        verbose_name_plural='Rubros de la Actividad'
+        verbose_name='Rubro de Actividad'
 
 class foto(models.Model):
     actividad=models.ForeignKey(actividad, blank=True, null=True)
@@ -366,7 +421,21 @@ class foto(models.Model):
         verbose_name='Foto'
 
 class nivelSocieconomico(models.Model):
-    pass
+    id=models.CharField(max_length=2, primary_key=True, verbose_name='Codigo')
+    descripcion=models.CharField(max_length=15)
 
-class sistemaDeMedicion(models.Model):
-    pass
+    def __unicode__(self):
+        return self.descripcion
+
+    class Meta:
+        verbose_name_plural="Niveles Socioeconómicos"
+        verbose_name='Nivel Socioeconómico'
+
+#class sistemaDeMedicion(models.Model):
+#    pass
+#
+#    def __unicode__(self):
+#        return None
+#
+#    class Meta:
+#        verbose_name_plural=''

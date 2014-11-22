@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 import pythoncom
 from ControlSystem.pComm.conexion import manejadorDeConexion
 from busquedas.models import ClienteBuscado, MedidorBuscado
-from ingresos.models import cliente, secuencia, ruta, sector, canton, provincia
+from ingresos.models import cliente, secuencia, ruta, sector, canton, provincia, parroquia, ubicacion, calle, urbanizacion
 from inventario.models import medidor
 
 
@@ -15,9 +15,9 @@ def llenarCliente(sesion, cli):
         cli.ci_ruc = sesion.autECLPS.GetText(4, 10, 13)
         cli.cuenta = sesion.autECLPS.GetText(3, 27, 7)
         cli.nombre = sesion.autECLPS.GetText(3, 35, 30)
-        cli.direccion = sesion.autECLPS.GetText(14, 18, 50)
-        cli.interseccion = sesion.autECLPS.GetText(15, 18, 50)
-        cli.urbanizacion = sesion.autECLPS.GetText(16, 18, 50)
+        #cli.direccion = sesion.autECLPS.GetText(14, 18, 50)
+        #cli.interseccion = sesion.autECLPS.GetText(15, 18, 50)
+        #cli.urbanizacion = sesion.autECLPS.GetText(16, 18, 50)
         cli.estado = sesion.autECLPS.GetText(21, 42, 20)
         cli.geocodigo = secuencia(
             num=int(sesion.autECLPS.GetText(20, 73, 7)),
@@ -36,6 +36,21 @@ def llenarCliente(sesion, cli):
                         )
                     )
                 )
+            )
+        )
+        cli.ubicacionGeografica = ubicacion(
+            parroquia=parroquia(
+                id=int(sesion.autECLPS.GetText(13, 13, 2)),
+                descripcion=sesion.autECLPS.GetText(13, 17, 35)
+            ),
+            calle=calle(
+                descripcion=sesion.autECLPS.GetText(14, 18, 50),
+            ),
+            intercepcion=calle(
+                descripcion=sesion.autECLPS.GetText(15, 18, 50),
+            ),
+            urbanizacion=urbanizacion(
+                descripcion=sesion.autECLPS.GetText(16, 18, 50)
             )
         )
         #print(cli.geocodigo)
