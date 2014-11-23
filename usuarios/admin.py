@@ -1,11 +1,11 @@
 from django.contrib import admin
 
 # Register your models here.
+from django.contrib.auth.models import Group
 from usuarios.models import *
 
 
-class ContratoAdmin(admin.ModelAdmin):
-    pass
 
-admin.site.register(contrato)
 admin.site.register(usuarioSico)
+#admin.site.register(User)
+#admin.site.register(Group)

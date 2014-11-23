@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block title %}
+    Cambio de Material
+{% endblock %}
+
+{% block jquery %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+    {% if form.errors %}
+        <p>{{ form.errors }}</p>
+    {% endif %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading text-center">
+                        <b>Datos de Abonado</b>
+                    </div>
+                    <div class="panel-body">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading text-center">
+                        <b>Datos del Varios</b>
+                    </div>
+                    <div class="panel-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block jqueryfooter %}{% endblock %}

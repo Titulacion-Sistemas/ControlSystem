@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
@@ -10,19 +11,29 @@ urlpatterns = patterns('',
     # url(r'^$', 'ControlSystem.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-
-    url(r'^$', 'usuarios.views.main', name='main'),
+    #Administración
     url(r'^admin/', include(admin.site.urls)),
+
+    #Usuarios
+    url(r'^$', 'usuarios.views.main', name='main'),
     url(r'^login$', "usuarios.views.ingreso", name='login'),
     url(r'^logout$', 'usuarios.views.salir', name="logout"),
     url(r'^signup$', 'usuarios.views.signup', name='signup'),
+    url(r'^home$', 'usuarios.views.home', name='home'),
+
+    #Búsquedas
     url(r'^buscar/1$', 'busquedas.views.cuenta', name='buscarCuenta'),
     url(r'^buscar/2$', 'busquedas.views.medidor', name='buscarMedidor'),
     url(r'^buscar/3$', 'busquedas.views.nombre', name='buscarNombre'),
     url(r'^buscar/4$', 'busquedas.views.geocodigo', name='buscarGeocodigo'),
     url(r'^busqueda$', 'busquedas.views.busqueda', name='busqueda'),
-    url(r'^home$', 'usuarios.views.home', name='home'),
+
     url(r'^multiply', multiply),
+
+    #Ingresos
+    url(r'^ingresarcambiomaterial$', 'ingresos.views.cambioDeMaterial', name='cambioDeMaterial'),
+    url(r'^ingresarcambiomedidor$', 'ingresos.views.cambioDeMedidor', name='cambioDeMedidor'),
+    url(r'^ingresarservicionuevo$', 'ingresos.views.servicioNuevo', name='servicioNuevo'),
 
     #Servicios Web
     (r"^hello_world/", 'serviciosWeb.views.hello_world_service'),

@@ -122,7 +122,7 @@ class detalleClienteReferencia(models.Model):
 class ubicacion(models.Model):
     parroquia=models.ForeignKey('parroquia')
     calle=models.ForeignKey("calle", verbose_name='Dirección o Calle', related_name='calle', blank=True, null=True, default='')
-    intersepcion=models.ForeignKey("calle", related_name='intersepcion', blank=True, null=True, default='')
+    interseccion=models.ForeignKey("calle", related_name='interseccion', blank=True, null=True, default='')
     urbanizacion=models.ForeignKey("urbanizacion", blank=True, null=True, default='')
     caserio=models.ForeignKey("caserio", blank=True, null=True, default='')
 
@@ -134,6 +134,11 @@ class ubicacion(models.Model):
                   self.urbanizacion,
                   self.caserio
         )
+
+    class Meta:
+        verbose_name_plural="Ubicaciones"
+        verbose_name='Ubicación'
+
 
 class caserio(models.Model):
     descripcion = models.CharField(max_length=50)
@@ -147,6 +152,10 @@ class urbanizacion(models.Model):
     def __unicode__(self):
         return self.descripcion
 
+    class Meta:
+        verbose_name_plural="Urbanizaciones"
+        verbose_name='Urbanización'
+
 class calle(models.Model):
     descripcion = models.CharField(max_length=50)
     tipoDeCalle = models.ForeignKey("tipoCalle")
@@ -159,6 +168,7 @@ class tipoCalle(models.Model):
 
     def __unicode__(self):
         return self.descripcion
+
 
 
 
@@ -184,7 +194,12 @@ class actividad(models.Model):
     tipoDeSolicitud=models.ForeignKey('tipoDeSolicitud')
 
 
+    def __unicode__(self):
+        return self.numeroDeSolicitud
 
+    class Meta:
+        verbose_name_plural="Actividades Realizadas"
+        verbose_name='Actividad'
 
 
 

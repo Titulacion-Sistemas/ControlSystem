@@ -92,7 +92,7 @@ class manejadorDeConexion:
                             self.estado = True
                             return self.estado
 
-        self.closeProgram(self.activeConnection)
+        self.closeProgram(self.activeConnection, directo=True)
 
         return self.estado
 
@@ -103,13 +103,15 @@ class manejadorDeConexion:
             "PROFILE=.\ControlSystem\pComm\sico\CNEL.WS CONNNAME={0} WINSTATE=MIN".format(self.activeConnection))
 
 
-    def closeProgram(self, connection):
+    def closeProgram(self, connection, directo=False):
         if not connection:
             connection = self.activeConnection
         try:
             print "Cerrando el Programa, Sesion: {0}".format(connection)
-            self.setActiveSession(connection)
-            self.sendKeys(10, '[pf12]', connectionName=connection, wait=False)
+            if not directo:
+                if not self.activeSession:
+                    self.setActiveSession(connection)
+                self.sendKeys(10, '[pf12]', connectionName=connection, wait=False)
             self.PCommConnMgr.StopConnection(connection, "saveprofile=no")
         except:
             print "No se ha podido cerrar la sesion: {0}".format(connection)

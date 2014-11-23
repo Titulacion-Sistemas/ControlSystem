@@ -99,7 +99,7 @@
                                 {{ c.nombre }}
                             </td>
                             <td>
-                                {{ c.direccion }}
+                                {{ c.ubicacionGeografica.calle.descripcion }}
                             </td>
                             <td class="text-right">
                                 {{ c.deuda }}
@@ -116,7 +116,7 @@
                                 {{ c.nombre }}
                             </td>
                             <td>
-                                {{ c.direccion }}
+                                {{ c.ubicacionGeografica.calle.descripcion }}
                             </td>
                             <td>
                                 {{ c.cuenta }}
@@ -139,7 +139,7 @@
                         {% if tipo == '2' %}
                             <tr onclick="buscarAjax('2','{{ c.urbanizacion }}')">
                                 <td>
-                                    {{ c.urbanizacion }}
+                                    {{ c.ubicacionGeografica.urbanizacion.descripcion }}
                                 </td>
                                 <td>
                                     {{ c.estado }}
@@ -151,7 +151,7 @@
                                     {{ c.nombre }}
                                 </td>
                                 <td>
-                                    {{ c.direccion }}
+                                    {{ c.ubicacionGeografica.calle.descripcion }}
                                 </td>
                             </tr>
                         {% endif %}
@@ -159,7 +159,7 @@
                         {% if tipo == '4' %}
                             <tr onclick="buscarAjax('4','{{ c.interseccion }}')">
                                 <td>
-                                    {{ c.interseccion }}
+                                    {{ c.ubicacionGeografica.interseccion.descripcion }}
                                 </td>
                                 <td>
                                     {{ c.cuenta }}
@@ -168,10 +168,10 @@
                                     {{ c.nombre }}
                                 </td>
                                 <td>
-                                    {{ c.direccion }}
+                                    {{ c.ubicacionGeografica.calle.descripcion }}
                                 </td>
                                 <td>
-                                    {{ c.urbanizacion }}
+                                    {{ c.ubicacionGeografica.urbanizacion.descripcion }}
                                 </td>
                                 <td>
                                     {{ c.deuda }}

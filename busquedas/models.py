@@ -24,7 +24,13 @@ class vitacoraBusquedas(models.Model):
     estadoRetorno = models.BooleanField(default=True)
 
     def __str__(self):
-        return 'Busqueda por %s: %s' % (self.tipoBusq, self.consulta)
+        opciones = {
+            '1': 'Cuenta',
+            '2': 'Medidor',
+            '3': 'Nombre',
+            '4': 'Geocodigo'
+        }
+        return 'Busqueda por %s: %s, (%s)' % (opciones[self.tipoBusq], self.consulta, self.fechaHora)
 
     class Meta:
         verbose_name_plural="Búsquedas Realizadas"
@@ -91,6 +97,12 @@ class BusquedaForm(ModelForm):
 
 class ClienteBuscado(ModelForm):
     geo = forms.CharField(label='Geocódigo', widget=forms.TextInput(attrs={'readonly': True}))
+    provincia=forms.CharField(label='Provincia', widget=forms.TextInput(attrs={'readonly': True}))
+    canton=forms.CharField(label='Cantón', widget=forms.TextInput(attrs={'readonly': True}))
+    parroquia=forms.CharField(label='Parroquia', widget=forms.TextInput(attrs={'readonly': True}))
+    direccion=forms.CharField(label='Dirección', widget=forms.TextInput(attrs={'readonly': True}))
+    interseccion=forms.CharField(label='Intersección', widget=forms.TextInput(attrs={'readonly': True}))
+    urbanizacion=forms.CharField(label='Urbanización', widget=forms.TextInput(attrs={'readonly': True}))
 
     class Meta:
         model = cliente
@@ -100,10 +112,12 @@ class ClienteBuscado(ModelForm):
             'nombre',
             'ci_ruc',
             'geo',
-            'ubicacionGeografica',
-            #'direccion',
-            #'interseccion',
-            #'urbanizacion',
+            'provincia',
+            'canton',
+            'parroquia',
+            'direccion',
+            'interseccion',
+            'urbanizacion',
             'estado',
             'deuda',
             'meses'
@@ -113,17 +127,20 @@ class ClienteBuscado(ModelForm):
             'cuenta': forms.TextInput(attrs={'readonly': True}),
             'nombre': forms.TextInput(attrs={'readonly': True}),
             'ci_ruc': forms.TextInput(attrs={'readonly': True}),
-            'ubicacionGeografica.calle.descripcion': forms.TextInput(attrs={'readonly': True}),
-            'ubicacionGeografica.intercepcion.descripcion': forms.TextInput(attrs={'readonly': True}),
-            'ubicacionGeografica.urbanizacion.descripcion': forms.TextInput(attrs={'readonly': True}),
             'estado': forms.TextInput(attrs={'readonly': True}),
             'deuda': forms.TextInput(attrs={'readonly': True}),
             'meses': forms.TextInput(attrs={'readonly': True}),
         }
 
-    def __init__(self, geo, *args, **kwargs):
+    def __init__(self, geo, ubicacion,  *args, **kwargs):
         super(ClienteBuscado, self).__init__(*args, **kwargs)
         self.fields['geo'].initial = str(geo)
+        self.fields['provincia'].initial = str(geo.ruta.sector.canton.provincia.descripcion)
+        self.fields['canton'].initial = str(geo.ruta.sector.canton.descripcion)
+        self.fields['parroquia'].initial = str(ubicacion.parroquia.descripcion)
+        self.fields['direccion'].initial = str(ubicacion.calle.descripcion)
+        self.fields['interseccion'].initial = str(ubicacion.interseccion.descripcion)
+        self.fields['urbanizacion'].initial = str(ubicacion.urbanizacion.descripcion)
 
 
 class MedidorBuscado(ModelForm):

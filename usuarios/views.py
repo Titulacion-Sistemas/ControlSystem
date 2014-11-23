@@ -117,11 +117,9 @@ def ingreso(request):
 
 @login_required()
 def home(request):
-    try:
-        if request.user.sesion_sico:
-            return render_to_response('usuarios/home.html', {}, context_instance=RequestContext(request))
-    except:
-        pass
+    print 'Sesion : %s' % request.user.sesion_sico
+    if request.user.sesion_sico:
+        return render_to_response('usuarios/home.html', {}, context_instance=RequestContext(request))
     return HttpResponseRedirect('/login')
 
 def integracion(u, c, user):

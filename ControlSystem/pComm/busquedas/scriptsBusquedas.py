@@ -40,13 +40,13 @@ def llenarCliente(sesion, cli):
         )
         cli.ubicacionGeografica = ubicacion(
             parroquia=parroquia(
-                id=int(sesion.autECLPS.GetText(13, 13, 2)),
+                #id=int(sesion.autECLPS.GetText(13, 13, 2)),
                 descripcion=sesion.autECLPS.GetText(13, 17, 35)
             ),
             calle=calle(
                 descripcion=sesion.autECLPS.GetText(14, 18, 50),
             ),
-            intercepcion=calle(
+            interseccion=calle(
                 descripcion=sesion.autECLPS.GetText(15, 18, 50),
             ),
             urbanizacion=urbanizacion(
@@ -152,7 +152,23 @@ class buscar:
                         id=i - 9,
                         cuenta=sesion.autECLPS.GetText(i, 5, 7),
                         nombre=sesion.autECLPS.GetText(i, 13, 23),
-                        direccion=sesion.autECLPS.GetText(i, 37, 16),
+
+                        ubicacionGeografica=ubicacion(
+                            parroquia=parroquia(
+                                descripcion=''
+                            ),
+                            calle=calle(
+                                descripcion=sesion.autECLPS.GetText(i, 37, 16),
+                            ),
+                            interseccion=calle(
+                                descripcion=''
+                            ),
+                            urbanizacion=urbanizacion(
+                                descripcion=''
+                            )
+                        ),
+
+                        #direccion=sesion.autECLPS.GetText(i, 37, 16),
                         deuda=sesion.autECLPS.GetText(i, 59, 8),
                         meses=sesion.autECLPS.GetText(i, 68, 4)
                     )
@@ -183,7 +199,7 @@ class buscar:
             sesion.autECLOIA.WaitForInputReady()
             titulo = sesion.autECLPS.GetText(9, 16, 20)
 
-        formC = ClienteBuscado(coincidencias[0].geocodigo, instance=coincidencias[0])
+        formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica, instance=coincidencias[0])
 
         data = {
             'cClientes': coincidencias,
@@ -221,11 +237,27 @@ class buscar:
                 coincidencias.append(
                     cliente(
                         id=i - 9,
-                        urbanizacion=sesion.autECLPS.GetText(i, 8, 11),
+
+                        ubicacionGeografica=ubicacion(
+                            parroquia=parroquia(
+                                descripcion=''
+                            ),
+                            calle=calle(
+                                descripcion=sesion.autECLPS.GetText(i, 58, 20)
+                            ),
+                            interseccion=calle(
+                                descripcion=''
+                            ),
+                            urbanizacion=urbanizacion(
+                                descripcion=sesion.autECLPS.GetText(i, 8, 11)
+                            )
+                        ),
+                        #urbanizacion=sesion.autECLPS.GetText(i, 8, 11),
+                        #direccion=sesion.autECLPS.GetText(i, 58, 20),
                         estado=sesion.autECLPS.GetText(i, 20, 3),
                         cuenta=sesion.autECLPS.GetText(i, 24, 7),
                         nombre=sesion.autECLPS.GetText(i, 32, 25),
-                        direccion=sesion.autECLPS.GetText(i, 58, 20)
+
 
                     )
                 )
@@ -260,7 +292,7 @@ class buscar:
             sesion.autECLOIA.WaitForInputReady()
             titulo = sesion.autECLPS.GetText(9, 16, 20)
 
-        formC = ClienteBuscado(coincidencias[0].geocodigo, instance=coincidencias[0])
+        formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica, instance=coincidencias[0])
 
         data = {
             'cClientes': coincidencias,
@@ -297,7 +329,22 @@ class buscar:
                     cliente(
                         id=i - 9,
                         nombre=sesion.autECLPS.GetText(i, 5, 22),
-                        direccion=sesion.autECLPS.GetText(i, 28, 17),
+
+                        ubicacionGeografica=ubicacion(
+                            parroquia=parroquia(
+                                descripcion=''
+                            ),
+                            calle=calle(
+                                descripcion=sesion.autECLPS.GetText(i, 28, 17),
+                            ),
+                            interseccion=calle(
+                                descripcion=''
+                            ),
+                            urbanizacion=urbanizacion(
+                                descripcion=''
+                            )
+                        ),
+                        #direccion=sesion.autECLPS.GetText(i, 28, 17),
                         cuenta=sesion.autECLPS.GetText(i, 46, 7),
                         deuda=sesion.autECLPS.GetText(i, 59, 8),
                         meses=sesion.autECLPS.GetText(i, 68, 3)
@@ -329,7 +376,7 @@ class buscar:
             sesion.autECLOIA.WaitForInputReady()
             titulo = sesion.autECLPS.GetText(9, 16, 20)
 
-        formC = ClienteBuscado(coincidencias[0].geocodigo, instance=coincidencias[0])
+        formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica, instance=coincidencias[0])
 
         data = {
             'cClientes': coincidencias,
@@ -352,7 +399,7 @@ class buscar:
         sesion.autECLOIA.WaitForAppAvailable()
         sesion.autECLOIA.WaitForInputReady()
         sesion.autECLPS.SendKeys('[pf8]', 9, 5)
-        geocodigo=geocodigo.split(".")
+        geocodigo = geocodigo.split(".")
         sesion.autECLPS.SendKeys('[up]')
         sesion.autECLPS.SendKeys('[tab]')
         sesion.autECLPS.SendKeys(str('%02d' % (int(geocodigo[0]))), 8, 6)
@@ -393,11 +440,26 @@ class buscar:
                 coincidencias.append(
                     cliente(
                         id=i - 9,
-                        interseccion=ruta+'.'+str(sesion.autECLPS.GetText(i, 5, 7)).strip(),
+
+                        ubicacionGeografica=ubicacion(
+                            parroquia=parroquia(
+                                descripcion=''
+                            ),
+                            calle=calle(
+                                descripcion=sesion.autECLPS.GetText(i, 38, 14)
+                            ),
+                            interseccion=calle(
+                                descripcion=ruta + '.' + str(sesion.autECLPS.GetText(i, 5, 7)).strip()
+                            ),
+                            urbanizacion=urbanizacion(
+                                descripcion=sesion.autECLPS.GetText(i, 53, 10)
+                            )
+                        ),
+                        #interseccion=ruta+'.'+str(sesion.autECLPS.GetText(i, 5, 7)).strip(),
+                        #direccion=sesion.autECLPS.GetText(i, 38, 14),
+                        #urbanizacion=sesion.autECLPS.GetText(i, 53, 10),
                         cuenta=sesion.autECLPS.GetText(i, 13, 7),
                         nombre=sesion.autECLPS.GetText(i, 21, 16),
-                        direccion=sesion.autECLPS.GetText(i, 38, 14),
-                        urbanizacion=sesion.autECLPS.GetText(i, 53, 10),
                         deuda=sesion.autECLPS.GetText(i, 68, 8)
                     )
                 )
@@ -427,7 +489,7 @@ class buscar:
             sesion.autECLOIA.WaitForInputReady()
             titulo = sesion.autECLPS.GetText(9, 16, 20)
 
-        formC = ClienteBuscado(coincidencias[0].geocodigo, instance=coincidencias[0])
+        formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica, instance=coincidencias[0])
 
         data = {
             'cClientes': coincidencias,

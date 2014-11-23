@@ -104,6 +104,17 @@ class material(models.Model):
     class Meta:
         verbose_name_plural='Materiales'
 
+class rangoDeMaterial(models.Model):
+    detalleMaterialContrato=models.OneToOneField('detalleMaterialContrato')
+    inicio=models.DecimalField(max_digits=10, decimal_places=0)
+    final=models.DecimalField(max_digits=10, decimal_places=0)
+
+    def __unicode__(self):
+        return '%s => %s' % (str(self.inicio), str(self.final))
+
+    class Meta:
+        verbose_name_plural='Rango de Materiales'
+
 class detalleMaterialContrato(models.Model):
     material=models.ForeignKey('subtipoDeMaterial')
     contrato=models.ForeignKey('contrato')
