@@ -122,7 +122,7 @@ class detalleClienteReferencia(models.Model):
 
 class ubicacion(models.Model):
     parroquia=models.ForeignKey('parroquia')
-    calle=models.ForeignKey("calle", verbose_name='Dirección o Calle', related_name='calle', blank=True, null=True, default='')
+    calle=models.ForeignKey('calle', verbose_name='Dirección o Calle', related_name='calle', blank=True, null=True, default='')
     interseccion=models.ForeignKey("calle", related_name='interseccion', blank=True, null=True, default='')
     urbanizacion=models.ForeignKey("urbanizacion", blank=True, null=True, default='')
     caserio=models.ForeignKey("caserio", blank=True, null=True, default='')
@@ -131,7 +131,7 @@ class ubicacion(models.Model):
         return '%s; %s y %s; Urb: %s, Cas: %s' \
                % (self.parroquia,
                   self.calle,
-                  self.intersepcion,
+                  self.interseccion,
                   self.urbanizacion,
                   self.caserio
         )
@@ -158,19 +158,24 @@ class urbanizacion(models.Model):
         verbose_name='Urbanización'
 
 class calle(models.Model):
-    descripcion = models.CharField(max_length=50)
+    codigoDeCalle=models.CharField(max_length=6)
+    descripcion1 = models.CharField(max_length=40)
+    descripcion2 = models.CharField(max_length=40, blank=True, null=True, default='')
     tipoDeCalle = models.ForeignKey("tipoCalle")
 
     def __unicode__(self):
-        return self.descripcion
+        return '%s %s' % (self.descripcion1, self.descripcion2)
 
 class tipoCalle(models.Model):
+    id=models.CharField(max_length=2, primary_key=True, editable=True)
     descripcion = models.CharField(max_length=50, blank=True, null=True, default='')
 
     def __unicode__(self):
         return self.descripcion
 
-
+    class Meta:
+        verbose_name_plural="Tipos de Calle"
+        verbose_name='Tipo de Calle'
 
 
 
