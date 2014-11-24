@@ -18,7 +18,7 @@ class vitacoraBusquedas(models.Model):
         ('4', 'Geocodigo'),
     )
     tipoBusq = models.CharField(max_length=1, choices=TIPOSBUSQUEDA, default='1', verbose_name='Buscar por ')
-    fechaHora = models.DateTimeField(auto_now=True)
+    fechaHora = models.DateTimeField(auto_now=True, auto_now_add=True, editable=True)
     consulta = models.CharField(max_length=20, null=False, verbose_name='')
     usuario = models.ForeignKey(User)
     estadoRetorno = models.BooleanField(default=True)

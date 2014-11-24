@@ -10,7 +10,7 @@ class provincia(models.Model):
     descripcion = models.CharField(max_length=20, verbose_name='Nombre de Provincia', blank=True, null=True, default='')
 
     def __unicode__(self):
-        return self.descirpcion
+        return self.descripcion
 
 
 class canton(models.Model):
@@ -19,7 +19,7 @@ class canton(models.Model):
     provincia = models.ForeignKey(provincia, verbose_name='Nombre de Provincia')
 
     def __unicode__(self):
-        return self.descirpcion
+        return self.descripcion
 
     class Meta:
         verbose_name_plural="Cantones"
@@ -30,7 +30,7 @@ class parroquia(models.Model):
     canton = models.ForeignKey(canton, verbose_name='Nombre de Cantón', blank=True, null=True, default='')
 
     def __unicode__(self):
-        return self.descirpcion
+        return self.descripcion
 
 class sector(models.Model):
     num = models.PositiveSmallIntegerField(max_length=2)
@@ -38,7 +38,7 @@ class sector(models.Model):
     canton = models.ForeignKey(canton, verbose_name='Nombre de Cantón')
 
     def __unicode__(self):
-        return self.descirpcion
+        return self.descripcion
 
     class Meta:
         verbose_name_plural="Sectores"
@@ -50,7 +50,7 @@ class ruta(models.Model):
     sector = models.ForeignKey(sector, verbose_name='Nombre de Sector')
 
     def __unicode__(self):
-        return self.descirpcion
+        return self.descripcion
 
 
 class secuencia(models.Model):
@@ -86,6 +86,7 @@ class cliente(models.Model):
     #direccion = models.CharField(max_length=50, verbose_name='Dirección')
     #interseccion = models.CharField(max_length=50, verbose_name='Intersección')
     #urbanizacion = models.CharField(max_length=50, verbose_name='Urbanización')
+    telefono = models.CharField(max_length=10, verbose_name='Teléfono o Celular')
     tipo = models.CharField(max_length=1, choices=PERSONA, default='N')
     estado = models.CharField(max_length=20, verbose_name="Estado")
 
@@ -185,7 +186,7 @@ class actividad(models.Model):
     calibreDeLaRed=models.ForeignKey('calibreDeLaRed')
     estadoDeLaInstalacion=models.ForeignKey('estadoDeUnaInstalacion')
     tipoDeAcometidaRed=models.ForeignKey('tipoDeAcometidaRed', verbose_name='Tipo de Acometida o Red')
-    fechaDeActividad=models.DateTimeField(verbose_name='Fecha y Hora de la Actividad', auto_now=True, auto_now_add=True)
+    fechaDeActividad=models.DateTimeField(verbose_name='Fecha y Hora de la Actividad', auto_now=True, auto_now_add=True, editable=True)
     usoDeEnergia=models.ForeignKey('usoDeEnergia')
     usoEspecificoDelInmueble=models.ForeignKey('usoEspecificoDelInmueble')
     formaDeConexion=models.ForeignKey('formaDeConexion')
@@ -193,13 +194,15 @@ class actividad(models.Model):
     motivoDeSolicitud=models.ForeignKey('motivoParaSolicitud')
     tipoDeSolicitud=models.ForeignKey('tipoDeSolicitud')
 
-
     def __unicode__(self):
         return self.numeroDeSolicitud
 
     class Meta:
         verbose_name_plural="Actividades Realizadas"
         verbose_name='Actividad'
+
+
+
 
 
 
@@ -260,7 +263,7 @@ class tipoDeAcometidaRed(models.Model):
 
 class usoDeEnergia(models.Model):
     id=models.CharField(max_length=2, primary_key=True, verbose_name='Codigo')
-    descripcion=models.CharField(max_length=25)
+    descripcion=models.CharField(max_length=50)
 
     def __unicode__(self):
         return self.descripcion
@@ -283,18 +286,18 @@ class usoGeneralDelInmueble(models.Model):
 class usoEspecificoDelInmueble(models.Model):
     id=models.PositiveSmallIntegerField(verbose_name='codigo', editable=True, primary_key=True)
     usoGeneral=models.ForeignKey('usoGeneralDelInmueble', verbose_name='Uso General del Inmueble')
-    descripcion=models.CharField(max_length=25)
+    descripcion=models.CharField(max_length=50)
 
     def __unicode__(self):
-        return self.descripcion
+        return '%s %s' % (self.usoGeneral.descripcion, self.descripcion)
 
     class Meta:
         verbose_name_plural="Usos Específicos del Inmueble"
         verbose_name='Uso Específico del Inmueble'
 
 class modeloDeMedidor(models.Model):
-    id=models.CharField(max_length=6, primary_key=True, verbose_name='Codigo')
-    descripcion=models.CharField(max_length=25)
+    id=models.CharField(max_length=7, primary_key=True, verbose_name='Codigo')
+    descripcion=models.CharField(max_length=50)
 
     def __unicode__(self):
         return self.descripcion
@@ -316,7 +319,7 @@ class formaDeConexion(models.Model):
 
 class demanda(models.Model):
     id=models.PositiveSmallIntegerField(verbose_name='codigo', editable=True, primary_key=True)
-    descripcion=models.CharField(max_length=25)
+    descripcion=models.CharField(max_length=40)
 
     def __unicode__(self):
         return self.descripcion
@@ -454,3 +457,5 @@ class nivelSocieconomico(models.Model):
 #
 #    class Meta:
 #        verbose_name_plural=''
+
+
