@@ -26,24 +26,111 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <div class="panel panel-info">
-                    <div class="panel-heading text-center">
-                        <b>Datos de Abonado</b>
-                    </div>
-                    <div class="panel-body">
-                        {% bootstrap_form formCliente layout="horizontal" %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">
+                                <b>Abonado</b>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        {% bootstrap_field form.codigoDeCliente layout="horizontal" %}
+                                    </div>
+                                    <div class="col-md-4">
+                                    {% buttons %}
+                                        <button type="button" class="btn btn-primary">
+                                            {% bootstrap_icon "search" %} Buscar Abonado
+                                        </button>
+                                    {% endbuttons %}
+                                    </div>
+                                </div>
+                                {% bootstrap_field form.nombreDeCliente layout="horizontal" %}
+                                {% bootstrap_field form.cedula layout="horizontal" %}
+                                {% bootstrap_field form.telefono layout="horizontal" %}
+                                {% bootstrap_field form.lugar layout="horizontal" %}
+                                {% bootstrap_field form.calle layout="horizontal" %}
+                                {% bootstrap_field form.parroquia layout="horizontal" %}
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">
+                                <b>Medidor(Revisado)</b>
+                            </div>
+                            <div class="panel-body">
+                                {% bootstrap_field form.fabrica layout="horizontal" %}
+                                {% bootstrap_field form.serie layout="horizontal" %}
+                                {% bootstrap_field form.marca layout="horizontal" %}
+                                {% bootstrap_field form.voltaje layout="horizontal" %}
+                                {% bootstrap_field form.lectura layout="horizontal" %}
+                                {% bootstrap_field form.amp layout="horizontal" %}
+                                {% bootstrap_field form.fases layout="horizontal" %}
+                                {% bootstrap_field form.hilos layout="horizontal" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">
+                                <b>Materiales</b>
+                            </div>
+                            <div class="panel-body">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
             <div class="col-md-6">
-                <div class="panel panel-info">
-                    <div class="panel-heading text-center">
-                        <b>Datos del Varios</b>
-                    </div>
-                    <div class="panel-body">
-
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">
+                                <b>Periodo</b>
+                            </div>
+                            <div class="panel-body form-horizontal">
+                                {% bootstrap_field form.fecha layout="horizontal" %}
+                                {% bootstrap_field form.hora layout="horizontal" %}
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">
+                                <b>Materiales</b>
+                            </div>
+                            <div class="panel-body">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">
+                                <b>Materiales</b>
+                            </div>
+                            <div class="panel-body">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
         </div>
     </div>
