@@ -44,10 +44,10 @@ def llenarCliente(sesion, cli):
                 descripcion=sesion.autECLPS.GetText(13, 17, 35)
             ),
             calle=calle(
-                descripcion=sesion.autECLPS.GetText(14, 18, 50),
+                descripcion1=sesion.autECLPS.GetText(14, 18, 50),
             ),
             interseccion=calle(
-                descripcion=sesion.autECLPS.GetText(15, 18, 50),
+                descripcion1=sesion.autECLPS.GetText(15, 18, 50),
             ),
             urbanizacion=urbanizacion(
                 descripcion=sesion.autECLPS.GetText(16, 18, 50)
@@ -158,10 +158,10 @@ class buscar:
                                 descripcion=''
                             ),
                             calle=calle(
-                                descripcion=sesion.autECLPS.GetText(i, 37, 16),
+                                descripcion1=sesion.autECLPS.GetText(i, 37, 16),
                             ),
                             interseccion=calle(
-                                descripcion=''
+                                descripcion1=''
                             ),
                             urbanizacion=urbanizacion(
                                 descripcion=''
@@ -243,10 +243,10 @@ class buscar:
                                 descripcion=''
                             ),
                             calle=calle(
-                                descripcion=sesion.autECLPS.GetText(i, 58, 20)
+                                descripcion1=sesion.autECLPS.GetText(i, 58, 20)
                             ),
                             interseccion=calle(
-                                descripcion=''
+                                descripcion1=''
                             ),
                             urbanizacion=urbanizacion(
                                 descripcion=sesion.autECLPS.GetText(i, 8, 11)
@@ -335,10 +335,10 @@ class buscar:
                                 descripcion=''
                             ),
                             calle=calle(
-                                descripcion=sesion.autECLPS.GetText(i, 28, 17),
+                                descripcion1=sesion.autECLPS.GetText(i, 28, 17),
                             ),
                             interseccion=calle(
-                                descripcion=''
+                                descripcion1=''
                             ),
                             urbanizacion=urbanizacion(
                                 descripcion=''
@@ -446,10 +446,10 @@ class buscar:
                                 descripcion=''
                             ),
                             calle=calle(
-                                descripcion=sesion.autECLPS.GetText(i, 38, 14)
+                                descripcion1=sesion.autECLPS.GetText(i, 38, 14)
                             ),
                             interseccion=calle(
-                                descripcion=ruta + '.' + str(sesion.autECLPS.GetText(i, 5, 7)).strip()
+                                descripcion1=ruta + '.' + str(sesion.autECLPS.GetText(i, 5, 7)).strip()
                             ),
                             urbanizacion=urbanizacion(
                                 descripcion=sesion.autECLPS.GetText(i, 53, 10)

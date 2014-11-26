@@ -65,7 +65,7 @@ MIDDLEWARE_CLASSES = (
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 # Auto logout delay in minutes
-AUTO_LOGOUT_DELAY = 10 #equivalent to 10 minutes
+AUTO_LOGOUT_DELAY = 30 #equivalent to 10 minutes
 
 ROOT_URLCONF = 'ControlSystem.urls'
 

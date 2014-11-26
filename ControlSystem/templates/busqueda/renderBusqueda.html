@@ -99,7 +99,7 @@
                                 {{ c.nombre }}
                             </td>
                             <td>
-                                {{ c.ubicacionGeografica.calle.descripcion }}
+                                {{ c.ubicacionGeografica.calle.descripcion1 }}
                             </td>
                             <td class="text-right">
                                 {{ c.deuda }}
@@ -116,7 +116,7 @@
                                 {{ c.nombre }}
                             </td>
                             <td>
-                                {{ c.ubicacionGeografica.calle.descripcion }}
+                                {{ c.ubicacionGeografica.calle.descripcion1 }}
                             </td>
                             <td>
                                 {{ c.cuenta }}
@@ -151,7 +151,7 @@
                                     {{ c.nombre }}
                                 </td>
                                 <td>
-                                    {{ c.ubicacionGeografica.calle.descripcion }}
+                                    {{ c.ubicacionGeografica.calle.descripcion1 }}
                                 </td>
                             </tr>
                         {% endif %}
@@ -159,7 +159,7 @@
                         {% if tipo == '4' %}
                             <tr onclick="buscarAjax('4','{{ c.interseccion }}')">
                                 <td>
-                                    {{ c.ubicacionGeografica.interseccion.descripcion }}
+                                    {{ c.ubicacionGeografica.interseccion.descripcion1 }}
                                 </td>
                                 <td>
                                     {{ c.cuenta }}
@@ -168,7 +168,7 @@
                                     {{ c.nombre }}
                                 </td>
                                 <td>
-                                    {{ c.ubicacionGeografica.calle.descripcion }}
+                                    {{ c.ubicacionGeografica.calle.descripcion1 }}
                                 </td>
                                 <td>
                                     {{ c.ubicacionGeografica.urbanizacion.descripcion }}

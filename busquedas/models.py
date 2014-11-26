@@ -138,8 +138,8 @@ class ClienteBuscado(ModelForm):
         self.fields['provincia'].initial = str(geo.ruta.sector.canton.provincia.descripcion)
         self.fields['canton'].initial = str(geo.ruta.sector.canton.descripcion)
         self.fields['parroquia'].initial = str(ubicacion.parroquia.descripcion)
-        self.fields['direccion'].initial = str(ubicacion.calle.descripcion)
-        self.fields['interseccion'].initial = str(ubicacion.interseccion.descripcion)
+        self.fields['direccion'].initial = str(ubicacion.calle.descripcion1)
+        self.fields['interseccion'].initial = str(ubicacion.interseccion.descripcion1)
         self.fields['urbanizacion'].initial = str(ubicacion.urbanizacion.descripcion)
 
 

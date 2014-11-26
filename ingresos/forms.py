@@ -4,6 +4,7 @@ from django import forms
 from django.forms.extras import *
 from django.utils.timezone import now
 from ingresos.models import *
+from inventario.models import detalleMaterialContrato
 
 __author__ = 'Jhonsson'
 
@@ -85,7 +86,7 @@ class cambioDeMaterialForm(forms.Form):
 
 
     #Materiales
-    material=forms.ModelChoiceField(canton.objects, label='Cantón : ')
+    material=forms.ModelChoiceField(detalleMaterialContrato.objects, label='Materiales : ')
 
 
 

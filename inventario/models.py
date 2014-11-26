@@ -32,9 +32,11 @@ class medidor(models.Model):
 
     contrato=models.ForeignKey('detalleMaterialContrato', blank=True, null=True, default='')
     fabrica = models.CharField(max_length=11, verbose_name='Número de Fábrica')
+    fabricaFinal=models.CharField(max_length=11, verbose_name='Fin de rango de Medidores', blank=True, null=True, default='')
     serie = models.CharField(max_length=9, verbose_name='Numero de Serie')
+
     marca = models.ForeignKey(marca, verbose_name='Marca')
-    tipo = models.CharField(max_length=15, verbose_name='Tipo de Medidor')
+    tipo = models.CharField(max_length=15, verbose_name='Tipo de Medidor', blank=True, null=True, default='')
     digitos = models.PositiveSmallIntegerField(verbose_name='Dígitos')
     hilos = models.PositiveSmallIntegerField(verbose_name='Hilos')
     fases = models.PositiveSmallIntegerField(verbose_name='Fases')
@@ -50,23 +52,39 @@ class medidor(models.Model):
 
 
 
+class colorDeSello(models.Model):
+    color=models.CharField(max_length=20, verbose_name='Color de Sello')
 
+    def __unicode__(self):
+        return u'%s' % self.color
 
 class sello(models.Model):
     UBICACIONES={
         ('Caja', 'Caja'),
         ('Bornera', 'Bornera'),
         ('Panel', 'Panel'),
+        ('N/A', ''),
     }
     detalleMaterialContrato=models.ForeignKey('detalleMaterialContrato', verbose_name='Detalle de Material / Contrato')
+    utilizado=models.ForeignKey('ingresos.actividad', verbose_name='Utilizado en actividad', blank=True, null=True, default=None)
     numero=models.CharField(max_length=10, verbose_name='Número de Sello')
-    color=models.CharField(max_length=20, verbose_name='Color de Sello')
-    ubicacion=models.CharField(max_length=10, choices=UBICACIONES, default='Caja')
-    estado=models.PositiveSmallIntegerField(default=True)
+    finalNumero=models.CharField(max_length=10, verbose_name='Fin de rango de Número de Sello', blank=True, null=True, default='')
+    color=models.ForeignKey('colorDeSello', verbose_name='Color de Sello')
+    ubicacion=models.CharField(max_length=10, choices=UBICACIONES, default='')
+    estado=models.PositiveSmallIntegerField(default=0)
+
+    def __unicode__(self):
+        return '%s (%s)' % (
+            self.numero,
+            self.detalleMaterialContrato.contrato.descripcion
+        )
+
 
 class subtipoDeMaterial(models.Model):
     tipoDeMaterial=models.ForeignKey('tipoDeMaterial', verbose_name='Tipo de Material')
+    claveEnSico=models.CharField(max_length=9, verbose_name='Clave de Sico', blank=True, null=True, default='')
     descripcion=models.CharField(max_length=35, verbose_name='Subtipo de Material')
+    descargableDeSico=models.BooleanField(verbose_name='¿Se descarga para ingreso al Sistema SICO?', default=True)
 
     def __unicode__(self):
         return '%s%s%s' % (
@@ -104,16 +122,6 @@ class material(models.Model):
     class Meta:
         verbose_name_plural='Materiales'
 
-class rangoDeMaterial(models.Model):
-    detalleMaterialContrato=models.ForeignKey('detalleMaterialContrato')
-    inicio=models.DecimalField(max_digits=10, decimal_places=0)
-    final=models.DecimalField(max_digits=10, decimal_places=0)
-
-    def __unicode__(self):
-        return '%s => %s' % (str(self.inicio), str(self.final))
-
-    class Meta:
-        verbose_name_plural='Rango de Materiales'
 
 class detalleMaterialContrato(models.Model):
     material=models.ForeignKey('subtipoDeMaterial', blank=True, null=True, default=None)
@@ -123,9 +131,9 @@ class detalleMaterialContrato(models.Model):
     proporcionado=models.BooleanField(verbose_name='¿Provisto por CNEL EP?', default=True)
 
     def __unicode__(self):
-        return 'Contrato:%s - Material:%s' % (
-            self.contrato,
-            self.material
+        return u'%s (%s)' % (
+            str(self.material),
+            str(self.contrato)
         )
 
     class Meta:
@@ -134,13 +142,13 @@ class detalleMaterialContrato(models.Model):
 
 
 class servicio(models.Model):
-    descripcion=models.CharField(max_length=25, verbose_name='Servicio')
+    descripcion=models.CharField(max_length=100, verbose_name='Servicio')
 
     def __unicode__(self):
         return self.descripcion
 
 class rubro(models.Model):
-    descripcion=models.CharField(max_length=25, verbose_name='Rubro')
+    descripcion=models.CharField(max_length=100, verbose_name='Rubro')
 
     def __unicode__(self):
         return self.descripcion
@@ -150,6 +158,9 @@ class detalleRubro(models.Model):
     servicio=models.ForeignKey('servicio')
     rubro=models.ForeignKey('rubro')
     precioUnitario=models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __unicode__(self):
+        return u'%s' % self.rubro.descripcion
 
     class Meta:
         verbose_name_plural='Valores a Facturar de cada Contrato'

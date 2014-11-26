@@ -385,12 +385,12 @@ class cuadrilla(models.Model):
 class empleado(models.Model):
     nombre=models.CharField(max_length=20)
     apellido=models.CharField(max_length=20)
-    telefono=models.CharField(max_length=10)
-    correo=models.CharField(max_length=20)
-    observacion=models.CharField(max_length=50)
+    telefono=models.CharField(max_length=10, blank=True, null=True)
+    correo=models.CharField(max_length=20, blank=True, null=True)
+    observacion=models.CharField(max_length=50, blank=True, null=True)
 
     def __unicode__(self):
-        return '%s %s' % 8(
+        return '%s %s' % (
             self.nombre,
             self.apellido
         )
