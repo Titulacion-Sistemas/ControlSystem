@@ -25,20 +25,10 @@
             </ul>
         </li>
 
-        <li id="ingresar" class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-               data-hover="dropdown" data-delay="200" data-close-others="true">
-                Ingresar a Sico
-                <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu pull-right" role="menu">
-                {#<li class="divider"></li>#}
-                <li class="dropdown-header">Acciones: </li>
-                <li><a href="{% url 'cambioDeMaterial' %}">Cambio de Materiales</a></li>
-                <li><a href="{% url 'cambioDeMedidor' %}">Cambio de Medidor</a></li>
-                <li><a href="{% url 'servicioNuevo' %}">Servicio Nuevo</a></li>
-            </ul>
-        </li>
+
+        <li><a href="{% url 'ingresarSico' %}">Ingresar a Sico</a></li>
+
+
 
         <li><a href="#">Fotos</a></li>
 
@@ -49,5 +39,7 @@
         <li><a href="#">Avance de Obra</a></li>
 
         <li><a href="#">Contrato</a></li>
+
+        <li><a href="{% url 'logout' %}">Salir</a></li>
     {% endif %}
 </ul>

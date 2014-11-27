@@ -8,9 +8,12 @@ from busquedas.models import ClienteBuscado, MedidorBuscado
 from ingresos.models import cliente, secuencia, ruta, sector, canton, provincia, parroquia, ubicacion, calle, urbanizacion
 from inventario.models import medidor
 
+lectura = '0'
 
 def llenarCliente(sesion, cli):
     if isinstance(cli, cliente):
+        global lectura
+        lectura = sesion.autECLPS.GetText(8, 35, 9)
         cli = cliente()
         cli.ci_ruc = sesion.autECLPS.GetText(4, 10, 13)
         cli.cuenta = sesion.autECLPS.GetText(3, 27, 7)
@@ -82,6 +85,8 @@ def llenarMedidores(sesion):
     it = 9
     fab = sesion.autECLPS.GetText(it, 28, 1)
     while fab != " ":
+        if sesion.autECLPS.GetText(it, 59, 10) == ' 0/00/0000': lect=lectura
+        else: lect='-'
         sesion.autECLPS.SendKeys("1")
         sesion.autECLPS.SendKeys("[enter]")
         sesion.autECLOIA.WaitForAppAvailable()
@@ -100,6 +105,7 @@ def llenarMedidores(sesion):
                 instance=medidor(
                     fabrica=sesion.autECLPS.GetText(7, 29, 11),
                     serie=sesion.autECLPS.GetText(10, 29, 11),
+                    lectura=lect,
                     tipo=sesion.autECLPS.GetText(5, 29, 16),
                     digitos=sesion.autECLPS.GetText(11, 29, 2),
                     fases=sesion.autECLPS.GetText(11, 68, 2),

@@ -31,9 +31,7 @@ urlpatterns = patterns('',
     url(r'^multiply', multiply),
 
     #Ingresos
-    url(r'^ingresarcambiomaterial$', 'ingresos.views.cambioDeMaterial', name='cambioDeMaterial'),
-    url(r'^ingresarcambiomedidor$', 'ingresos.views.cambioDeMedidor', name='cambioDeMedidor'),
-    url(r'^ingresarservicionuevo$', 'ingresos.views.servicioNuevo', name='servicioNuevo'),
+    url(r'^ingresarsico$', 'ingresos.views.ingresarSico', name='ingresarSico'),
 
     #Servicios Web
     (r"^hello_world/", 'serviciosWeb.views.hello_world_service'),

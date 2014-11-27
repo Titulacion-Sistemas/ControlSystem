@@ -1,0 +1,294 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block title %}
+    Cambio de Material
+{% endblock %}
+
+{% block jquery %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+    {% if form.errors %}
+        <p>{{ form.errors }}</p>
+    {% endif %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">
+                                <b>Abonado</b>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        {% bootstrap_field form.codigoDeCliente layout="horizontal" %}
+                                    </div>
+                                    <div class="col-md-4 center-block">
+                                        {% buttons %}
+                                            <button type="button" class="btn btn-default">
+                                                {% bootstrap_icon "search" %} Buscar
+                                            </button>
+                                        {% endbuttons %}
+                                    </div>
+                                </div>
+                                {% bootstrap_field form.nombreDeCliente layout="horizontal" %}
+                                {% bootstrap_field form.cedula layout="horizontal" %}
+                                {% bootstrap_field form.telefono layout="horizontal" %}
+                                {% bootstrap_field form.lugar layout="horizontal" %}
+                                {% bootstrap_field form.calle layout="horizontal" %}
+                                {% bootstrap_field form.geocodigo layout="horizontal" %}
+                                <div class="row" >
+                                    <div class="col-md-12" style="margin-top: 10px;">
+                                        <div class="panel panel-info" style="margin-bottom: -5px;">
+                                            <div class="panel-heading text-center">
+                                                <b>Medidor - (Revisado / Desconectado)</b>
+                                            </div>
+                                            <div class="panel-body">
+                                                {% bootstrap_field form.fabricaRev layout="horizontal" %}
+                                                {% bootstrap_field form.serieRev layout="horizontal" %}
+                                                {% bootstrap_field form.marcaRev layout="horizontal" %}
+                                                {% bootstrap_field form.lecturaRev layout="horizontal" %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">
+                                <b>Medidor - (Instalado)</b>
+                            </div>
+                            <div class="panel-body">
+                                {% bootstrap_field form.medidor layout="horizontal" %}
+                                {% bootstrap_field form.fabricaInst layout="horizontal" %}
+                                {% bootstrap_field form.serieInst layout="horizontal" %}
+                                {% bootstrap_field form.marcaInst layout="horizontal" %}
+                                {% bootstrap_field form.lecturaInst layout="horizontal" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">
+                                <b>Sello(s)</b>
+                            </div>
+                            <div class="panel-body">
+                                {% bootstrap_field form.selloInst layout="horizontal" %}
+                                <div class="row">
+                                    <div class="col-md-8 center-block" style="margin-top: 5px;">
+                                        {% bootstrap_field form.ubicacionDeSello layout="horizontal" %}
+                                    </div>
+                                    <div class="col-md-4 center-block" style="margin-top: 5px;">
+                                        {% buttons %}
+                                            <button type="button" class="btn btn-default" title="Agregar a la lista de sellos">
+                                                {% bootstrap_icon "plus" %}
+                                            </button>
+                                            <button type="button" disabled="disabled" class="btn btn-default" title="Quitar de la lista de sellos">
+                                                {% bootstrap_icon "minus" %}
+                                            </button>
+                                        {% endbuttons %}
+                                    </div>
+                                </div>
+                                <div class="center-block">
+                                    <table class="table table-condensed table-hover">
+                                        <thead>
+                                            <td>
+                                                <b>Item</b>
+                                            </td>
+                                            <td>
+                                                <b>Sello</b>
+                                            </td>
+                                            <td>
+                                                <b>Ubicacion</b>
+                                            </td>
+                                        </thead>
+                                        <tbody id="detalleSellos">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">
+                                <b>Referencia(s)</b>
+                            </div>
+                            <div class="panel-body">
+                                {% bootstrap_field form.anterior layout="horizontal" %}
+                                {% bootstrap_field form.posterior layout="horizontal" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">
+                                <b>Fotos</b>
+                            </div>
+                            <div class="panel-body">
+                                {% bootstrap_field form.fotos layout="horizontal" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {#                                      Barra separadora de columnas                                      #}
+
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">
+                                <b>Actividad</b>
+                            </div>
+                            <div class="panel-body form-horizontal">
+                                {% bootstrap_field form.tipoDeActividad layout="horizontal" %}
+                                {% bootstrap_field form.fecha layout="horizontal" %}
+                                {% bootstrap_field form.hora layout="horizontal" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">
+                                <b>Materiales</b>
+                            </div>
+                            <div class="panel-body">
+                                {% bootstrap_field form.material layout="horizontal" %}
+                                <div class="row">
+                                    <div class="col-md-8 center-block" style="margin-top: 5px;">
+                                        {% bootstrap_field form.cantidad layout="horizontal" %}
+                                    </div>
+                                    <div class="col-md-4 center-block" style="margin-top: 5px;">
+                                        {% buttons %}
+                                            <button type="button" class="btn btn-default" title="Agregar a la lista">
+                                                {% bootstrap_icon "plus" %}
+                                            </button>
+                                            <button type="button" disabled="disabled" class="btn btn-default" title="Quitar de la lista">
+                                                {% bootstrap_icon "minus" %}
+                                            </button>
+                                        {% endbuttons %}
+                                    </div>
+                                </div>
+                                <div>
+                                    <table class="table table-condensed table-hover">
+                                        <thead>
+                                            <td>
+                                                <b>Item</b>
+                                            </td>
+                                            <td>
+                                                <b>Descripcion</b>
+                                            </td>
+                                            <td>
+                                                <b>Cantidad</b>
+                                            </td>
+                                            <td>
+                                                <b>Unidad</b>
+                                            </td>
+                                        </thead>
+                                        <tbody id="detalle">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading text-center">
+                                <b>Detalles de Instalacion</b>
+                            </div>
+                            <div class="panel-body form-horizontal small">
+                                <div class="row" >
+                                    <div class="col-md-12" style="margin-bottom: 0px;">
+                                        <div class="panel panel-info" style="margin-top: -5px; margin-bottom: 10px;">
+                                            <div class="panel-heading text-center">
+                                                <b>Instalador</b>
+                                            </div>
+                                            <div class="panel-body">
+                                                {% bootstrap_field form.instalador layout="horizontal" %}
+                                                {% bootstrap_field form.cuadrilla layout="horizontal" %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% bootstrap_field form.usoEspecificoDelInmueble layout="horizontal" %}
+                                {% bootstrap_field form.usoDeEnergia layout="horizontal" %}
+                                {% bootstrap_field form.materialDeLaRed layout="horizontal" %}
+                                {% bootstrap_field form.tipoDeConstruccion layout="horizontal" %}
+                                {% bootstrap_field form.ubicacionDelMedidor layout="horizontal" %}
+                                {% bootstrap_field form.tipoDeAcometidaRed layout="horizontal" %}
+                                {% bootstrap_field form.calibreDeLaRed layout="horizontal" %}
+                                {% bootstrap_field form.claseRed layout="horizontal" %}
+                                {% bootstrap_field form.estadoDeUnaInstalacion layout="horizontal" %}
+                                {% bootstrap_field form.formaDeConexion layout="horizontal" %}
+                                {% bootstrap_field form.demanda layout="horizontal" %}
+                                {% bootstrap_field form.motivoParaSolicitud layout="horizontal" %}
+                                {% bootstrap_field form.tipoDeSolicitud layout="horizontal" %}
+                                {% bootstrap_field form.tipoDeServicio layout="horizontal" %}
+                                {% bootstrap_field form.nivelSocieconomico layout="horizontal" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="col-md-2" style="margin-top: 50px;">
+                <div class="row center-block">
+                    <button type="button" class="btn btn-primary center-block">
+                        {% bootstrap_icon "floppy-disk" %} Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10" style="margin-top: 0px;">
+                <div class="panel panel-info" style="margin-top: -5px; margin-bottom: 10px;">
+                    <div class="panel-heading text-center">
+                        <b>Observaciones</b>
+                    </div>
+                    <div class="panel-body">
+                        {% bootstrap_field form.observaciones layout="inline" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block jqueryfooter %}{% endblock %}

@@ -34,7 +34,7 @@ class medidor(models.Model):
     fabrica = models.CharField(max_length=11, verbose_name='Número de Fábrica')
     fabricaFinal=models.CharField(max_length=11, verbose_name='Fin de rango de Medidores', blank=True, null=True, default='')
     serie = models.CharField(max_length=9, verbose_name='Numero de Serie')
-
+    lectura=models.CharField(max_length=10, verbose_name='Lectura', blank=True, null=True, default='0')
     marca = models.ForeignKey(marca, verbose_name='Marca')
     tipo = models.CharField(max_length=15, verbose_name='Tipo de Medidor', blank=True, null=True, default='')
     digitos = models.PositiveSmallIntegerField(verbose_name='Dígitos')
@@ -45,7 +45,7 @@ class medidor(models.Model):
     modelo=models.ForeignKey('ingresos.modeloDeMedidor', blank=True, null=True, default='')
 
     def __unicode__(self):
-        return '%s - %s' % (self.fabrica, self.serie)
+        return u'%s - ( %s ) - %s' % (self.fabrica, self.serie, self.marca.id)
 
     class Meta:
         verbose_name_plural='Medidores'
@@ -63,20 +63,20 @@ class sello(models.Model):
         ('Caja', 'Caja'),
         ('Bornera', 'Bornera'),
         ('Panel', 'Panel'),
-        ('N/A', ''),
+        ('N/A', 'N/A'),
     }
     detalleMaterialContrato=models.ForeignKey('detalleMaterialContrato', verbose_name='Detalle de Material / Contrato')
     utilizado=models.ForeignKey('ingresos.actividad', verbose_name='Utilizado en actividad', blank=True, null=True, default=None)
     numero=models.CharField(max_length=10, verbose_name='Número de Sello')
     finalNumero=models.CharField(max_length=10, verbose_name='Fin de rango de Número de Sello', blank=True, null=True, default='')
     color=models.ForeignKey('colorDeSello', verbose_name='Color de Sello')
-    ubicacion=models.CharField(max_length=10, choices=UBICACIONES, default='')
+    ubicacion=models.CharField(max_length=10, choices=UBICACIONES, default='N/A')
     estado=models.PositiveSmallIntegerField(default=0)
 
     def __unicode__(self):
-        return '%s (%s)' % (
+        return u'%s (%s)' % (
             self.numero,
-            self.detalleMaterialContrato.contrato.descripcion
+            self.color.color
         )
 
 

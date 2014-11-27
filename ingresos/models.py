@@ -164,7 +164,7 @@ class calle(models.Model):
     tipoDeCalle = models.ForeignKey("tipoCalle")
 
     def __unicode__(self):
-        return '%s %s' % (self.descripcion1, self.descripcion2)
+        return u'%s %s' % (self.descripcion1, self.descripcion2)
 
 class tipoCalle(models.Model):
     id=models.CharField(max_length=2, primary_key=True, editable=True)
@@ -183,7 +183,6 @@ class actividad(models.Model):
     numeroDeSolicitud=models.CharField(max_length=10, verbose_name='Número de Solicitud')
     cliente=models.ForeignKey('cliente')
     tipoDeConstruccion=models.ForeignKey('tipoDeConstruccion')
-    materialDeRed=models.CharField(max_length=5, blank=True, null=True, default='')
     instalador=models.ForeignKey('instalador')
     ubicacionDelMedidor=models.ForeignKey('ubicacionDelMedidor')
     claseRed=models.ForeignKey('claseRed')
@@ -199,6 +198,7 @@ class actividad(models.Model):
     demanda=models.ForeignKey('demanda')
     motivoDeSolicitud=models.ForeignKey('motivoParaSolicitud')
     tipoDeSolicitud=models.ForeignKey('tipoDeSolicitud')
+    materialDeLaRed=models.ForeignKey('materialDeLaRed')
 
     def __unicode__(self):
         return self.numeroDeSolicitud
@@ -217,7 +217,7 @@ class tipoDeConstruccion(models.Model):
     descripcion=models.CharField(max_length=50)
 
     def __unicode__(self):
-        return self.descripcion
+        return u'%s %s' % (str(self.id), self.descripcion)
 
     class Meta:
         verbose_name_plural="Tipos de Construcción"
@@ -228,7 +228,7 @@ class claseRed(models.Model):
     descripcion=models.CharField(max_length=25)
 
     def __unicode__(self):
-        return self.descripcion
+        return u'%s %s' % (str(self.id), self.descripcion)
 
     class Meta:
         verbose_name_plural="Clases de Red"
@@ -239,7 +239,7 @@ class calibreDeLaRed(models.Model):
     descripcion=models.CharField(max_length=25)
 
     def __unicode__(self):
-        return self.descripcion
+        return u'%s' % self.descripcion
 
     class Meta:
         verbose_name_plural="Calibres de Red"
@@ -261,7 +261,7 @@ class tipoDeAcometidaRed(models.Model):
     descripcion=models.CharField(max_length=25)
 
     def __unicode__(self):
-        return self.descripcion
+        return u'%s %s' % (self.id, self.descripcion)
 
     class Meta:
         verbose_name_plural="Tipos de Acometida o Red"
@@ -272,7 +272,7 @@ class usoDeEnergia(models.Model):
     descripcion=models.CharField(max_length=50)
 
     def __unicode__(self):
-        return self.descripcion
+        return u'%s %s' % (self.id, self.descripcion)
 
     class Meta:
         verbose_name_plural="Usos de Energía"
@@ -295,7 +295,7 @@ class usoEspecificoDelInmueble(models.Model):
     descripcion=models.CharField(max_length=50)
 
     def __unicode__(self):
-        return '%s %s' % (self.usoGeneral.descripcion, self.descripcion)
+        return u'%s %s' % (self.usoGeneral.descripcion, self.descripcion)
 
     class Meta:
         verbose_name_plural="Usos Específicos del Inmueble"
@@ -369,7 +369,7 @@ class ubicacionDelMedidor(models.Model):
     descripcion=models.CharField(max_length=25)
 
     def __unicode__(self):
-        return self.descripcion
+        return u'%s %s' % (str(self.id), self.descripcion)
 
     class Meta:
         verbose_name_plural="Ubicaciones posibles de Medidor"
@@ -449,11 +449,23 @@ class nivelSocieconomico(models.Model):
     descripcion=models.CharField(max_length=15)
 
     def __unicode__(self):
-        return self.descripcion
+        return u'%s %s' % (str(self.id), self.descripcion)
 
     class Meta:
         verbose_name_plural="Niveles Socioeconómicos"
         verbose_name='Nivel Socioeconómico'
+
+class materialDeLaRed(models.Model):
+    id=models.CharField(max_length=2, primary_key=True, verbose_name='Codigo')
+    descripcion=models.CharField(max_length=15)
+
+    def __unicode__(self):
+        return u'%s %s' % (str(self.id), str(self.descripcion))
+
+    class Meta:
+        verbose_name_plural="Materiales de la Red"
+        verbose_name='Material de la Red'
+
 
 #class sistemaDeMedicion(models.Model):
 #    pass

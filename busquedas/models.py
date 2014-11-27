@@ -159,6 +159,7 @@ class MedidorBuscado(ModelForm):
         fields = [
             'fabrica',
             'serie',
+            'lectura',
             'marc',
             'tipo',
             'tecnologia',
@@ -174,6 +175,7 @@ class MedidorBuscado(ModelForm):
         widgets = {
             'fabrica': forms.TextInput(attrs={'readonly': True}),
             'serie': forms.TextInput(attrs={'readonly': True}),
+            'lectura': forms.TextInput(attrs={'readonly': True}),
             'marc': forms.TextInput(attrs={'readonly': True}),
             'tipo': forms.TextInput(attrs={'readonly': True}),
             'tecnologia': forms.TextInput(attrs={'readonly': True}),
