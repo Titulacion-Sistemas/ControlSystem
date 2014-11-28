@@ -32,6 +32,7 @@ urlpatterns = patterns('',
 
     #Ingresos
     url(r'^ingresarsico$', 'ingresos.views.ingresarSico', name='ingresarSico'),
+    url(r'^bcliente', 'ingresos.views.buscarCliente', name='buscarCliente'),
 
     #Servicios Web
     (r"^hello_world/", 'serviciosWeb.views.hello_world_service'),

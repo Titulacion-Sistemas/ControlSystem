@@ -15,6 +15,195 @@
 
 {% block jquery %}
     {{ block.super }}
+        <script>
+            var matSeleccionado=0;
+            var sellSeleccionado=0;
+            $(document).ready(function(){
+
+                $('#buscarCliente').click(function(){
+
+                    var tipo='';
+                    var valorBuscado='';
+                    var cta = trim($('#id_codigoDeCliente').val());
+                    var med = trim($('#id_fabricaRev').val());
+                    var nom = trim($('#id_nombreDeCliente').val());
+                    var geo = trim($('#id_geocodigo').val());
+                    if(cta!=''){
+                        tipo='1';
+                        valorBuscado=cta;
+                    }else if(med!=''){
+                        tipo='2';
+                        valorBuscado=med;
+                    }else if(nom!=''){
+                        tipo='3';
+                        valorBuscado=nom;
+                    }else if(geo!=''){
+                        tipo='4';
+                        valorBuscado=geo;
+                    }else{
+
+                        return;
+                    }
+
+                    envioRecepcionAjax
+                    (
+                        '{% url 'buscarCliente' %}',
+                        {
+                            'tipo': tipo,
+                            'dato': valorBuscado
+                        }
+                    );
+                    $('#cargando').removeClass('hidden');
+
+                });
+
+                $('#id_tipoDeActividad').change(function(){
+                    var medidorInstalado = $('#medidorInstalado');
+                    if($('#id_tipoDeActividad option:selected').val()!='1'){
+                        medidorInstalado.removeClass('hidden');
+                    }else{
+                        $('#id_medidor').find("option[value='']").attr("selected",true);
+                        $('#id_fabricaInst').val('');
+                        $('#id_serieInst').val('');
+                        $('#id_marcaInst').val('');
+                        $('#id_lecturaInst').val('0');
+                        medidorInstalado.addClass('hidden');
+                    }
+                });
+
+                /**
+                 * MATERIALES
+                 */
+                $("#masMaterial").click(function(){
+
+                    var materialSeleccionado = $('#id_material option:selected');
+                    var cantidad = $('#id_cantidad').val();
+
+                    var item=$("#detalleMaterial tr").length;
+                    var nuevaFila="<tr id='matRow-"+(item)+"' " +
+                            "onclick='seleccionMat("+item+")'>";
+                    nuevaFila+="" +
+                    "<td class='center-block' id='matRowitem-"+(item)+"'>"+(item)+"</td>" +
+                    "<td class='"+materialSeleccionado.val()+"' id='matRowDesc-"+item+"'>"+materialSeleccionado.html()+"</td>" +
+                    "<td class='left' id='matRowCantidad-"+item+"'>"+cantidad+"</td>" +
+                    "<td class='center-block'>" +
+                        "<button type='button' class='btn btn-default btn-xs' onclick='eliminarMat("+item+")' " +
+                            "title='Quitar este Material de la lista'>" +
+                            "<span class='glyphicon glyphicon-minus'></span>" +
+                        "</button>" +
+                    "</td>" +
+                    "";
+                    nuevaFila+="</tr>";
+                    $("#detalleMaterial").append(nuevaFila);
+                    $("#id_material").find("option[value='"+materialSeleccionado.val()+"']").remove();
+                    $("#id_cantidad").val(1);
+                });
+
+                $("#id_cantidad").change(function(){
+                    if(matSeleccionado>0){
+                        $("[id='matRowCantidad-"+matSeleccionado+"']").html($("#id_cantidad").val());
+                    }
+                });
+
+                 /**
+                 * SELLOS
+                 */
+                $("#masSellos").click(function(){
+
+                    var selloSeleccionado = $('#id_selloInst option:selected');
+                    var ubicacionSeleccionada = $('#id_ubicacionDeSello option:selected');
+
+                    var item=$("#detalleSellos tr").length;
+                    var nuevaFila="<tr id='sellRow-"+(item)+"' " +
+                            "onclick='seleccionSell("+item+")'>";
+                    nuevaFila+="" +
+                    "<td class='center-block' id='sellRowitem-"+(item)+"'>"+(item)+"</td>" +
+                    "<td class='"+selloSeleccionado.val()+"' id='sellRowDesc-"+item+"'>"+selloSeleccionado.html()+"</td>" +
+                    "<td class='"+ubicacionSeleccionada.val()+"' id='sellRowUbic-"+item+"'>"+ubicacionSeleccionada.html()+"</td>" +
+                    "<td class='center-block'>" +
+                        "<button type='button' class='btn btn-default btn-xs' onclick='eliminarSell("+item+")' " +
+                            "title='Quitar este sllo de la lista'>" +
+                            "<span class='glyphicon glyphicon-minus'></span>" +
+                        "</button>" +
+                    "</td>" +
+                    "";
+                    nuevaFila+="</tr>";
+                    $("#detalleSellos").append(nuevaFila);
+                    $("#id_selloInst").find("option[value='"+selloSeleccionado.val()+"']").remove();
+                    $("#id_ubicacionDeSello").find("option[value='Caja']").attr("selected",true);
+                });
+                $("#id_ubicacionDeSello").change(function(){
+                    if(sellSeleccionado>0){
+                        $("[id='sellRowUbic-"+sellSeleccionado+"']").html($('#id_ubicacionDeSello option:selected').html());
+                    }
+                });
+
+            });
+
+
+            /**
+             * MATERIALES
+             */
+            function eliminarMat(fila){
+                // Obtenemos el total de columnas (tr) del id "tabla"
+                var descripcion=$("[id='matRowDesc-"+fila+"']");
+                $('#id_material').append(
+                        "<option value='"+descripcion.attr('class')+"'>" +
+                                ""+descripcion.html()+"" +
+                        "</option>"
+                );
+                $("[id='matRow-"+fila+"']").remove()
+            }
+            function seleccionMat(fila){
+                matSeleccionado=fila;
+                var trs=$('#detalleMaterial tr').length
+                var filaSeleccionada=$("[id='matRow-"+fila+"']");
+                var colorear=filaSeleccionada.css( "background-color" )=='rgba(0, 0, 0, 0)';
+                for(var i=0;i<trs;i++){
+                    $("[id='matRow-"+(i+1)+"']").css('background-color', 'transparent');
+                }
+                //$("#detalleMaterial").css('background-color', 'transparent');
+                if(colorear){
+                    filaSeleccionada.css('background-color', '#c4e3f3');
+                    $('#id_cantidad').val($("[id='matRowCantidad-"+fila+"']").html());
+                }
+                else{
+                    matSeleccionado=0;
+                }
+            }
+
+            /**
+             * SELLOS
+             */
+            function eliminarSell(fila){
+                // Obtenemos el total de columnas (tr) del id "tabla"
+                var descripcion=$("[id='sellRowDesc-"+fila+"']");
+                $('#id_selloInst').append(
+                        "<option value='"+descripcion.attr('class')+"'>" +
+                                ""+descripcion.html()+"" +
+                        "</option>"
+                );
+                $("[id='sellRow-"+fila+"']").remove()
+            }
+            function seleccionSell(fila){
+                sellSeleccionado=fila;
+                var trs=$('#detalleSellos tr').length
+                var filaSeleccionada=$("[id='sellRow-"+fila+"']");
+                var colorear=filaSeleccionada.css( "background-color" )=='rgba(0, 0, 0, 0)';
+                for(var i=0;i<trs;i++){
+                    $("[id='sellRow-"+(i+1)+"']").css('background-color', 'transparent');
+                }
+                //$("#detalleSellos").css('background-color', 'transparent');
+                if(colorear){
+                    filaSeleccionada.css('background-color', '#c4e3f3');
+                    $('#id_ubicacionDeSello').find("option[value='"+$("[id='sellRowUbic-"+fila+"']").html()+"']").attr("selected",true);
+                }
+                else{
+                    sellSeleccionado=0;
+                }
+            }
+
+        </script>
 {% endblock %}
 
 {% block content %}
@@ -34,12 +223,18 @@
                             </div>
                             <div class="panel-body">
                                 <div class="row">
-                                    <div class="col-md-8">
+                                    <div class="col-md-7 center-block" style="margin: 0; padding: 0 0 0 13px;">
                                         {% bootstrap_field form.codigoDeCliente layout="horizontal" %}
                                     </div>
-                                    <div class="col-md-4 center-block">
+                                    <div id="cargando" class="col-md-2 center-block hidden"
+                                         style="margin: 0; padding: 5px 0 0 0;">
+                                        <img src="{% static 'img/cargandoCliente.gif' %}"
+                                             height="24px" width="24px" class="center-block"
+                                             >
+                                    </div>
+                                    <div class="col-md-3 center-block" style="margin: 0; padding: 0;">
                                         {% buttons %}
-                                            <button type="button" class="btn btn-default">
+                                            <button id="buscarCliente" type="button" class="btn btn-default">
                                                 {% bootstrap_icon "search" %} Buscar
                                             </button>
                                         {% endbuttons %}
@@ -70,7 +265,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div id="medidorInstalado" class="row hidden">
                     <div class="col-md-12">
                         <div class="panel panel-info">
                             <div class="panel-heading text-center">
@@ -100,17 +295,14 @@
                                     </div>
                                     <div class="col-md-4 center-block" style="margin-top: 5px;">
                                         {% buttons %}
-                                            <button type="button" class="btn btn-default" title="Agregar a la lista de sellos">
+                                            <button type="button" id="masSellos" class="btn btn-default" title="Agregar a la lista de sellos">
                                                 {% bootstrap_icon "plus" %}
-                                            </button>
-                                            <button type="button" disabled="disabled" class="btn btn-default" title="Quitar de la lista de sellos">
-                                                {% bootstrap_icon "minus" %}
                                             </button>
                                         {% endbuttons %}
                                     </div>
                                 </div>
                                 <div class="center-block">
-                                    <table class="table table-condensed table-hover">
+                                    <table id="detalleSellos" class="table table-condensed table-hover">
                                         <thead>
                                             <td>
                                                 <b>Item</b>
@@ -122,8 +314,7 @@
                                                 <b>Ubicacion</b>
                                             </td>
                                         </thead>
-                                        <tbody id="detalleSellos">
-
+                                        <tbody >
                                         </tbody>
                                     </table>
                                 </div>
@@ -190,32 +381,33 @@
                                     </div>
                                     <div class="col-md-4 center-block" style="margin-top: 5px;">
                                         {% buttons %}
-                                            <button type="button" class="btn btn-default" title="Agregar a la lista">
+                                            <button type="button" class="btn btn-default"
+                                                    title="Agregar a la lista de materiales"
+                                                    id="masMaterial">
                                                 {% bootstrap_icon "plus" %}
-                                            </button>
-                                            <button type="button" disabled="disabled" class="btn btn-default" title="Quitar de la lista">
-                                                {% bootstrap_icon "minus" %}
                                             </button>
                                         {% endbuttons %}
                                     </div>
                                 </div>
                                 <div>
-                                    <table class="table table-condensed table-hover">
+                                    <table id="detalleMaterial" class="table table-condensed table-hover">
                                         <thead>
-                                            <td>
-                                                <b>Item</b>
-                                            </td>
-                                            <td>
-                                                <b>Descripcion</b>
-                                            </td>
-                                            <td>
-                                                <b>Cantidad</b>
-                                            </td>
-                                            <td>
-                                                <b>Unidad</b>
-                                            </td>
+                                            <tr>
+                                                <th>
+                                                    <b>Item</b>
+                                                </th>
+                                                <th>
+                                                    <b>Descripcion</b>
+                                                </th>
+                                                <th>
+                                                    <b>Cantidad</b>
+                                                </th>
+                                                <th>
+                                                    &nbsp;
+                                                </th>
+                                            </tr>
                                         </thead>
-                                        <tbody id="detalle">
+                                        <tbody >
 
                                         </tbody>
                                     </table>
@@ -276,7 +468,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-10" style="margin-top: 0px;">
+            <div class="col-md-10" style="margin-top: 0;">
                 <div class="panel panel-info" style="margin-top: -5px; margin-bottom: 10px;">
                     <div class="panel-heading text-center">
                         <b>Observaciones</b>

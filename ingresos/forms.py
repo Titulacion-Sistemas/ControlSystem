@@ -43,7 +43,7 @@ class cambioDeMaterialForm(forms.Form):
     #Cliente
     codigoDeCliente = forms.CharField(
         max_length=7, min_length=5, label='Código',
-        widget=forms.TextInput(attrs={'placeholder': 'Buscar por Cuenta'})
+        widget=forms.TextInput(attrs={'placeholder': 'Buscar por Cta.'})
     )
     nombreDeCliente = forms.CharField(
         max_length=50, min_length=6, label='Nombre',
