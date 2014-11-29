@@ -11,20 +11,23 @@ from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar as b
 def cuenta(request):
     return buscar(request, 1)
 
+
 @login_required()
 def medidor(request):
     return buscar(request, 2)
+
 
 @login_required()
 def nombre(request):
     return buscar(request, 3)
 
+
 @login_required()
 def geocodigo(request):
     return buscar(request, 4)
 
-def buscar(request, tipo):
 
+def buscar(request, tipo):
     form = BusquedaForm(initial={'usuario': request.user, 'estadoRetorno': True, })
 
     data = {
@@ -52,11 +55,19 @@ def comprobarFormBusqueda(form, sesionAct):
         form.save()
     else:
         print form.errors
-        dajax.append(
-            '#err',
-            'innerHTML',
-            render_to_response('busqueda/error.html', {'errors': dict(form.errors)['__all__']})
-        )
+
+        try:
+            dajax.append(
+                '#err',
+                'innerHTML',
+                render_to_response('busqueda/error.html', {'errors': dict(form.errors)['__all__']})
+            )
+        except:
+            dajax.append(
+                '#err',
+                'innerHTML',
+                render_to_response('busqueda/error.html', {'errors': dict(form.errors)['consulta']})
+            )
     return dajax.calls
 
 

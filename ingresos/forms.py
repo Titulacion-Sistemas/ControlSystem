@@ -11,14 +11,22 @@ __author__ = 'Jhonsson'
 
 
 class cambioDeMaterialForm(forms.Form):
-    # def __init__(self, contrato, *args, **kwargs):
-    #     super(cambioDeMaterialForm, self).__init__(*args, **kwargs)
-    #     self.fields['material'] = forms.ModelMultipleChoiceField(
-    #         detalleMaterialContrato.objects.filter(contrato=contrato), label='Materiales',
-    #         widget=forms.Select()
-    #     )
-    # medidores segun contrato...
-    # sellos segun contrato...
+    def __init__(self, contrato, *args, **kwargs):
+        super(cambioDeMaterialForm, self).__init__(*args, **kwargs)
+        self.fields['material'] = forms.ModelMultipleChoiceField(
+            detalleMaterialContrato.objects.filter(contrato=contrato), label='Materiales',
+            widget=forms.Select()
+        )
+        # medidores segun contrato...
+        self.fields['medidor'] = forms.ModelMultipleChoiceField(
+            medidor.objects.filter(contrato__contrato=contrato), label='En bodega',
+            widget=forms.Select()
+        )
+        # sellos segun contrato...
+        self.fields['selloInst'] = forms.ModelMultipleChoiceField(
+            sello.objects.filter(detalleMaterialContrato__contrato=contrato), label='En bodega',
+            widget=forms.Select()
+        )
 
     #actividad
     fecha = forms.DateField(
@@ -29,7 +37,7 @@ class cambioDeMaterialForm(forms.Form):
         initial=now().time(), label='Hora',
         widget=forms.TimeInput()
     )
-    tipoDeActividad=forms.ChoiceField(
+    tipoDeActividad = forms.ChoiceField(
         choices=(
             ('1', 'Cambio de Materiales'),
             ('2', 'Cambio de Medidor'),
@@ -47,7 +55,7 @@ class cambioDeMaterialForm(forms.Form):
     )
     nombreDeCliente = forms.CharField(
         max_length=50, min_length=6, label='Nombre',
-        widget=forms.TextInput(attrs={ 'placeholder': 'Buscar por Nombre'})
+        widget=forms.TextInput(attrs={'placeholder': 'Buscar por Nombre'})
     )
     cedula = forms.CharField(
         max_length=13, min_length=10, label='Cédula',
@@ -91,7 +99,7 @@ class cambioDeMaterialForm(forms.Form):
 
 
     #Medidor(Instalado)
-    medidor=forms.ModelChoiceField(
+    medidor = forms.ModelChoiceField(
         medidor.objects, label='En Bodega',
     )
     fabricaInst = forms.CharField(
@@ -118,71 +126,71 @@ class cambioDeMaterialForm(forms.Form):
         detalleMaterialContrato.objects, label='Materiales',
         widget=forms.Select()
     )
-    cantidad=forms.IntegerField(
+    cantidad = forms.IntegerField(
         max_value=99, min_value=1, label='Cantidad',
         initial=1
     )
 
 
     #Detalles de Instalación
-    usoEspecificoDelInmueble=forms.ModelChoiceField(
+    usoEspecificoDelInmueble = forms.ModelChoiceField(
         usoEspecificoDelInmueble.objects,
         label='Uso del Inmueble'
-    
+
     )
-    usoDeEnergia=forms.ModelChoiceField(
+    usoDeEnergia = forms.ModelChoiceField(
         usoDeEnergia.objects,
         label='Uso de Energía'
     )
-    materialDeLaRed=forms.ModelChoiceField(
+    materialDeLaRed = forms.ModelChoiceField(
         materialDeLaRed.objects,
         label='Material de la Red'
     )
-    tipoDeConstruccion=forms.ModelChoiceField(
+    tipoDeConstruccion = forms.ModelChoiceField(
         tipoDeConstruccion.objects,
         label='Tipo de Construcción'
     )
-    ubicacionDelMedidor=forms.ModelChoiceField(
+    ubicacionDelMedidor = forms.ModelChoiceField(
         ubicacionDelMedidor.objects,
         label='Ubicación del Medidor'
     )
-    tipoDeAcometidaRed=forms.ModelChoiceField(
+    tipoDeAcometidaRed = forms.ModelChoiceField(
         tipoDeAcometidaRed.objects,
         label='Tipo de Acometida'
     )
-    calibreDeLaRed=forms.ModelChoiceField(
+    calibreDeLaRed = forms.ModelChoiceField(
         calibreDeLaRed.objects,
         label='Calibre de Red'
     )
-    claseRed=forms.ModelChoiceField(
+    claseRed = forms.ModelChoiceField(
         claseRed.objects,
         label='Clase de Red'
     )
-    nivelSocieconomico=forms.ModelChoiceField(
+    nivelSocieconomico = forms.ModelChoiceField(
         nivelSocieconomico.objects,
         label='Nivel Socioeconómico'
     )
-    estadoDeUnaInstalacion=forms.ModelChoiceField(
+    estadoDeUnaInstalacion = forms.ModelChoiceField(
         estadoDeUnaInstalacion.objects,
         label='Estado de Instalación'
     )
-    formaDeConexion=forms.ModelChoiceField(
+    formaDeConexion = forms.ModelChoiceField(
         formaDeConexion.objects,
         label='Forma de Conexión'
     )
-    demanda=forms.ModelChoiceField(
+    demanda = forms.ModelChoiceField(
         demanda.objects,
         label='Demanda'
     )
-    motivoParaSolicitud=forms.ModelChoiceField(
+    motivoParaSolicitud = forms.ModelChoiceField(
         motivoParaSolicitud.objects,
         label='Motivo de Solicitud'
     )
-    tipoDeSolicitud=forms.ModelChoiceField(
+    tipoDeSolicitud = forms.ModelChoiceField(
         tipoDeSolicitud.objects,
         label='Tipo de Solicitud'
     )
-    tipoDeServicio=forms.ModelChoiceField(
+    tipoDeServicio = forms.ModelChoiceField(
         tipoDeServicio.objects,
         label='Tipo de Servicio',
     )
@@ -193,7 +201,7 @@ class cambioDeMaterialForm(forms.Form):
         sello.objects, label='En Bodega',
         widget=forms.Select()
     )
-    ubicacionDeSello=forms.ChoiceField(
+    ubicacionDeSello = forms.ChoiceField(
         choices=sello.UBICACIONES,
         label='Ubicacion',
         initial='Caja'
@@ -212,18 +220,18 @@ class cambioDeMaterialForm(forms.Form):
 
 
     #Instalador
-    instalador=forms.ModelChoiceField(
+    instalador = forms.ModelChoiceField(
         empleado.objects,
         label='Instalador'
     )
-    cuadrilla=forms.ModelChoiceField(
+    cuadrilla = forms.ModelChoiceField(
         cuadrilla.objects,
         label='Cuadrilla'
     )
 
 
     #Fotos
-    fotos=MultiFileField(max_num=10, min_num=1, maximum_file_size=1024*1024*5)
+    fotos = MultiFileField(max_num=10, min_num=1, maximum_file_size=1024 * 1024 * 5)
 
 
     #Observaciones

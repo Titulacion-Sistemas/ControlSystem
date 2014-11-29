@@ -65,7 +65,7 @@ class BusquedaForm(ModelForm):
                     raise forms.ValidationError("Error, Cuenta ingresada no válida.")
 
             if tb == '2':
-                if not c.isdigit() or len(c) > 11:
+                if not c.isdigit() or len(c) >= 11:
                     raise forms.ValidationError("Error, Número de medidor ingresado no válido.")
 
             if tb == '3':

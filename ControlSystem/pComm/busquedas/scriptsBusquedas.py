@@ -10,6 +10,7 @@ from inventario.models import medidor
 
 lectura = '0'
 
+
 def llenarCliente(sesion, cli):
     if isinstance(cli, cliente):
         global lectura
@@ -86,10 +87,12 @@ def llenarMedidores(sesion, paraIngreso=False):
     fab = sesion.autECLPS.GetText(it, 28, 1)
     while fab != " ":
         actualmenteInstalado = sesion.autECLPS.GetText(it, 59, 10) == ' 0/00/0000'
+
         if actualmenteInstalado:
-            lect=lectura
+            lect = lectura
         else:
-            lect='-'
+            lect = '-'
+
         if actualmenteInstalado or not paraIngreso:
             sesion.autECLPS.SendKeys("1")
             sesion.autECLPS.SendKeys("[enter]")
@@ -121,9 +124,9 @@ def llenarMedidores(sesion, paraIngreso=False):
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
             #sesion.autECLPS.Wait(900)
-            sesion.autECLPS.SendKeys("[down]")
-            sesion.autECLOIA.WaitForAppAvailable()
-            sesion.autECLOIA.WaitForInputReady()
+        sesion.autECLPS.SendKeys("[down]")
+        sesion.autECLOIA.WaitForAppAvailable()
+        sesion.autECLOIA.WaitForInputReady()
         it += 1
         fab = sesion.autECLPS.GetText(it, 28, 1)
 
@@ -193,8 +196,11 @@ class buscar:
         sesion.autECLOIA.WaitForAppAvailable()
         sesion.autECLOIA.WaitForInputReady()
 
-        coincidencias[0] = llenarCliente(sesion, coincidencias[0])
-        if paraIngreso and coincidencias[0].cuenta!=cuenta:
+        try:
+            coincidencias[0] = llenarCliente(sesion, coincidencias[0])
+        except:
+            coincidencias.append(llenarCliente(sesion, cliente()))
+        if paraIngreso and coincidencias[0].cuenta != cuenta:
             return None
 
         sesion.autECLPS.SendKeys('9')
@@ -202,7 +208,7 @@ class buscar:
         sesion.autECLOIA.WaitForAppAvailable()
         sesion.autECLOIA.WaitForInputReady()
 
-        medidores = llenarMedidores(sesion)
+        medidores = llenarMedidores(sesion, paraIngreso=paraIngreso)
 
         titulo = sesion.autECLPS.GetText(9, 16, 20)
         while titulo != 'CONSULTA DE CLIENTES':
@@ -211,7 +217,8 @@ class buscar:
             sesion.autECLOIA.WaitForInputReady()
             titulo = sesion.autECLPS.GetText(9, 16, 20)
 
-        formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica, instance=coincidencias[0])
+        formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica,
+                               instance=coincidencias[0])
 
         data = {
             'cClientes': coincidencias,
@@ -283,7 +290,10 @@ class buscar:
         sesion.autECLOIA.WaitForAppAvailable()
         sesion.autECLOIA.WaitForInputReady()
 
-        coincidencias.insert(0, llenarCliente(sesion, coincidencias[0]))
+        try:
+            coincidencias.insert(0, llenarCliente(sesion, coincidencias[0]))
+        except:
+            coincidencias.append(llenarCliente(sesion, cliente()))
 
         sesion.autECLPS.SendKeys('1')
         sesion.autECLPS.SendKeys('[enter]')
@@ -294,7 +304,7 @@ class buscar:
         sesion.autECLOIA.WaitForAppAvailable()
         sesion.autECLOIA.WaitForInputReady()
 
-        medidores = llenarMedidores(sesion)
+        medidores = llenarMedidores(sesion, paraIngreso=paraIngreso)
 
         titulo = sesion.autECLPS.GetText(9, 16, 20)
         while titulo != 'CONSULTA DE CLIENTES':
@@ -303,7 +313,8 @@ class buscar:
             sesion.autECLOIA.WaitForInputReady()
             titulo = sesion.autECLPS.GetText(9, 16, 20)
 
-        formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica, instance=coincidencias[0])
+        formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica,
+                               instance=coincidencias[0])
 
         data = {
             'cClientes': coincidencias,
@@ -371,14 +382,17 @@ class buscar:
         sesion.autECLOIA.WaitForAppAvailable()
         sesion.autECLOIA.WaitForInputReady()
 
-        coincidencias[0] = llenarCliente(sesion, coincidencias[0])
+        try:
+            coincidencias[0] = llenarCliente(sesion, coincidencias[0])
+        except:
+            coincidencias.append(llenarCliente(sesion, cliente()))
 
         sesion.autECLPS.SendKeys('9')
         sesion.autECLPS.SendKeys('[enter]')
         sesion.autECLOIA.WaitForAppAvailable()
         sesion.autECLOIA.WaitForInputReady()
 
-        medidores = llenarMedidores(sesion)
+        medidores = llenarMedidores(sesion, paraIngreso=paraIngreso)
 
         titulo = sesion.autECLPS.GetText(9, 16, 20)
         while titulo != 'CONSULTA DE CLIENTES':
@@ -387,7 +401,8 @@ class buscar:
             sesion.autECLOIA.WaitForInputReady()
             titulo = sesion.autECLPS.GetText(9, 16, 20)
 
-        formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica, instance=coincidencias[0])
+        formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica,
+                               instance=coincidencias[0])
 
         data = {
             'cClientes': coincidencias,
@@ -484,8 +499,11 @@ class buscar:
         sesion.autECLOIA.WaitForAppAvailable()
         sesion.autECLOIA.WaitForInputReady()
 
-        coincidencias.insert(0, llenarCliente(sesion, coincidencias[0]))
-        if paraIngreso and coincidencias[0].geocodigo!=geocodigo:
+        try:
+            coincidencias.insert(0, llenarCliente(sesion, coincidencias[0]))
+        except:
+            coincidencias.append(llenarCliente(sesion, cliente()))
+        if paraIngreso and coincidencias[0].geocodigo != geocodigo:
             return None
 
         sesion.autECLPS.SendKeys('9')
@@ -493,7 +511,7 @@ class buscar:
         sesion.autECLOIA.WaitForAppAvailable()
         sesion.autECLOIA.WaitForInputReady()
 
-        medidores = llenarMedidores(sesion)
+        medidores = llenarMedidores(sesion, paraIngreso=paraIngreso)
 
         titulo = sesion.autECLPS.GetText(9, 16, 20)
         while titulo != 'CONSULTA DE CLIENTES':
@@ -502,7 +520,8 @@ class buscar:
             sesion.autECLOIA.WaitForInputReady()
             titulo = sesion.autECLPS.GetText(9, 16, 20)
 
-        formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica, instance=coincidencias[0])
+        formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica,
+                               instance=coincidencias[0])
 
         data = {
             'cClientes': coincidencias,
