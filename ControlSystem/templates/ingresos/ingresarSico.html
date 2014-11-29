@@ -24,10 +24,10 @@
 
                     var tipo='';
                     var valorBuscado='';
-                    var cta = trim($('#id_codigoDeCliente').val());
-                    var med = trim($('#id_fabricaRev').val());
-                    var nom = trim($('#id_nombreDeCliente').val());
-                    var geo = trim($('#id_geocodigo').val());
+                    var cta = $('#id_codigoDeCliente').val();
+                    var med = $('#id_fabricaRev').val();
+                    var nom = $('#id_nombreDeCliente').val();
+                    var geo = $('#id_geocodigo').val();
                     if(cta!=''){
                         tipo='1';
                         valorBuscado=cta;
@@ -44,7 +44,7 @@
 
                         return;
                     }
-
+                    $('#cargando').removeClass('hidden');
                     envioRecepcionAjax
                     (
                         '{% url 'buscarCliente' %}',
@@ -53,7 +53,7 @@
                             'dato': valorBuscado
                         }
                     );
-                    $('#cargando').removeClass('hidden');
+
 
                 });
 
@@ -215,6 +215,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-5">
+                <div id="erroresB" class="row">
+                    <div class="col-md-12">
+                        <div id="err">
+
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-info">

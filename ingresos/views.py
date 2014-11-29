@@ -1,4 +1,5 @@
 from dajax.core import Dajax
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -6,7 +7,10 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django_ajax.decorators import ajax
+from busquedas.models import BusquedaForm, vitacoraBusquedas, MedidorBuscado
 from ingresos.forms import cambioDeMaterialForm
+from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar as b
+from inventario.models import medidor
 
 
 def ingresarSico(request):
@@ -28,9 +32,57 @@ def ingresarSico(request):
 
 @ajax()
 def buscarCliente(request):
-    a = int(request.POST['a'])
-    b = int(request.POST['b'])
-    c = a * b
+    tipo = request.POST['tipo']
+    dato = request.POST['dato']
+    print tipo
+    print dato
+    print request.user
+
     dajax = Dajax()
-    dajax.assign('#result', 'value', str(c))
+    try:
+        #validando ando
+        usuario = request.user
+        #usuario = User.objects.first()
+
+        bucqModel = vitacoraBusquedas(tipoBusq=tipo, consulta=dato, usuario=usuario, estadoRetorno=True)
+        form = BusquedaForm(
+            {'usuario': usuario.id, 'estadoRetorno': True, 'tipoBusq': tipo, 'consulta': dato},
+            instance=bucqModel
+        )
+
+        if form.is_valid():
+            buscando = b(usuario.sesion_sico)
+            data = buscando.busquedaDeTipo(tipo, dato, paraIngreso=True)
+            #data = MedidorBuscado('marca','tecnologia', 'tension', 'amp', 'fi', 'fd', 'li', 'ld',
+            #instance=medidor.objects.first())
+            if data != None:
+                dajax.assign('#id_codigoDeCliente', 'value', ''+str(data['formCliente'].instance.cuenta)+'')
+                dajax.assign('#id_nombreDeCliente', 'value', ''+str(data['formCliente'].instance.nombre)+'')
+                dajax.assign('#id_cedula', 'value', ''+str(data['formCliente'].instance.ci_ruc)+'')
+                dajax.assign('#id_lugar', 'value', ''+str(data['formCliente'].fields['parroquia'].initial)+'')
+                dajax.assign('#id_calle', 'value', ''+str(data['formCliente'].fields['direccion'].initial)+'')
+                dajax.assign('#id_geocodigo', 'value', ''+str(data['formCliente'].fields['geo'].initial)+'')
+                dajax.assign('#id_fabricaRev', 'value', ''+str(data['cMedidores'][0].instance.fabrica)+'')
+                dajax.assign('#id_serieRev', 'value', ''+str(data['cMedidores'][0].instance.serie)+'')
+                dajax.assign('#id_marcaRev', 'value', ''+str(data['cMedidores'][0].fields['marc'].initial)+'')
+                dajax.assign('#id_lecturaRev', 'value', ''+str(data['cMedidores'][0].instance.lectura)+'')
+            else:
+                dajax = mostraError(dajax, ['No Encontrato'])
+
+        else:
+            print form.errors
+            dajax = mostraError(dajax, dict(form.errors)['__all__'])
+
+    except: dajax = mostraError(dajax, ['No Encontrato'])
+
+    dajax.add_css_class('#cargando', 'hidden')
+
     return dajax.calls
+
+def mostraError(dajax, e):
+    dajax.append(
+        '#err',
+        'innerHTML',
+        render_to_response('busqueda/error.html', {'errors': e})
+    )
+    return dajax

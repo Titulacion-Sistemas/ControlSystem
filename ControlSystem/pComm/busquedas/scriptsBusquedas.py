@@ -80,46 +80,50 @@ def llenarCliente(sesion, cli):
     return cli
 
 
-def llenarMedidores(sesion):
+def llenarMedidores(sesion, paraIngreso=False):
     medidores = []
     it = 9
     fab = sesion.autECLPS.GetText(it, 28, 1)
     while fab != " ":
-        if sesion.autECLPS.GetText(it, 59, 10) == ' 0/00/0000': lect=lectura
-        else: lect='-'
-        sesion.autECLPS.SendKeys("1")
-        sesion.autECLPS.SendKeys("[enter]")
-        sesion.autECLOIA.WaitForAppAvailable()
-        sesion.autECLOIA.WaitForInputReady()
-        sesion.autECLPS.SendKeys("[down]")
-        medidores.append(
-            MedidorBuscado(
-                sesion.autECLPS.GetText(6, 29, 20),
-                sesion.autECLPS.GetText(16, 29, 18),
-                (sesion.autECLPS.GetText(17, 29, 23)).encode('utf-8'),
-                sesion.autECLPS.GetText(18, 29, 17),
-                sesion.autECLPS.GetText(8, 29, 10),
-                sesion.autECLPS.GetText(9, 29, 10),
-                sesion.autECLPS.GetText(8, 68, 9),
-                sesion.autECLPS.GetText(9, 68, 9),
-                instance=medidor(
-                    fabrica=sesion.autECLPS.GetText(7, 29, 11),
-                    serie=sesion.autECLPS.GetText(10, 29, 11),
-                    lectura=lect,
-                    tipo=sesion.autECLPS.GetText(5, 29, 16),
-                    digitos=sesion.autECLPS.GetText(11, 29, 2),
-                    fases=sesion.autECLPS.GetText(11, 68, 2),
-                    hilos=sesion.autECLPS.GetText(12, 29, 2)
+        actualmenteInstalado = sesion.autECLPS.GetText(it, 59, 10) == ' 0/00/0000'
+        if actualmenteInstalado:
+            lect=lectura
+        else:
+            lect='-'
+        if actualmenteInstalado or not paraIngreso:
+            sesion.autECLPS.SendKeys("1")
+            sesion.autECLPS.SendKeys("[enter]")
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+            sesion.autECLPS.SendKeys("[down]")
+            medidores.append(
+                MedidorBuscado(
+                    sesion.autECLPS.GetText(6, 29, 20),
+                    sesion.autECLPS.GetText(16, 29, 18),
+                    (sesion.autECLPS.GetText(17, 29, 23)).encode('utf-8'),
+                    sesion.autECLPS.GetText(18, 29, 17),
+                    sesion.autECLPS.GetText(8, 29, 10),
+                    sesion.autECLPS.GetText(9, 29, 10),
+                    sesion.autECLPS.GetText(8, 68, 9),
+                    sesion.autECLPS.GetText(9, 68, 9),
+                    instance=medidor(
+                        fabrica=sesion.autECLPS.GetText(7, 29, 11),
+                        serie=sesion.autECLPS.GetText(10, 29, 11),
+                        lectura=lect,
+                        tipo=sesion.autECLPS.GetText(5, 29, 16),
+                        digitos=sesion.autECLPS.GetText(11, 29, 2),
+                        fases=sesion.autECLPS.GetText(11, 68, 2),
+                        hilos=sesion.autECLPS.GetText(12, 29, 2)
+                    )
                 )
             )
-        )
-        sesion.autECLPS.SendKeys("[pf12]")
-        sesion.autECLOIA.WaitForAppAvailable()
-        sesion.autECLOIA.WaitForInputReady()
-        #sesion.autECLPS.Wait(900)
-        sesion.autECLPS.SendKeys("[down]")
-        sesion.autECLOIA.WaitForAppAvailable()
-        sesion.autECLOIA.WaitForInputReady()
+            sesion.autECLPS.SendKeys("[pf12]")
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+            #sesion.autECLPS.Wait(900)
+            sesion.autECLPS.SendKeys("[down]")
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
         it += 1
         fab = sesion.autECLPS.GetText(it, 28, 1)
 
@@ -134,7 +138,7 @@ class buscar:
 
 
     #busqueda por cuenta
-    def porCuenta(self, cuenta):
+    def porCuenta(self, cuenta, paraIngreso=False):
         sesion = self.sesion
         sesion.autECLPS.SendKeys('5', 9, 12)
         sesion.autECLPS.SendKeys('[enter]')
@@ -150,35 +154,35 @@ class buscar:
         sesion.autECLOIA.WaitForAppAvailable()
         sesion.autECLOIA.WaitForInputReady()
         coincidencias = []
+        if not paraIngreso:
+            for i in range(10, 21):
+                if sesion.autECLPS.GetText(i, 5, 7).strip() != "":
+                    coincidencias.append(
+                        cliente(
+                            id=i - 9,
+                            cuenta=sesion.autECLPS.GetText(i, 5, 7),
+                            nombre=sesion.autECLPS.GetText(i, 13, 23),
 
-        for i in range(10, 21):
-            if sesion.autECLPS.GetText(i, 5, 7).strip() != "":
-                coincidencias.append(
-                    cliente(
-                        id=i - 9,
-                        cuenta=sesion.autECLPS.GetText(i, 5, 7),
-                        nombre=sesion.autECLPS.GetText(i, 13, 23),
+                            ubicacionGeografica=ubicacion(
+                                parroquia=parroquia(
+                                    descripcion=''
+                                ),
+                                calle=calle(
+                                    descripcion1=sesion.autECLPS.GetText(i, 37, 16),
+                                ),
+                                interseccion=calle(
+                                    descripcion1=''
+                                ),
+                                urbanizacion=urbanizacion(
+                                    descripcion=''
+                                )
+                            ),
 
-                        ubicacionGeografica=ubicacion(
-                            parroquia=parroquia(
-                                descripcion=''
-                            ),
-                            calle=calle(
-                                descripcion1=sesion.autECLPS.GetText(i, 37, 16),
-                            ),
-                            interseccion=calle(
-                                descripcion1=''
-                            ),
-                            urbanizacion=urbanizacion(
-                                descripcion=''
-                            )
-                        ),
-
-                        #direccion=sesion.autECLPS.GetText(i, 37, 16),
-                        deuda=sesion.autECLPS.GetText(i, 59, 8),
-                        meses=sesion.autECLPS.GetText(i, 68, 4)
+                            #direccion=sesion.autECLPS.GetText(i, 37, 16),
+                            deuda=sesion.autECLPS.GetText(i, 59, 8),
+                            meses=sesion.autECLPS.GetText(i, 68, 4)
+                        )
                     )
-                )
 
         sesion.autECLPS.SendKeys('1', 10, 3)
         for j in range(4):
@@ -190,6 +194,8 @@ class buscar:
         sesion.autECLOIA.WaitForInputReady()
 
         coincidencias[0] = llenarCliente(sesion, coincidencias[0])
+        if paraIngreso and coincidencias[0].cuenta!=cuenta:
+            return None
 
         sesion.autECLPS.SendKeys('9')
         sesion.autECLPS.SendKeys('[enter]')
@@ -216,7 +222,7 @@ class buscar:
         return data
 
     #busqueda por medidor
-    def porMedidor(self, medidor):
+    def porMedidor(self, medidor, paraIngreso=False):
         sesion = self.sesion
         sesion.autECLPS.SendKeys('5', 9, 12)
         sesion.autECLPS.SendKeys('[enter]')
@@ -237,36 +243,35 @@ class buscar:
         sesion.autECLOIA.WaitForAppAvailable()
         sesion.autECLOIA.WaitForInputReady()
         coincidencias = []
+        if not paraIngreso:
+            for i in range(7, 18):
+                if sesion.autECLPS.GetText(i, 8, 11).strip() != "":
+                    coincidencias.append(
+                        cliente(
+                            id=i - 9,
 
-        for i in range(7, 18):
-            if sesion.autECLPS.GetText(i, 8, 11).strip() != "":
-                coincidencias.append(
-                    cliente(
-                        id=i - 9,
-
-                        ubicacionGeografica=ubicacion(
-                            parroquia=parroquia(
-                                descripcion=''
+                            ubicacionGeografica=ubicacion(
+                                parroquia=parroquia(
+                                    descripcion=''
+                                ),
+                                calle=calle(
+                                    descripcion1=sesion.autECLPS.GetText(i, 58, 20)
+                                ),
+                                interseccion=calle(
+                                    descripcion1=''
+                                ),
+                                urbanizacion=urbanizacion(
+                                    descripcion=sesion.autECLPS.GetText(i, 8, 11)
+                                )
                             ),
-                            calle=calle(
-                                descripcion1=sesion.autECLPS.GetText(i, 58, 20)
-                            ),
-                            interseccion=calle(
-                                descripcion1=''
-                            ),
-                            urbanizacion=urbanizacion(
-                                descripcion=sesion.autECLPS.GetText(i, 8, 11)
-                            )
-                        ),
-                        #urbanizacion=sesion.autECLPS.GetText(i, 8, 11),
-                        #direccion=sesion.autECLPS.GetText(i, 58, 20),
-                        estado=sesion.autECLPS.GetText(i, 20, 3),
-                        cuenta=sesion.autECLPS.GetText(i, 24, 7),
-                        nombre=sesion.autECLPS.GetText(i, 32, 25),
+                            #urbanizacion=sesion.autECLPS.GetText(i, 8, 11),
+                            #direccion=sesion.autECLPS.GetText(i, 58, 20),
+                            estado=sesion.autECLPS.GetText(i, 20, 3),
+                            cuenta=sesion.autECLPS.GetText(i, 24, 7),
+                            nombre=sesion.autECLPS.GetText(i, 32, 25),
 
-
+                        )
                     )
-                )
 
         sesion.autECLPS.SendKeys('2', 7, 4)
         #print 'se pulsoel 2'
@@ -310,7 +315,7 @@ class buscar:
 
 
     #busqueda por nombre
-    def porNombre(self, nombre):
+    def porNombre(self, nombre, paraIngreso=False):
         sesion = self.sesion
         sesion.autECLPS.SendKeys('5', 9, 12)
         sesion.autECLPS.SendKeys('[enter]')
@@ -328,34 +333,34 @@ class buscar:
         sesion.autECLOIA.WaitForAppAvailable()
         sesion.autECLOIA.WaitForInputReady()
         coincidencias = []
+        if not paraIngreso:
+            for i in range(9, 21):
+                if sesion.autECLPS.GetText(i, 5, 22).strip() != "":
+                    coincidencias.append(
+                        cliente(
+                            id=i - 9,
+                            nombre=sesion.autECLPS.GetText(i, 5, 22),
 
-        for i in range(9, 21):
-            if sesion.autECLPS.GetText(i, 5, 22).strip() != "":
-                coincidencias.append(
-                    cliente(
-                        id=i - 9,
-                        nombre=sesion.autECLPS.GetText(i, 5, 22),
-
-                        ubicacionGeografica=ubicacion(
-                            parroquia=parroquia(
-                                descripcion=''
+                            ubicacionGeografica=ubicacion(
+                                parroquia=parroquia(
+                                    descripcion=''
+                                ),
+                                calle=calle(
+                                    descripcion1=sesion.autECLPS.GetText(i, 28, 17),
+                                ),
+                                interseccion=calle(
+                                    descripcion1=''
+                                ),
+                                urbanizacion=urbanizacion(
+                                    descripcion=''
+                                )
                             ),
-                            calle=calle(
-                                descripcion1=sesion.autECLPS.GetText(i, 28, 17),
-                            ),
-                            interseccion=calle(
-                                descripcion1=''
-                            ),
-                            urbanizacion=urbanizacion(
-                                descripcion=''
-                            )
-                        ),
-                        #direccion=sesion.autECLPS.GetText(i, 28, 17),
-                        cuenta=sesion.autECLPS.GetText(i, 46, 7),
-                        deuda=sesion.autECLPS.GetText(i, 59, 8),
-                        meses=sesion.autECLPS.GetText(i, 68, 3)
+                            #direccion=sesion.autECLPS.GetText(i, 28, 17),
+                            cuenta=sesion.autECLPS.GetText(i, 46, 7),
+                            deuda=sesion.autECLPS.GetText(i, 59, 8),
+                            meses=sesion.autECLPS.GetText(i, 68, 3)
+                        )
                     )
-                )
 
         sesion.autECLPS.SendKeys('1', 9, 3)
         for j in range(4):
@@ -394,7 +399,7 @@ class buscar:
 
 
     #busqueda por ruta de lectura
-    def porGeocodigo(self, geocodigo):
+    def porGeocodigo(self, geocodigo, paraIngreso=False):
         sesion = self.sesion
         sesion.autECLPS.SendKeys('5', 9, 12)
         sesion.autECLPS.SendKeys('[enter]')
@@ -440,35 +445,35 @@ class buscar:
         sesion.autECLOIA.WaitForInputReady()
         ruta = str(sesion.autECLPS.GetText(4, 16, 13)).strip()
         coincidencias = []
+        if not paraIngreso:
+            for i in range(9, 21):
+                if sesion.autECLPS.GetText(i, 5, 7).strip() != "":
+                    coincidencias.append(
+                        cliente(
+                            id=i - 9,
 
-        for i in range(9, 21):
-            if sesion.autECLPS.GetText(i, 5, 7).strip() != "":
-                coincidencias.append(
-                    cliente(
-                        id=i - 9,
-
-                        ubicacionGeografica=ubicacion(
-                            parroquia=parroquia(
-                                descripcion=''
+                            ubicacionGeografica=ubicacion(
+                                parroquia=parroquia(
+                                    descripcion=''
+                                ),
+                                calle=calle(
+                                    descripcion1=sesion.autECLPS.GetText(i, 38, 14)
+                                ),
+                                interseccion=calle(
+                                    descripcion1=ruta + '.' + str(sesion.autECLPS.GetText(i, 5, 7)).strip()
+                                ),
+                                urbanizacion=urbanizacion(
+                                    descripcion=sesion.autECLPS.GetText(i, 53, 10)
+                                )
                             ),
-                            calle=calle(
-                                descripcion1=sesion.autECLPS.GetText(i, 38, 14)
-                            ),
-                            interseccion=calle(
-                                descripcion1=ruta + '.' + str(sesion.autECLPS.GetText(i, 5, 7)).strip()
-                            ),
-                            urbanizacion=urbanizacion(
-                                descripcion=sesion.autECLPS.GetText(i, 53, 10)
-                            )
-                        ),
-                        #interseccion=ruta+'.'+str(sesion.autECLPS.GetText(i, 5, 7)).strip(),
-                        #direccion=sesion.autECLPS.GetText(i, 38, 14),
-                        #urbanizacion=sesion.autECLPS.GetText(i, 53, 10),
-                        cuenta=sesion.autECLPS.GetText(i, 13, 7),
-                        nombre=sesion.autECLPS.GetText(i, 21, 16),
-                        deuda=sesion.autECLPS.GetText(i, 68, 8)
+                            #interseccion=ruta+'.'+str(sesion.autECLPS.GetText(i, 5, 7)).strip(),
+                            #direccion=sesion.autECLPS.GetText(i, 38, 14),
+                            #urbanizacion=sesion.autECLPS.GetText(i, 53, 10),
+                            cuenta=sesion.autECLPS.GetText(i, 13, 7),
+                            nombre=sesion.autECLPS.GetText(i, 21, 16),
+                            deuda=sesion.autECLPS.GetText(i, 68, 8)
+                        )
                     )
-                )
 
         sesion.autECLPS.SendKeys('1', 9, 3)
         for j in range(4):
@@ -480,6 +485,8 @@ class buscar:
         sesion.autECLOIA.WaitForInputReady()
 
         coincidencias.insert(0, llenarCliente(sesion, coincidencias[0]))
+        if paraIngreso and coincidencias[0].geocodigo!=geocodigo:
+            return None
 
         sesion.autECLPS.SendKeys('9')
         sesion.autECLPS.SendKeys('[enter]')
@@ -505,15 +512,20 @@ class buscar:
 
         return data
 
-    def renderBusqueda(self, tipo, data):
+
+    def busquedaDeTipo(self, tipo, data, paraIngreso=False):
         operaciones = {
             '1': self.porCuenta,
             '2': self.porMedidor,
             '3': self.porNombre,
             '4': self.porGeocodigo
         }
+        return operaciones[str(tipo)](data, paraIngreso=paraIngreso)
 
-        data = operaciones[str(tipo)](data)
+
+    def renderBusqueda(self, tipo, data):
+
+        data = self.busquedaDeTipo(tipo, data)
         data['tipo'] = tipo
 
         return render_to_response('busqueda/renderBusqueda.html', data)
