@@ -20,8 +20,45 @@
             var sellSeleccionado=0;
             $(document).ready(function(){
 
-                $('#buscarCliente').click(function(){
+                $("#id_ubicacionDeSello").find("option[value='Caja']").attr("selected",true);
 
+                $('#id_serieRev').change(function(){
+                    if($('#id_tipoDeSolicitud option:selected').val() == '11'){
+                        cambiosPorVoltaje($('#id_serieRev').val())
+                    }
+                });
+
+                $('#id_serieInst').change(function(){
+                    cambiosPorVoltaje($('#id_serieInst').val())
+                });
+
+                $('#id_medidor').change(function(){
+                    envioRecepcionAjax
+                    (
+                        '{% url 'buscarMedidor' %}',
+                        {
+                            'medidor': $('#id_medidor option:selected').val()
+                        }
+                    );
+                });
+
+                $('#buscarReferencia').click(function(){
+
+                    var valorBuscado=$('#id_anterior').val();
+                    if(valorBuscado == ''){
+                        return;
+                    }
+                    $('#cargandoRef').removeClass('hidden');
+                    envioRecepcionAjax
+                    (
+                        '{% url 'buscarReferencia' %}',
+                        {
+                            'dato': valorBuscado
+                        }
+                    );
+                });
+
+                $('#buscarCliente').click(function(){
                     var tipo='';
                     var valorBuscado='';
                     var cta = $('#id_codigoDeCliente').val();
@@ -41,7 +78,6 @@
                         tipo='4';
                         valorBuscado=geo;
                     }else{
-
                         return;
                     }
                     $('#cargando').removeClass('hidden');
@@ -53,22 +89,42 @@
                             'dato': valorBuscado
                         }
                     );
-
-
                 });
 
-                $('#id_tipoDeActividad').change(function(){
+                $('#id_nivelSocieconomico').addClass('hidden');
+                $("[for='id_nivelSocieconomico']").addClass('hidden')
+                $('#id_tipoDeSolicitud').change(function(){
                     var medidorInstalado = $('#medidorInstalado');
-                    if($('#id_tipoDeActividad option:selected').val()!='1'){
+                    if($('#id_tipoDeSolicitud option:selected').val()!='11'){
                         medidorInstalado.removeClass('hidden');
                     }else{
                         $('#id_medidor').find("option[value='']").attr("selected",true);
                         $('#id_fabricaInst').val('');
                         $('#id_serieInst').val('');
                         $('#id_marcaInst').val('');
+                        $('#id_tipoDeMedidor').val('');
                         $('#id_lecturaInst').val('0');
                         medidorInstalado.addClass('hidden');
+                        $('#id_serieRev').change();
                     }
+                    if($('#id_tipoDeSolicitud option:selected').val()=='1'){
+                        $('#buscarCliente').prop('disabled', true);
+                        $('#id_cedula').prop('readonly', false);
+                        $('#id_cedula').prop('placeholder', 'Digite la Cédula del Cliente');
+                        $('#Referencia').removeClass('hidden');
+                        $('#medRevisado').addClass('hidden')
+                        $('#id_nivelSocieconomico').removeClass('hidden');
+                        $("[for='id_nivelSocieconomico']").removeClass('hidden')
+                    }else{
+                        $('#buscarCliente').prop('disabled', false);
+                        $('#id_cedula').prop('placeholder', '');
+                        $('#id_cedula').prop('readonly', true);
+                        $('#Referencia').addClass('hidden');
+                        $('#medRevisado').removeClass('hidden')
+                        $('#id_nivelSocieconomico').addClass('hidden');
+                        $("[for='id_nivelSocieconomico']").addClass('hidden')
+                    }
+
                 });
 
                 /**
@@ -140,6 +196,22 @@
 
             });
 
+            function cambiosPorVoltaje(ser){
+                if (ser!=''){
+                    var r = ser.split("-")[0];
+                    if((parseInt(r) % 2)==0){
+                        $("#id_formaDeConexion").find("option[value='4']").attr("selected",true);
+                        $("#id_tipoDeServicio").find("option[value='13B']").attr("selected",true);
+                    }
+                    else{
+                        $("#id_formaDeConexion").find("option[value='3']").attr("selected",true);
+                        $("#id_tipoDeServicio").find("option[value='12B']").attr("selected",true);
+                    }
+                }else{
+                    $("#id_formaDeConexion").find("option[value='']").attr("selected",true);
+                    $("#id_tipoDeServicio").find("option[value='']").attr("selected",true);
+                }
+            }
 
             /**
              * MATERIALES
@@ -253,7 +325,7 @@
                                 {% bootstrap_field form.lugar layout="horizontal" %}
                                 {% bootstrap_field form.calle layout="horizontal" %}
                                 {% bootstrap_field form.geocodigo layout="horizontal" %}
-                                <div class="row" >
+                                <div class="row" id="medRevisado">
                                     <div class="col-md-12" style="margin-top: 10px;">
                                         <div class="panel panel-info" style="margin-bottom: -5px;">
                                             <div class="panel-heading text-center">
@@ -283,6 +355,7 @@
                                 {% bootstrap_field form.fabricaInst layout="horizontal" %}
                                 {% bootstrap_field form.serieInst layout="horizontal" %}
                                 {% bootstrap_field form.marcaInst layout="horizontal" %}
+                                {% bootstrap_field form.tipoDeMedidor layout="horizontal" %}
                                 {% bootstrap_field form.lecturaInst layout="horizontal" %}
                             </div>
                         </div>
@@ -329,15 +402,42 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row hidden" id="Referencia">
                     <div class="col-md-12">
                         <div class="panel panel-info">
                             <div class="panel-heading text-center">
                                 <b>Referencia(s)</b>
                             </div>
                             <div class="panel-body">
-                                {% bootstrap_field form.anterior layout="horizontal" %}
-                                {% bootstrap_field form.posterior layout="horizontal" %}
+                                <div id="erroresR" class="row">
+                                    <div class="col-md-12">
+                                        <div id="errRef">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-7 center-block" style="margin: 0; padding: 0 0 0 13px;">
+                                        {% bootstrap_field form.anterior layout="horizontal" %}
+                                    </div>
+                                    <div id="cargandoRef" class="col-md-2 center-block hidden"
+                                         style="margin: 0; padding: 5px 0 0 0;">
+                                        <img src="{% static 'img/cargandoCliente.gif' %}"
+                                             height="24px" width="24px" class="center-block"
+                                             >
+                                    </div>
+                                    <div class="col-md-3 center-block" style="margin: 0; padding: 0;">
+                                        {% buttons %}
+                                            <button id="buscarReferencia" type="button" class="btn btn-default">
+                                                {% bootstrap_icon "search" %} Buscar
+                                            </button>
+                                        {% endbuttons %}
+                                    </div>
+                                </div>
+
+                                {% bootstrap_field form.serieAnteriror layout="horizontal" %}
+                                {% bootstrap_field form.marcaAnteriror layout="horizontal" %}
+                                {% bootstrap_field form.cuentaAnteriror layout="horizontal" %}
                             </div>
                         </div>
                     </div>
@@ -367,7 +467,8 @@
                                 <b>Actividad</b>
                             </div>
                             <div class="panel-body form-horizontal">
-                                {% bootstrap_field form.tipoDeActividad layout="horizontal" %}
+                                {% bootstrap_field form.tipoDeSolicitud layout="horizontal" %}
+                                {% bootstrap_field form.motivoParaSolicitud layout="horizontal" %}
                                 {% bootstrap_field form.fecha layout="horizontal" %}
                                 {% bootstrap_field form.hora layout="horizontal" %}
                             </div>
@@ -443,20 +544,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                {% bootstrap_field form.usoEspecificoDelInmueble layout="horizontal" %}
-                                {% bootstrap_field form.usoDeEnergia layout="horizontal" %}
                                 {% bootstrap_field form.materialDeLaRed layout="horizontal" %}
+                                {% bootstrap_field form.formaDeConexion layout="horizontal" %}
+                                {% bootstrap_field form.estadoDeUnaInstalacion layout="horizontal" %}
                                 {% bootstrap_field form.tipoDeConstruccion layout="horizontal" %}
                                 {% bootstrap_field form.ubicacionDelMedidor layout="horizontal" %}
                                 {% bootstrap_field form.tipoDeAcometidaRed layout="horizontal" %}
                                 {% bootstrap_field form.calibreDeLaRed layout="horizontal" %}
+                                {% bootstrap_field form.usoDeEnergia layout="horizontal" %}
                                 {% bootstrap_field form.claseRed layout="horizontal" %}
-                                {% bootstrap_field form.estadoDeUnaInstalacion layout="horizontal" %}
-                                {% bootstrap_field form.formaDeConexion layout="horizontal" %}
-                                {% bootstrap_field form.demanda layout="horizontal" %}
-                                {% bootstrap_field form.motivoParaSolicitud layout="horizontal" %}
-                                {% bootstrap_field form.tipoDeSolicitud layout="horizontal" %}
                                 {% bootstrap_field form.tipoDeServicio layout="horizontal" %}
+                                {% bootstrap_field form.usoEspecificoDelInmueble layout="horizontal" %}
+                                {% bootstrap_field form.demanda layout="horizontal" %}
                                 {% bootstrap_field form.nivelSocieconomico layout="horizontal" %}
                             </div>
                         </div>

@@ -239,7 +239,7 @@ class calibreDeLaRed(models.Model):
     descripcion=models.CharField(max_length=25)
 
     def __unicode__(self):
-        return u'%s' % self.descripcion
+        return u'%d %s' % (self.id, self.descripcion)
 
     class Meta:
         verbose_name_plural="Calibres de Red"
@@ -250,7 +250,7 @@ class estadoDeUnaInstalacion(models.Model):
     descripcion=models.CharField(max_length=25)
 
     def __unicode__(self):
-        return self.descripcion
+        return u'%d %s' % (self.id, self.descripcion)
 
     class Meta:
         verbose_name_plural="Estados posibles de una Instalación"
@@ -295,7 +295,7 @@ class usoEspecificoDelInmueble(models.Model):
     descripcion=models.CharField(max_length=50)
 
     def __unicode__(self):
-        return u'%s %s' % (self.usoGeneral.descripcion, self.descripcion)
+        return u'%d %s %s' % (self.id, self.usoGeneral.descripcion, self.descripcion)
 
     class Meta:
         verbose_name_plural="Usos Específicos del Inmueble"
@@ -317,7 +317,7 @@ class formaDeConexion(models.Model):
     descripcion=models.CharField(max_length=50)
 
     def __unicode__(self):
-        return self.descripcion
+        return u'%d %s' % (self.id, self.descripcion)
 
     class Meta:
         verbose_name_plural="Formas de Conexión"
@@ -328,14 +328,14 @@ class demanda(models.Model):
     descripcion=models.CharField(max_length=40)
 
     def __unicode__(self):
-        return self.descripcion
+        return u'%s %s' % (str(self.id), self.descripcion)
 
 class motivoParaSolicitud(models.Model):
     id=models.PositiveSmallIntegerField(verbose_name='codigo', editable=True, primary_key=True)
     descripcion=models.CharField(max_length=25)
 
     def __unicode__(self):
-        return self.descripcion
+        return u'%d %s' % (self.id, self.descripcion)
 
     class Meta:
         verbose_name_plural="Motivos para Solicitud"
@@ -346,7 +346,7 @@ class tipoDeSolicitud(models.Model):
     descripcion=models.CharField(max_length=25)
 
     def __unicode__(self):
-        return self.descripcion
+        return u'%d %s' % (self.id, self.descripcion)
 
     class Meta:
         verbose_name_plural="Tipos de Solicitud"
@@ -358,7 +358,7 @@ class tipoDeServicio(models.Model):
     descripcion=models.CharField(max_length=25)
 
     def __unicode__(self):
-        return self.descripcion
+        return u'%s %s' % (self.id, self.descripcion)
 
     class Meta:
         verbose_name_plural="Tipos de Servicio"
