@@ -199,6 +199,7 @@ class actividad(models.Model):
     motivoDeSolicitud=models.ForeignKey('motivoParaSolicitud')
     tipoDeSolicitud=models.ForeignKey('tipoDeSolicitud')
     materialDeLaRed=models.ForeignKey('materialDeLaRed')
+    estadoDeSolicitud=models.ForeignKey('estadoDeSolicitud')
 
     def __unicode__(self):
         return self.numeroDeSolicitud
@@ -211,6 +212,16 @@ class actividad(models.Model):
 
 
 
+class estadoDeSolicitud(models.Model):
+    id=models.PositiveSmallIntegerField(verbose_name='codigo', editable=True, primary_key=True)
+    descripcion=models.CharField(max_length=60)
+
+    def __unicode__(self):
+        return u'Estado %s : %s' % (str(self.id), self.descripcion)
+
+    class Meta:
+        verbose_name_plural="Estados de Solicitud"
+        verbose_name='Estado de Solicitud'
 
 class tipoDeConstruccion(models.Model):
     id=models.PositiveSmallIntegerField(verbose_name='codigo', editable=True, primary_key=True)

@@ -10,7 +10,7 @@
 {% bootstrap_messages %}
 
 {% block title %}
-    Cambio de Material
+    Cambio de Materiales
 {% endblock %}
 
 {% block jquery %}
@@ -21,10 +21,12 @@
             $(document).ready(function(){
 
                 $("#id_ubicacionDeSello").find("option[value='Caja']").attr("selected",true);
+                $('#id_material').find("option[value='']").remove();
+                $('#id_selloInst').find("option[value='']").remove();
 
                 $('#id_serieRev').change(function(){
                     if($('#id_tipoDeSolicitud option:selected').val() == '11'){
-                        cambiosPorVoltaje($('#id_serieRev').val())
+                        cambiosPorVoltaje($('#id_serieRev').val());
                     }
                 });
 
@@ -92,13 +94,21 @@
                 });
 
                 $('#id_nivelSocieconomico').addClass('hidden');
-                $("[for='id_nivelSocieconomico']").addClass('hidden')
+                $("[for='id_nivelSocieconomico']").addClass('hidden');
+                $('#id_anterior').prop('disabled', true);
+                $('#id_medidor').prop('disabled', true);
                 $('#id_tipoDeSolicitud').change(function(){
                     var medidorInstalado = $('#medidorInstalado');
-                    if($('#id_tipoDeSolicitud option:selected').val()!='11'){
+                    var seleccion = $('#id_tipoDeSolicitud option:selected').val();
+                    if(seleccion !='11'){
+                        $('#id_medidor').prop('disabled', false);
                         medidorInstalado.removeClass('hidden');
+                        if(seleccion=='13'){
+                            $('#title').html('Cambio de Medidor');
+                        }
                     }else{
-                        $('#id_medidor').find("option[value='']").attr("selected",true);
+                        $('#id_medidor').prop('disabled', true).find("option[value='']").attr("selected",true);
+                        $('#title').html('Cambio de Materiales');
                         $('#id_fabricaInst').val('');
                         $('#id_serieInst').val('');
                         $('#id_marcaInst').val('');
@@ -107,22 +117,29 @@
                         medidorInstalado.addClass('hidden');
                         $('#id_serieRev').change();
                     }
-                    if($('#id_tipoDeSolicitud option:selected').val()=='1'){
+                    if(seleccion=='1'){
+                        $('#id_nombreDeCliente').attr('placeholder', 'Nombre del nuevo Cliente');
+                        $('#id_geocodigo').prop('disabled', true).attr('placeholder', '');
+                        $('#id_codigoDeCliente').prop('disabled', true).attr('placeholder', '');
+                        $('#id_anterior').prop('disabled', false);
+                        $('#title').html('Servicio Nuevo');
                         $('#buscarCliente').prop('disabled', true);
-                        $('#id_cedula').prop('readonly', false);
-                        $('#id_cedula').prop('placeholder', 'Digite la Cédula del Cliente');
+                        $('#id_cedula').prop('readonly', false).prop('placeholder', 'Cédula del nuevo Cliente');
                         $('#Referencia').removeClass('hidden');
-                        $('#medRevisado').addClass('hidden')
+                        $('#medRevisado').addClass('hidden');
                         $('#id_nivelSocieconomico').removeClass('hidden');
-                        $("[for='id_nivelSocieconomico']").removeClass('hidden')
+                        $("[for='id_nivelSocieconomico']").removeClass('hidden');
                     }else{
+                        $('#id_nombreDeCliente').attr('placeholder', 'Buscar por Nombre');
+                        $('#id_geocodigo').prop('disabled', false).attr('placeholder', 'Buscar por Geocódigo');
+                        $('#id_codigoDeCliente').prop('disabled', false).attr('placeholder', 'Buscar por Cta.');
+                        $('#id_anterior').prop('disabled', true);
                         $('#buscarCliente').prop('disabled', false);
-                        $('#id_cedula').prop('placeholder', '');
-                        $('#id_cedula').prop('readonly', true);
+                        $('#id_cedula').prop('placeholder', '').prop('readonly', true);
                         $('#Referencia').addClass('hidden');
-                        $('#medRevisado').removeClass('hidden')
+                        $('#medRevisado').removeClass('hidden');
                         $('#id_nivelSocieconomico').addClass('hidden');
-                        $("[for='id_nivelSocieconomico']").addClass('hidden')
+                        $("[for='id_nivelSocieconomico']").addClass('hidden');
                     }
 
                 });
@@ -151,13 +168,26 @@
                     "";
                     nuevaFila+="</tr>";
                     $("#detalleMaterial").append(nuevaFila);
+                    $('#id_cantMaterialesSeleccionados').append(
+                        "<option id='matRowCantidad-"+item+"' value='"+cantidad+"' selected='selected'>" +
+                                ""+cantidad+"" +
+                        "</option>"
+                    );
+                    $('#id_materialesSeleccionados').append(
+                        "<option id='matRow-"+(item)+"' value='"+materialSeleccionado.val()+"' selected='selected'>" +
+                                ""+materialSeleccionado.html()+"" +
+                        "</option>"
+                    );
                     $("#id_material").find("option[value='"+materialSeleccionado.val()+"']").remove();
                     $("#id_cantidad").val(1);
                 });
 
                 $("#id_cantidad").change(function(){
                     if(matSeleccionado>0){
-                        $("[id='matRowCantidad-"+matSeleccionado+"']").html($("#id_cantidad").val());
+                        var cant = $("[id='matRowCantidad-"+matSeleccionado+"']");
+                        var newCant = $("#id_cantidad").val();
+                        cant.html(newCant);
+                        cant.val(newCant);
                     }
                 });
 
@@ -185,12 +215,25 @@
                     "";
                     nuevaFila+="</tr>";
                     $("#detalleSellos").append(nuevaFila);
+                     $('#id_ubiSellosSeleccionados').append(
+                        "<option value='"+ubicacionSeleccionada.val()+
+                                "' selected='selected' id='sellRowUbic-"+item+"'>"+
+                                ubicacionSeleccionada.html()+"</option>"
+                    );
+                    $('#id_sellosSeleccionados').append(
+                        "<option value='"+selloSeleccionado.val()+
+                                "' selected='selected' id='sellRow-"+item+"'>"+
+                                selloSeleccionado.html()+"</option>"
+                    );
                     $("#id_selloInst").find("option[value='"+selloSeleccionado.val()+"']").remove();
                     $("#id_ubicacionDeSello").find("option[value='Caja']").attr("selected",true);
                 });
                 $("#id_ubicacionDeSello").change(function(){
                     if(sellSeleccionado>0){
-                        $("[id='sellRowUbic-"+sellSeleccionado+"']").html($('#id_ubicacionDeSello option:selected').html());
+                        var ubi = $("[id='sellRowUbic-"+sellSeleccionado+"']");
+                        var newUbi = $('#id_ubicacionDeSello option:selected').html();
+                        ubi.html(newUbi);
+                        ubi.val(newUbi);
                     }
                 });
 
@@ -224,11 +267,12 @@
                                 ""+descripcion.html()+"" +
                         "</option>"
                 );
-                $("[id='matRow-"+fila+"']").remove()
+                $("[id='matRow-"+fila+"']").remove();
+                $("[id='matRowCantidad-"+fila+"']").remove();
             }
             function seleccionMat(fila){
                 matSeleccionado=fila;
-                var trs=$('#detalleMaterial tr').length
+                var trs=$('#detalleMaterial tr').length;
                 var filaSeleccionada=$("[id='matRow-"+fila+"']");
                 var colorear=filaSeleccionada.css( "background-color" )=='rgba(0, 0, 0, 0)';
                 for(var i=0;i<trs;i++){
@@ -255,11 +299,12 @@
                                 ""+descripcion.html()+"" +
                         "</option>"
                 );
-                $("[id='sellRow-"+fila+"']").remove()
+                $("[id='sellRow-"+fila+"']").remove();
+                $("[id='sellRowUbic-"+fila+"']").remove();
             }
             function seleccionSell(fila){
                 sellSeleccionado=fila;
-                var trs=$('#detalleSellos tr').length
+                var trs=$('#detalleSellos tr').length;
                 var filaSeleccionada=$("[id='sellRow-"+fila+"']");
                 var colorear=filaSeleccionada.css( "background-color" )=='rgba(0, 0, 0, 0)';
                 for(var i=0;i<trs;i++){
@@ -275,6 +320,17 @@
                 }
             }
 
+            function guardarAjax(){
+                $('#cargandoForm').removeClass('hidden');
+                envioRecepcionAjax
+                (
+                    '{% url 'guardarIngreso' %}',
+                    $('#ingreso').serialize()
+                );
+                return false;
+
+            }
+
         </script>
 {% endblock %}
 
@@ -285,6 +341,9 @@
     {% endif %}
 
     <div class="container-fluid">
+        <form role="form" class="form-group" id="ingreso" name="ingreso" method="post" action=""
+        onsubmit="return guardarAjax();"
+        >{% csrf_token %}
         <div class="row">
             <div class="col-md-5">
                 <div id="erroresB" class="row">
@@ -382,21 +441,36 @@
                                     </div>
                                 </div>
                                 <div class="center-block">
-                                    <table id="detalleSellos" class="table table-condensed table-hover">
+                                    <table id="detalleSellos" class="table table-condensed table-hover" style="margin-bottom: 0">
                                         <thead>
-                                            <td>
-                                                <b>Item</b>
-                                            </td>
-                                            <td>
-                                                <b>Sello</b>
-                                            </td>
-                                            <td>
-                                                <b>Ubicacion</b>
-                                            </td>
+                                            <tr>
+                                                <th>
+                                                    <b>Item</b>
+                                                </th>
+                                                <th>
+                                                    <b>Sello</b>
+                                                </th>
+                                                <th>
+                                                    <b>Ubicacion</b>
+                                                </th>
+                                                <th>
+                                                    &nbsp;
+                                                </th>
+                                            </tr>
                                         </thead>
                                         <tbody >
                                         </tbody>
                                     </table>
+
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            {% bootstrap_field form.sellosSeleccionados layout="inline" %}
+                                        </div>
+                                        <div class="col-md-2">
+                                            {% bootstrap_field form.ubiSellosSeleccionados layout="inline" %}
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -498,7 +572,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <table id="detalleMaterial" class="table table-condensed table-hover">
+                                    <table id="detalleMaterial" class="table table-condensed table-hover" style="margin-bottom: 0">
                                         <thead>
                                             <tr>
                                                 <th>
@@ -516,9 +590,18 @@
                                             </tr>
                                         </thead>
                                         <tbody >
-
                                         </tbody>
                                     </table>
+
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            {% bootstrap_field form.materialesSeleccionados layout="inline" %}
+                                        </div>
+                                        <div class="col-md-2">
+                                            {% bootstrap_field form.cantMaterialesSeleccionados layout="inline" %}
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -561,18 +644,46 @@
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
+
+            {#                                      Barra separadora de columnas                                      #}
+
+
             <div class="col-md-2" style="margin-top: 50px;">
                 <div class="row center-block">
-                    <button type="button" class="btn btn-primary center-block">
-                        {% bootstrap_icon "floppy-disk" %} Guardar
+                    <div class="panel panel-info">
+                        <div class="panel-heading text-center">
+                            <b>{{ form.numeroDeSolicitud.label }}</b>
+                        </div>
+                        <div class="panel-body">
+                            {% bootstrap_field form.numeroDeSolicitud layout="inline" %}
+                            <label id="estadoDeSolicitud">
+                                {{  form.estadoSolicitud.value }}
+                            </label>
+                        </div>
+                    </div>
+
+                    <button id="btnGuardar" type="submit" class="btn btn-default btn-lg center-block"
+                            style="width: 100%; margin: 20px 0 20px 0;">
+                        {% bootstrap_icon "save" %} Guardar
                     </button>
+                    <div id="cargandoForm" class="col-md-2 center-block hidden"
+                         style="padding: 0; width: 100%; margin: 0 0 20px 0;">
+                        <img src="{% static 'img/cargandoCliente.gif' %}"
+                             height="24px" width="24px" class="center-block"
+                             > <label class="text-center" style="width: 100%;">Espere...</label>
+                    </div>
+                    <button id="btnIngresarSico" type="button" class="btn btn-default btn-lg center-block "
+                            style="width: 100%; margin: 20px 0 20px 0;">
+                        {% bootstrap_icon "send" %} Ingresar
+                    </button>
+
                 </div>
             </div>
         </div>
+
+        {#                                      Barra separadora de Fila                                      #}
+
         <div class="row">
             <div class="col-md-10" style="margin-top: 0;">
                 <div class="panel panel-info" style="margin-top: -5px; margin-bottom: 10px;">
@@ -585,6 +696,7 @@
                 </div>
             </div>
         </div>
+        </form>
     </div>
 
 {% endblock %}

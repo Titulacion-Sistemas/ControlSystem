@@ -131,9 +131,8 @@ class detalleMaterialContrato(models.Model):
     proporcionado=models.BooleanField(verbose_name='¿Provisto por CNEL EP?', default=True)
 
     def __unicode__(self):
-        return u'%s (%s)' % (
-            str(self.material),
-            str(self.contrato)
+        return u'%s' % (
+            str(self.material)
         )
 
     class Meta:

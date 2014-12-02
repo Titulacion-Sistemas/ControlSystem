@@ -74,6 +74,7 @@ def comprobarFormBusqueda(form, sesionAct):
 @ajax()
 def busqueda(request):
     if request.method == 'POST':
+        print request.POST
         form = BusquedaForm(request.POST)
         return comprobarFormBusqueda(form, request.user.sesion_sico)
     else:

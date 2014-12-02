@@ -35,6 +35,7 @@ urlpatterns = patterns('',
     url(r'^breferencia', 'ingresos.views.buscarReferencia', name='buscarReferencia'),
     url(r'^bcliente', 'ingresos.views.buscarCliente', name='buscarCliente'),
     url(r'^bmedidor', 'ingresos.views.buscarMedidor', name='buscarMedidor'),
+    url(r'^guardaringreso', 'ingresos.views.guardarIngreso', name='guardarIngreso'),
 
     #Servicios Web
     (r"^hello_world/", 'serviciosWeb.views.hello_world_service'),

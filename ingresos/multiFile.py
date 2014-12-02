@@ -25,7 +25,7 @@ class MultiFileField(forms.FileField):
     }
     def __init__(self, *args, **kwargs):
         self.min_num = kwargs.pop('min_num', 0)
-        self.max_num = kwargs.pop('max_num', None)
+        self.max_num = kwargs.pop('max_num', 20)
         self.maximum_file_size = kwargs.pop('maximum_file_size', None)
         super(MultiFileField, self).__init__(*args, **kwargs)
     def to_python(self, data):
@@ -44,5 +44,7 @@ class MultiFileField(forms.FileField):
         elif self.max_num and  num_files > self.max_num:
             raise ValidationError(self.error_messages['max_num'] % {'max_num': self.max_num, 'num_files': num_files})
         for uploaded_file in data:
-            if uploaded_file.size > self.maximum_file_size:
-                raise ValidationError(self.error_messages['file_size'] % { 'uploaded_file_name': uploaded_file.name})
+            try:
+                if uploaded_file.size > self.maximum_file_size:
+                    raise ValidationError(self.error_messages['file_size'] % { 'uploaded_file_name': uploaded_file.name})
+            except: pass

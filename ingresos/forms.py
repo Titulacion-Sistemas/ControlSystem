@@ -10,35 +10,51 @@ from inventario.models import detalleMaterialContrato, medidor, sello
 __author__ = 'Jhonsson'
 
 
-class cambioDeMaterialForm(forms.Form):
+class ingresoForm(forms.Form):
     def __init__(self, idActividad=0, contrato=None, *args, **kwargs):
-        super(cambioDeMaterialForm, self).__init__(*args, **kwargs)
-        if contrato!=None:
+        super(ingresoForm, self).__init__(*args, **kwargs)
+        if idActividad > 0:
+            self.rellenarDetalle(idActividad)
+        elif contrato != None:
             self.fields['material'] = forms.ModelMultipleChoiceField(
                 detalleMaterialContrato.objects
-                    #.filter(contrato=contrato)
-                    .exclude(material__tipoDeMaterial__material__descripcion='KIT '),
+                .filter(contrato=contrato)
+                .exclude(material__tipoDeMaterial__material__descripcion='KIT '),
                 label='Materiales',
                 widget=forms.Select()
             )
             # medidores segun contrato...
             self.fields['medidor'] = forms.ModelMultipleChoiceField(
-                medidor.objects.filter(contrato__contrato=contrato), label='En bodega',
+                medidor.objects.filter(contrato__contrato=contrato, est=True), label='En bodega',
                 widget=forms.Select()
             )
             # sellos segun contrato...
             self.fields['selloInst'] = forms.ModelMultipleChoiceField(
-                sello.objects.filter(detalleMaterialContrato__contrato=contrato), label='En bodega',
+                sello.objects.filter(detalleMaterialContrato__contrato=contrato, utilizado=None), label='En bodega',
                 widget=forms.Select()
             )
 
-        if idActividad>0:
-            self.rellenarDetalle(idActividad)
-
-            #uso de inmueble
-            #self.fields['usoEspecificoDelInmueble'].initial = 1 #usoEspecificoDelInmueble.objects.filter(descripcion=' ')[0].id
 
     #actividad
+    estadoSolicitud = forms.CharField(
+        initial=estadoDeSolicitud.__unicode__(estadoDeSolicitud.objects.get(id=0)), label='',
+        widget=forms.TextInput(),
+        required=False
+    )
+    numeroDeSolicitud = forms.CharField(
+        max_length=8, required=False, label='Número do Solicitud',
+        widget=forms.TextInput(attrs={
+            'style': 'text-align: center; font-size: 1.35em;',
+            'readonly': True,
+            'placeholder': 'No. de Solicitud'
+        }),
+        initial='0'
+    )
+    tipoDeSolicitud = forms.ModelChoiceField(
+        tipoDeSolicitud.objects,
+        label='Tipo de Solicitud',
+        initial=11
+    )
     fecha = forms.DateField(
         initial=datetime.date.today(), label='Fecha',
         widget=SelectDateWidget(), required=True
@@ -57,16 +73,16 @@ class cambioDeMaterialForm(forms.Form):
     nombreDeCliente = forms.CharField(
         max_length=50, min_length=6, label='Nombre',
         widget=forms.TextInput(attrs={'placeholder': 'Buscar por Nombre'}),
-        required=False
+        required=True
     )
     cedula = forms.CharField(
         max_length=13, min_length=10, label='Cédula',
         widget=forms.TextInput(attrs={'readonly': True, 'placeholder': ''}),
-        required=True
+        required=False
     )
     telefono = forms.CharField(
         max_length=11, min_length=7, label='Teléfono',
-        widget=forms.TextInput(attrs={'placeholder': 'Escriba un teléfono de referencia'}),
+        widget=forms.TextInput(attrs={'placeholder': 'Teléfono de referencia'}),
         required=False
     )
     lugar = forms.CharField(
@@ -131,7 +147,7 @@ class cambioDeMaterialForm(forms.Form):
     )
     tipoDeMedidor = forms.CharField(
         max_length=25, label='Tipo',
-        widget=forms.TextInput(attrs={'placeholder': 'Cambiar Tipo de Medidor'}),
+        widget=forms.TextInput(attrs={'readonly': True,'placeholder': ''}),
         required=False
     )
     lecturaInst = forms.CharField(
@@ -143,7 +159,7 @@ class cambioDeMaterialForm(forms.Form):
 
 
     #Materiales
-    material = forms.ModelMultipleChoiceField(
+    material = forms.ModelChoiceField(
         detalleMaterialContrato.objects, label='Materiales',
         widget=forms.Select(),
         required=False
@@ -231,20 +247,16 @@ class cambioDeMaterialForm(forms.Form):
         label='Motivo de Solicitud',
         initial=2
     )
-    tipoDeSolicitud = forms.ModelChoiceField(
-        tipoDeSolicitud.objects,
-        label='Tipo de Solicitud',
-        initial=11
-    )
     tipoDeServicio = forms.ModelChoiceField(
         tipoDeServicio.objects,
         label='Tipo de Servicio',
         #initial='13B'
+        required=True
     )
 
 
     #Sello
-    selloInst = forms.ModelMultipleChoiceField(
+    selloInst = forms.ModelChoiceField(
         sello.objects, label='En Bodega',
         widget=forms.Select(),
         required=False
@@ -295,8 +307,8 @@ class cambioDeMaterialForm(forms.Form):
 
     #Fotos
     fotos = MultiFileField(
-        max_num=10, min_num=1, maximum_file_size=1024 * 1024 * 5,
-        required=True
+        maximum_file_size=1024 * 1024 * 30,
+        required=False
     )
 
 
@@ -314,8 +326,116 @@ class cambioDeMaterialForm(forms.Form):
     )
 
 
+    materialesSeleccionados=forms.MultipleChoiceField(
+        widget=forms.SelectMultiple(attrs={'style': 'height: 1px; padding: 0; margin: 0; border: 0;'}),
+        label='',
+        required=True
+    )
+    cantMaterialesSeleccionados=forms.MultipleChoiceField(
+        widget=forms.SelectMultiple(attrs={'style': 'height: 1px; padding: 0; margin: 0; border: 0;'}),
+        required=True
+    )
+    sellosSeleccionados=forms.MultipleChoiceField(
+        widget=forms.SelectMultiple(attrs={'style': 'height: 1px; padding: 0; margin: 0; border: 0;'}),
+        required=True
+    )
+    ubiSellosSeleccionados=forms.MultipleChoiceField(
+        widget=forms.SelectMultiple(attrs={'style': 'height: 1px; padding: 0; margin: 0; border: 0;'}),
+        label='',
+        required=True
+    )
+
+
     def save(self):
-        pass
+        if self.tipoDeSolicitud.empty_values == 13:
+            pass
+        print self.tipoDeSolicitud
+
 
     def rellenarDetalle(self, idActividad):
-        act = actividad.objects.get(id=idActividad)
+        try:
+            act = actividad.objects.get(id=idActividad)
+
+        except:
+            pass
+
+
+
+
+    def is_valid(self):
+        # run the parent validation first
+        valid = super(ingresoForm, self).is_valid()
+
+        #dicDeErrores = dict(self.errors)
+        del self.errors['sellosSeleccionados']
+        del self.errors['materialesSeleccionados']
+        del self.errors['ubiSellosSeleccionados']
+        del self.errors['cantMaterialesSeleccionados']
+        print 'Validando...'
+        print self.errors
+        if len(self.errors)==0:
+            return True
+        else:
+            print self.errors
+            return False
+        #
+
+    def clean(self):
+        cleaned_data = super(ingresoForm, self).clean()
+        ts = self.data['tipoDeSolicitud']
+        print ts
+        if ts == '11' or ts == '13':
+            if not self.data['codigoDeCliente']:
+                self._errors["Cuenta"] = self.error_class([u"Ingrese un número de Cuenta."])
+            if not self.data['serieRev']:
+                self._errors["Medidor"] = self.error_class([u"El Cliente debe tener un medidor activo."])
+            if ts == '13':
+                if not str(self.data['lecturaRev']):
+                    self._errors["Lectura"] = self.error_class([u"Ingrese una Lectura de Desconección "])
+        if ts=='1' or ts=='13':
+            if not self.data['tipoDeMedidor']:
+                self._errors["Medidor"] = self.error_class([u" Seleccione el medidor a instalar "])
+            if ts == '1':
+                if not str(self.data['cuentaAnteriror']):
+                    self._errors["Referencia"] = self.error_class([u"Ingrese la referencia de instalación del Servicio nuevo "])
+
+
+        print self.data['materialesSeleccionados']
+        # tb = cleaned_data.get("tipoDeSolicitud")
+        # c = cleaned_data.get("tipoDeSolicitud")
+        #
+        # if c and tb:
+        #     # Only do something if both fields are valid so far.
+        #     if tb == '1':
+        #         if not c.isdigit() or len(c) > 8:
+        #             raise forms.ValidationError("Error, Cuenta ingresada no válida.")
+        #
+        #     if tb == '2':
+        #         if not c.isdigit() or len(c) >= 11:
+        #             raise forms.ValidationError("Error, Número de medidor ingresado no válido.")
+        #
+        #     if tb == '3':
+        #         if c.isdigit():
+        #             raise forms.ValidationError("Error, Nombre de ciente no valido.")
+        #
+        #     if tb == '4':
+        #         sp = c.split('.')
+        #         if len(sp) != 5 \
+        #             or (not sp[0].isdigit()) \
+        #             or (not sp[1].isdigit()) \
+        #             or (not sp[2].isdigit()) \
+        #             or (not sp[3].isdigit()) \
+        #             or (not sp[4].isdigit()):
+        #
+        #             raise forms.ValidationError("Error, Geocódigo incorrecto.")
+        #
+        #         elif len(sp[0]) > 2 or len(sp[0]) < 1 \
+        #             or len(sp[1]) > 2 or len(sp[1]) < 1 \
+        #             or len(sp[2]) > 2 or len(sp[2]) < 1 \
+        #             or len(sp[3]) > 3 or len(sp[3]) < 1 \
+        #             or len(sp[4]) > 7 or len(sp[4]) < 1:
+        #
+        #             raise forms.ValidationError("Error, Geocódigo no válido.")
+        #
+        #             # Always return the full collection of cleaned data.
+        return cleaned_data
