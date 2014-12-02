@@ -14,7 +14,7 @@ from ingresos.forms import ingresoForm
 from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar as b
 from inventario.models import medidor
 
-#@login_required()
+@login_required()
 def ingresarSico(request):
     if request.method == 'POST': # If the form has been submitted...
         # ContactForm was defined in the previous section
@@ -24,8 +24,8 @@ def ingresarSico(request):
             # ...
             return HttpResponseRedirect('/ingresarsico/') # Redirect after POST
     else:
-        #form = ingresoForm(contrato=request.session['contrato'])
-        form = ingresoForm()
+        form = ingresoForm(contrato=request.session['contrato'])
+        #form = ingresoForm()
     data = {
         'form': form
     }
@@ -58,7 +58,7 @@ def buscarCliente(request):
                 buscando = b(usuario.sesion_sico)
                 data = buscando.busquedaDeTipo(tipo, dato, paraIngreso=True)
                 request.session['cliente'] = data['formCliente'].instance
-                request.session['medidor'] = data['cMedidores'][0].instance
+                request.session['medidor'] = data['cMedidores'][0]
                 #data = MedidorBuscado('marca','tecnologia', 'tension', 'amp', 'fi', 'fd', 'li', 'ld',
                 #instance=medidor.objects.first())
                 if data != None:
@@ -174,7 +174,7 @@ def guardarIngreso(request):
             # Process the data in form.cleaned_data
             #form.save()
             print 'Correcto...'
-
+            form.save()
             dajax.script("$('#err').addClass('hidden');")
         else:
             print dict(form.errors)

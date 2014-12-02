@@ -11,10 +11,10 @@ __author__ = 'Jhonsson'
 
 
 class ingresoForm(forms.Form):
-    def __init__(self, idActividad=0, contrato=None, *args, **kwargs):
+    def __init__(self, actividad=None, contrato=None, *args, **kwargs):
         super(ingresoForm, self).__init__(*args, **kwargs)
-        if idActividad > 0:
-            self.rellenarDetalle(idActividad)
+        if actividad:
+            self.rellenarDetalle(actividad)
         elif contrato != None:
             self.fields['material'] = forms.ModelMultipleChoiceField(
                 detalleMaterialContrato.objects
@@ -36,6 +36,10 @@ class ingresoForm(forms.Form):
 
 
     #actividad
+    id=forms.CharField(
+        required=False, initial=0, label='',
+        widget=forms.TextInput(attrs={'style': 'height: 1px; padding: 0; margin: 0; border: 0;'}),
+    )
     estadoSolicitud = forms.CharField(
         initial=estadoDeSolicitud.__unicode__(estadoDeSolicitud.objects.get(id=0)), label='',
         widget=forms.TextInput(),
@@ -109,7 +113,7 @@ class ingresoForm(forms.Form):
         required=False
     )
     serieRev = forms.CharField(
-        max_length=10, label='Serial',
+        max_length=12, label='Serial',
         widget=forms.TextInput(attrs={'readonly': True, 'placeholder': ''}),
         required=False
     )
@@ -347,9 +351,42 @@ class ingresoForm(forms.Form):
 
 
     def save(self):
+        print self.data['id']
+        if self.data['id']==0:
+            act = actividad.objects.get(id=self.data['id'])
+        else:
+            #cliente=
+            act=actividad(
+                numeroDeSolicitud=self.data['numeroDeSolicitud'],
+                #cliente=
+            )
         if self.tipoDeSolicitud.empty_values == 13:
             pass
         print self.tipoDeSolicitud
+
+
+#class actividad(models.Model):
+#    numeroDeSolicitud=models.CharField(max_length=10, verbose_name='Número de Solicitud')
+#    cliente=models.ForeignKey('cliente')
+#    tipoDeConstruccion=models.ForeignKey('tipoDeConstruccion')
+#    instalador=models.ForeignKey('instalador')
+#    ubicacionDelMedidor=models.ForeignKey('ubicacionDelMedidor')
+#    claseRed=models.ForeignKey('claseRed')
+#    nivelSocieconomico=models.ForeignKey('nivelSocieconomico', blank=True, null=True, default='')
+#    calibreDeLaRed=models.ForeignKey('calibreDeLaRed')
+#    estadoDeLaInstalacion=models.ForeignKey('estadoDeUnaInstalacion')
+#    tipoDeAcometidaRed=models.ForeignKey('tipoDeAcometidaRed', verbose_name='Tipo de Acometida o Red')
+#    fechaDeActividad=models.DateField(verbose_name='Fecha de Actividad', editable=True)
+#    horaDeActividad=models.TimeField(verbose_name='Hora de Actividad', editable=True)
+#    usoDeEnergia=models.ForeignKey('usoDeEnergia')
+#    usoEspecificoDelInmueble=models.ForeignKey('usoEspecificoDelInmueble')
+#    formaDeConexion=models.ForeignKey('formaDeConexion')
+#    demanda=models.ForeignKey('demanda')
+#    motivoDeSolicitud=models.ForeignKey('motivoParaSolicitud')
+#    tipoDeSolicitud=models.ForeignKey('tipoDeSolicitud')
+#    materialDeLaRed=models.ForeignKey('materialDeLaRed')
+#    estadoDeSolicitud=models.ForeignKey('estadoDeSolicitud')
+
 
 
     def rellenarDetalle(self, idActividad):
@@ -376,7 +413,6 @@ class ingresoForm(forms.Form):
         if len(self.errors)==0:
             return True
         else:
-            print self.errors
             return False
         #
 
@@ -400,42 +436,4 @@ class ingresoForm(forms.Form):
                     self._errors["Referencia"] = self.error_class([u"Ingrese la referencia de instalación del Servicio nuevo "])
 
 
-        print self.data['materialesSeleccionados']
-        # tb = cleaned_data.get("tipoDeSolicitud")
-        # c = cleaned_data.get("tipoDeSolicitud")
-        #
-        # if c and tb:
-        #     # Only do something if both fields are valid so far.
-        #     if tb == '1':
-        #         if not c.isdigit() or len(c) > 8:
-        #             raise forms.ValidationError("Error, Cuenta ingresada no válida.")
-        #
-        #     if tb == '2':
-        #         if not c.isdigit() or len(c) >= 11:
-        #             raise forms.ValidationError("Error, Número de medidor ingresado no válido.")
-        #
-        #     if tb == '3':
-        #         if c.isdigit():
-        #             raise forms.ValidationError("Error, Nombre de ciente no valido.")
-        #
-        #     if tb == '4':
-        #         sp = c.split('.')
-        #         if len(sp) != 5 \
-        #             or (not sp[0].isdigit()) \
-        #             or (not sp[1].isdigit()) \
-        #             or (not sp[2].isdigit()) \
-        #             or (not sp[3].isdigit()) \
-        #             or (not sp[4].isdigit()):
-        #
-        #             raise forms.ValidationError("Error, Geocódigo incorrecto.")
-        #
-        #         elif len(sp[0]) > 2 or len(sp[0]) < 1 \
-        #             or len(sp[1]) > 2 or len(sp[1]) < 1 \
-        #             or len(sp[2]) > 2 or len(sp[2]) < 1 \
-        #             or len(sp[3]) > 3 or len(sp[3]) < 1 \
-        #             or len(sp[4]) > 7 or len(sp[4]) < 1:
-        #
-        #             raise forms.ValidationError("Error, Geocódigo no válido.")
-        #
-        #             # Always return the full collection of cleaned data.
         return cleaned_data

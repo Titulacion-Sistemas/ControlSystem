@@ -16,7 +16,7 @@ class contrato(models.Model):
 
 
 class marca(models.Model):
-    id = models.CharField(max_length=3, primary_key=True, verbose_name='Abreviatura')
+    id = models.CharField(max_length=5, primary_key=True, verbose_name='Abreviatura')
     descripcion = models.CharField(max_length=25, verbose_name="Nombre")
 
     def __unicode__(self):

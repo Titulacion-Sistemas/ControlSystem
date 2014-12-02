@@ -7,7 +7,7 @@ from django.db import models
 # Create your models here.
 from django.forms import ModelForm
 from ingresos.models import cliente
-from inventario.models import medidor
+from inventario.models import medidor, marca
 
 
 class vitacoraBusquedas(models.Model):
@@ -192,7 +192,7 @@ class MedidorBuscado(ModelForm):
 
     def __init__(self, marc, tecnologia, tension, amperaje, fi, fd, li, ld, *args, **kwargs):
         super(MedidorBuscado, self).__init__(*args, **kwargs)
-        self.fields['marc'].initial = str(marc)
+        self.fields['marc'].initial = str(marc)+' '
         self.fields['tecnologia'].initial = str(tecnologia)
         self.fields['tension'].initial = str(tension)
         self.fields['amperaje'].initial = str(amperaje)
@@ -200,3 +200,17 @@ class MedidorBuscado(ModelForm):
         self.fields['fd'].initial = str(fd)
         self.fields['li'].initial = str(li)
         self.fields['ld'].initial = str(ld)
+
+        m = str(marc).strip().split(' ')
+        if len(m)>1:
+            abr=m[0]
+            m[0]=''
+            m=" ".join(str(x) for x in m)
+        else:
+            m = str(marc).strip()
+            abr=m[:4]
+        try:
+            miM = marca.objects.get(id=str(marc)[0:3])
+        except:
+            miMarca = marca(id=abr, descripcion=str(m).strip())
+            miMarca.save()
