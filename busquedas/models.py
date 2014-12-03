@@ -210,7 +210,28 @@ class MedidorBuscado(ModelForm):
             m = str(marc).strip()
             abr=m[:4]
         try:
-            miM = marca.objects.get(id=str(marc)[0:3])
+            miMarca = marca.objects.get(id=str(marc)[0:3])
         except:
             miMarca = marca(id=abr, descripcion=str(m).strip())
             miMarca.save()
+
+        self.instance.marca = miMarca
+        self.instance.voltaje = 120
+
+        try:
+            if int(self.initial['serie'][:2])%2==0:
+                self.instance.voltaje = 240
+                print 'si'
+        except:
+            try:
+                if int(self.initial['serie'][1:3])%2==0:
+                    self.instance.voltaje = 240
+                    print 'si'
+            except:
+                pass
+
+
+
+
+
+

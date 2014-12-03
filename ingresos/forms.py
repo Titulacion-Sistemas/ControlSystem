@@ -84,6 +84,11 @@ class ingresoForm(forms.Form):
         widget=forms.TextInput(attrs={'readonly': True, 'placeholder': ''}),
         required=False
     )
+    estadoCli=forms.CharField(
+        max_length=30, min_length=1, label='Estado',
+        widget=forms.TextInput(attrs={'readonly': True, 'placeholder': ''}),
+        required=False
+    )
     telefono = forms.CharField(
         max_length=11, min_length=7, label='Teléfono',
         widget=forms.TextInput(attrs={'placeholder': 'Teléfono de referencia'}),
@@ -352,17 +357,14 @@ class ingresoForm(forms.Form):
 
     def save(self):
         print self.data['id']
-        if self.data['id']==0:
-            act = actividad.objects.get(id=self.data['id'])
-        else:
-            #cliente=
-            act=actividad(
-                numeroDeSolicitud=self.data['numeroDeSolicitud'],
-                #cliente=
-            )
-        if self.tipoDeSolicitud.empty_values == 13:
-            pass
+        act=actividad()
+        if self.data['id']!=0:
+            act.id = self.data['id']
         print self.tipoDeSolicitud
+
+
+
+
 
 
 #class actividad(models.Model):
@@ -421,12 +423,12 @@ class ingresoForm(forms.Form):
         ts = self.data['tipoDeSolicitud']
         print ts
         if ts == '11' or ts == '13':
-            if not self.data['codigoDeCliente']:
+            if not self.data['codigoDeCliente'].strip():
                 self._errors["Cuenta"] = self.error_class([u"Ingrese un número de Cuenta."])
-            if not self.data['serieRev']:
+            if not self.data['serieRev'].strip():
                 self._errors["Medidor"] = self.error_class([u"El Cliente debe tener un medidor activo."])
             if ts == '13':
-                if not str(self.data['lecturaRev']):
+                if not str(self.data['lecturaRev']).strip():
                     self._errors["Lectura"] = self.error_class([u"Ingrese una Lectura de Desconección "])
         if ts=='1' or ts=='13':
             if not self.data['tipoDeMedidor']:

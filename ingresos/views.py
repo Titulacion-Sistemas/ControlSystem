@@ -12,6 +12,7 @@ from django_ajax.decorators import ajax
 from busquedas.models import BusquedaForm, vitacoraBusquedas, MedidorBuscado
 from ingresos.forms import ingresoForm
 from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar as b
+from ingresos.models import *
 from inventario.models import medidor
 
 @login_required()
@@ -57,14 +58,14 @@ def buscarCliente(request):
             if form.is_valid():
                 buscando = b(usuario.sesion_sico)
                 data = buscando.busquedaDeTipo(tipo, dato, paraIngreso=True)
-                request.session['cliente'] = data['formCliente'].instance
-                request.session['medidor'] = data['cMedidores'][0]
+
                 #data = MedidorBuscado('marca','tecnologia', 'tension', 'amp', 'fi', 'fd', 'li', 'ld',
                 #instance=medidor.objects.first())
                 if data != None:
                     dajax.assign('#id_codigoDeCliente', 'value', '' + str(data['formCliente'].instance.cuenta) + '')
                     dajax.assign('#id_nombreDeCliente', 'value', '' + str(data['formCliente'].instance.nombre) + '')
                     dajax.assign('#id_cedula', 'value', '' + str(data['formCliente'].instance.ci_ruc) + '')
+                    dajax.assign('#id_estadoCli', 'value', '' + str(data['formCliente'].instance.estado) + '')
                     dajax.assign('#id_lugar', 'value', '' + str(data['formCliente'].fields['parroquia'].initial) + '')
                     dajax.assign('#id_calle', 'value', '' + str(data['formCliente'].fields['direccion'].initial) + '')
                     dajax.assign('#id_geocodigo', 'value', '' + str(data['formCliente'].fields['geo'].initial) + '')
@@ -72,7 +73,8 @@ def buscarCliente(request):
                     dajax.script("$('#id_serieRev').val('" + str(data['cMedidores'][0].instance.serie) + "').change();")
                     dajax.assign('#id_marcaRev', 'value', '' + str(data['cMedidores'][0].fields['marc'].initial) + '')
                     dajax.assign('#id_lecturaRev', 'value', '' + str(data['cMedidores'][0].instance.lectura) + '')
-
+                    request.session['cliente'] = data['formCliente'].instance
+                    request.session['medidor'] = data['cMedidores'][0]
                 else:
                     dajax = mostraError(dajax, {'Cliente':'No Encontrato'}, '#err')
 
@@ -81,7 +83,7 @@ def buscarCliente(request):
                 dajax = mostraError(dajax, {'':dict(form.errors)['__all__']}, '#err')
 
         except:
-            dajax = mostraError(dajax, {'Error':'No se pudo Buscar Cliente...'}, '#err')
+           dajax = mostraError(dajax, {'Error':'No se pudo Buscar Cliente...'}, '#err')
 
         dajax.add_css_class('#cargando', 'hidden')
         return dajax.calls
@@ -112,7 +114,7 @@ def buscarReferencia(request):
                 buscando = b(usuario.sesion_sico)
                 data = buscando.busquedaDeTipo('2', dato, paraIngreso=True)
                 request.session['clienteRef'] = data['formCliente'].instance
-                request.session['medidorRef'] = data['cMedidores'][0].instance
+                request.session['medidorRef'] = data['cMedidores'][0]
                 #data = MedidorBuscado('marca','tecnologia', 'tension', 'amp', 'fi', 'fd', 'li', 'ld',
                 #instance=medidor.objects.first())
                 if data is not None:
@@ -169,18 +171,52 @@ def guardarIngreso(request):
     if request.method == 'POST':
         print request.POST
         dajax = Dajax()
+        dajax.script("$('#cargandoForm').addClass('hidden');")
         form = ingresoForm(data=request.POST)
         if form.is_valid():  # All validation rules pass
             # Process the data in form.cleaned_data
-            #form.save()
             print 'Correcto...'
+            ts = form.data['tipoDeSolicitud']
+            if ts == '11' or ts == '13':
+
+                try:
+                    #en caso de ser un nuevo guardado...
+                    cliente=request.session['cliente']
+                    medidor=request.session['medidor']
+                except:
+                    #en caso de ser actualizacion
+                    try:
+                        enlace = detalleClienteMedidor(
+                            cliente=cliente.objects.get(
+                                cuenta=(form.data['codigoDeCliente']).strip(),
+                                ci_ruc=(form.data['cedula']).strip()
+                            ),
+                            medidor=medidor.objects.get(
+                                fabrica=(form.data['fabricaRev']).strip(),
+                                serie=(form.data['serieRev']).strip()
+                            )
+                        )
+
+                    #actualizar
+
+                    except:
+                        dajax = mostraError(dajax, {'Error': 'Datos incompletos para guardar...'}, '#err')
+                        return dajax.calls
+
+                #guardar por primera vez
+                cliente.save()
+                print medidor.instance.marca
+                medidor.save()
+                detalleClienteMedidor(
+                    cliente=cliente,
+                    medidor=medidor.instance
+                ).save()
+
             form.save()
             dajax.script("$('#err').addClass('hidden');")
         else:
             print dict(form.errors)
             dajax = mostraError(dajax, form.errors, '#err')
-
-        dajax.script("$('#cargandoForm').addClass('hidden');")
 
         return dajax.calls
     else:

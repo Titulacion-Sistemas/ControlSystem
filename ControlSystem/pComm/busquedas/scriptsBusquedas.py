@@ -14,29 +14,29 @@ lectura = '0'
 def llenarCliente(sesion, cli):
     if isinstance(cli, cliente):
         global lectura
-        lectura = sesion.autECLPS.GetText(8, 35, 9)
+        lectura = sesion.autECLPS.GetText(8, 35, 9).strip()
         cli = cliente()
-        cli.ci_ruc = sesion.autECLPS.GetText(4, 10, 13)
-        cli.cuenta = sesion.autECLPS.GetText(3, 27, 7)
-        cli.nombre = sesion.autECLPS.GetText(3, 35, 30)
+        cli.ci_ruc = sesion.autECLPS.GetText(4, 10, 13).strip()
+        cli.cuenta = sesion.autECLPS.GetText(3, 27, 7).strip()
+        cli.nombre = sesion.autECLPS.GetText(3, 35, 30).strip()
         #cli.direccion = sesion.autECLPS.GetText(14, 18, 50)
         #cli.interseccion = sesion.autECLPS.GetText(15, 18, 50)
         #cli.urbanizacion = sesion.autECLPS.GetText(16, 18, 50)
-        cli.estado = sesion.autECLPS.GetText(21, 42, 20)
+        cli.estado = sesion.autECLPS.GetText(21, 42, 20).strip()
         cli.geocodigo = secuencia(
-            num=int(sesion.autECLPS.GetText(20, 73, 7)),
+            num=int(sesion.autECLPS.GetText(20, 73, 7).strip()),
             ruta=ruta(
-                num=int(sesion.autECLPS.GetText(20, 7, 3)),
-                descripcion=sesion.autECLPS.GetText(20, 11, 30),
+                num=int(sesion.autECLPS.GetText(20, 7, 3).strip()),
+                descripcion=sesion.autECLPS.GetText(20, 11, 30).strip(),
                 sector=sector(
-                    num=int(sesion.autECLPS.GetText(19, 13, 2)),
-                    descripcion=sesion.autECLPS.GetText(19, 16, 40),
+                    num=int(sesion.autECLPS.GetText(19, 13, 2).strip()),
+                    descripcion=sesion.autECLPS.GetText(19, 16, 40).strip(),
                     canton=canton(
-                        num=int(sesion.autECLPS.GetText(18, 45, 2)),
-                        descripcion=sesion.autECLPS.GetText(18, 48, 20),
+                        num=int(sesion.autECLPS.GetText(18, 45, 2).strip()),
+                        descripcion=sesion.autECLPS.GetText(18, 48, 20).strip(),
                         provincia=provincia(
-                            id=int(sesion.autECLPS.GetText(18, 13, 2)),
-                            descripcion=sesion.autECLPS.GetText(18, 16, 20)
+                            id=int(sesion.autECLPS.GetText(18, 13, 2).strip()),
+                            descripcion=sesion.autECLPS.GetText(18, 16, 20).strip()
                         )
                     )
                 )
@@ -44,17 +44,17 @@ def llenarCliente(sesion, cli):
         )
         cli.ubicacionGeografica = ubicacion(
             parroquia=parroquia(
-                #id=int(sesion.autECLPS.GetText(13, 13, 2)),
-                descripcion=sesion.autECLPS.GetText(13, 17, 35)
+                num=int(sesion.autECLPS.GetText(13, 13, 2).strip()),
+                descripcion=sesion.autECLPS.GetText(13, 17, 35).strip()
             ),
             calle=calle(
-                descripcion1=sesion.autECLPS.GetText(14, 18, 50),
+                descripcion1=sesion.autECLPS.GetText(14, 18, 50).strip(),
             ),
             interseccion=calle(
-                descripcion1=sesion.autECLPS.GetText(15, 18, 50),
+                descripcion1=sesion.autECLPS.GetText(15, 18, 50).strip(),
             ),
             urbanizacion=urbanizacion(
-                descripcion=sesion.autECLPS.GetText(16, 18, 50)
+                descripcion=sesion.autECLPS.GetText(16, 18, 50).strip()
             )
         )
         #print(cli.geocodigo)
@@ -100,23 +100,23 @@ def llenarMedidores(sesion, paraIngreso=False):
             sesion.autECLOIA.WaitForInputReady()
             sesion.autECLPS.SendKeys("[down]")
             medidores.append(
-                MedidorBuscado(
-                    sesion.autECLPS.GetText(6, 29, 20),
-                    sesion.autECLPS.GetText(16, 29, 18),
+                MedidorBuscado(data={
+                    sesion.autECLPS.GetText(6, 29, 20).strip(),
+                    sesion.autECLPS.GetText(16, 29, 18).strip(),
                     (sesion.autECLPS.GetText(17, 29, 23)).encode('utf-8'),
-                    sesion.autECLPS.GetText(18, 29, 17),
+                    sesion.autECLPS.GetText(18, 29, 17).strip(),
                     sesion.autECLPS.GetText(8, 29, 10),
                     sesion.autECLPS.GetText(9, 29, 10),
-                    sesion.autECLPS.GetText(8, 68, 9),
-                    sesion.autECLPS.GetText(9, 68, 9),
+                    sesion.autECLPS.GetText(8, 68, 9).strip(),
+                    sesion.autECLPS.GetText(9, 68, 9).strip()},
                     instance=medidor(
-                        fabrica=sesion.autECLPS.GetText(7, 29, 11),
-                        serie=sesion.autECLPS.GetText(10, 29, 11),
+                        fabrica=sesion.autECLPS.GetText(7, 29, 11).strip(),
+                        serie=sesion.autECLPS.GetText(10, 29, 11).strip(),
                         lectura=lect,
-                        tipo=sesion.autECLPS.GetText(5, 29, 16),
-                        digitos=sesion.autECLPS.GetText(11, 29, 2),
-                        fases=sesion.autECLPS.GetText(11, 68, 2),
-                        hilos=sesion.autECLPS.GetText(12, 29, 2)
+                        tipo=sesion.autECLPS.GetText(5, 29, 16).strip(),
+                        digitos=sesion.autECLPS.GetText(11, 29, 2).strip(),
+                        fases=sesion.autECLPS.GetText(11, 68, 2).strip(),
+                        hilos=sesion.autECLPS.GetText(12, 29, 2).strip()
                     )
                 )
             )
