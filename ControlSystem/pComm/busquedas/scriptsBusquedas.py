@@ -6,9 +6,43 @@ import pythoncom
 from ControlSystem.pComm.conexion import manejadorDeConexion
 from busquedas.models import ClienteBuscado, MedidorBuscado
 from ingresos.models import cliente, secuencia, ruta, sector, canton, provincia, parroquia, ubicacion, calle, urbanizacion
-from inventario.models import medidor
+from inventario.models import medidor, marca
 
 lectura = '0'
+
+
+def newMarca(marc):
+    m = str(marc).strip().split(' ')
+    if len(m)>1:
+        abr=m[0]
+        m[0]=''
+        m=" ".join(str(x) for x in m)
+    else:
+        m = str(marc).strip()
+        abr=m[:4]
+    try:
+        miMarca = marca.objects.get(id=str(marc)[0:3])
+    except:
+        miMarca = marca(id=abr, descripcion=str(m).strip())
+        miMarca.save()
+
+    return miMarca
+
+def newVoltaje(ser):
+    voltaje = 120
+
+    try:
+        if int(ser[:2])%2==0:
+            print 'si'
+            return 240
+    except:
+        try:
+            if int(ser[1:3])%2==0:
+                print 'si'
+                return 240
+        except:
+            pass
+    return voltaje
 
 
 def llenarCliente(sesion, cli):
@@ -99,8 +133,9 @@ def llenarMedidores(sesion, paraIngreso=False):
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
             sesion.autECLPS.SendKeys("[down]")
+            miSerie = sesion.autECLPS.GetText(10, 29, 11).strip()
             medidores.append(
-                MedidorBuscado(data={
+                MedidorBuscado(
                     sesion.autECLPS.GetText(6, 29, 20).strip(),
                     sesion.autECLPS.GetText(16, 29, 18).strip(),
                     (sesion.autECLPS.GetText(17, 29, 23)).encode('utf-8'),
@@ -108,10 +143,12 @@ def llenarMedidores(sesion, paraIngreso=False):
                     sesion.autECLPS.GetText(8, 29, 10),
                     sesion.autECLPS.GetText(9, 29, 10),
                     sesion.autECLPS.GetText(8, 68, 9).strip(),
-                    sesion.autECLPS.GetText(9, 68, 9).strip()},
+                    sesion.autECLPS.GetText(9, 68, 9).strip(),
                     instance=medidor(
                         fabrica=sesion.autECLPS.GetText(7, 29, 11).strip(),
-                        serie=sesion.autECLPS.GetText(10, 29, 11).strip(),
+                        serie=miSerie,
+                        marca=newMarca(sesion.autECLPS.GetText(6, 29, 20).strip()),
+                        voltaje=newVoltaje(miSerie),
                         lectura=lect,
                         tipo=sesion.autECLPS.GetText(5, 29, 16).strip(),
                         digitos=sesion.autECLPS.GetText(11, 29, 2).strip(),

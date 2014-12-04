@@ -201,37 +201,11 @@ class MedidorBuscado(ModelForm):
         self.fields['li'].initial = str(li)
         self.fields['ld'].initial = str(ld)
 
-        m = str(marc).strip().split(' ')
-        if len(m)>1:
-            abr=m[0]
-            m[0]=''
-            m=" ".join(str(x) for x in m)
-        else:
-            m = str(marc).strip()
-            abr=m[:4]
-        try:
-            miMarca = marca.objects.get(id=str(marc)[0:3])
-        except:
-            miMarca = marca(id=abr, descripcion=str(m).strip())
-            miMarca.save()
-
-        self.instance.marca = miMarca
-        self.instance.voltaje = 120
-
-        try:
-            if int(self.initial['serie'][:2])%2==0:
-                self.instance.voltaje = 240
-                print 'si'
-        except:
-            try:
-                if int(self.initial['serie'][1:3])%2==0:
-                    self.instance.voltaje = 240
-                    print 'si'
-            except:
-                pass
-
-
-
-
-
-
+    def is_valid(self):
+        valid = super(MedidorBuscado, self).is_valid()
+        return True
+    def clean(self):
+        cleaned_data = super(MedidorBuscado, self).clean()
+        print cleaned_data
+        self.cleaned_data=cleaned_data
+        return cleaned_data

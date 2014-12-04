@@ -42,7 +42,7 @@ class ingresoForm(forms.Form):
     )
     estadoSolicitud = forms.CharField(
         initial=estadoDeSolicitud.__unicode__(estadoDeSolicitud.objects.get(id=0)), label='',
-        widget=forms.TextInput(),
+        widget=forms.TextInput(attrs={'style': 'height: 1px; padding: 0; margin: 0; border: 0;'}),
         required=False
     )
     numeroDeSolicitud = forms.CharField(
@@ -355,40 +355,57 @@ class ingresoForm(forms.Form):
     )
 
 
-    def save(self):
+    def save(self, cliente=None):
         print self.data['id']
+
         act=actividad()
+        if cliente is not None:
+            act.cliente=cliente
+
+        act.tipoDeConstruccion=tipoDeConstruccion.objects.get(id=int(self.data['tipoDeConstruccion']))
+        try:
+            inst = instalador.objects.get(
+                nombre=empleado.objects.get(id=int(self.data['instalador'])),
+                cuadrilla=cuadrilla.objects.get(id=int(self.data['cuadrilla']))
+            )
+        except:
+            inst = instalador(
+                nombre=empleado.objects.get(id=int(self.data['instalador'])),
+                cuadrilla=cuadrilla.objects.get(id=int(self.data['cuadrilla']))
+            )
+            inst.save()
+        act.instalador=inst
+        act.ubicacionDelMedidor=ubicacionDelMedidor.objects.get(id=int(self.data['ubicacionDelMedidor']))
+        act.claseRed=claseRed.objects.get(id=self.data['claseRed'])
+        act.nivelSocieconomico=nivelSocieconomico.objects.get(id=self.data['nivelSocieconomico'])
+        act.calibreDeLaRed=calibreDeLaRed.objects.get(id=int(self.data['calibreDeLaRed']))
+        act.estadoDeLaInstalacion=estadoDeUnaInstalacion.objects.get(id=int(self.data['estadoDeUnaInstalacion']))
+        act.tipoDeAcometidaRed=tipoDeAcometidaRed.objects.get(id=self.data['tipoDeAcometidaRed'])
+        act.fechaDeActividad=datetime.date(
+            int(self.data['fecha_year']),
+            int(self.data['fecha_month']),
+            int(self.data['fecha_day'])
+        )
+        try:
+            act.horaDeActividad=datetime.datetime.strptime(self.data['hora'], '%H:%M:%S')
+        except:
+            act.horaDeActividad=datetime.time(hour=10, minute=30, second=0)
+
+        act.usoDeEnergia=usoDeEnergia.objects.get(id=self.data['usoDeEnergia'])
+        act.usoEspecificoDelInmueble=usoDeEnergia.objects.get(id=self.data['usoEspecificoDelInmueble'])
+        act.formaDeConexion=formaDeConexion.objects.get(id=int(self.data['formaDeConexion']))
+        act.demanda=demanda.objects.get(id=int(self.data['demanda']))
+        act.motivoDeSolicitud=motivoParaSolicitud.objects.get(id=int(self.data['motivoParaSolicitud']))
+        act.tipoDeSolicitud=tipoDeSolicitud.objects.get(id=int(self.data['tipoDeSolicitud']))
+        act.materialDeLaRed=materialDeLaRed.objects.get(id=self.data['materialDeLaRed'])
+
         if self.data['id']!=0:
             act.id = self.data['id']
-        print self.tipoDeSolicitud
-
-
-
-
-
-
-#class actividad(models.Model):
-#    numeroDeSolicitud=models.CharField(max_length=10, verbose_name='Número de Solicitud')
-#    cliente=models.ForeignKey('cliente')
-#    tipoDeConstruccion=models.ForeignKey('tipoDeConstruccion')
-#    instalador=models.ForeignKey('instalador')
-#    ubicacionDelMedidor=models.ForeignKey('ubicacionDelMedidor')
-#    claseRed=models.ForeignKey('claseRed')
-#    nivelSocieconomico=models.ForeignKey('nivelSocieconomico', blank=True, null=True, default='')
-#    calibreDeLaRed=models.ForeignKey('calibreDeLaRed')
-#    estadoDeLaInstalacion=models.ForeignKey('estadoDeUnaInstalacion')
-#    tipoDeAcometidaRed=models.ForeignKey('tipoDeAcometidaRed', verbose_name='Tipo de Acometida o Red')
-#    fechaDeActividad=models.DateField(verbose_name='Fecha de Actividad', editable=True)
-#    horaDeActividad=models.TimeField(verbose_name='Hora de Actividad', editable=True)
-#    usoDeEnergia=models.ForeignKey('usoDeEnergia')
-#    usoEspecificoDelInmueble=models.ForeignKey('usoEspecificoDelInmueble')
-#    formaDeConexion=models.ForeignKey('formaDeConexion')
-#    demanda=models.ForeignKey('demanda')
-#    motivoDeSolicitud=models.ForeignKey('motivoParaSolicitud')
-#    tipoDeSolicitud=models.ForeignKey('tipoDeSolicitud')
-#    materialDeLaRed=models.ForeignKey('materialDeLaRed')
-#    estadoDeSolicitud=models.ForeignKey('estadoDeSolicitud')
-
+            act.numeroDeSolicitud=self.data['numeroDeSolicitud']
+            act.estadoDeSolicitud=estadoDeSolicitud.objects.get(id=int(self.data['estadoSolicitud']))
+            act.save(force_update=True)
+        else:
+            act.save()
 
 
     def rellenarDetalle(self, idActividad):

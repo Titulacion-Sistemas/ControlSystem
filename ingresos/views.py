@@ -1,4 +1,5 @@
 from dajax.core import Dajax
+import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.context_processors import csrf
@@ -14,6 +15,7 @@ from ingresos.forms import ingresoForm
 from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar as b
 from ingresos.models import *
 from inventario.models import medidor
+
 
 @login_required()
 def ingresarSico(request):
@@ -76,14 +78,14 @@ def buscarCliente(request):
                     request.session['cliente'] = data['formCliente'].instance
                     request.session['medidor'] = data['cMedidores'][0]
                 else:
-                    dajax = mostraError(dajax, {'Cliente':'No Encontrato'}, '#err')
+                    dajax = mostraError(dajax, {'Cliente': 'No Encontrato'}, '#err')
 
             else:
                 print form.errors
-                dajax = mostraError(dajax, {'':dict(form.errors)['__all__']}, '#err')
+                dajax = mostraError(dajax, {'': dict(form.errors)['__all__']}, '#err')
 
         except:
-           dajax = mostraError(dajax, {'Error':'No se pudo Buscar Cliente...'}, '#err')
+            dajax = mostraError(dajax, {'Error': 'No se pudo Buscar Cliente...'}, '#err')
 
         dajax.add_css_class('#cargando', 'hidden')
         return dajax.calls
@@ -124,11 +126,11 @@ def buscarReferencia(request):
                                  '' + str(data['cMedidores'][0].fields['marc'].initial) + '')
 
                 else:
-                    dajax = mostraError(dajax, {'Referencia':'No Encontrada'}, '#errRef')
+                    dajax = mostraError(dajax, {'Referencia': 'No Encontrada'}, '#errRef')
 
             else:
                 print form.errors
-                dajax = mostraError(dajax, {'':dict(form.errors)['__all__']}, '#errRef')
+                dajax = mostraError(dajax, {'': dict(form.errors)['__all__']}, '#errRef')
 
         except:
             dajax = mostraError(dajax, {'Error': 'No se pudo Buscar'}, '#errRef')
@@ -175,18 +177,17 @@ def guardarIngreso(request):
         form = ingresoForm(data=request.POST)
         if form.is_valid():  # All validation rules pass
             # Process the data in form.cleaned_data
-            print 'Correcto...'
             ts = form.data['tipoDeSolicitud']
             if ts == '11' or ts == '13':
-
                 try:
                     #en caso de ser un nuevo guardado...
-                    cliente=request.session['cliente']
-                    medidor=request.session['medidor']
+                    cli = request.session['cliente']
+                    med = request.session['medidor']
+                    print ts
                 except:
                     #en caso de ser actualizacion
                     try:
-                        enlace = detalleClienteMedidor(
+                        enlace = detalleClienteMedidor.objects.get(
                             cliente=cliente.objects.get(
                                 cuenta=(form.data['codigoDeCliente']).strip(),
                                 ci_ruc=(form.data['cedula']).strip()
@@ -196,30 +197,51 @@ def guardarIngreso(request):
                                 serie=(form.data['serieRev']).strip()
                             )
                         )
+                        print enlace
 
-                    #actualizar
+                        #actualizar
+                        form.save()
+                        return dajax.calls
 
                     except:
                         dajax = mostraError(dajax, {'Error': 'Datos incompletos para guardar...'}, '#err')
                         return dajax.calls
 
                 #guardar por primera vez
-                cliente.save()
-                print medidor.instance.marca
-                medidor.save()
-                detalleClienteMedidor(
-                    cliente=cliente,
-                    medidor=medidor.instance
-                ).save()
+                cli.save()
+                med.instance.save()
+                #medidor.save()
+                fi = formatFechas(med.fields['fi'].initial)
+                fd = formatFechas(med.fields['fd'].initial)
 
-            form.save()
-            dajax.script("$('#err').addClass('hidden');")
+                d = detalleClienteMedidor(
+                    cliente=cli,
+                    medidor=med.instance,
+                    lectura_instalacion=int(med.fields['li'].initial),
+                    lectura_desinstalacion=int(med.fields['ld'].initial),
+                    fecha_instalacion=fi,
+                    fecha_desinstalacion=fd,
+                )
+                d.save()
+                print 'Correcto...'
+
+                form.save()
+
         else:
             print dict(form.errors)
             dajax = mostraError(dajax, form.errors, '#err')
 
         return dajax.calls
     else:
+        return None
+
+
+def formatFechas(f):
+    f = str(f).split('/')
+    try:
+        f = "-".join(str(x) for x in f[::-1])
+        return datetime.date(*map(int, f.split('-')))
+    except:
         return None
 
 
