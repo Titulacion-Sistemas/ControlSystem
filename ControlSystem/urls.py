@@ -36,6 +36,7 @@ urlpatterns = patterns('',
     url(r'^bcliente', 'ingresos.views.buscarCliente', name='buscarCliente'),
     url(r'^bmedidor', 'ingresos.views.buscarMedidor', name='buscarMedidor'),
     url(r'^guardaringreso', 'ingresos.views.guardarIngreso', name='guardarIngreso'),
+    url(r'^ingreso/(?P<pk>\d+)/$', 'ingresos.views.ingreso', name='ingreso'),
 
     #Servicios Web
     (r"^hello_world/", 'serviciosWeb.views.hello_world_service'),

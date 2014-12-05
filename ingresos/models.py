@@ -54,7 +54,7 @@ class ruta(models.Model):
 
 
 class secuencia(models.Model):
-    num = models.PositiveSmallIntegerField(max_length=2)
+    num = models.IntegerField()
     descripcion = models.CharField(max_length=30, verbose_name='Nombre de Secuencia', blank=True, null=True, default='')
     ruta = models.ForeignKey(ruta, verbose_name='Nombre de Ruta')
 
@@ -82,7 +82,7 @@ class cliente(models.Model):
     deuda = models.DecimalField(max_digits=12, decimal_places=2, verbose_name='Deuda del abonado', blank=True, null=True, default=0)
     meses = models.PositiveSmallIntegerField(verbose_name='Meses adeudados', blank=True, null=True, default=0)
     geocodigo = models.OneToOneField(secuencia, verbose_name='Geocódigo', blank=True, null=True, default=None)
-    ubicacionGeografica=models.OneToOneField('ubicacion', verbose_name='Ubicación geográfica', blank=True, null=True, default=None)
+    ubicacionGeografica=models.ForeignKey('ubicacion', verbose_name='Ubicación geográfica', blank=True, null=True, default=None)
     telefono = models.CharField(max_length=10, verbose_name='Teléfono o Celular', blank=True, null=True, default='N/A')
     tipo = models.CharField(max_length=1, choices=PERSONA, default='N')
     estado = models.CharField(max_length=20, verbose_name="Estado", default='S/N')
@@ -91,163 +91,162 @@ class cliente(models.Model):
         return self.cuenta
 
     def save(self, *args, **kwargs):
-        try:
-            p = provincia.objects.get(
-                id=self.geocodigo.ruta.sector.canton.provincia.id,
-                descripcion=self.geocodigo.ruta.sector.canton.provincia.descripcion
-            )
-        except:
-            p = provincia(
-                id=self.geocodigo.ruta.sector.canton.provincia.id,
-                descripcion=self.geocodigo.ruta.sector.canton.provincia.descripcion
-            )
-            print 'BD : Guardando Provincia...'
-            p.save()
-        try:
-            c = canton.objects.get(
-                num=self.geocodigo.ruta.sector.canton.num,
-                descripcion=self.geocodigo.ruta.sector.canton.descripcion,
-            )
-        except:
-            c = canton(
-                num=self.geocodigo.ruta.sector.canton.num,
-                descripcion=self.geocodigo.ruta.sector.canton.descripcion,
-                provincia=p
-            )
-            print 'BD : Guardando Canton...'
-            c.save()
-        try:
-            parr=parroquia.objects.get(
-                num=self.ubicacionGeografica.parroquia.num,
-                descripcion=self.ubicacionGeografica.parroquia.descripcion,
-            )
-        except:
-            parr = parroquia(
-                num=self.ubicacionGeografica.parroquia.num,
-                descripcion=self.ubicacionGeografica.parroquia.descripcion,
-                canton=c
-            )
-            print 'BD : Guardando Parroquia...'
-            parr.save()
-        try:
-            sec=sector.objects.get(
-                num=self.geocodigo.ruta.sector.num,
-                descripcion=self.geocodigo.ruta.sector.descripcion,
-            )
-        except:
-            sec=sector(
-                num=self.geocodigo.ruta.sector.num,
-                descripcion=self.geocodigo.ruta.sector.descripcion,
-                canton=c
-            )
-            print 'BD : Guardando Sector...'
-            sec.save()
-        try:
-            rut = ruta.objects.get(
-                num=self.geocodigo.ruta.num,
-                descripcion=self.geocodigo.ruta.descripcion,
-            )
-        except:
-            rut = ruta(
-                num=self.geocodigo.ruta.num,
-                descripcion=self.geocodigo.ruta.descripcion,
-                sector=sec
-            )
-            print 'BD : Guardando Ruta...'
-            rut.save()
-
-        try:
-            geo = secuencia.objects.get(
-                num=self.geocodigo.ruta.num,
-                ruta=rut
-            )
-        except:
-            geo = secuencia(
-                num=self.geocodigo.ruta.num,
-                ruta=rut
-            )
-            print 'BD : Guardando Secuencia...'
-            geo.save()
-
-        tipCall=None
-        if self.ubicacionGeografica.calle.descripcion1[2]==' ':
+        if self.geocodigo is not None:
             try:
-                tipCall=tipoCalle.objects.get(
-                    id=self.ubicacionGeografica.calle.descripcion1[:2]
+                p = provincia.objects.get(
+                    id=self.geocodigo.ruta.sector.canton.provincia.id,
+                    descripcion=self.geocodigo.ruta.sector.canton.provincia.descripcion
                 )
-                print 'BD : Asignada Tipo de Calle'
             except:
-                tipCall=tipoCalle(
-                    id=self.ubicacionGeografica.calle.descripcion1[:2],
-                    descripcion=
-                    self.ubicacionGeografica.calle.descripcion1[3:len(self.ubicacionGeografica.calle.descripcion1)]
+                p = provincia(
+                    id=self.geocodigo.ruta.sector.canton.provincia.id,
+                    descripcion=self.geocodigo.ruta.sector.canton.provincia.descripcion
                 )
-                print 'BD : Guardando Tipo de Calle (Calle)...'
-                tipCall.save()
-                self.ubicacionGeografica.calle.descripcion1=tipCall.descripcion
-        try:
-            call=calle.objects.get(
-                tipoDeCalle=tipCall,
-                descripcion1=self.ubicacionGeografica.calle.descripcion1
-            )
-            print 'BD : Asignada Calle'
-        except:
-            call=calle(
-                tipoDeCalle=tipCall,
-                descripcion1=self.ubicacionGeografica.calle.descripcion1
-            )
-            print 'BD : Guardando Calle...'
-            call.save()
-
-        tipCall=None
-        if len(self.ubicacionGeografica.interseccion.descripcion1)>0 and self.ubicacionGeografica.interseccion.descripcion1[2]==' ':
+                print 'BD : Guardando Provincia...'
+                p.save()
             try:
-                tipCall=tipoCalle.objects.get(
-                    id=self.ubicacionGeografica.interseccion.descripcion1[:2]
+                c = canton.objects.get(
+                    num=self.geocodigo.ruta.sector.canton.num,
+                    descripcion=self.geocodigo.ruta.sector.canton.descripcion,
                 )
-                print 'BD : Asignada Tipo de Calle(I)'
             except:
-                tipCall=tipoCalle(
-                    id=self.ubicacionGeografica.interseccion.descripcion1[:2],
-                    descripcion=
-                    self.ubicacionGeografica.interseccion.descripcion1[3:len(self.ubicacionGeografica.interseccion.descripcion1)]
+                c = canton(
+                    num=self.geocodigo.ruta.sector.canton.num,
+                    descripcion=self.geocodigo.ruta.sector.canton.descripcion,
+                    provincia=p
                 )
-                print 'BD : Guardando Tipo de Calle (Interseccion)...'
-                tipCall.save()
-                self.ubicacionGeografica.interseccion.descripcion1=tipCall.descripcion
-        try:
-            inter=calle.objects.get(
-                tipoDeCalle=tipCall,
-                descripcion1=self.ubicacionGeografica.interseccion.descripcion1
-            )
-            print 'BD : Asignada Calle(I)'
-        except:
-            inter=calle(
-                tipoDeCalle=tipCall,
-                descripcion1=self.ubicacionGeografica.interseccion.descripcion1
-            )
-            print 'BD : Guardando Interseccion...'
-            inter.save()
+                print 'BD : Guardando Canton...'
+                c.save()
+            try:
+                sec=sector.objects.get(
+                    num=self.geocodigo.ruta.sector.num,
+                    descripcion=self.geocodigo.ruta.sector.descripcion,
+                )
+            except:
+                sec=sector(
+                    num=self.geocodigo.ruta.sector.num,
+                    descripcion=self.geocodigo.ruta.sector.descripcion,
+                    canton=c
+                )
+                print 'BD : Guardando Sector...'
+                sec.save()
+            try:
+                rut = ruta.objects.get(
+                    num=self.geocodigo.ruta.num,
+                    descripcion=self.geocodigo.ruta.descripcion,
+                )
+            except:
+                rut = ruta(
+                    num=self.geocodigo.ruta.num,
+                    descripcion=self.geocodigo.ruta.descripcion,
+                    sector=sec
+                )
+                print 'BD : Guardando Ruta...'
+                rut.save()
+            print self.geocodigo.num
+            try:
+                geo = secuencia.objects.get(
+                    num=self.geocodigo.num,
+                    ruta=rut
+                )
+            except:
+                geo = secuencia(
+                    num=self.geocodigo.num,
+                    ruta=rut
+                )
+                print 'BD : Guardando Secuencia...'
+                geo.save()
 
-        urb=None
-        if self.ubicacionGeografica.urbanizacion:
-            if len(self.ubicacionGeografica.urbanizacion.descripcion.strip())>0:
+            self.geocodigo=geo
+
+        if self.ubicacionGeografica is not None:
+
+            try:
+                parr=parroquia.objects.get(
+                    num=self.ubicacionGeografica.parroquia.num,
+                    descripcion=self.ubicacionGeografica.parroquia.descripcion,
+                )
+            except:
+                parr = parroquia(
+                    num=self.ubicacionGeografica.parroquia.num,
+                    descripcion=self.ubicacionGeografica.parroquia.descripcion,
+                    canton=c
+                )
+                print 'BD : Guardando Parroquia...'
+                parr.save()
+
+            tipCall=None
+            if self.ubicacionGeografica.calle.descripcion1[2]==' ':
                 try:
-                    urb=urbanizacion.objects.get(descripcion=self.ubicacionGeografica.urbanizacion.descripcion)
-                    print 'BD : Asignada Urbanizacion'
+                    tipCall=tipoCalle.objects.get(
+                        id=self.ubicacionGeografica.calle.descripcion1[:2]
+                    )
+                    print 'BD : Asignada Tipo de Calle'
                 except:
-                    urb = urbanizacion(descripcion=self.ubicacionGeografica.urbanizacion.descripcion)
-                    print 'BD : Guardando Urbanizacion...'
-                    urb.save()
+                    tipCall=tipoCalle(
+                        id=self.ubicacionGeografica.calle.descripcion1[:2],
+                        descripcion=
+                        self.ubicacionGeografica.calle.descripcion1[3:len(self.ubicacionGeografica.calle.descripcion1)]
+                    )
+                    print 'BD : Guardando Tipo de Calle (Calle)...'
+                    tipCall.save()
+                    self.ubicacionGeografica.calle.descripcion1=tipCall.descripcion
+            try:
+                call=calle.objects.get(
+                    tipoDeCalle=tipCall,
+                    descripcion1=self.ubicacionGeografica.calle.descripcion1
+                )
+                print 'BD : Asignada Calle'
+            except:
+                call=calle(
+                    tipoDeCalle=tipCall,
+                    descripcion1=self.ubicacionGeografica.calle.descripcion1
+                )
+                print 'BD : Guardando Calle...'
+                call.save()
 
-        try:
-            ubi=ubicacion.objects.get(
-                parroquia=parr, calle=call,
-                interseccion=inter, urbanizacion=urb
-            )
-            print 'BD : Asignada Ubicacion'
+            tipCall=None
+            if len(self.ubicacionGeografica.interseccion.descripcion1)>0 and self.ubicacionGeografica.interseccion.descripcion1[2]==' ':
+                try:
+                    tipCall=tipoCalle.objects.get(
+                        id=self.ubicacionGeografica.interseccion.descripcion1[:2]
+                    )
+                    print 'BD : Asignada Tipo de Calle(I)'
+                except:
+                    tipCall=tipoCalle(
+                        id=self.ubicacionGeografica.interseccion.descripcion1[:2],
+                        descripcion=
+                        self.ubicacionGeografica.interseccion.descripcion1[3:len(self.ubicacionGeografica.interseccion.descripcion1)]
+                    )
+                    print 'BD : Guardando Tipo de Calle (Interseccion)...'
+                    tipCall.save()
+                    self.ubicacionGeografica.interseccion.descripcion1=tipCall.descripcion
+            try:
+                inter=calle.objects.get(
+                    tipoDeCalle=tipCall,
+                    descripcion1=self.ubicacionGeografica.interseccion.descripcion1
+                )
+                print 'BD : Asignada Calle(I)'
+            except:
+                inter=calle(
+                    tipoDeCalle=tipCall,
+                    descripcion1=self.ubicacionGeografica.interseccion.descripcion1
+                )
+                print 'BD : Guardando Interseccion...'
+                inter.save()
 
-        except:
+            urb=None
+            if self.ubicacionGeografica.urbanizacion:
+                if len(self.ubicacionGeografica.urbanizacion.descripcion.strip())>0:
+                    try:
+                        urb=urbanizacion.objects.get(descripcion=self.ubicacionGeografica.urbanizacion.descripcion)
+                        print 'BD : Asignada Urbanizacion'
+                    except:
+                        urb = urbanizacion(descripcion=self.ubicacionGeografica.urbanizacion.descripcion)
+                        print 'BD : Guardando Urbanizacion...'
+                        urb.save()
+
+
             ubi=ubicacion(
                 parroquia=parr, calle=call,
                 interseccion=inter, urbanizacion=urb
@@ -255,25 +254,43 @@ class cliente(models.Model):
             print 'BD : Guardando Ubicacion...'
             ubi.save()
 
-        self.ubicacionGeografica=ubi
-        self.geocodigo=geo
+            self.ubicacionGeografica=ubi
 
+        print self.geocodigo
         try:
-            self.id = cliente.objects.get(cuenta=self.cuenta).id
+            self.id = cliente.objects.get(cuenta=str(self.cuenta)).id
+            print 'Actualizar por cuenta'
             super(cliente, self).save(force_update=True, *args, **kwargs)
         except:
-            super(cliente, self).save(*args, **kwargs)
+            try:
+                self.id = cliente.objects.get(id=self.id).id
+                print 'Actualizar por id'
+                super(cliente, self).save(force_update=True, *args, **kwargs)
+            except:
+                print 'Gurdar Cliente'
+                super(cliente, self).save(*args, **kwargs)
+
         print 'BD : Guardado Completo...'
 
 
 class detalleClienteMedidor(models.Model):
     lectura_instalacion = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Lectura de instalación', null=True)
     lectura_desinstalacion = models.DecimalField(max_digits=8, decimal_places=2, verbose_name='Lectura de desinstalación', null=True)
-    fecha_instalacion = models.DateField(verbose_name='Fecha de instalación')
-    fecha_desinstalacion = models.DateField(verbose_name='Fecha de desinstalación')
+    fecha_instalacion = models.DateField(verbose_name='Fecha de instalación', null=True)
+    fecha_desinstalacion = models.DateField(verbose_name='Fecha de desinstalación', null=True)
     medidor = models.ForeignKey('inventario.medidor', verbose_name='Medidor')
     cliente = models.ForeignKey(cliente, verbose_name='Cliente')
     observacion=models.CharField(max_length=50, blank=True, null=True, default='')
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        try:
+            self.id = detalleClienteMedidor.objects.get(medidor=self.medidor, cliente=self.cliente).id
+            super(detalleClienteMedidor, self).save(force_update=True)
+            print 'Se Actualiza la relación Cliente - Medidor...'
+        except:
+            super(detalleClienteMedidor, self).save()
+            print 'Se Guarda la relación Cliente - Medidor...'
 
     def __unicode__(self):
         return '%s - %s' % (self.cliente, self.medidor)
@@ -286,8 +303,19 @@ class detalleClienteMedidor(models.Model):
 class detalleClienteReferencia(models.Model):
     cliente=models.ForeignKey('cliente', related_name='cliente')
     referencia=models.ForeignKey('cliente', related_name='referencia')
-    medidorDeReferencia=models.CharField(max_length=10)
+    medidorDeReferencia=models.CharField(max_length=15)
     ubicacion=models.ForeignKey("ubicacion")
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        try:
+            self.id = detalleClienteReferencia.objects.get(cliente=self.cliente, referencia=self.referencia).id
+            super(detalleClienteReferencia, self).save(force_update=True)
+            print 'Se Actualiza la relación Cliente - Referencia...'
+        except:
+            super(detalleClienteReferencia, self).save()
+            print 'Se Guarda la relación Cliente - Referencia...'
+
 
     def __unicode__(self):
         return 'C:%s - R:%s' % (self.cliente, self.referencia)
@@ -371,7 +399,9 @@ class actividad(models.Model):
     motivoDeSolicitud=models.ForeignKey('motivoParaSolicitud')
     tipoDeSolicitud=models.ForeignKey('tipoDeSolicitud')
     materialDeLaRed=models.ForeignKey('materialDeLaRed')
-    estadoDeSolicitud=models.ForeignKey('estadoDeSolicitud')
+    estadoDeSolicitud=models.ForeignKey('estadoDeSolicitud', default=0)
+    tipoDeServicio=models.ForeignKey('tipoDeServicio')
+    observaciones=models.CharField(max_length=200, blank=True, null=True, default='')
 
     def __unicode__(self):
         return self.numeroDeSolicitud
@@ -592,7 +622,7 @@ class instalador(models.Model):
 class materialDeActividad(models.Model):
     material=models.ForeignKey('inventario.detalleMaterialContrato')
     actividad=models.ForeignKey('actividad')
-    cantidad=models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
+    cantidad=models.BigIntegerField(default=1)
     observacion=models.CharField(max_length=50, blank=True, null=True, default='')
 
     def __unicode__(self):

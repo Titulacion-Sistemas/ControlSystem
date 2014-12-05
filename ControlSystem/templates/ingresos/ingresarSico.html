@@ -341,7 +341,8 @@
     {% endif %}
 
     <div class="container-fluid">
-        <form role="form" class="form-group" id="ingreso" name="ingreso" method="post" action=""
+        <form role="form" class="form-group" id="ingreso" name="ingreso"
+              method="post" action="" enctype="multipart/form-data"
         onsubmit="return guardarAjax();"
         >{% csrf_token %}
         <div class="row">
@@ -404,19 +405,72 @@
                         </div>
                     </div>
                 </div>
-                <div id="medidorInstalado" class="row hidden">
+                <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-info">
                             <div class="panel-heading text-center">
-                                <b>Medidor - (Instalado)</b>
+                                <b>Materiales</b>
                             </div>
                             <div class="panel-body">
-                                {% bootstrap_field form.medidor layout="horizontal" %}
-                                {% bootstrap_field form.fabricaInst layout="horizontal" %}
-                                {% bootstrap_field form.serieInst layout="horizontal" %}
-                                {% bootstrap_field form.marcaInst layout="horizontal" %}
-                                {% bootstrap_field form.tipoDeMedidor layout="horizontal" %}
-                                {% bootstrap_field form.lecturaInst layout="horizontal" %}
+                                {% bootstrap_field form.material layout="horizontal" %}
+                                <div class="row">
+                                    <div class="col-md-8 center-block" style="margin-top: 5px;">
+                                        {% bootstrap_field form.cantidad layout="horizontal" %}
+                                    </div>
+                                    <div class="col-md-4 center-block" style="margin-top: 5px;">
+                                        {% buttons %}
+                                            <button type="button" class="btn btn-default"
+                                                    title="Agregar a la lista de materiales"
+                                                    id="masMaterial">
+                                                {% bootstrap_icon "plus" %}
+                                            </button>
+                                        {% endbuttons %}
+                                    </div>
+                                </div>
+                                <div>
+                                    <table id="detalleMaterial" class="table table-condensed table-hover" style="margin-bottom: 0">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <b>Item</b>
+                                                </th>
+                                                <th>
+                                                    <b>Descripcion</b>
+                                                </th>
+                                                <th>
+                                                    <b>Cantidad</b>
+                                                </th>
+                                                <th>
+                                                    &nbsp;
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                        </tbody>
+                                    </table>
+
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            {% bootstrap_field form.materialesSeleccionados layout="inline" %}
+                                        </div>
+                                        <div class="col-md-2">
+                                            {% bootstrap_field form.cantMaterialesSeleccionados layout="inline" %}
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4 small">
+                                            {% bootstrap_field form.reubicacion layout="inline" %}
+                                        </div>
+                                        <div class="col-md-4 small">
+                                            {% bootstrap_field form.contrastacion layout="inline" %}
+                                        </div>
+                                        <div class="col-md-4 small">
+                                            {% bootstrap_field form.directo layout="inline" %}
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -471,7 +525,6 @@
                                             {% bootstrap_field form.ubiSellosSeleccionados layout="inline" %}
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -517,14 +570,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row
+                {% if form.id.value == 0 %}
+                    hidden
+                {% endif %}
+                ">
                     <div class="col-md-12">
                         <div class="panel panel-info">
                             <div class="panel-heading text-center">
                                 <b>Fotos</b>
                             </div>
-                            <div class="panel-body">
-                                {% bootstrap_field form.fotos layout="horizontal" %}
+                            <div class="panel-body center-block">
+                                {% buttons %}
+                                    <button id="misFotos" type="button" class="btn btn-default center-block">
+                                        {% bootstrap_icon "picture" %} Fotos de Actividad...
+                                    </button>
+                                {% endbuttons %}
                             </div>
                         </div>
                     </div>
@@ -551,60 +612,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div id="medidorInstalado" class="row hidden">
                     <div class="col-md-12">
                         <div class="panel panel-info">
                             <div class="panel-heading text-center">
-                                <b>Materiales</b>
+                                <b>Medidor - (Instalado)</b>
                             </div>
                             <div class="panel-body">
-                                {% bootstrap_field form.material layout="horizontal" %}
-                                <div class="row">
-                                    <div class="col-md-8 center-block" style="margin-top: 5px;">
-                                        {% bootstrap_field form.cantidad layout="horizontal" %}
-                                    </div>
-                                    <div class="col-md-4 center-block" style="margin-top: 5px;">
-                                        {% buttons %}
-                                            <button type="button" class="btn btn-default"
-                                                    title="Agregar a la lista de materiales"
-                                                    id="masMaterial">
-                                                {% bootstrap_icon "plus" %}
-                                            </button>
-                                        {% endbuttons %}
-                                    </div>
-                                </div>
-                                <div>
-                                    <table id="detalleMaterial" class="table table-condensed table-hover" style="margin-bottom: 0">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    <b>Item</b>
-                                                </th>
-                                                <th>
-                                                    <b>Descripcion</b>
-                                                </th>
-                                                <th>
-                                                    <b>Cantidad</b>
-                                                </th>
-                                                <th>
-                                                    &nbsp;
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody >
-                                        </tbody>
-                                    </table>
-
-                                    <div class="row">
-                                        <div class="col-md-10">
-                                            {% bootstrap_field form.materialesSeleccionados layout="inline" %}
-                                        </div>
-                                        <div class="col-md-2">
-                                            {% bootstrap_field form.cantMaterialesSeleccionados layout="inline" %}
-                                        </div>
-                                    </div>
-
-                                </div>
+                                {% bootstrap_field form.medidor layout="horizontal" %}
+                                {% bootstrap_field form.fabricaInst layout="horizontal" %}
+                                {% bootstrap_field form.serieInst layout="horizontal" %}
+                                {% bootstrap_field form.marcaInst layout="horizontal" %}
+                                {% bootstrap_field form.tipoDeMedidor layout="horizontal" %}
+                                {% bootstrap_field form.lecturaInst layout="horizontal" %}
                             </div>
                         </div>
                     </div>
@@ -646,10 +666,21 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12" style="margin-top: 0;">
+                        <div class="panel panel-info" style="margin-top: -5px; margin-bottom: 10px;">
+                            <div class="panel-heading text-center">
+                                <b>Observaciones</b>
+                            </div>
+                            <div class="panel-body">
+                                {% bootstrap_field form.observaciones layout="inline" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {#                                      Barra separadora de columnas                                      #}
-
 
             <div class="col-md-2" style="margin-top: 50px;">
                 <div class="row center-block">
@@ -660,7 +691,8 @@
                         <div class="panel-body">
                             {% bootstrap_field form.numeroDeSolicitud layout="inline" %}
                             <label id="estadoDeSolicitud">
-                                {{  form.estadoSolicitud.value }}
+                                Estado {{  form.estadoSolicitud.value }}:<br>
+                                {{ form.estadoSolicitud.label }}
                             </label>
                             {% bootstrap_field form.estadoSolicitud layout="inline" %}
                         </div>
@@ -681,21 +713,6 @@
                         {% bootstrap_icon "send" %} Ingresar
                     </button>
 
-                </div>
-            </div>
-        </div>
-
-        {#                                      Barra separadora de Fila                                      #}
-
-        <div class="row">
-            <div class="col-md-10" style="margin-top: 0;">
-                <div class="panel panel-info" style="margin-top: -5px; margin-bottom: 10px;">
-                    <div class="panel-heading text-center">
-                        <b>Observaciones</b>
-                    </div>
-                    <div class="panel-body">
-                        {% bootstrap_field form.observaciones layout="inline" %}
-                    </div>
                 </div>
             </div>
         </div>

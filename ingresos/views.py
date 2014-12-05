@@ -1,9 +1,11 @@
+# coding=utf-8
+import decimal
 from dajax.core import Dajax
 import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.context_processors import csrf
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, QueryDict
 from django.shortcuts import render
 
 # Create your views here.
@@ -35,6 +37,26 @@ def ingresarSico(request):
 
     return render_to_response('ingresos/ingresarSico.html', data, context_instance=RequestContext(request))
 
+
+@login_required()
+def ingreso(request, pk):
+    act = actividad.objects.get(id=int(pk))
+
+    if request.method == 'POST': # If the form has been submitted...
+        # ContactForm was defined in the previous section
+        form = ingresoForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            # Process the data in form.cleaned_data
+            # ...
+            return HttpResponseRedirect('/ingresarsico/') # Redirect after POST
+    else:
+        form = ingresoForm(contrato=request.session['contrato'], actividad=act)
+        #form = ingresoForm()
+    data = {
+        'form': form
+    }
+
+    return render_to_response('ingresos/ingresarSico.html', data, context_instance=RequestContext(request))
 
 @ajax()
 def buscarCliente(request):
@@ -171,62 +193,136 @@ def buscarMedidor(request):
 @ajax()
 def guardarIngreso(request):
     if request.method == 'POST':
+
         print request.POST
+
         dajax = Dajax()
         dajax.script("$('#cargandoForm').addClass('hidden');")
-        form = ingresoForm(data=request.POST)
+        form = ingresoForm(data=QueryDict(request.POST.urlencode(), mutable=True))
+
         if form.is_valid():  # All validation rules pass
             # Process the data in form.cleaned_data
             ts = form.data['tipoDeSolicitud']
-            if ts == '11' or ts == '13':
+            #if ts == '11' or ts == '13':
+            #en caso de ser un nuevo guardado...
+
+            med = medidor()
+            cli = cliente()
+
+            if form.data['id'] != '0':
+                act=actividad.objects.get(id=int(form.data['id']))
+                cli=act.cliente
+                print 'Se obtuvo el id del cliente nuevo a actualizar'
                 try:
-                    #en caso de ser un nuevo guardado...
+                    med = medidor.objects.get(actividad=act, contrato=None)
+                    med.lectura=str(form.data['lecturaRev'])
+                except: pass
+
+            if len(form.data['cedula']) == 13:
+                t = 'J'
+                print u'Es persona jurídica'
+            else:
+                t = 'N'
+                print u'Es persona natural'
+            cli.ci_ruc=form.data['cedula']
+            cli.nombre=form.data['nombreDeCliente']
+            cli.tipo=t
+            cli.telefono=form.data['telefono']
+            print 'se generó el cliente nuevo'
+
+            try:
+                if ts == '1':
+                    cliref = request.session['clienteRef']
+                    medref = request.session['medidorRef']
+                    print 'es s/N (1)'
+                else:
                     cli = request.session['cliente']
+                    cli.tipo=t
+                    cli.telefono=form.data['telefono']
                     med = request.session['medidor']
-                    print ts
-                except:
+                    med.instance.lectura=str(form.data['lecturaRev'])
+                    print 'NO es s/N'
+
+            except:
+                try:
                     #en caso de ser actualizacion
-                    try:
+                    cli=cliente.objects.get(
+                        id=cli.id,
+                        cuenta=(form.data['codigoDeCliente']).strip(),
+                        ci_ruc=(form.data['cedula']).strip()
+                    )
+                    cli.tipo=t
+                    cli.telefono=form.data['telefono']
+                    print 'cliente a actualizar'
+                    cli.save(force_update=True)
+
+                    if ts != '1':
+                        med.save(force_update=True)
+
                         enlace = detalleClienteMedidor.objects.get(
-                            cliente=cliente.objects.get(
-                                cuenta=(form.data['codigoDeCliente']).strip(),
-                                ci_ruc=(form.data['cedula']).strip()
-                            ),
-                            medidor=medidor.objects.get(
-                                fabrica=(form.data['fabricaRev']).strip(),
-                                serie=(form.data['serieRev']).strip()
-                            )
+                            cliente=cli,
+                            medidor=med
                         )
                         print enlace
 
+                    elif med:
+                        med.delete()
+
                         #actualizar
-                        form.save()
-                        return dajax.calls
+                        #form.save(request.session['contrato'], cliente=cli)
+                        #return dajax.calls
 
-                    except:
-                        dajax = mostraError(dajax, {'Error': 'Datos incompletos para guardar...'}, '#err')
-                        return dajax.calls
+                except:
+                    dajax = mostraError(dajax, {'Error': 'Datos invalidos para guardar...'}, '#err')
+                    return dajax.calls
 
-                #guardar por primera vez
-                cli.save()
+
+            #guardar por primera vez
+            cli.save()
+
+            if ts == '1':
+                cliref.save()
+                medref.instance.save()
+                fi = formatFechas(medref.fields['fi'].initial)
+                fd = formatFechas(medref.fields['fd'].initial)
+                d = detalleClienteMedidor(
+                    cliente=cliref,
+                    medidor=medref.instance,
+                    lectura_instalacion=float(medref.fields['li'].initial),
+                    lectura_desinstalacion=float(medref.fields['ld'].initial),
+                    fecha_instalacion=fi,
+                    fecha_desinstalacion=fd,
+                )
+                d.save()
+
+                dcr = detalleClienteReferencia(
+                    ubicacion=cliref.ubicacionGeografica,
+                    cliente=cli,
+                    referencia=cliref,
+                    medidorDeReferencia=medref.instance.fabrica
+                )
+                dcr.save()
+                if med.id:
+                    med.delete()
+            else:
                 med.instance.save()
-                #medidor.save()
+
                 fi = formatFechas(med.fields['fi'].initial)
                 fd = formatFechas(med.fields['fd'].initial)
 
                 d = detalleClienteMedidor(
                     cliente=cli,
                     medidor=med.instance,
-                    lectura_instalacion=int(med.fields['li'].initial),
-                    lectura_desinstalacion=int(med.fields['ld'].initial),
+                    lectura_instalacion=float(med.fields['li'].initial),
+                    lectura_desinstalacion=float(med.fields['ld'].initial),
                     fecha_instalacion=fi,
                     fecha_desinstalacion=fd,
                 )
                 d.save()
-                print 'Correcto...'
 
-                form.save()
+            print 'Correcto...'
 
+            form.save(request.session['contrato'], cliente=cli)
         else:
             print dict(form.errors)
             dajax = mostraError(dajax, form.errors, '#err')

@@ -29,7 +29,7 @@ class medidor(models.Model):
         (120, 120),
         (240, 240),
     )
-
+    actividad = models.ForeignKey('ingresos.actividad', blank=True, null=True, default=None)
     contrato=models.ForeignKey('detalleMaterialContrato', blank=True, null=True, default='')
     fabrica = models.CharField(max_length=11, verbose_name='Número de Fábrica')
     fabricaFinal=models.CharField(max_length=11, verbose_name='Fin de rango de Medidores', blank=True, null=True, default='')
@@ -43,6 +43,16 @@ class medidor(models.Model):
     voltaje = models.PositiveSmallIntegerField(choices=VOLT, default=240)
     est = models.BooleanField(default=True)
     modelo=models.ForeignKey('ingresos.modeloDeMedidor', blank=True, null=True, default='')
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        try:
+            self.id = medidor.objects.get(fabrica=self.fabrica, serie=self.serie).id
+            super(medidor, self).save(force_update=True)
+            print 'Se actualiza el Medidor...'
+        except:
+            super(medidor, self).save()
+            print 'Se guarda el Medidor...'
 
     def __unicode__(self):
         return u'%s - ( %s ) - %s' % (self.fabrica, self.serie, self.marca.id)
@@ -159,7 +169,7 @@ class detalleRubro(models.Model):
     precioUnitario=models.DecimalField(max_digits=10, decimal_places=2)
 
     def __unicode__(self):
-        return u'%s' % self.rubro.descripcion
+        return u'%s -> ( %s )' % (self.rubro.descripcion, self.contrato.descripcion)
 
     class Meta:
         verbose_name_plural='Valores a Facturar de cada Contrato'
