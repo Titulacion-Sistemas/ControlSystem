@@ -1,18 +1,13 @@
 # coding=utf-8
-import decimal
-from dajax.core import Dajax
 import datetime
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.core.context_processors import csrf
-from django.http import HttpResponseRedirect, QueryDict
-from django.shortcuts import render
 
-# Create your views here.
+from dajax.core import Dajax
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, QueryDict
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django_ajax.decorators import ajax
-from busquedas.models import BusquedaForm, vitacoraBusquedas, MedidorBuscado
+from busquedas.models import BusquedaForm, vitacoraBusquedas
 from ingresos.forms import ingresoForm
 from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar as b
 from ingresos.models import *
@@ -21,16 +16,9 @@ from inventario.models import medidor
 
 @login_required()
 def ingresarSico(request):
-    if request.method == 'POST': # If the form has been submitted...
-        # ContactForm was defined in the previous section
-        form = ingresoForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            # Process the data in form.cleaned_data
-            # ...
-            return HttpResponseRedirect('/ingresarsico/') # Redirect after POST
-    else:
-        form = ingresoForm(contrato=request.session['contrato'])
-        #form = ingresoForm()
+
+    form = ingresoForm(contrato=request.session['contrato'])
+
     data = {
         'form': form
     }
@@ -42,15 +30,7 @@ def ingresarSico(request):
 def ingreso(request, pk):
     act = actividad.objects.get(id=int(pk))
 
-    if request.method == 'POST': # If the form has been submitted...
-        # ContactForm was defined in the previous section
-        form = ingresoForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            # Process the data in form.cleaned_data
-            # ...
-            return HttpResponseRedirect('/ingresarsico/') # Redirect after POST
-    else:
-        form = ingresoForm(contrato=request.session['contrato'], actividad=act)
+    form = ingresoForm(contrato=request.session['contrato'], actividad=act)
         #form = ingresoForm()
     data = {
         'form': form
