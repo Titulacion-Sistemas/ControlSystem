@@ -722,6 +722,8 @@ class ingresoForm(forms.Form):
             required=True,
         )
 
+        self.fields['id'].initial = actividad.id
+
 
 
 

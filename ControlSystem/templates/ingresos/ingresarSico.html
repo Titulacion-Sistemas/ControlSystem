@@ -18,7 +18,9 @@
         <script>
             var matSeleccionado=0;
             var sellSeleccionado=0;
+
             $(document).ready(function(){
+
 
                 $("#id_ubicacionDeSello").find("option[value='Caja']").attr("selected",true);
                 $('#id_material').find("option[value='']").remove();
@@ -236,6 +238,28 @@
                         ubi.val(newUbi);
                     }
                 });
+
+
+                {% if form.id.value != 0 %}
+
+                    var tSolicitud = $('#id_tipoDeSolicitud');
+                    tSolicitud.find("option[value='{{ form.tipoDeSolicitud.value }}']").attr("selected",true);
+                    tSolicitud.change();
+
+                    var sellos = $('#id_sellosSeleccionados');
+                    var ubiMedidor = $('#id_ubiSellosSeleccionados option');
+                    //$("#id_sellosSeleccionados option").each(function(){
+                    //   alert('opcion '+$(this).text()+' valor '+ $(this).attr('value'))
+                    //});
+                    for (var i=0; i<sellos.children().length; i++){
+                        alert(sellos.children()[i].innerHTML);
+                        //$('#id_selloInst').find("option[value='']").attr("selected",true);
+                    }
+
+
+
+                {% endif %}
+
 
             });
 
