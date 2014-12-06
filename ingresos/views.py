@@ -3,15 +3,114 @@ import datetime
 
 from dajax.core import Dajax
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnInteger
 from django.http import HttpResponseRedirect, QueryDict
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django_ajax.decorators import ajax
 from busquedas.models import BusquedaForm, vitacoraBusquedas
-from ingresos.forms import ingresoForm
+from ingresos.forms import ingresoForm, BuscarActividad
 from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar as b
 from ingresos.models import *
 from inventario.models import medidor
+from django.core.files.storage import default_storage
+
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models.fields.files import FieldFile
+from django.views.generic import FormView
+from django.views.generic.base import TemplateView
+from django.contrib import messages
+
+
+
+class ListaDeIngreso(TemplateView):
+    template_name = 'ingresos/listadeingreso.html'
+
+    def get(self, request, *args, **kwargs):
+        d = detalleDeActividad.objects.filter(
+            rubro__contrato=request.session['contrato']
+        ).distinct('actividad').order_by('-activiada.fechaDeActividad')
+
+        entrada=[]
+        for act in d:
+            entrada.append(act.actividad)
+        #     .raw(
+        #     "SELECT "
+        #     "ingresos_actividad.* "
+        #     "FROM "
+        #     "ingresos_actividad, "
+        #     "ingresos_detalledeactividad, "
+        #     "inventario_detallerubro, "
+        #     "inventario_contrato "
+        #     "WHERE "
+        #     "ingresos_actividad.id=ingresos_detalledeactividad.actividad_id and "
+        #     "ingresos_detalledeactividad.rubro_id=inventario_detallerubro.id and "
+        #     "inventario_detallerubro.contrato_id=inventario_contrato.num and "
+        #     "inventario_contrato.num='%s' "
+        #     "group by ingresos_actividad.id "
+        #     "order by ingresos_actividad.\"fechaDeActividad\" desc;" % request.session['contrato'].num
+        # )
+
+        ba=BuscarActividad()
+        print request.GET
+        try:
+
+            criterio = request.GET.get('criterio')
+            if criterio == '1':
+                d = detalleDeActividad.objects.filter(
+                    rubro__contrato=request.session['contrato'],
+                    actividad__cliente__cuenta__contains=request.GET.get('dato')
+                ).distinct('actividad').order_by('-activiada.fechaDeActividad')
+                entrada=[]
+                for act in d:
+                    entrada.append(act.actividad)
+                ba=BuscarActividad(data=request.GET)
+            elif criterio == '2':
+                m = medidor.objects.filter(
+                    fabrica__contains=request.GET.get('dato')
+                ).distinct('actividad').order_by('-activiada.fechaDeActividad')
+                entradatmp=[]
+                for act in m:
+                    if act.actividad in entrada:
+                        entradatmp.append(act.actividad)
+                entrada=entradatmp
+                ba=BuscarActividad(data=request.GET)
+            elif criterio == '3':
+                sp=str(request.GET.get('dato')).split(' ')
+                if len(sp) > 1:
+                    d = detalleDeActividad.objects.filter(
+                        rubro__contrato=request.session['contrato'],
+                        actividad__instalador__nombre__nombre__icontains=sp[0],
+                        actividad__instalador__nombre__apellido__icontains=sp[1]
+                    ).distinct('actividad').order_by('-activiada.fechaDeActividad')
+                else:
+                    d = detalleDeActividad.objects.filter(
+                        rubro__contrato=request.session['contrato'],
+                        actividad__instalador__nombre__nombre__icontains=str(request.GET.get('dato'))
+                    ).distinct('actividad').order_by('-activiada.fechaDeActividad')
+                entrada=[]
+                for act in d:
+                    entrada.append(act.actividad)
+                ba=BuscarActividad(data=request.GET)
+
+        except: pass
+
+        lines = []
+        for i in entrada:
+            lines.append(i)
+        paginator = Paginator(lines, 20)
+        page = request.GET.get('page')
+        try:
+            show_lines = paginator.page(page)
+        except PageNotAnInteger:
+            show_lines = paginator.page(1)
+        except EmptyPage:
+            show_lines = paginator.page(paginator.num_pages)
+        data = {
+            'form': ba,
+            'lines': show_lines
+        }
+        return render_to_response('ingresos/listadeingreso.html', data, context_instance=RequestContext(request))
 
 
 @login_required()
@@ -172,6 +271,11 @@ def buscarMedidor(request):
 
 @ajax()
 def guardarIngreso(request):
+    """
+
+    :param request:
+    :return:
+    """
     if request.method == 'POST':
 
         print request.POST
@@ -302,7 +406,8 @@ def guardarIngreso(request):
 
             print 'Correcto...'
 
-            form.save(request.session['contrato'], cliente=cli)
+            id = form.save(request.session['contrato'], cliente=cli)
+            dajax.script("newUrl('ingreso/"+str(id)+"');")
         else:
             print dict(form.errors)
             dajax = mostraError(dajax, form.errors, '#err')

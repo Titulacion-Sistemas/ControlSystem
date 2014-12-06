@@ -1,8 +1,11 @@
 # coding=utf-8
+from __future__ import unicode_literals
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
 from usuarios.views import multiply
+from ingresos.views import ListaDeIngreso
+from serviciosWeb.views import *
 
 admin.autodiscover()
 
@@ -37,6 +40,7 @@ urlpatterns = patterns('',
     url(r'^bmedidor', 'ingresos.views.buscarMedidor', name='buscarMedidor'),
     url(r'^guardaringreso', 'ingresos.views.guardarIngreso', name='guardarIngreso'),
     url(r'^ingreso/(?P<pk>\d+)/$', 'ingresos.views.ingreso', name='ingreso'),
+    url(r'^listadeingresos$', ListaDeIngreso.as_view(), name='listadeingresos'),
 
     #Servicios Web
     (r"^hello_world/", 'serviciosWeb.views.hello_world_service'),

@@ -2,6 +2,7 @@
 import datetime
 from django import forms
 from django.forms.extras import *
+import time
 from django.utils.timezone import now
 from ingresos.models import *
 from ingresos.multiFile import MultiFileField
@@ -72,7 +73,7 @@ class ingresoForm(forms.Form):
         widget=SelectDateWidget(), required=True
     )
     hora = forms.TimeField(
-        initial=now().time(), label='Hora',
+        initial=time.localtime(), label='Hora',
         widget=forms.TimeInput(), required=True
     )
 
@@ -685,7 +686,41 @@ class ingresoForm(forms.Form):
                 self.fields['directo'].initial=True
         except: pass
 
+        #sellos de actividad...
+        s = list(sello.objects.filter(utilizado__id=actividad.id))
+        ubi = ((i.ubicacion, i.ubicacion) for i in s)
+        se = ((i.id, i.numero) for i in s)
 
+        self.fields['sellosSeleccionados'] = forms.MultipleChoiceField(
+            choices=se,
+            widget=forms.SelectMultiple(attrs={'style': 'height: 1px; padding: 0; margin: 0; border: 0;'}),
+            label='',
+            required=True,
+        )
+        self.fields['ubiSellosSeleccionados'] = forms.MultipleChoiceField(
+            choices=ubi,
+            widget=forms.SelectMultiple(attrs={'style': 'height: 1px; padding: 0; margin: 0; border: 0;'}),
+            label='',
+            required=True,
+        )
+
+        #materiales de actividad...
+        s = list(materialDeActividad.objects.filter(actividad__id=actividad.id))
+        cant = ((i.cantidad, i.cantidad) for i in s)
+        mate = ((i.id, i.material) for i in s)
+
+        self.fields['materialesSeleccionados'] = forms.MultipleChoiceField(
+            choices=mate,
+            widget=forms.SelectMultiple(attrs={'style': 'height: 1px; padding: 0; margin: 0; border: 0;'}),
+            label='',
+            required=True,
+        )
+        self.fields['cantMaterialesSeleccionados'] = forms.MultipleChoiceField(
+            choices=cant,
+            widget=forms.SelectMultiple(attrs={'style': 'height: 1px; padding: 0; margin: 0; border: 0;'}),
+            label='',
+            required=True,
+        )
 
 
 
@@ -719,3 +754,16 @@ class ingresoForm(forms.Form):
                         [u"Ingrese la referencia de instalación del Servicio nuevo "])
 
         return cleaned_data
+
+
+
+class BuscarActividad(forms.Form):
+    criterio = forms.ChoiceField(choices=(('1','Cuenta'),('2','Medidor'),('3', 'Instalador')),
+        label=' Criterio :  ',
+        required=True
+    )
+    dato = forms.CharField(
+        max_length=20, label='',
+        widget=forms.TextInput(attrs={'placeholder': 'Escriba dato a buscar'}),
+        required=True
+    )

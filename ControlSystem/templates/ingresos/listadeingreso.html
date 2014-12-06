@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block title %}
+    Lista de Actividades
+{% endblock %}
+
+{% block jquery %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+    {% if form.errors %}
+        <p>{{ form.errors }}</p>
+    {% endif %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-info">
+                    <div class="panel-body" style="padding-bottom: 40px;">
+                        <form role="form" class="form-inline text-center" id="b" name="b" method="get" action="{% url 'listadeingresos' %}">
+                            <br><div id="err"></div>
+                            {% bootstrap_form form %}
+                            {% buttons %}
+                                <button type="submit" class="btn btn-primary">
+                                    {% bootstrap_icon "search" %} Buscar
+                                </button>
+                            {% endbuttons %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row table-responsive">
+            <table class="table table-striped table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <td>
+                            <b>Cuenta</b>
+                        </td>
+                        <td>
+                            <b>Cliente</b>
+                        </td>
+                        <td>
+                            <b>Actividad</b>
+                        </td>
+                        <td>
+                            <b>Estado</b>
+                        </td>
+                        <td>
+                            <b>Instalador</b>
+                        </td>
+                        <td>
+                            <b>Geocódigo</b>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for line in lines %}
+                        <tr onclick="newUrl('ingreso/{{ line.id }}')">
+                            <td>
+                                {{ line.cliente.cuenta }}
+                            </td>
+                            <td>
+                                {{ line.cliente.nombre }}
+                            </td>
+                            <td>
+                                {{ line.tipoDeSolicitud }}
+                            </td>
+                            <td>
+                                {{ line.estadoDeSolicitud }}
+                            </td>
+                            <td>
+                                {{ line.instalador.nombre }}
+                            </td>
+                            <td>
+                                {{ line.cliente.geocodigo }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="row text-center">
+            {% bootstrap_pagination lines url="/listadeingresos?page=1" size="large" %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block jqueryfooter %}{% endblock %}

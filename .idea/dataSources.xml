@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" hash="277855340">
-    <data-source source="LOCAL" name="Django default" uuid="afad0ca2-cacc-47d8-b30f-8175aa4add19">
+    <data-source source="LOCAL" name="Django default" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="afad0ca2-cacc-47d8-b30f-8175aa4add19">
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://127.0.0.1:5432/Coniel</jdbc-url>
       <user-name>postgres</user-name>
