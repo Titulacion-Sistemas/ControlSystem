@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
 from django_ajax.decorators import ajax
 from ControlSystem.pComm.conexion import manejadorDeConexion
+from ControlSystem.settings import BASE_DIR
 from usuarios.models import SignUpForm, LogIn, usuarioSico
 
 # Create your views here.
@@ -97,14 +98,14 @@ def ingreso(request):
                         except:
                             u = False
                         if isinstance(u, usuarioSico):
-                            if integracion(u.nombre, u.clave, user):
-                                login(request, user)
-                                request.session['contrato'] = contrato
-                                return HttpResponseRedirect('/home')
-                            else:
-                                error = 'El Sistema Comercial(Sico Cnel) no esta disponible por el momento...'
-                                user.sesion_sico=''
-                                user.save()
+                            #if integracion(u.nombre, u.clave, user):
+                            login(request, user)
+                            request.session['contrato'] = contrato
+                            return HttpResponseRedirect('/home')
+                            #else:
+                            #   error = 'El Sistema Comercial(Sico Cnel) no esta disponible por el momento...'
+                            #    user.sesion_sico=''
+                            #    user.save()
                         else:
                             error = 'El Usuario Especificado no cuenta con permisos necesarios para acceder al contarto'
             elif username and password:
@@ -118,9 +119,9 @@ def ingreso(request):
 @login_required()
 def home(request):
     print 'Sesion : %s' % request.user.sesion_sico
-    if request.user.sesion_sico:
-        return render_to_response('usuarios/home.html', {}, context_instance=RequestContext(request))
-    return HttpResponseRedirect('/login')
+    #if request.user.sesion_sico:
+    return render_to_response('usuarios/home.html', {}, context_instance=RequestContext(request))
+    #return HttpResponseRedirect('/login')
 
 def integracion(u, c, user):
     conn=None

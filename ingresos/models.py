@@ -1,4 +1,5 @@
 # coding=utf-8
+import os
 from django.db import models
 from inventario.models import material
 
@@ -645,13 +646,35 @@ class detalleDeActividad(models.Model):
         verbose_name_plural='Rubros de la Actividad'
         verbose_name='Rubro de Actividad'
 
+
+def destino(instance, filename):
+    act=actividad.objects.get(id=instance.actividad.id)
+    if len(act.cliente.cuenta)>4:
+        dos= str(act.cliente.cuenta)
+    else:
+        dos= str(act.cliente.ci_ruc)
+    return os.path.join('/%s/%s/' % (str(act.tipoDeSolicitud.descripcion), dos), filename)
+
 class foto(models.Model):
+
+    upload_to = '%s/%s/%s'
+
+    def _get_upload_to(self, filename):
+        act=actividad.objects.get(id=self.actividad.id)
+        if len(act.cliente.cuenta)>4:
+            dos= str(act.cliente.cuenta)
+        else:
+            dos= str(act.cliente.ci_ruc)
+        #return os.path.join('%s/%s' % (str(act.tipoDeSolicitud.descripcion), dos), filename)
+        return self.upload_to % (str(act.tipoDeSolicitud.descripcion), dos, filename)
+
     actividad=models.ForeignKey(actividad, blank=True, null=True)
-    observacion=models.CharField(max_length=50, blank=True, null=True)
-    ruta=models.CharField(max_length=255, blank=True, null=True)
+    foto=models.FileField(upload_to=_get_upload_to)
+
+
 
     def __unicode__(self):
-        return self.ruta
+        return self.actividad
 
     class Meta:
         verbose_name_plural="Fotos de Actividad"

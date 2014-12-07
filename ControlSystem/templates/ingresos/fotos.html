@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block title %}
+    Lista de Actividades
+{% endblock %}
+
+{% block jquery %}
+    {{ block.super }}
+    <script>
+        function borrarFoto(id){
+            var formulario = $('#f');
+            formulario.attr('action', '/borrarfoto/'+id+'/')
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <form id="f" action="/fotos/{{ act }}/" method="post" enctype="multipart/form-data">
+        <!-- List of uploaded documents -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading text-center">
+                        <b>Fotos de actividad</b>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row text-center">
+                            {% if documents %}
+                                {% for document in documents %}
+                                    <div class="col-md-4 center-block text-center" >
+                                        <div class="row text-center">
+                                            <a href="{{ document.foto.url }}">
+                                                <img src="{{ document.foto.url }}"
+                                                     class="img-responsive img-rounded center-block"
+                                                     style="height: 150px"><br>
+                                                {{ document.foto.name }}
+                                            </a>
+                                        </div>
+                                        <div class="row text-center">
+                                            <button class="btn-sm btn-default" type="submit" onclick="borrarFoto({{ document.id }});">
+                                                {% bootstrap_icon "remove" %}
+                                            </button>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <h1><p>No existen fotos para esta actividad...</p></h1>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<!-- Upload form. Note enctype attribute! -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-info">
+                    <div class="panel-heading text-center">
+                        <b>Nueva Foto</b>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row text-center center-block">
+
+                                {% csrf_token %}
+                                {% bootstrap_form_errors form %}
+                                {% bootstrap_form form layout='horizontal' %}
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-7 text-justify">
+                                        <button class="btn-lg btn-default" type="submit">
+                                            {% bootstrap_icon "cloud-upload" %} Subir
+                                        </button>
+                                    </div>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block jqueryfooter %}{% endblock %}

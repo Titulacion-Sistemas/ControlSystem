@@ -689,7 +689,7 @@ class ingresoForm(forms.Form):
         #sellos de actividad...
         s = list(sello.objects.filter(utilizado__id=actividad.id))
         ubi = ((i.ubicacion, i.ubicacion) for i in s)
-        se = ((i.id, i.numero) for i in s)
+        se = ((i.id, i) for i in s)
 
         self.fields['sellosSeleccionados'] = forms.MultipleChoiceField(
             choices=se,
@@ -768,4 +768,10 @@ class BuscarActividad(forms.Form):
         max_length=20, label='',
         widget=forms.TextInput(attrs={'placeholder': 'Escriba dato a buscar'}),
         required=True
+    )
+
+
+class FotoForm(forms.Form):
+    foto = forms.FileField(
+        label='Seleccione una Foto...'
     )

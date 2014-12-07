@@ -1,7 +1,10 @@
 # coding=utf-8
 from __future__ import unicode_literals
 from django.conf.urls import patterns, include, url
-
+from django.conf.urls import patterns, include, url
+from django.conf import settings
+from django.conf.urls.static import static
+from django.views.generic import RedirectView
 from django.contrib import admin
 from usuarios.views import multiply
 from ingresos.views import ListaDeIngreso
@@ -41,6 +44,8 @@ urlpatterns = patterns('',
     url(r'^guardaringreso', 'ingresos.views.guardarIngreso', name='guardarIngreso'),
     url(r'^ingreso/(?P<pk>\d+)/$', 'ingresos.views.ingreso', name='ingreso'),
     url(r'^listadeingresos$', ListaDeIngreso.as_view(), name='listadeingresos'),
+    url(r'^fotos/(?P<pk>\d+)/$', 'ingresos.views.fotos', name='fotos'),
+    url(r'^borrarfoto/(?P<pk>\d+)/$', 'ingresos.views.borrarFoto', name='borrarfoto'),
 
     #Servicios Web
     (r"^hello_world/", 'serviciosWeb.views.hello_world_service'),
@@ -49,4 +54,4 @@ urlpatterns = patterns('',
     (r'^sw/usuarios.wsdl', 'serviciosWeb.views.sw_usuarios'),
     (r'^sw/busquedas', 'serviciosWeb.views.sw_busquedas'),
     (r'^sw/busquedas.wsdl', 'serviciosWeb.views.sw_busquedas'),
-)
+)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

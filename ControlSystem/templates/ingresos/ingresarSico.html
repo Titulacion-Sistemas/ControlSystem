@@ -246,15 +246,59 @@
                     tSolicitud.find("option[value='{{ form.tipoDeSolicitud.value }}']").attr("selected",true);
                     tSolicitud.change();
 
-                    var sellos = $('#id_sellosSeleccionados');
-                    var ubiMedidor = $('#id_ubiSellosSeleccionados option');
-                    //$("#id_sellosSeleccionados option").each(function(){
-                    //   alert('opcion '+$(this).text()+' valor '+ $(this).attr('value'))
-                    //});
-                    for (var i=0; i<sellos.children().length; i++){
-                        alert(sellos.children()[i].innerHTML);
-                        //$('#id_selloInst').find("option[value='']").attr("selected",true);
+                    var v1=[];
+                    var v2=[];
+                    $("#id_sellosSeleccionados option").each(function(){
+                       //alert('opcion '+$(this).text()+' valor '+ $(this).attr('value'))
+                        v1.push($(this).attr('value'));
+                        $('#id_selloInst').append(
+                            "<option value='"+$(this).attr('value')+"'>"+$(this).text()+"</option>"
+                        );
+                    });
+                    $("#id_ubiSellosSeleccionados option").each(function(){
+                       //alert('opcion '+$(this).text()+' valor '+ $(this).attr('value'))
+                        v2.push($(this).attr('value'));
+                    });
+
+                    $("#id_sellosSeleccionados option[value!='0']").remove();
+                    $("#id_ubiSellosSeleccionados option[value!='0']").remove();
+
+                    for (var i=0; i<v1.length; i++){
+                        //alert(v1[i])
+                        $('#id_selloInst').find("option[value='"+v1[i]+"']").attr("selected",true).change();
+                        $('#id_ubicacionDeSello').find("option[value='"+v2[i]+"']").attr("selected",true).change();
+
+                        $('#masSellos').click();
                     }
+
+                    var m1=[];
+
+                    $("#id_materialesSeleccionados option").each(function(){
+                       //alert('opcion '+$(this).text()+' valor '+ $(this).attr('value'))
+                        var seleccionado=$(this);
+                        var existeMat=false;
+                        $("#id_material option").each(function(){
+                            if($(this).attr('value') == seleccionado.attr('value')){
+                                existeMat=true;
+                            }
+                        });
+                        if(existeMat==false){
+                            $('#id_material').append(
+                                    "<option value='"+$(this).attr('value')+"'>"+$(this).text()+"</option>"
+                            );
+                        }
+                        m1.push($(this).attr('value'));
+                    });
+                    var j =0;
+                    $("#id_cantMaterialesSeleccionados option").each(function(){
+                        //alert('opcion '+$(this).text()+' valor '+ $(this).attr('value'))
+                        $('#id_cantidad').val($(this).attr('value')).change();
+                        $('#id_material').find("option[value='"+m1[i]+"']").attr("selected",true).change();
+                        $('#masMaterial').click();
+                        j++;
+                    });
+                    $('#id_cantidad').val('1').change();
+
 
 
 
@@ -606,7 +650,8 @@
                             </div>
                             <div class="panel-body center-block">
                                 {% buttons %}
-                                    <button id="misFotos" type="button" class="btn btn-default center-block">
+                                    <button id="misFotos" type="button" onclick="newUrl('/fotos/{{ form.id.value }}')"
+                                            class="btn btn-default center-block">
                                         {% bootstrap_icon "picture" %} Fotos de Actividad...
                                     </button>
                                 {% endbuttons %}

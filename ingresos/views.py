@@ -4,12 +4,13 @@ import datetime
 from dajax.core import Dajax
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnInteger
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, QueryDict
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django_ajax.decorators import ajax
 from busquedas.models import BusquedaForm, vitacoraBusquedas
-from ingresos.forms import ingresoForm, BuscarActividad
+from ingresos.forms import ingresoForm, BuscarActividad, FotoForm
 from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar as b
 from ingresos.models import *
 from inventario.models import medidor
@@ -415,6 +416,55 @@ def guardarIngreso(request):
         return dajax.calls
     else:
         return None
+    
+    
+    
+def fotos(request, pk):
+    if request.method == 'POST':
+        form = FotoForm(request.POST, request.FILES)
+        if form.is_valid():
+            try:
+                act=actividad.objects.get(id=int(pk))
+                newdoc = foto(foto = request.FILES['foto'], actividad=act)
+                newdoc.save()
+            except:
+                pass
+
+            # Redirect to the document list after POST
+            return HttpResponseRedirect('/fotos/%s/' % str(pk))
+    else:
+        form = FotoForm() # A empty, unbound form
+
+    # Load documents for the list page
+    documents = foto.objects.filter(actividad__id=int(pk))
+
+    # Render list page with the documents and the form
+    return render_to_response(
+        'ingresos/fotos.html',
+        {
+            'documents': documents,
+            'form': form,
+            'act': str(pk)
+        },
+        context_instance=RequestContext(request)
+    )    
+
+def borrarFoto(request, pk):
+    try:
+        f=foto.objects.get(id=int(pk))
+        act=str(f.actividad.id)
+    except:
+        act=str(pk)
+        return HttpResponseRedirect('/fotos/%s/' % str(act))
+    if request.method == 'POST':
+        f.delete()
+        return HttpResponseRedirect('/fotos/%s/' % act)
+    else:
+        return HttpResponseRedirect('/fotos/%s/' % act)
+
+    
+    
+    
 
 
 def formatFechas(f):
