@@ -13,7 +13,7 @@ from busquedas.models import BusquedaForm, vitacoraBusquedas
 from ingresos.forms import ingresoForm, BuscarActividad, FotoForm
 from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar as b
 from ingresos.models import *
-from inventario.models import medidor
+from inventario.models import medidor, sello, detalleMaterialContrato
 from django.core.files.storage import default_storage
 
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -272,11 +272,7 @@ def buscarMedidor(request):
 
 @ajax()
 def guardarIngreso(request):
-    """
 
-    :param request:
-    :return:
-    """
     if request.method == 'POST':
 
         print request.POST
@@ -301,6 +297,7 @@ def guardarIngreso(request):
                 try:
                     med = medidor.objects.get(actividad=act, contrato=None)
                     med.lectura=str(form.data['lecturaRev'])
+                    print 'medidor revisado'
                 except: pass
 
             if len(form.data['cedula']) == 13:
@@ -330,7 +327,7 @@ def guardarIngreso(request):
 
             except:
                 try:
-                    #en caso de ser actualizacion
+                #en caso de ser actualizacion
                     cli=cliente.objects.get(
                         id=cli.id,
                         cuenta=(form.data['codigoDeCliente']).strip(),
@@ -350,12 +347,13 @@ def guardarIngreso(request):
                         )
                         print enlace
 
-                    elif med:
+                    elif med.id>0:
                         med.delete()
 
                         #actualizar
-                        #form.save(request.session['contrato'], cliente=cli)
-                        #return dajax.calls
+                    id = form.save(request.session['contrato'], cliente=cli)
+                    dajax.script("newUrl('/ingreso/"+str(id)+"');")
+                    return dajax.calls
 
                 except:
                     dajax = mostraError(dajax, {'Error': 'Datos invalidos para guardar...'}, '#err')
@@ -408,16 +406,75 @@ def guardarIngreso(request):
             print 'Correcto...'
 
             id = form.save(request.session['contrato'], cliente=cli)
-            dajax.script("newUrl('ingreso/"+str(id)+"');")
+            dajax.script("newUrl('/ingreso/"+str(id)+"');")
         else:
             print dict(form.errors)
             dajax = mostraError(dajax, form.errors, '#err')
-
+        try:
+            del request.session['clienteRef']
+            del request.session['medidorRef']
+            del request.session['cliente']
+            del request.session['medidor']
+        except: pass
         return dajax.calls
     else:
         return None
     
-    
+
+@ajax()
+def eliminarIngreso(request, pk):
+    if request.method == 'POST':
+        print request.POST
+        dajax = Dajax()
+        dajax.script("$('#cargandoForm').addClass('hidden');")
+        form = ingresoForm(data=QueryDict(request.POST.urlencode(), mutable=True))
+        if form.is_valid():
+            act = actividad.objects.get(id=int(pk))
+            if int(form.data['id'])==act.id:
+                #borrando detalles de existir
+                    #de medidores...
+                for m in list(medidor.objects.filter(actividad__id=act.id)):
+                    try:
+                        m.actividad=None
+                        m.save(force_update=True)
+                    except: pass
+
+
+                    #de sellos
+                for s in list(sello.objects.filter(utilizado__id=act.id)):
+                    try:
+                        s.utilizado=None
+                        s.ubicacion='N/A'
+                        s.save(force_update=True)
+                    except: pass
+
+
+                    #de rubros
+                for r in list(detalleDeActividad.objects.filter(actividad__id=act.id)):
+                    try:
+                        r.delete()
+                    except: pass
+
+
+                    #de materiales
+                for m in list(materialDeActividad.objects.filter(actividad=act)):
+                    mat = detalleMaterialContrato.objects.get(id=m.material.id)
+                    mat.stock += m.cantidad
+                    mat.save(force_update=True)
+                    m.delete()
+
+                    #deFotos
+                for fot in list(foto.objects.filter(actividad=act)):
+                    fot.delete()
+
+                act.delete()
+
+                dajax.script("newUrl('/listadeingresos');")
+                return dajax.calls
+
+        dajax = mostraError(dajax, {'Error': 'Datos inconsistentes para proceder a eliminacion de actividad...'}, '#err')
+        return dajax.calls
+    else: return None
     
 def fotos(request, pk):
     if request.method == 'POST':

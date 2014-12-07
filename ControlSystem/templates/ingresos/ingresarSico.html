@@ -182,6 +182,11 @@
                     );
                     $("#id_material").find("option[value='"+materialSeleccionado.val()+"']").remove();
                     $("#id_cantidad").val(1);
+
+                    if (!($('#id_material option').length>0)){
+                        $('#masMaterial').prop('disabled', true);
+                    }
+
                 });
 
                 $("#id_cantidad").change(function(){
@@ -229,6 +234,11 @@
                     );
                     $("#id_selloInst").find("option[value='"+selloSeleccionado.val()+"']").remove();
                     $("#id_ubicacionDeSello").find("option[value='Caja']").attr("selected",true);
+
+                    if (!($('#id_selloInst option').length>0)){
+                        $('#masSellos').prop('disabled', true);
+                    }
+
                 });
                 $("#id_ubicacionDeSello").change(function(){
                     if(sellSeleccionado>0){
@@ -272,6 +282,7 @@
                     }
 
                     var m1=[];
+                    var m2=[];
 
                     $("#id_materialesSeleccionados option").each(function(){
                        //alert('opcion '+$(this).text()+' valor '+ $(this).attr('value'))
@@ -289,18 +300,22 @@
                         }
                         m1.push($(this).attr('value'));
                     });
-                    var j =0;
+
                     $("#id_cantMaterialesSeleccionados option").each(function(){
-                        //alert('opcion '+$(this).text()+' valor '+ $(this).attr('value'))
-                        $('#id_cantidad').val($(this).attr('value')).change();
-                        $('#id_material').find("option[value='"+m1[i]+"']").attr("selected",true).change();
-                        $('#masMaterial').click();
-                        j++;
+                        //alert('opcion '+$(this).text()+' valor '+ )
+                        m2.push($(this).attr('value'));
                     });
+
+                    $("#id_materialesSeleccionados option[value!='0']").remove();
+                    $("#id_cantMaterialesSeleccionados option[value!='0']").remove();
+
+                    for (var j=0; j<m1.length; j++){
+                        $('#id_cantidad').val(m2[j]).change();
+                        $('#id_material').find("option[value='"+m1[j]+"']").attr("selected",true).change();
+                        $('#masMaterial').click();
+                    }
+
                     $('#id_cantidad').val('1').change();
-
-
-
 
                 {% endif %}
 
@@ -337,6 +352,7 @@
                 );
                 $("[id='matRow-"+fila+"']").remove();
                 $("[id='matRowCantidad-"+fila+"']").remove();
+                $('#masMaterial').prop('disabled', false);
             }
             function seleccionMat(fila){
                 matSeleccionado=fila;
@@ -369,6 +385,7 @@
                 );
                 $("[id='sellRow-"+fila+"']").remove();
                 $("[id='sellRowUbic-"+fila+"']").remove();
+                $('#masSellos').prop('disabled', false);
             }
             function seleccionSell(fila){
                 sellSeleccionado=fila;
@@ -390,11 +407,48 @@
 
             function guardarAjax(){
                 $('#cargandoForm').removeClass('hidden');
+                $('#id_codigoDeCliente').prop('disabled', false);
                 envioRecepcionAjax
                 (
                     '{% url 'guardarIngreso' %}',
                     $('#ingreso').serialize()
                 );
+                $('#id_codigoDeCliente').prop('disabled', true);
+                return false;
+
+            }
+
+            function eliminarAjax(){
+                $('<div></div>').appendTo('#preg')
+                .html('<div><h6>Esta seguro de eliminar la actividad...?</h6></div>')
+                .dialog({
+                    modal: true,
+                    title: 'Eliminar Actividad...',
+                    zIndex: 10000,
+                    autoOpen: true,
+                    width: 'auto',
+                    resizable: false,
+                    buttons: {
+                        Si: function () {
+                            // $(obj).removeAttr('onclick');
+                            // $(obj).parents('.Parent').remove();
+                            $('#cargandoForm').removeClass('hidden');
+                            envioRecepcionAjax
+                            (
+                                '/eliminaringreso/{{ form.id.value }}/',
+                                $('#ingreso').serialize()
+                            );
+                            $(this).dialog("close");
+                        },
+                        No: function () {
+                            $(this).dialog("close");
+                        }
+                    },
+                    close: function (event, ui) {
+                        $(this).remove();
+                    }
+                });
+
                 return false;
 
             }
@@ -777,11 +831,20 @@
                              height="24px" width="24px" class="center-block"
                              > <label class="text-center" style="width: 100%;">Espere...</label>
                     </div>
+                    {% if form.id.value != 0 %}
                     <button id="btnIngresarSico" type="button" class="btn btn-default btn-lg center-block "
                             style="width: 100%; margin: 20px 0 20px 0;">
                         {% bootstrap_icon "send" %} Ingresar
                     </button>
+                    <button id="btnEliminar" type="button" onclick="eliminarAjax();"
+                            class="btn btn-default btn-lg center-block "
+                            style="width: 100%; margin: 20px 0 20px 0;">
+                        {% bootstrap_icon "trash" %} Eliminar
+                    </button>
+                    <div id="preg">
 
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

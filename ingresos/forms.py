@@ -2,7 +2,7 @@
 import datetime
 from django import forms
 from django.forms.extras import *
-import time
+from django.utils import timezone
 from django.utils.timezone import now
 from ingresos.models import *
 from ingresos.multiFile import MultiFileField
@@ -73,13 +73,13 @@ class ingresoForm(forms.Form):
         widget=SelectDateWidget(), required=True
     )
     hora = forms.TimeField(
-        initial=time.localtime(), label='Hora',
+        initial=timezone.localtime(timezone.now()), label='Hora',
         widget=forms.TimeInput(), required=True
     )
 
     #Cliente
     codigoDeCliente = forms.CharField(
-        max_length=7, min_length=5, label='Código',
+        max_length=7, min_length=3, label='Código',
         widget=forms.TextInput(attrs={'placeholder': 'Buscar por Cta.'}),
         required=False
     )
@@ -418,7 +418,7 @@ class ingresoForm(forms.Form):
 
         #borrando detalles de existir
             #de medidores...
-        for m in list(medidor.objects.filter(actividad=act)):
+        for m in list(medidor.objects.filter(actividad__id=act.id)):
             try:
                 m.actividad=None
                 m.save(force_update=True)
@@ -426,7 +426,7 @@ class ingresoForm(forms.Form):
 
 
             #de sellos
-        for s in list(sello.objects.filter(utilizado=act)):
+        for s in list(sello.objects.filter(utilizado__id=act.id)):
             try:
                 s.utilizado=None
                 s.ubicacion='N/A'
@@ -435,7 +435,7 @@ class ingresoForm(forms.Form):
 
 
             #de rubros
-        for r in list(detalleDeActividad.objects.filter(actividad=act)):
+        for r in list(detalleDeActividad.objects.filter(actividad__id=act.id)):
             try:
                 r.delete()
             except: pass
@@ -588,7 +588,7 @@ class ingresoForm(forms.Form):
 
 
         print 'Guardado completo de Actividad...id : %s ' % act.id
-        return act
+        return act.id
 
 
 
@@ -707,7 +707,7 @@ class ingresoForm(forms.Form):
         #materiales de actividad...
         s = list(materialDeActividad.objects.filter(actividad__id=actividad.id))
         cant = ((i.cantidad, i.cantidad) for i in s)
-        mate = ((i.id, i.material) for i in s)
+        mate = ((i.material.id, i.material) for i in s)
 
         self.fields['materialesSeleccionados'] = forms.MultipleChoiceField(
             choices=mate,

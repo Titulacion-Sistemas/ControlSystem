@@ -98,7 +98,8 @@ class cliente(models.Model):
                     id=self.geocodigo.ruta.sector.canton.provincia.id,
                     descripcion=self.geocodigo.ruta.sector.canton.provincia.descripcion
                 )
-            except:
+            except Exception as e:
+                print e.message
                 p = provincia(
                     id=self.geocodigo.ruta.sector.canton.provincia.id,
                     descripcion=self.geocodigo.ruta.sector.canton.provincia.descripcion
@@ -110,7 +111,8 @@ class cliente(models.Model):
                     num=self.geocodigo.ruta.sector.canton.num,
                     descripcion=self.geocodigo.ruta.sector.canton.descripcion,
                 )
-            except:
+            except Exception as e:
+                print e.message
                 c = canton(
                     num=self.geocodigo.ruta.sector.canton.num,
                     descripcion=self.geocodigo.ruta.sector.canton.descripcion,
@@ -123,7 +125,8 @@ class cliente(models.Model):
                     num=self.geocodigo.ruta.sector.num,
                     descripcion=self.geocodigo.ruta.sector.descripcion,
                 )
-            except:
+            except Exception as e:
+                print e.message
                 sec=sector(
                     num=self.geocodigo.ruta.sector.num,
                     descripcion=self.geocodigo.ruta.sector.descripcion,
@@ -136,7 +139,8 @@ class cliente(models.Model):
                     num=self.geocodigo.ruta.num,
                     descripcion=self.geocodigo.ruta.descripcion,
                 )
-            except:
+            except Exception as e:
+                print e.message
                 rut = ruta(
                     num=self.geocodigo.ruta.num,
                     descripcion=self.geocodigo.ruta.descripcion,
@@ -150,7 +154,8 @@ class cliente(models.Model):
                     num=self.geocodigo.num,
                     ruta=rut
                 )
-            except:
+            except Exception as e:
+                print e.message
                 geo = secuencia(
                     num=self.geocodigo.num,
                     ruta=rut
@@ -167,7 +172,8 @@ class cliente(models.Model):
                     num=self.ubicacionGeografica.parroquia.num,
                     descripcion=self.ubicacionGeografica.parroquia.descripcion,
                 )
-            except:
+            except Exception as e:
+                print e.message
                 parr = parroquia(
                     num=self.ubicacionGeografica.parroquia.num,
                     descripcion=self.ubicacionGeografica.parroquia.descripcion,
@@ -183,7 +189,8 @@ class cliente(models.Model):
                         id=self.ubicacionGeografica.calle.descripcion1[:2]
                     )
                     print 'BD : Asignada Tipo de Calle'
-                except:
+                except Exception as e:
+                    print e.message
                     tipCall=tipoCalle(
                         id=self.ubicacionGeografica.calle.descripcion1[:2],
                         descripcion=
@@ -198,7 +205,8 @@ class cliente(models.Model):
                     descripcion1=self.ubicacionGeografica.calle.descripcion1
                 )
                 print 'BD : Asignada Calle'
-            except:
+            except Exception as e:
+                print e.message
                 call=calle(
                     tipoDeCalle=tipCall,
                     descripcion1=self.ubicacionGeografica.calle.descripcion1
@@ -213,7 +221,8 @@ class cliente(models.Model):
                         id=self.ubicacionGeografica.interseccion.descripcion1[:2]
                     )
                     print 'BD : Asignada Tipo de Calle(I)'
-                except:
+                except Exception as e:
+                    print e.message
                     tipCall=tipoCalle(
                         id=self.ubicacionGeografica.interseccion.descripcion1[:2],
                         descripcion=
@@ -228,7 +237,8 @@ class cliente(models.Model):
                     descripcion1=self.ubicacionGeografica.interseccion.descripcion1
                 )
                 print 'BD : Asignada Calle(I)'
-            except:
+            except Exception as e:
+                print e.message
                 inter=calle(
                     tipoDeCalle=tipCall,
                     descripcion1=self.ubicacionGeografica.interseccion.descripcion1
@@ -237,21 +247,30 @@ class cliente(models.Model):
                 inter.save()
 
             urb=None
-            if self.ubicacionGeografica.urbanizacion:
-                if len(self.ubicacionGeografica.urbanizacion.descripcion.strip())>0:
-                    try:
-                        urb=urbanizacion.objects.get(descripcion=self.ubicacionGeografica.urbanizacion.descripcion)
-                        print 'BD : Asignada Urbanizacion'
-                    except:
-                        urb = urbanizacion(descripcion=self.ubicacionGeografica.urbanizacion.descripcion)
-                        print 'BD : Guardando Urbanizacion...'
-                        urb.save()
+            if self.ubicacionGeografica.urbanizacion is not None:
+                print '='+str(self.ubicacionGeografica.urbanizacion.descripcion.strip())+'='
+                if self.ubicacionGeografica.urbanizacion:
+                    if len(self.ubicacionGeografica.urbanizacion.descripcion.strip())>0:
+                        try:
+                            urb=urbanizacion.objects.get(descripcion=self.ubicacionGeografica.urbanizacion.descripcion)
+                            print 'BD : Asignada Urbanizacion'
+                        except Exception as e:
+                            print e.message
+                            urb = urbanizacion(descripcion=self.ubicacionGeografica.urbanizacion.descripcion)
+                            print 'BD : Guardando Urbanizacion...'
+                            urb.save()
 
-
-            ubi=ubicacion(
-                parroquia=parr, calle=call,
-                interseccion=inter, urbanizacion=urb
-            )
+            try:
+                ubi=ubicacion.objects.get(
+                    parroquia=parr, calle=call,
+                    interseccion=inter, urbanizacion=urb
+                )
+            except Exception as e:
+                print e.message
+                ubi=ubicacion(
+                    parroquia=parr, calle=call,
+                    interseccion=inter, urbanizacion=urb
+                )
             print 'BD : Guardando Ubicacion...'
             ubi.save()
 
@@ -262,12 +281,14 @@ class cliente(models.Model):
             self.id = cliente.objects.get(cuenta=str(self.cuenta)).id
             print 'Actualizar por cuenta'
             super(cliente, self).save(force_update=True, *args, **kwargs)
-        except:
+        except Exception as e:
+            print e.message
             try:
                 self.id = cliente.objects.get(id=self.id).id
                 print 'Actualizar por id'
                 super(cliente, self).save(force_update=True, *args, **kwargs)
-            except:
+            except Exception as e:
+                print e.message
                 print 'Gurdar Cliente'
                 super(cliente, self).save(*args, **kwargs)
 
@@ -289,7 +310,8 @@ class detalleClienteMedidor(models.Model):
             self.id = detalleClienteMedidor.objects.get(medidor=self.medidor, cliente=self.cliente).id
             super(detalleClienteMedidor, self).save(force_update=True)
             print 'Se Actualiza la relación Cliente - Medidor...'
-        except:
+        except Exception as e:
+            print e.message
             super(detalleClienteMedidor, self).save()
             print 'Se Guarda la relación Cliente - Medidor...'
 
@@ -313,7 +335,8 @@ class detalleClienteReferencia(models.Model):
             self.id = detalleClienteReferencia.objects.get(cliente=self.cliente, referencia=self.referencia).id
             super(detalleClienteReferencia, self).save(force_update=True)
             print 'Se Actualiza la relación Cliente - Referencia...'
-        except:
+        except Exception as e:
+            print e.message
             super(detalleClienteReferencia, self).save()
             print 'Se Guarda la relación Cliente - Referencia...'
 
