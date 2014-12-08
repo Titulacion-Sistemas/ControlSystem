@@ -443,9 +443,9 @@ class ingresoForm(forms.Form):
 
             #de materiales
         for m in list(materialDeActividad.objects.filter(actividad=act)):
-            mat = detalleMaterialContrato.objects.get(id=m.material.id)
-            mat.stock += m.cantidad
-            mat.save(force_update=True)
+            #mat = detalleMaterialContrato.objects.get(id=m.material.id)
+            #mat.stock += m.cantidad
+            #mat.save(force_update=True)
             m.delete()
 
 
@@ -483,19 +483,18 @@ class ingresoForm(forms.Form):
             #continuando con detalle de materiales para actividad
         materialInstalado = list(self.data.pop('materialesSeleccionados'))
         cantMaterialInstado = list(self.data.pop('cantMaterialesSeleccionados'))
-        print materialInstalado
+        #print materialInstalado
         for m in range(len(cantMaterialInstado)):
-
             mat = detalleMaterialContrato.objects.get(id=int(materialInstalado[m]))
-            print int(materialInstalado[m])
+            #print int(materialInstalado[m])
             actMat = materialDeActividad(
                 material=mat,
                 actividad=act,
                 cantidad=long(cantMaterialInstado[m])
             )
+            #mat.stock -= actMat.cantidad
             actMat.save()
-            mat.stock -= actMat.cantidad
-
+            #mat.save(force_update=True)
 
         #actividades realizadas para desgloce de valores a facturar
         realizadas=[[5,6], [5,8]]

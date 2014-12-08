@@ -28,10 +28,12 @@ class ListaDeIngreso(TemplateView):
     template_name = 'ingresos/listadeingreso.html'
 
     def get(self, request, *args, **kwargs):
-        d = detalleDeActividad.objects.filter(
-            rubro__contrato=request.session['contrato']
-        ).distinct('actividad').order_by('-activiada.fechaDeActividad')
-
+        try:
+            d = detalleDeActividad.objects.filter(
+                rubro__contrato=request.session['contrato']
+            ).distinct('actividad').order_by('-activiada.fechaDeActividad')
+        except:
+            return HttpResponseRedirect('/logout')
         entrada=[]
         for act in d:
             entrada.append(act.actividad)
@@ -458,9 +460,9 @@ def eliminarIngreso(request, pk):
 
                     #de materiales
                 for m in list(materialDeActividad.objects.filter(actividad=act)):
-                    mat = detalleMaterialContrato.objects.get(id=m.material.id)
-                    mat.stock += m.cantidad
-                    mat.save(force_update=True)
+                    #mat = detalleMaterialContrato.objects.get(id=m.material.id)
+                    #mat.stock += m.cantidad
+                    #mat.save(force_update=True)
                     m.delete()
 
                     #deFotos
