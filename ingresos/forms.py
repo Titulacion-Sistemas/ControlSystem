@@ -26,7 +26,11 @@ class ingresoForm(forms.Form):
             )
             # medidores segun contrato...
             self.fields['medidor'] = forms.ModelMultipleChoiceField(
-                medidor.objects.filter(contrato__contrato=contrato, est=True), label='En bodega',
+                medidor.objects.filter(
+                    contrato__contrato=contrato,
+                    est=True,
+                    actividad=None
+                ), label='En bodega',
                 widget=forms.Select(),
                 required=False
 
@@ -416,29 +420,33 @@ class ingresoForm(forms.Form):
             act.save()
 
 
-        #borrando detalles de existir
+            #borrando detalles de existir
             #de medidores...
         for m in list(medidor.objects.filter(actividad__id=act.id)):
             try:
-                m.actividad=None
+                m.est = True
+                m.actividad = None
                 m.save(force_update=True)
-            except: pass
+            except:
+                pass
 
 
             #de sellos
         for s in list(sello.objects.filter(utilizado__id=act.id)):
             try:
-                s.utilizado=None
-                s.ubicacion='N/A'
+                s.utilizado = None
+                s.ubicacion = 'N/A'
                 s.save(force_update=True)
-            except: pass
+            except:
+                pass
 
 
             #de rubros
         for r in list(detalleDeActividad.objects.filter(actividad__id=act.id)):
             try:
                 r.delete()
-            except: pass
+            except:
+                pass
 
 
             #de materiales
@@ -450,27 +458,31 @@ class ingresoForm(forms.Form):
 
 
 
-        #hay que generar detalles...
+            #hay que generar detalles...
             #empezando con medidores
         try:
             medDeActividad = medidor.objects.get(
                 fabrica=str(self.data['fabricaRev']),
                 serie=str(self.data['serieRev'])
             )
-            medDeActividad.actividad=act
+            medDeActividad.est=False
+            medDeActividad.actividad = act
             medDeActividad.save(force_update=True)
-        except: pass
+        except:
+            pass
         try:
             medDeActividad = medidor.objects.get(
                 fabrica=str(self.data['fabricaInst']),
                 serie=str(self.data['serieInst'])
             )
-            medDeActividad.actividad=act
+            medDeActividad.est=False
+            medDeActividad.actividad = act
             medDeActividad.save(force_update=True)
-        except: pass
+        except:
+            pass
 
 
-            #luego con sellos
+        #luego con sellos
         sellosInstalados = list(self.data.pop('sellosSeleccionados'))
         ubiSellosInstalados = list(self.data.pop('ubiSellosSeleccionados'))
         print sellosInstalados
@@ -497,78 +509,81 @@ class ingresoForm(forms.Form):
             #mat.save(force_update=True)
 
         #actividades realizadas para desgloce de valores a facturar
-        realizadas=[[5,6], [5,8]]
-        if act.tipoDeSolicitud_id==1:
-            realizadas.append([1,1])
-            realizadas.append([5,7])
+        realizadas = [[5, 6], [5, 8]]
+        if act.tipoDeSolicitud_id == 1:
+            realizadas.append([1, 1])
+            realizadas.append([5, 7])
             print 'servicio nuevo...'
-        elif act.tipoDeSolicitud_id==11 or act.tipoDeSolicitud_id==13:
+        elif act.tipoDeSolicitud_id == 11 or act.tipoDeSolicitud_id == 13:
             try:
                 if self.data['contrastacion']:
-                    realizadas.append([4,4])
+                    realizadas.append([4, 4])
                     print 'Contrastacion...'
-            except: pass
+            except:
+                pass
             try:
                 if self.data['reubicacion']:
-                    realizadas.append([3,1])
+                    realizadas.append([3, 1])
                     print 'Reubicacion...'
-            except: pass
+            except:
+                pass
             try:
                 if materialDeActividad.objects.get(
-                    actividad=act,
-                    material=detalleMaterialContrato.objects.get(
-                        contrato=contrato,
-                        material__tipoDeMaterial__material__id=6#cable
-                    )
-                ):
-                    try:
-                        if realizadas.index([3,1])>=0:
-                            realizadas.append([5,7])
-                            print 'Reubicacion y desgloce para cable...'
-                    except ValueError:
-                        realizadas.append([4,3])
-                        realizadas.append([5,7])
-                        print 'Hay Solo Acometida...'
-            except: pass
-
-            if act.tipoDeSolicitud_id==11:
-                try:
-                    if materialDeActividad.objects.get(
                         actividad=act,
                         material=detalleMaterialContrato.objects.get(
-                            contrato=contrato,
-                            material__tipoDeMaterial__material__id=4#caja
+                                contrato=contrato,
+                                material__tipoDeMaterial__material__id=6#cable
                         )
+                ):
+                    try:
+                        if realizadas.index([3, 1]) >= 0:
+                            realizadas.append([5, 7])
+                            print 'Reubicacion y desgloce para cable...'
+                    except ValueError:
+                        realizadas.append([4, 3])
+                        realizadas.append([5, 7])
+                        print 'Hay Solo Acometida...'
+            except:
+                pass
+
+            if act.tipoDeSolicitud_id == 11:
+                try:
+                    if materialDeActividad.objects.get(
+                            actividad=act,
+                            material=detalleMaterialContrato.objects.get(
+                                    contrato=contrato,
+                                    material__tipoDeMaterial__material__id=4#caja
+                            )
                     ):
-                        realizadas.append([4,2])
+                        realizadas.append([4, 2])
                         print u'Se realizó cambio de caja...'
                 except:
                     try:
                         if materialDeActividad.objects.get(
-                            actividad=act,
-                            material=detalleMaterialContrato.objects.get(
-                                contrato=contrato,
-                                material__tipoDeMaterial__material__id=16#sello
-                            )
-                        ) and len(cantMaterialInstado)==1:
-                            realizadas.append([4,5])
+                                actividad=act,
+                                material=detalleMaterialContrato.objects.get(
+                                        contrato=contrato,
+                                        material__tipoDeMaterial__material__id=16#sello
+                                )
+                        ) and len(cantMaterialInstado) == 1:
+                            realizadas.append([4, 5])
                             print u'Se realizó revision que no incluye material...'
-                    except: pass
-            elif act.tipoDeSolicitud_id==13:
+                    except:
+                        pass
+            elif act.tipoDeSolicitud_id == 13:
                 try:
                     if self.data['directo']:
-                        realizadas.append([6,2])
+                        realizadas.append([6, 2])
                         print 'Directo...'
                 except:
-                    realizadas.append([2,2])
+                    realizadas.append([2, 2])
                     print 'Cambio de Medidor...'
                 try:
-                    if realizadas.index([5,7])>=0:
+                    if realizadas.index([5, 7]) >= 0:
                         print 'desgloce de Gis...'
                 except:
-                    realizadas.append([5,7])
+                    realizadas.append([5, 7])
                     print 'se agregó desgloce de Gis...'
-
 
         for a in realizadas:
             try:
@@ -584,27 +599,22 @@ class ingresoForm(forms.Form):
             except:
                 print 'nose pudo guardar :' + str(a)
 
-
-
         print 'Guardado completo de Actividad...id : %s ' % act.id
         return act.id
 
 
-
-
-
     def rellenarDetalle(self, actividad, contrato):
         #try:
-        self.fields['codigoDeCliente'].initial=actividad.cliente.cuenta
-        self.fields['nombreDeCliente'].initial=actividad.cliente.nombre
-        self.fields['cedula'].initial=actividad.cliente.ci_ruc
-        self.fields['estadoCli'].initial=actividad.cliente.estado
-        self.fields['telefono'].initial=actividad.cliente.telefono
+        self.fields['codigoDeCliente'].initial = actividad.cliente.cuenta
+        self.fields['nombreDeCliente'].initial = actividad.cliente.nombre
+        self.fields['cedula'].initial = actividad.cliente.ci_ruc
+        self.fields['estadoCli'].initial = actividad.cliente.estado
+        self.fields['telefono'].initial = actividad.cliente.telefono
 
-        if actividad.tipoDeSolicitud_id!=1:
-            self.fields['lugar'].initial=actividad.cliente.ubicacionGeografica.parroquia
-            self.fields['calle'].initial=actividad.cliente.ubicacionGeografica.calle.descripcion1
-            self.fields['geocodigo'].initial=actividad.cliente.geocodigo
+        if actividad.tipoDeSolicitud_id != 1:
+            self.fields['lugar'].initial = actividad.cliente.ubicacionGeografica.parroquia
+            self.fields['calle'].initial = actividad.cliente.ubicacionGeografica.calle.descripcion1
+            self.fields['geocodigo'].initial = actividad.cliente.geocodigo
         else:
             ref = list(detalleClienteReferencia.objects.filter(
                 cliente=actividad.cliente
@@ -613,77 +623,79 @@ class ingresoForm(forms.Form):
                 cliente=ref.referencia,
                 #medidor=ref.medidorDeReferencia
             ))[0].medidor
-            self.fields['anterior'].initial=ref.medidorDeReferencia
-            self.fields['serieAnteriror'].initial=m.serie
-            self.fields['marcaAnteriror'].initial=m.marca
-            self.fields['cuentaAnteriror'].initial=ref.referencia.cuenta
+            self.fields['anterior'].initial = ref.medidorDeReferencia
+            self.fields['serieAnteriror'].initial = m.serie
+            self.fields['marcaAnteriror'].initial = m.marca
+            self.fields['cuentaAnteriror'].initial = ref.referencia.cuenta
 
         miMed = list(medidor.objects.filter(actividad=actividad, contrato=None))
         if miMed:
-            self.fields['fabricaRev'].initial=miMed[0].fabrica
-            self.fields['serieRev'].initial=miMed[0].serie
-            self.fields['marcaRev'].initial=miMed[0].marca
-            self.fields['lecturaRev'].initial=miMed[0].lectura
+            self.fields['fabricaRev'].initial = miMed[0].fabrica
+            self.fields['serieRev'].initial = miMed[0].serie
+            self.fields['marcaRev'].initial = miMed[0].marca
+            self.fields['lecturaRev'].initial = miMed[0].lectura
         miMed = list(medidor.objects.filter(actividad=actividad, contrato__contrato=contrato))
         if miMed:
-            self.fields['medidor'].initial=miMed[0]
-            self.fields['fabricaInst'].initial=miMed[0].fabrica
-            self.fields['serieInst'].initial=miMed[0].serie
-            self.fields['marcaInst'].initial=miMed[0].marca
-            self.fields['tipoDeMedidor'].initial=miMed[0].tipo
-            self.fields['lecturaInst'].initial=miMed[0].lectura
+            self.fields['medidor'].initial = miMed[0]
+            self.fields['fabricaInst'].initial = miMed[0].fabrica
+            self.fields['serieInst'].initial = miMed[0].serie
+            self.fields['marcaInst'].initial = miMed[0].marca
+            self.fields['tipoDeMedidor'].initial = miMed[0].tipo
+            self.fields['lecturaInst'].initial = miMed[0].lectura
 
-        self.fields['tipoDeSolicitud'].initial=actividad.tipoDeSolicitud
-        self.fields['motivoParaSolicitud'].initial=actividad.motivoDeSolicitud
-        self.fields['fecha'].initial=actividad.fechaDeActividad
-        self.fields['hora'].initial=actividad.horaDeActividad
-        self.fields['instalador'].initial=actividad.instalador.nombre
-        self.fields['cuadrilla'].initial=actividad.instalador.cuadrilla
-        self.fields['materialDeLaRed'].initial=actividad.materialDeLaRed
-        self.fields['formaDeConexion'].initial=actividad.formaDeConexion
-        self.fields['estadoDeUnaInstalacion'].initial=actividad.estadoDeLaInstalacion
-        self.fields['tipoDeConstruccion'].initial=actividad.tipoDeConstruccion
-        self.fields['ubicacionDelMedidor'].initial=actividad.ubicacionDelMedidor
-        self.fields['tipoDeAcometidaRed'].initial=actividad.tipoDeAcometidaRed
-        self.fields['calibreDeLaRed'].initial=actividad.calibreDeLaRed
-        self.fields['usoDeEnergia'].initial=actividad.usoDeEnergia
-        self.fields['claseRed'].initial=actividad.claseRed
-        self.fields['tipoDeServicio'].initial=actividad.tipoDeServicio
-        self.fields['usoEspecificoDelInmueble'].initial=actividad.usoEspecificoDelInmueble
-        self.fields['demanda'].initial=actividad.demanda
-        self.fields['nivelSocieconomico'].initial=actividad.nivelSocieconomico
-        self.fields['observaciones'].initial=actividad.observaciones
+        self.fields['tipoDeSolicitud'].initial = actividad.tipoDeSolicitud
+        self.fields['motivoParaSolicitud'].initial = actividad.motivoDeSolicitud
+        self.fields['fecha'].initial = actividad.fechaDeActividad
+        self.fields['hora'].initial = actividad.horaDeActividad
+        self.fields['instalador'].initial = actividad.instalador.nombre
+        self.fields['cuadrilla'].initial = actividad.instalador.cuadrilla
+        self.fields['materialDeLaRed'].initial = actividad.materialDeLaRed
+        self.fields['formaDeConexion'].initial = actividad.formaDeConexion
+        self.fields['estadoDeUnaInstalacion'].initial = actividad.estadoDeLaInstalacion
+        self.fields['tipoDeConstruccion'].initial = actividad.tipoDeConstruccion
+        self.fields['ubicacionDelMedidor'].initial = actividad.ubicacionDelMedidor
+        self.fields['tipoDeAcometidaRed'].initial = actividad.tipoDeAcometidaRed
+        self.fields['calibreDeLaRed'].initial = actividad.calibreDeLaRed
+        self.fields['usoDeEnergia'].initial = actividad.usoDeEnergia
+        self.fields['claseRed'].initial = actividad.claseRed
+        self.fields['tipoDeServicio'].initial = actividad.tipoDeServicio
+        self.fields['usoEspecificoDelInmueble'].initial = actividad.usoEspecificoDelInmueble
+        self.fields['demanda'].initial = actividad.demanda
+        self.fields['nivelSocieconomico'].initial = actividad.nivelSocieconomico
+        self.fields['observaciones'].initial = actividad.observaciones
         try:
             if len(list(detalleDeActividad.objects.filter(
-                actividad=actividad,
-                rubro=detalleRubro.objects.get(
-                    contrato=contrato,
-                    servicio__id=3,
-                    rubro__id=1
-                ))))>0:
-                self.fields['reubicacion'].initial=True
-        except: pass
+                    actividad=actividad,
+                    rubro=detalleRubro.objects.get(
+                            contrato=contrato,
+                            servicio__id=3,
+                            rubro__id=1
+                    )))) > 0:
+                self.fields['reubicacion'].initial = True
+        except:
+            pass
         try:
             if len(list(detalleDeActividad.objects.filter(
-                actividad=actividad,
-                rubro=detalleRubro.objects.get(
-                    contrato=contrato,
-                    servicio__id=4,
-                    rubro__id=4
-                ))))>0:
-
-                self.fields['contrastacion'].initial=True
-        except: pass
+                    actividad=actividad,
+                    rubro=detalleRubro.objects.get(
+                            contrato=contrato,
+                            servicio__id=4,
+                            rubro__id=4
+                    )))) > 0:
+                self.fields['contrastacion'].initial = True
+        except:
+            pass
         try:
             if len(list(detalleDeActividad.objects.filter(
-                actividad=actividad,
-                rubro=detalleRubro.objects.get(
-                    contrato=contrato,
-                    servicio__id=6,
-                    rubro__id=2
-            ))))>0:
-                self.fields['directo'].initial=True
-        except: pass
+                    actividad=actividad,
+                    rubro=detalleRubro.objects.get(
+                            contrato=contrato,
+                            servicio__id=6,
+                            rubro__id=2
+                    )))) > 0:
+                self.fields['directo'].initial = True
+        except:
+            pass
 
         #sellos de actividad...
         s = list(sello.objects.filter(utilizado__id=actividad.id))
@@ -721,9 +733,17 @@ class ingresoForm(forms.Form):
             required=True,
         )
 
+        self.fields['estadoSolicitud'] = forms.ModelChoiceField(
+            estadoDeSolicitud.objects,
+            initial=actividad.estadoDeSolicitud.id,
+            label=estadoDeSolicitud.objects.get(id=actividad.estadoDeSolicitud.id).descripcion,
+            widget=forms.TextInput(
+                attrs={'style': 'height: 1px; padding: 0; margin: 0; border: 0;'}
+            ),
+            required=False
+        )
+
         self.fields['id'].initial = actividad.id
-
-
 
 
     def clean(self):
@@ -757,11 +777,10 @@ class ingresoForm(forms.Form):
         return cleaned_data
 
 
-
 class BuscarActividad(forms.Form):
-    criterio = forms.ChoiceField(choices=(('1','Cuenta'),('2','Medidor'),('3', 'Instalador')),
-        label=' Criterio :  ',
-        required=True
+    criterio = forms.ChoiceField(choices=(('1', 'Cuenta'), ('2', 'Medidor'), ('3', 'Instalador')),
+                                 label=' Criterio :  ',
+                                 required=True
     )
     dato = forms.CharField(
         max_length=20, label='',

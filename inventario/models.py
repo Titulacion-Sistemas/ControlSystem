@@ -97,7 +97,7 @@ class subtipoDeMaterial(models.Model):
     descargableDeSico=models.BooleanField(verbose_name='¿Se descarga para ingreso al Sistema SICO?', default=True)
 
     def __unicode__(self):
-        return '%s%s%s' % (
+        return u'%s%s%s' % (
             self.tipoDeMaterial.material.descripcion,
             self.tipoDeMaterial.descripcion,
             self.descripcion

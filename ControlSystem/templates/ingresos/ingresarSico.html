@@ -19,8 +19,37 @@
             var matSeleccionado=0;
             var sellSeleccionado=0;
 
+            //Funciones Para ingreso*************************************************************************************
+
+            function continuarIngresoSico(url){
+                envioRecepcionAjax
+                    (
+                        url,
+                        {}
+                    );
+            }
+            function deshabilitarBotones(bul){
+                $('#btnGuardar').prop('disabled', bul);
+                $('#btnIngresarSico').prop('disabled', bul);
+                $('#btnEliminar').prop('disabled', bul);
+            }
+
+            //**********************************************************************************************************
+
             $(document).ready(function(){
 
+                $('#btnIngresarSico').click(function(){
+                    $('#cargandoForm').removeClass('hidden');
+                    $('#lblEspera').html('Ingresando, Espere...');
+                    deshabilitarBotones(true);
+                    cambioDeEstado(false);
+                    envioRecepcionAjax
+                    (
+                        '{% url 'guardarIngreso' %}',
+                        $('#ingreso').serialize()
+                    );
+                    cambioDeEstado(true);
+                });
 
                 $("#id_ubicacionDeSello").find("option[value='Caja']").attr("selected",true);
                 $('#id_material').find("option[value='']").remove();
@@ -162,7 +191,7 @@
                     "<td class='"+materialSeleccionado.val()+"' id='matRowDesc-"+item+"'>"+materialSeleccionado.html()+"</td>" +
                     "<td class='left' id='matRowCantidad-"+item+"'>"+cantidad+"</td>" +
                     "<td class='center-block'>" +
-                        "<button type='button' class='btn btn-default btn-xs' onclick='eliminarMat("+item+")' " +
+                        "<button type='button' id='mmbtn' class='btn btn-default btn-xs mmbtn' onclick='eliminarMat("+item+")' " +
                             "title='Quitar este Material de la lista'>" +
                             "<span class='glyphicon glyphicon-minus'></span>" +
                         "</button>" +
@@ -214,7 +243,7 @@
                     "<td class='"+selloSeleccionado.val()+"' id='sellRowDesc-"+item+"'>"+selloSeleccionado.html()+"</td>" +
                     "<td class='"+ubicacionSeleccionada.val()+"' id='sellRowUbic-"+item+"'>"+ubicacionSeleccionada.html()+"</td>" +
                     "<td class='center-block'>" +
-                        "<button type='button' class='btn btn-default btn-xs' onclick='eliminarSell("+item+")' " +
+                        "<button type='button' id='msbtn' class='btn btn-default btn-xs msbtn' onclick='eliminarSell("+item+")' " +
                             "title='Quitar este sllo de la lista'>" +
                             "<span class='glyphicon glyphicon-minus'></span>" +
                         "</button>" +
@@ -317,10 +346,57 @@
 
                     $('#id_cantidad').val('1').change();
 
+                    {% if form.estadoSolicitud.value != 0 %}
+                        cambioDeEstado(true);
+                    {% endif %}
+
                 {% endif %}
 
 
             });
+
+            function cambioDeEstado(bul){
+                $('#id_codigoDeCliente').prop('disabled', bul);
+                $('#buscarCliente').prop('disabled', bul);
+                $('#id_nombreDeCliente').prop('disabled', bul);
+                $('#id_cedula').prop('disabled', bul);
+                $('#id_telefono').prop('disabled', bul);
+                $('#id_geocodigo').prop('disabled', bul);
+                $('#id_tipoDeSolicitud').prop('disabled', bul);
+                $('#id_motivoParaSolicitud').prop('disabled', bul);
+                $('#id_fecha_day').prop('disabled', bul);
+                $('#id_fecha_month').prop('disabled', bul);
+                $('#id_fecha_year').prop('disabled', bul);
+                $('#id_hora').prop('disabled', bul);
+                $('#id_fabricaRev').prop('disabled', bul);
+                $('#id_lecturaRev').prop('disabled', bul);
+                $('#masMaterial').prop('disabled', bul);
+                $('#id_cantidad').prop('disabled', bul);
+                $('.msbtn').prop('disabled', bul);
+                $('.mmbtn').prop('disabled', bul);
+                $('#id_reubicacion').prop('disabled', bul);
+                $('#id_contrastacion').prop('disabled', bul);
+                $('#id_directo').prop('disabled', bul);
+                $('#id_ubicacionDeSello').prop('disabled', bul);
+                $('#masSellos').prop('disabled', bul);
+                $('#id_materialDeLaRed').prop('disabled', bul);
+                $('#id_formaDeConexion').prop('disabled', bul);
+                $('#id_estadoDeUnaInstalacion').prop('disabled', bul);
+                $('#id_tipoDeConstruccion').prop('disabled', bul);
+                $('#id_tipoDeAcometidaRed').prop('disabled', bul);
+                $('#id_calibreDeLaRed').prop('disabled', bul);
+                $('#id_usoDeEnergia').prop('disabled', bul);
+                $('#id_claseRed').prop('disabled', bul);
+                $('#id_tipoDeServicio').prop('disabled', bul);
+                $('#id_usoEspecificoDelInmueble').prop('disabled', bul);
+                $('#id_demanda').prop('disabled', bul);
+                $('#id_medidor').prop('disabled', bul);
+                $('#id_lecturaInst').prop('disabled', bul);
+                $('#id_ubicacionDelMedidor').prop('disabled', bul);
+                $('#id_nivelSocieconomico').prop('disabled', bul);
+                $('#id_anterior').prop('disabled', bul);
+                $('#buscarReferencia').prop('disabled', bul);
+            }
 
             function cambiosPorVoltaje(ser){
                 if (ser!=''){
@@ -407,13 +483,13 @@
 
             function guardarAjax(){
                 $('#cargandoForm').removeClass('hidden');
-                $('#id_codigoDeCliente').prop('disabled', false);
+                cambioDeEstado(false);
                 envioRecepcionAjax
                 (
                     '{% url 'guardarIngreso' %}',
                     $('#ingreso').serialize()
                 );
-                $('#id_codigoDeCliente').prop('disabled', true);
+                cambioDeEstado(true);
                 return false;
 
             }
@@ -825,26 +901,37 @@
                             style="width: 100%; margin: 20px 0 20px 0;">
                         {% bootstrap_icon "save" %} Guardar
                     </button>
+
                     <div id="cargandoForm" class="col-md-2 center-block hidden"
                          style="padding: 0; width: 100%; margin: 0 0 20px 0;">
                         <img src="{% static 'img/cargandoCliente.gif' %}"
-                             height="24px" width="24px" class="center-block"
-                             > <label class="text-center" style="width: 100%;">Espere...</label>
+                             height="24px" width="24px" class="center-block">
+                        <label id="lblEspera" class="text-center" style="width: 100%;">
+                            Espere...
+                        </label>
                     </div>
-                    {% if form.id.value != 0 %}
-                    <button id="btnIngresarSico" type="button" class="btn btn-default btn-lg center-block "
-                            style="width: 100%; margin: 20px 0 20px 0;">
-                        {% bootstrap_icon "send" %} Ingresar
-                    </button>
-                    <button id="btnEliminar" type="button" onclick="eliminarAjax();"
-                            class="btn btn-default btn-lg center-block "
-                            style="width: 100%; margin: 20px 0 20px 0;">
-                        {% bootstrap_icon "trash" %} Eliminar
-                    </button>
-                    <div id="preg">
 
-                    </div>
-                    {% endif %}
+                        {% if form.estadoSolicitud.value != 13 %}
+                            {% if form.id.value > 0 %}
+                                <button id="btnIngresarSico" type="button" class="btn btn-default btn-lg center-block "
+                                        style="width: 100%; margin: 20px 0 20px 0;">
+                                    {% bootstrap_icon "send" %}
+                                    {% if form.estadoSolicitud.value == 0 %}
+                                        Ingresar
+                                    {% else %}
+                                        Continuar
+                                    {% endif %}
+                                </button>
+                                {% if form.estadoSolicitud.value == 0 %}
+                                    <button id="btnEliminar" type="button" onclick="eliminarAjax();"
+                                            class="btn btn-default btn-lg center-block "
+                                            style="width: 100%; margin: 20px 0 20px 0;">
+                                        {% bootstrap_icon "trash" %} Eliminar
+                                    </button>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    <div id="preg"></div>
                 </div>
             </div>
         </div>

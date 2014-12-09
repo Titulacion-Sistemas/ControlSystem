@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 import pythoncom
 from ControlSystem.pComm.conexion import manejadorDeConexion
 from busquedas.models import ClienteBuscado, MedidorBuscado
-from ingresos.models import cliente, secuencia, ruta, sector, canton, provincia, parroquia, ubicacion, calle, urbanizacion
+from ingresos.models import cliente, secuencia, ruta, sector, canton, provincia, parroquia, ubicacion, calle, urbanizacion, modeloDeMedidor
 from inventario.models import medidor, marca
 
 lectura = '0'
@@ -134,6 +134,11 @@ def llenarMedidores(sesion, paraIngreso=False):
             sesion.autECLOIA.WaitForInputReady()
             sesion.autECLPS.SendKeys("[down]")
             miSerie = sesion.autECLPS.GetText(10, 29, 11).strip()
+            miVoltaje = newVoltaje(miSerie)
+            if miVoltaje==120:
+                miModelo = modeloDeMedidor.objects.get(id='NOR-10')
+            else:
+                miModelo = modeloDeMedidor.objects.get(id='NOR-20')
             medidores.append(
                 MedidorBuscado(
                     sesion.autECLPS.GetText(6, 29, 20).strip(),
@@ -148,7 +153,8 @@ def llenarMedidores(sesion, paraIngreso=False):
                         fabrica=sesion.autECLPS.GetText(7, 29, 11).strip(),
                         serie=miSerie,
                         marca=newMarca(sesion.autECLPS.GetText(6, 29, 20).strip()),
-                        voltaje=newVoltaje(miSerie),
+                        voltaje=miVoltaje,
+                        modelo=miModelo,
                         lectura=lect,
                         tipo=sesion.autECLPS.GetText(5, 29, 16).strip(),
                         digitos=sesion.autECLPS.GetText(11, 29, 2).strip(),

@@ -47,6 +47,8 @@ urlpatterns = patterns('',
     url(r'^listadeingresos$', ListaDeIngreso.as_view(), name='listadeingresos'),
     url(r'^fotos/(?P<pk>\d+)/$', 'ingresos.views.fotos', name='fotos'),
     url(r'^borrarfoto/(?P<pk>\d+)/$', 'ingresos.views.borrarFoto', name='borrarfoto'),
+    #Estados de ingreso
+    url(r'^continuaringreso/(?P<pk>\d+)/(?P<estado>\d+)/$', 'ingresos.views.continuar', name='continuaringreso'),
 
     #Servicios Web
     (r"^hello_world/", 'serviciosWeb.views.hello_world_service'),

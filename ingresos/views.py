@@ -521,8 +521,47 @@ def borrarFoto(request, pk):
     else:
         return HttpResponseRedirect('/fotos/%s/' % act)
 
-    
-    
+
+
+#funciones para ingreso en sico...#####################################################################################
+
+def ingresar(act, estado):
+    dajax = Dajax()
+
+    if act.tipoDeSolicitud.id == 1:
+        pass
+    elif act.tipoDeSolicitud.id == 13:
+        pass
+    elif act.tipoDeSolicitud.id == 11:
+        pass
+
+    return dajax.calls
+
+
+def continuar(request, pk, estado):
+    if request.method == 'POST':
+        print request.POST
+        #dajax.script("$('#cargandoForm').addClass('hidden');")
+        mydict = QueryDict(request.POST.urlencode(), mutable=True)
+        if len(mydict)>1:
+            form = ingresoForm(data=mydict)
+            if form.is_valid():
+                guardarIngreso(request)
+                #detectar estado
+            else:
+                dajax = Dajax()
+                #dajax = mostraError(dajax, {'': dict(form.errors)['__all__']}, '#err')
+                dajax = mostraError(dajax, {'Error': 'No se pudo guardar...'}, '#err')
+                return dajax.calls
+
+        #dajax.script("continuarIngresoSico('/continuaringreso/"+str(pk)+"/"+str(estado)+"');")
+        act=actividad.objects.get(id = int(pk))
+        return ingresar(act, estado)
+
+    else:
+        return None
+
+#######################################################################################################################
     
 
 

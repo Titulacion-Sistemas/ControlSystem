@@ -650,7 +650,7 @@ class materialDeActividad(models.Model):
     observacion=models.CharField(max_length=50, blank=True, null=True, default='')
 
     def __unicode__(self):
-        return self.material
+        return u'%s' % self.material
 
     class Meta:
         verbose_name_plural='Materiales de cada Actividad'
