@@ -23,6 +23,81 @@ from django.views.generic.base import TemplateView
 from django.contrib import messages
 
 
+class ListaDeFotos(TemplateView):
+    template_name = 'fotos/listaDeFotos.html'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            d = detalleDeActividad.objects.filter(
+                rubro__contrato=request.session['contrato']
+            ).distinct('actividad').order_by('-activiada.fechaDeActividad')
+        except:
+            return HttpResponseRedirect('/logout')
+        entrada=[]
+        for act in d:
+            entrada.append(act.actividad)
+
+        ba=BuscarActividad()
+        print request.GET
+        try:
+
+            criterio = request.GET.get('criterio')
+            if criterio == '1':
+                d = detalleDeActividad.objects.filter(
+                    rubro__contrato=request.session['contrato'],
+                    actividad__cliente__cuenta__contains=request.GET.get('dato')
+                ).distinct('actividad').order_by('-activiada.fechaDeActividad')
+                entrada=[]
+                for act in d:
+                    entrada.append(act.actividad)
+                ba=BuscarActividad(data=request.GET)
+            elif criterio == '2':
+                m = medidor.objects.filter(
+                    fabrica__contains=request.GET.get('dato')
+                ).distinct('actividad').order_by('-activiada.fechaDeActividad')
+                entradatmp=[]
+                for act in m:
+                    if act.actividad in entrada:
+                        entradatmp.append(act.actividad)
+                entrada=entradatmp
+                ba=BuscarActividad(data=request.GET)
+            elif criterio == '3':
+                sp=str(request.GET.get('dato')).split(' ')
+                if len(sp) > 1:
+                    d = detalleDeActividad.objects.filter(
+                        rubro__contrato=request.session['contrato'],
+                        actividad__instalador__nombre__nombre__icontains=sp[0],
+                        actividad__instalador__nombre__apellido__icontains=sp[1]
+                    ).distinct('actividad').order_by('-activiada.fechaDeActividad')
+                else:
+                    d = detalleDeActividad.objects.filter(
+                        rubro__contrato=request.session['contrato'],
+                        actividad__instalador__nombre__nombre__icontains=str(request.GET.get('dato'))
+                    ).distinct('actividad').order_by('-activiada.fechaDeActividad')
+                entrada=[]
+                for act in d:
+                    entrada.append(act.actividad)
+                ba=BuscarActividad(data=request.GET)
+
+        except: pass
+
+        lines = []
+        for i in entrada:
+            lines.append(i)
+        paginator = Paginator(lines, 50)
+        page = request.GET.get('page')
+        try:
+            show_lines = paginator.page(page)
+        except PageNotAnInteger:
+            show_lines = paginator.page(1)
+        except EmptyPage:
+            show_lines = paginator.page(paginator.num_pages)
+        data = {
+            'form': ba,
+            'lines': show_lines
+        }
+        return render_to_response('fotos/listaDeFotos.html', data, context_instance=RequestContext(request))
+
 
 class ListaDeIngreso(TemplateView):
     template_name = 'ingresos/listadeingreso.html'
@@ -499,7 +574,7 @@ def fotos(request, pk):
 
     # Render list page with the documents and the form
     return render_to_response(
-        'ingresos/fotos.html',
+        'fotos/fotos.html',
         {
             'documents': documents,
             'form': form,

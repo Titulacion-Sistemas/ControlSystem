@@ -1,7 +1,7 @@
 # coding=utf-8
 import os
 from django.db import models
-from inventario.models import material
+from inventario.models import material, sello
 
 # Create your models here.
 
@@ -638,7 +638,7 @@ class instalador(models.Model):
     observacion=models.CharField(max_length=50)
 
     def __unicode__(self):
-        return '%s %s' % (self.nombre, self.apellido)
+        return u'%s' % self.nombre
 
     class Meta:
         verbose_name_plural='Instaladores'
@@ -680,16 +680,20 @@ def destino(instance, filename):
 
 class foto(models.Model):
 
-    upload_to = '%s/%s/%s'
+    upload_to = '%s/%s/%s/%s'
 
     def _get_upload_to(self, filename):
+        try:
+            contrato = sello.objects.filter(utilizado=actividad)[0].detalleMaterialContrato.contrato.id
+        except:
+            contrato = 'Sin contrato'
         act=actividad.objects.get(id=self.actividad.id)
         if len(act.cliente.cuenta)>4:
-            dos= str(act.cliente.cuenta)
+            identificador= str(act.cliente.cuenta)
         else:
-            dos= str(act.cliente.ci_ruc)
+            identificador= str(act.cliente.ci_ruc)
         #return os.path.join('%s/%s' % (str(act.tipoDeSolicitud.descripcion), dos), filename)
-        return self.upload_to % (str(act.tipoDeSolicitud.descripcion), dos, filename)
+        return self.upload_to % (str(contrato), str(act.tipoDeSolicitud.descripcion), identificador, filename)
 
     actividad=models.ForeignKey(actividad, blank=True, null=True)
     foto=models.FileField(upload_to=_get_upload_to)

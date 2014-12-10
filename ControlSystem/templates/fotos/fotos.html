@@ -16,10 +16,39 @@
 {% block jquery %}
     {{ block.super }}
     <script>
-        function borrarFoto(id){
-            var formulario = $('#f');
-            formulario.attr('action', '/borrarfoto/'+id+'/')
+
+        function eliminarAjax(id){
+            $('<div></div>').appendTo('body')
+            .html('<div><h6>Esta seguro de eliminar la foto...?</h6></div>')
+            .dialog({
+                modal: true,
+                title: 'Eliminar Fotos...',
+                zIndex: 10000,
+                autoOpen: true,
+                width: 'auto',
+                resizable: false,
+                buttons: {
+                    Si: function () {
+                        // $(obj).removeAttr('onclick');
+                        // $(obj).parents('.Parent').remove();
+
+                        var formulario = $('#f');
+                        formulario.attr('action', '/borrarfoto/'+id+'/');
+                        $(this).dialog("close");
+
+                        formulario.submit()
+
+                    },
+                    No: function () {
+                        $(this).dialog("close");
+                    }
+                },
+                close: function (event, ui) {
+                    $(this).remove();
+                }
+            });
         }
+
     </script>
 {% endblock %}
 
@@ -48,7 +77,7 @@
                                             </a>
                                         </div>
                                         <div class="row text-center">
-                                            <button class="btn-sm btn-default" type="submit" onclick="borrarFoto({{ document.id }});">
+                                            <button class="btn-sm btn-default" onclick="eliminarAjax({{ document.id }}); return false;">
                                                 {% bootstrap_icon "remove" %}
                                             </button>
                                         </div>
@@ -72,27 +101,27 @@
                     <div class="panel-body">
                         <div class="row text-center center-block">
 
-                                {% csrf_token %}
-                                {% bootstrap_form_errors form %}
-                                {% bootstrap_form form layout='horizontal' %}
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-7 text-justify">
-                                        <button class="btn-lg btn-default" type="submit">
-                                            {% bootstrap_icon "cloud-upload" %} Subir
-                                        </button>
-                                    </div>
+                            {% csrf_token %}
+                            {% bootstrap_form_errors form %}
+                            {% bootstrap_form form layout='horizontal' %}
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-7 text-justify">
+                                    <button class="btn-lg btn-default" type="submit">
+                                        {% bootstrap_icon "cloud-upload" %} Subir
+                                    </button>
                                 </div>
+                            </div>
 
                         </div>
                     </div>
                 </div>
             </div>
+            <div id="preg"></div>
         </div>
         </form>
     </div>
-
 {% endblock %}
 
 {% block jqueryfooter %}{% endblock %}

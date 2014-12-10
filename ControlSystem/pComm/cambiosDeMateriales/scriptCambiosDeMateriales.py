@@ -134,12 +134,12 @@ class ingresarCambioDeMaterial():
                                     now.year,
                                 ) \
                             and str(sesion.autECLPS.GetText(i, 79, 2)) == ' 1':
-                            actividad.numeroDeSolicitud = str(sesion.autECLPS.GetText(i, 14, 6)).strip()
+                            actividad.numeroDeSolicitud = int(str(sesion.autECLPS.GetText(i, 14, 6)).strip())
                             actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=1)
                             break
                         else:
                             sesion.autECLPS.SendKeys('[down]')
-                    if actividad.numeroDeSolicitud:
+                    if actividad.numeroDeSolicitud>0:
                         actividad.save(force_update=True)
                         sesion.autECLPS.SendKeys('[pf12]')
                         sesion.autECLOIA.WaitForAppAvailable()
@@ -150,15 +150,20 @@ class ingresarCambioDeMaterial():
                         return {
                             'estado': actividad.estadoDeSolicitud_id,
                             'mensaje': 'Solicitud creada correctamente',
-                            'solicitud': actividad.numeroDeSolicitud,
-                            'opcion': self.cambiosDeMedidor
+                            'solicitud': actividad.numeroDeSolicitud
                         }
 
                     else:
                         return self.ERROR
                 else:
+                    sesion.autECLPS.SendKeys('[pf12]')
+                    sesion.autECLOIA.WaitForAppAvailable()
+                    sesion.autECLOIA.WaitForInputReady()
                     return self.ERROR
             else:
+                sesion.autECLPS.SendKeys('[pf12]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
                 return self.ERROR
         else:
             return self.ERROR
@@ -221,6 +226,9 @@ class ingresarCambioDeMaterial():
                     'solicitud': actividad.numeroDeSolicitud
                 }
             else:
+                sesion.autECLPS.SendKeys('[pf12]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
                 return self.ERROR
         else:
             return self.ERROR
@@ -270,8 +278,7 @@ class ingresarCambioDeMaterial():
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
 
-                inspector = sello.objects.filter(utilizado=actividad)[
-                    0].detalleMaterialContrato.contrato.codigoInstalador
+                inspector = sello.objects.filter(utilizado=actividad)[0].detalleMaterialContrato.contrato.codigoInstalador
                 sesion.autECLPS.SendKeys('[down]')
                 sesion.autECLPS.SendKeys('[eraseeof]')
                 sesion.autECLPS.SendKeys(str(inspector), 5, 30)
@@ -367,6 +374,9 @@ class ingresarCambioDeMaterial():
                 }
 
             else:
+                sesion.autECLPS.SendKeys('[pf12]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
                 return self.ERROR
         else:
             return self.ERROR
@@ -476,6 +486,9 @@ class ingresarCambioDeMaterial():
                 }
 
             else:
+                sesion.autECLPS.SendKeys('[pf12]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
                 return self.ERROR
         else:
             return self.ERROR
@@ -541,10 +554,10 @@ class ingresarCambioDeMaterial():
             sesion.autECLOIA.WaitForInputReady()
 
             return {
-                    'estado': actividad.estadoDeSolicitud_id,
-                    'mensaje': 'Generada solicitud a bodega...',
-                    'solicitud': actividad.numeroDeSolicitud
-                }
+                'estado': actividad.estadoDeSolicitud_id,
+                'mensaje': 'Generada solicitud a bodega...',
+                'solicitud': actividad.numeroDeSolicitud
+            }
 
         else:
             return self.ERROR
@@ -586,10 +599,10 @@ class ingresarCambioDeMaterial():
             sesion.autECLOIA.WaitForInputReady()
 
             return {
-                    'estado': actividad.estadoDeSolicitud_id,
-                    'mensaje': actividad.estadoDeSolicitud.descripcion,
-                    'solicitud': actividad.numeroDeSolicitud
-                }
+                'estado': actividad.estadoDeSolicitud_id,
+                'mensaje': actividad.estadoDeSolicitud.descripcion,
+                'solicitud': actividad.numeroDeSolicitud
+            }
         else:
             return self.ERROR
 
@@ -634,13 +647,195 @@ class ingresarCambioDeMaterial():
             sesion.autECLOIA.WaitForInputReady()
 
             return {
-                    'estado': actividad.estadoDeSolicitud_id,
-                    'mensaje': actividad.estadoDeSolicitud.descripcion,
-                    'solicitud': actividad.numeroDeSolicitud
-                }
+                'estado': actividad.estadoDeSolicitud_id,
+                'mensaje': actividad.estadoDeSolicitud.descripcion,
+                'solicitud': actividad.numeroDeSolicitud
+            }
 
         else:
             return self.ERROR
 
     def pasoOcho(self, actividad):
-        pass
+        if self.pasoAcceso():
+            sesion = self.sesion
+            sesion.autECLPS.SendKeys('5')
+            sesion.autECLPS.SendKeys('[enter]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+
+            sesion.autECLPS.SendKeys('[eraseeof]')
+            sesion.autECLPS.SendKeys(str(actividad.numeroDeSolicitud))
+            sesion.autECLPS.SendKeys('[enter]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+
+            sesion.autECLPS.SendKeys('0')    #450
+            sesion.autECLPS.SendKeys('[enter]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+
+            pag = False
+            i = 0
+            while i < 5:
+                if i == 4 and str(sesion.autECLPS.GetText(((i * 2) + 9), 76, 1)) == '+':
+                    pag = True
+                cm = str(sesion.autECLPS.GetText(((i * 2) + 8), 72, 2))
+                if cm == ' 0':
+                    cm = str(sesion.autECLPS.GetText(((i * 2) + 8), 75, 2))
+                    cm = ',%s' % cm
+                elif cm == '  ':
+                    break
+                else:
+                    cm = '.%s' % cm
+                sesion.autECLPS.SendKeys(cm, ((i * 2) + 9), 74)
+                if pag:
+                    i = 0
+                    sesion.autECLPS.SendKeys('[roll up]')
+                    pag = False
+                else:
+                    i += 1
+
+            sesion.autECLPS.SendKeys('[enter]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+            sesion.autECLPS.SendKeys('[pf12]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+            actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=451)
+            actividad.save(force_update=True)
+
+            sesion.autECLPS.SendKeys('[pf12]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+            sesion.autECLPS.SendKeys('[pf12]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+            sesion.autECLPS.SendKeys('[pf12]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+
+            return {
+                'estado': actividad.estadoDeSolicitud_id,
+                'mensaje': actividad.estadoDeSolicitud.descripcion,
+                'solicitud': actividad.numeroDeSolicitud
+            }
+
+        else:
+            return self.ERROR
+
+    def pasoNueve(self, actividad):
+        if self.pasoAcceso():
+            sesion = self.sesion
+            sesion.autECLPS.SendKeys('5')
+            sesion.autECLPS.SendKeys('[enter]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+
+            sesion.autECLPS.SendKeys('[eraseeof]')
+            sesion.autECLPS.SendKeys(str(actividad.numeroDeSolicitud))
+            sesion.autECLPS.SendKeys('[enter]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+
+            sesion.autECLPS.SendKeys('7')    #457
+            sesion.autECLPS.SendKeys('[enter]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+
+            sel=''
+            baja=True
+            for s in list(sello.objects.filter(utilizado=actividad)):
+                sesion.autECLPS.SendKeys('[eraseeof]', 11, 26)
+                sesion.autECLPS.SendKeys(s.numero, 11, 26)
+                sesion.autECLPS.SendKeys('[enter]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
+                if str(s.numero).strip() != str(sesion.autECLPS.GetText(12, 26, 10)).strip():
+                    sel=str(s.numero)
+                    baja=False
+                    break
+
+            if baja:
+                for s in list(sello.objects.filter(utilizado=actividad)):
+                    sesion.autECLPS.SendKeys('[eraseeof]', 11, 26)
+                    sesion.autECLPS.SendKeys(s.numero, 11, 26)
+                    sesion.autECLPS.SendKeys('[enter]')
+                    sesion.autECLOIA.WaitForAppAvailable()
+                    sesion.autECLOIA.WaitForInputReady()
+                    sesion.autECLPS.SendKeys('4')
+                    sesion.autECLPS.SendKeys('[enter]')
+                    sesion.autECLOIA.WaitForAppAvailable()
+                    sesion.autECLOIA.WaitForInputReady()
+
+                actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=457)
+                actividad.save(force_update=True)
+                retorno = {
+                    'estado': actividad.estadoDeSolicitud_id,
+                    'mensaje': actividad.estadoDeSolicitud.descripcion,
+                    'solicitud': actividad.numeroDeSolicitud
+                }
+
+            else:
+                retorno = {
+                    'estado': None,
+                    'mensaje': 'Sello %s no encontrado, posiblementa ya esta utilizado' % str(sel),
+                    'solicitud': None
+                }
+
+            sesion.autECLPS.SendKeys('[pf12]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+
+            sesion.autECLPS.SendKeys('[pf12]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+            sesion.autECLPS.SendKeys('[pf12]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+            sesion.autECLPS.SendKeys('[pf12]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+
+            return retorno
+
+        else:
+            return self.ERROR
+
+    def pasoDiez(self, actividad):
+        if self.pasoAcceso():
+            sesion = self.sesion
+            sesion.autECLPS.SendKeys('5')
+            sesion.autECLPS.SendKeys('[enter]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+
+            sesion.autECLPS.SendKeys('[eraseeof]')
+            sesion.autECLPS.SendKeys(str(actividad.numeroDeSolicitud))
+            sesion.autECLPS.SendKeys('[enter]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+
+            sesion.autECLPS.SendKeys('9')    #459
+            sesion.autECLPS.SendKeys('[enter]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+
+            sesion.autECLPS.SendKeys('[pf9]')
+            actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=457)
+            actividad.save(force_update=True)
+
+            titulo = sesion.autECLPS.GetText(9, 16, 20)
+            while titulo != 'CONSULTA DE CLIENTES':
+                sesion.autECLPS.SendKeys('[pf12]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
+                titulo = sesion.autECLPS.GetText(9, 16, 20)
+
+            return {
+                'estado': actividad.estadoDeSolicitud_id,
+                'mensaje': actividad.estadoDeSolicitud.descripcion,
+                'solicitud': actividad.numeroDeSolicitud
+            }
+
+        else:
+            return self.ERROR

@@ -6,8 +6,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from django.contrib import admin
-from usuarios.views import multiply
+from usuarios.views import *
 from ingresos.views import ListaDeIngreso
+from ingresos.views import ListaDeFotos
 from serviciosWeb.views import *
 
 admin.autodiscover()
@@ -35,6 +36,9 @@ urlpatterns = patterns('',
     url(r'^busqueda$', 'busquedas.views.busqueda', name='busqueda'),
 
     url(r'^multiply', multiply),
+
+    #Fotos
+    url(r'^listadefotos$', ListaDeFotos.as_view(), name='listadefotos'),
 
     #Ingresos
     url(r'^ingresarsico$', 'ingresos.views.ingresarSico', name='ingresarSico'),

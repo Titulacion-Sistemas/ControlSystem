@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block title %}
+    Fotos de Actividades realizadas
+{% endblock %}
+
+{% block jquery %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+    {% if form.errors %}
+        <p>{{ form.errors }}</p>
+    {% endif %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-info">
+                    <div class="panel-body" style="padding-bottom: 40px;">
+                        <form role="form" class="form-inline text-center" id="b" name="b" method="get" action="{% url 'listadefotos' %}">
+                            <br><div id="err"></div>
+                            {% bootstrap_form form %}
+                            {% buttons %}
+                                <button type="submit" class="btn btn-primary">
+                                    {% bootstrap_icon "search" %} Buscar
+                                </button>
+                            {% endbuttons %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading text-center">
+                        <b>Fotos de actividades realizadas</b>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row text-center">
+                            {% if lines %}
+                                {% for line in lines %}
+                                    <div class="col-md-3 center-block text-center" >
+                                        <div class="row text-center">
+                                            <div class="col-md-12">
+                                                <button type="button" onclick="newUrl('/fotos/{{ line.id }}')"
+                                                        class="btn btn-default" style="background: transparent">
+                                                    <div class="panel panel-info" style="margin-bottom: 0px;">
+                                                        <div class="panel-heading text-center">
+                                                            {% if line.cliente.cuenta|length > 3 %}
+                                                                <h4>{{ line.cliente.cuenta }}</h4>
+                                                            {% else %}
+                                                                 <h4>{{ line.cliente.ci_ruc }}</h4>
+                                                            {% endif %}
+                                                            {{ line.tipoDeSolicitud.descripcion }}
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="row text-center">
+                                                                {{ line.instalador }}<br>
+                                                                {{ line.fechaDeActividad }}<br>
+                                                                {{ line.estadoDeSolicitud }}<br>
+                                                                {{ line.cliente.ubicacionGeografica.calle }}<br>
+                                                                {{ line.cliente.geocodigo }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <h1><p>No existen fotos para esta actividad...</p></h1>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            {% bootstrap_pagination lines url="/listadeingresos?page=1" size="large" %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block jqueryfooter %}{% endblock %}
