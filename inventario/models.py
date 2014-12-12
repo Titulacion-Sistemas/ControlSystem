@@ -34,7 +34,7 @@ class medidor(models.Model):
     fabrica = models.CharField(max_length=11, verbose_name='Número de Fábrica')
     fabricaFinal=models.CharField(max_length=11, verbose_name='Fin de rango de Medidores', blank=True, null=True, default='')
     serie = models.CharField(max_length=15, verbose_name='Numero de Serie')
-    lectura=models.CharField(max_length=10, verbose_name='Lectura', blank=True, null=True, default='0')
+    lectura=models.CharField(max_length=10, verbose_name='Lectura', blank=True, null=True, default='00000')
     marca = models.ForeignKey(marca, verbose_name='Marca')
     tipo = models.CharField(max_length=15, verbose_name='Tipo de Medidor', blank=True, null=True, default='')
     digitos = models.PositiveSmallIntegerField(verbose_name='Dígitos')

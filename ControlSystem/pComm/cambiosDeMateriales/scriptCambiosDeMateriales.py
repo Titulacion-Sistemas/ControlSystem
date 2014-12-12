@@ -20,8 +20,20 @@ class ingresarCambioDeMaterial():
             'solicitud': None
         }
 
-    def elegirPunto(self, estado):
-        pass
+    def elegirPunto(self, estado, actividad):
+        operaciones = {
+            0: self.pasoUno,
+            1: self.pasoDos,
+            11: self.tercerPaso,
+            7: self.pasoCuatro,
+            8: self.pasoCinco,
+            10: self.pasoSeis,
+            45: self.pasoSiete,
+            451: self.pasoOcho,
+            450: self.pasoNueve,
+            457: self.pasoDiez,
+        }
+        return operaciones[estado](actividad)
 
     def pasoUno(self, actividad):
         sesion = self.sesion
@@ -39,6 +51,8 @@ class ingresarCambioDeMaterial():
         if opcionSico:
             sesion.autECLPS.SendKeys('5')
             sesion.autECLPS.SendKeys('[enter]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
 
             opcionSico = False
             sesion.autECLPS.SetCursorPos(9, 12)
@@ -217,6 +231,10 @@ class ingresarCambioDeMaterial():
                 sesion.autECLPS.SendKeys('[enter]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
+
+                actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=11)
+                actividad.save(force_update=True)
+
                 sesion.autECLPS.SendKeys('[pf12]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
@@ -236,7 +254,7 @@ class ingresarCambioDeMaterial():
         else:
             return self.ERROR
 
-    def tercerPaso(self, actividad, opcion=None):
+    def tercerPaso(self, actividad):
         sesion = self.sesion
         opcionSico = False
         sesion.autECLPS.SetCursorPos(9, 12)
@@ -704,7 +722,7 @@ class ingresarCambioDeMaterial():
             sesion.autECLPS.SendKeys('[pf12]')
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
-            actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=451)
+            actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=450)
             actividad.save(force_update=True)
 
             sesion.autECLPS.SendKeys('[pf12]')
@@ -824,7 +842,7 @@ class ingresarCambioDeMaterial():
             sesion.autECLOIA.WaitForInputReady()
 
             sesion.autECLPS.SendKeys('[pf9]')
-            actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=457)
+            actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=13)
             actividad.save(force_update=True)
 
             titulo = sesion.autECLPS.GetText(9, 16, 20)

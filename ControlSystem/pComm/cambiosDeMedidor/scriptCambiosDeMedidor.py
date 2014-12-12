@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.contrib.humanize.tests import now
 from ControlSystem.pComm.conexion import manejadorDeConexion
-from ingresos.models import estadoDeSolicitud, materialDeActividad
+from ingresos.models import estadoDeSolicitud, materialDeActividad, detalleClienteMedidor
 from inventario.models import sello, medidor
 
 __author__ = 'Jhonsson'
@@ -19,10 +19,23 @@ class ingresarCambioDeMedidor():
             'solicitud': None
         }
 
-    def elegirPunto(self, estado):
-        pass
+    def elegirPunto(self, estado, actividad):
+        operaciones = {
+            0: self.pasoUno,
+            1: self.pasoDos,
+            6: self.tercerPaso,
+            7: self.pasoCuatro,
+            8: self.pasoCinco,
+            10: self.pasoSeis,
+            45: self.pasoSiete,
+            451: self.pasoOcho,
+            450: self.pasoNueve,
+            457: self.pasoDiez,
+            454: self.pasoOnce
+        }
+        return operaciones[estado](actividad)
 
-    def pasoUno(self, actividad, contrato):
+    def pasoUno(self, actividad):
         sesion = self.sesion
         opcionSico = False
         sesion.autECLPS.SetCursorPos(9, 12)
@@ -39,6 +52,8 @@ class ingresarCambioDeMedidor():
         if opcionSico:
 
             sesion.autECLPS.SendKeys('[enter]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
 
             opcionSico = False
             sesion.autECLPS.SetCursorPos(9, 12)
@@ -96,7 +111,7 @@ class ingresarCambioDeMedidor():
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
 
-                medidorInst = list(medidor.objects.filter(utilizado=actividad, contrato=self.contrato))
+                medidorInst = list(medidor.objects.filter(actividad=actividad, contrato__contrato=self.contrato))
                 if medidorInst:
                     modelo = str(medidorInst[0].modelo_id).split('-')
                 else:
@@ -755,7 +770,7 @@ class ingresarCambioDeMedidor():
             sesion.autECLPS.SendKeys('[pf12]')
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
-            actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=451)
+            actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=450)
             actividad.save(force_update=True)
 
             sesion.autECLPS.SendKeys('[pf12]')
@@ -907,7 +922,7 @@ class ingresarCambioDeMedidor():
 
                     sesion.autECLPS.SendKeys('s')
                     sesion.autECLPS.SendKeys('[eraseeof]', 10, 62)
-                    sesion.autECLPS.SendKeys('00000', 10, 62)
+                    sesion.autECLPS.SendKeys(med.lectura, 10, 62)
                     sesion.autECLPS.SendKeys('[pf2]')
                     sesion.autECLOIA.WaitForAppAvailable()
                     sesion.autECLOIA.WaitForInputReady()
@@ -927,6 +942,8 @@ class ingresarCambioDeMedidor():
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
                 titulo = sesion.autECLPS.GetText(9, 16, 20)
+
+            return returno
 
         else:
             return self.ERROR
@@ -951,7 +968,7 @@ class ingresarCambioDeMedidor():
             sesion.autECLOIA.WaitForInputReady()
 
             sesion.autECLPS.SendKeys('[pf9]')
-            actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=457)
+            actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=13)
             actividad.save(force_update=True)
 
             titulo = sesion.autECLPS.GetText(9, 16, 20)
@@ -960,6 +977,24 @@ class ingresarCambioDeMedidor():
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
                 titulo = sesion.autECLPS.GetText(9, 16, 20)
+
+                medidorDes = list(medidor.objects.filter(actividad=actividad).exclude(contrato__contrato=self.contrato))[0]
+                enlace = detalleClienteMedidor.objects.get(
+                    medidor = medidorDes,
+                    cliente = actividad.cliente
+                )
+                enlace.lectura_desinstalacion=medidorDes.lectura
+                enlace.fecha_desinstalacion=now.date()
+                enlace.save(force_update=True)
+
+                medidorInst = list(medidor.objects.filter(actividad=actividad, contrato__contrato=self.contrato))[0]
+                enlace = detalleClienteMedidor(
+                    lectura_instalacion = medidorInst.lectura,
+                    fecha_instalacion = now.date(),
+                    medidor = medidorInst,
+                    cliente = actividad.cliente
+                )
+                enlace.save()
 
             return {
                 'estado': actividad.estadoDeSolicitud_id,

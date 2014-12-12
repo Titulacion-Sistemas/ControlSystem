@@ -42,13 +42,13 @@
                     $('#cargandoForm').removeClass('hidden');
                     $('#lblEspera').html('Ingresando, Espere...');
                     deshabilitarBotones(true);
-                    cambioDeEstado(false);
+
                     envioRecepcionAjax
                     (
-                        '{% url 'guardarIngreso' %}',
+                        '/continuaringreso/{{ form.id.value }}/{{ form.estadoSolicitud.value }}',
                         $('#ingreso').serialize()
                     );
-                    cambioDeEstado(true);
+
                 });
 
                 $("#id_ubicacionDeSello").find("option[value='Caja']").attr("selected",true);
@@ -68,7 +68,7 @@
                 $('#id_medidor').change(function(){
                     envioRecepcionAjax
                     (
-                        '{% url 'buscarMedidor' %}',
+                        '{% url 'buscarMedidorIngreso' %}',
                         {
                             'medidor': $('#id_medidor option:selected').val()
                         }
@@ -116,7 +116,7 @@
                     $('#cargando').removeClass('hidden');
                     envioRecepcionAjax
                     (
-                        '{% url 'buscarCliente' %}',
+                        '{% url 'buscarClienteIngreso' %}',
                         {
                             'tipo': tipo,
                             'dato': valorBuscado

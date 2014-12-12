@@ -173,7 +173,7 @@ class ingresoForm(forms.Form):
         required=False
     )
     lecturaInst = forms.CharField(
-        max_length=11, label='Lectura',
+        max_length=6, label='Lectura',
         widget=forms.TextInput(attrs={'placeholder': 'Digite la lectura del medidor'}),
         initial='0',
         required=False
@@ -481,6 +481,7 @@ class ingresoForm(forms.Form):
                 serie=str(self.data['serieInst'])
             )
             medDeActividad.est=False
+            medDeActividad.lectura=str('%05d' % int(self.data['lecturaInst']))
             medDeActividad.actividad = act
             medDeActividad.save(force_update=True)
         except:

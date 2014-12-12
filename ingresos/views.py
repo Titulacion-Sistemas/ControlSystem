@@ -10,6 +10,9 @@ from django.http import HttpResponseRedirect, QueryDict
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django_ajax.decorators import ajax
+from ControlSystem.pComm.cambiosDeMateriales.scriptCambiosDeMateriales import ingresarCambioDeMaterial
+from ControlSystem.pComm.cambiosDeMedidor.scriptCambiosDeMedidor import ingresarCambioDeMedidor
+from ControlSystem.pComm.serviciosNuevos.scriptServiciosNuevos import ingresarServicioNuevo
 from busquedas.models import BusquedaForm, vitacoraBusquedas
 from ingresos.forms import ingresoForm, BuscarActividad, FotoForm
 from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar as b
@@ -34,11 +37,11 @@ class ListaDeFotos(TemplateView):
             ).distinct('actividad').order_by('-activiada.fechaDeActividad')
         except:
             return HttpResponseRedirect('/logout')
-        entrada=[]
+        entrada = []
         for act in d:
             entrada.append(act.actividad)
 
-        ba=BuscarActividad()
+        ba = BuscarActividad()
         print request.GET
         try:
 
@@ -48,22 +51,22 @@ class ListaDeFotos(TemplateView):
                     rubro__contrato=request.session['contrato'],
                     actividad__cliente__cuenta__contains=request.GET.get('dato')
                 ).distinct('actividad').order_by('-activiada.fechaDeActividad')
-                entrada=[]
+                entrada = []
                 for act in d:
                     entrada.append(act.actividad)
-                ba=BuscarActividad(data=request.GET)
+                ba = BuscarActividad(data=request.GET)
             elif criterio == '2':
                 m = medidor.objects.filter(
                     fabrica__contains=request.GET.get('dato')
                 ).distinct('actividad').order_by('-activiada.fechaDeActividad')
-                entradatmp=[]
+                entradatmp = []
                 for act in m:
                     if act.actividad in entrada:
                         entradatmp.append(act.actividad)
-                entrada=entradatmp
-                ba=BuscarActividad(data=request.GET)
+                entrada = entradatmp
+                ba = BuscarActividad(data=request.GET)
             elif criterio == '3':
-                sp=str(request.GET.get('dato')).split(' ')
+                sp = str(request.GET.get('dato')).split(' ')
                 if len(sp) > 1:
                     d = detalleDeActividad.objects.filter(
                         rubro__contrato=request.session['contrato'],
@@ -75,12 +78,13 @@ class ListaDeFotos(TemplateView):
                         rubro__contrato=request.session['contrato'],
                         actividad__instalador__nombre__nombre__icontains=str(request.GET.get('dato'))
                     ).distinct('actividad').order_by('-activiada.fechaDeActividad')
-                entrada=[]
+                entrada = []
                 for act in d:
                     entrada.append(act.actividad)
-                ba=BuscarActividad(data=request.GET)
+                ba = BuscarActividad(data=request.GET)
 
-        except: pass
+        except:
+            pass
 
         lines = []
         for i in entrada:
@@ -110,10 +114,10 @@ class ListaDeIngreso(TemplateView):
             ).distinct('actividad').order_by('-activiada.fechaDeActividad')
         except:
             return HttpResponseRedirect('/logout')
-        entrada=[]
+        entrada = []
         for act in d:
             entrada.append(act.actividad)
-        #     .raw(
+            #     .raw(
         #     "SELECT "
         #     "ingresos_actividad.* "
         #     "FROM "
@@ -130,7 +134,7 @@ class ListaDeIngreso(TemplateView):
         #     "order by ingresos_actividad.\"fechaDeActividad\" desc;" % request.session['contrato'].num
         # )
 
-        ba=BuscarActividad()
+        ba = BuscarActividad()
         print request.GET
         try:
 
@@ -140,22 +144,22 @@ class ListaDeIngreso(TemplateView):
                     rubro__contrato=request.session['contrato'],
                     actividad__cliente__cuenta__contains=request.GET.get('dato')
                 ).distinct('actividad').order_by('-activiada.fechaDeActividad')
-                entrada=[]
+                entrada = []
                 for act in d:
                     entrada.append(act.actividad)
-                ba=BuscarActividad(data=request.GET)
+                ba = BuscarActividad(data=request.GET)
             elif criterio == '2':
                 m = medidor.objects.filter(
                     fabrica__contains=request.GET.get('dato')
                 ).distinct('actividad').order_by('-activiada.fechaDeActividad')
-                entradatmp=[]
+                entradatmp = []
                 for act in m:
                     if act.actividad in entrada:
                         entradatmp.append(act.actividad)
-                entrada=entradatmp
-                ba=BuscarActividad(data=request.GET)
+                entrada = entradatmp
+                ba = BuscarActividad(data=request.GET)
             elif criterio == '3':
-                sp=str(request.GET.get('dato')).split(' ')
+                sp = str(request.GET.get('dato')).split(' ')
                 if len(sp) > 1:
                     d = detalleDeActividad.objects.filter(
                         rubro__contrato=request.session['contrato'],
@@ -167,12 +171,13 @@ class ListaDeIngreso(TemplateView):
                         rubro__contrato=request.session['contrato'],
                         actividad__instalador__nombre__nombre__icontains=str(request.GET.get('dato'))
                     ).distinct('actividad').order_by('-activiada.fechaDeActividad')
-                entrada=[]
+                entrada = []
                 for act in d:
                     entrada.append(act.actividad)
-                ba=BuscarActividad(data=request.GET)
+                ba = BuscarActividad(data=request.GET)
 
-        except: pass
+        except:
+            pass
 
         lines = []
         for i in entrada:
@@ -194,7 +199,6 @@ class ListaDeIngreso(TemplateView):
 
 @login_required()
 def ingresarSico(request):
-
     form = ingresoForm(contrato=request.session['contrato'])
 
     data = {
@@ -209,12 +213,13 @@ def ingreso(request, pk):
     act = actividad.objects.get(id=int(pk))
 
     form = ingresoForm(contrato=request.session['contrato'], actividad=act)
-        #form = ingresoForm()
+    #form = ingresoForm()
     data = {
         'form': form
     }
 
     return render_to_response('ingresos/ingresarSico.html', data, context_instance=RequestContext(request))
+
 
 @ajax()
 def buscarCliente(request):
@@ -350,7 +355,6 @@ def buscarMedidor(request):
 
 @ajax()
 def guardarIngreso(request):
-
     if request.method == 'POST':
 
         print request.POST
@@ -369,14 +373,15 @@ def guardarIngreso(request):
             cli = cliente()
 
             if form.data['id'] != '0':
-                act=actividad.objects.get(id=int(form.data['id']))
-                cli=act.cliente
+                act = actividad.objects.get(id=int(form.data['id']))
+                cli = act.cliente
                 print 'Se obtuvo el id del cliente nuevo a actualizar'
                 try:
                     med = medidor.objects.get(actividad=act, contrato=None)
-                    med.lectura=str(form.data['lecturaRev'])
+                    med.lectura = str(form.data['lecturaRev'])
                     print 'medidor revisado'
-                except: pass
+                except:
+                    pass
 
             if len(form.data['cedula']) == 13:
                 t = 'J'
@@ -384,38 +389,38 @@ def guardarIngreso(request):
             else:
                 t = 'N'
                 print u'Es persona natural'
-            cli.ci_ruc=form.data['cedula']
-            cli.nombre=form.data['nombreDeCliente']
-            cli.tipo=t
-            cli.telefono=form.data['telefono']
+            cli.ci_ruc = form.data['cedula']
+            cli.nombre = form.data['nombreDeCliente']
+            cli.tipo = t
+            cli.telefono = form.data['telefono']
             print 'se generó el cliente nuevo'
 
             try:
                 if ts == '1':
 
                     cliref = request.session['clienteRef']
-                    cliref.ubicacionGeografica.calle.descripcion1=form.data['direccionRef']
+                    cliref.ubicacionGeografica.calle.descripcion1 = form.data['direccionRef']
                     medref = request.session['medidorRef']
                     print 'es s/N (1)'
                 else:
                     cli = request.session['cliente']
-                    cli.tipo=t
-                    cli.telefono=form.data['telefono']
+                    cli.tipo = t
+                    cli.telefono = form.data['telefono']
                     med = request.session['medidor']
-                    med.instance.lectura=str(form.data['lecturaRev'])
+                    med.instance.lectura = str(form.data['lecturaRev'])
                     print 'NO es s/N'
 
             except:
                 try:
                 #en caso de ser actualizacion
-                    cli=cliente.objects.get(
+                    cli = cliente.objects.get(
                         id=cli.id,
                         cuenta=(form.data['codigoDeCliente']).strip(),
                         ci_ruc=(form.data['cedula']).strip()
                     )
-                    cli.nombre=form.data['nombreDeCliente']
-                    cli.tipo=t
-                    cli.telefono=form.data['telefono']
+                    cli.nombre = form.data['nombreDeCliente']
+                    cli.tipo = t
+                    cli.telefono = form.data['telefono']
                     print 'cliente a actualizar'
                     cli.save(force_update=True)
 
@@ -428,8 +433,8 @@ def guardarIngreso(request):
                         )
                         print enlace
 
-                    else :
-                        if med.id>0:
+                    else:
+                        if med.id > 0:
                             med.delete()
 
                         ref = detalleClienteReferencia.objects.get(cliente=cli).referencia
@@ -439,7 +444,7 @@ def guardarIngreso(request):
 
                         #actualizar
                     id = form.save(request.session['contrato'], cliente=cli)
-                    dajax.script("newUrl('/ingreso/"+str(id)+"');")
+                    dajax.script("newUrl('/ingreso/" + str(id) + "');")
                     return dajax.calls
 
                 except:
@@ -493,7 +498,7 @@ def guardarIngreso(request):
             print 'Correcto...'
 
             id = form.save(request.session['contrato'], cliente=cli)
-            dajax.script("newUrl('/ingreso/"+str(id)+"');")
+            dajax.script("newUrl('/ingreso/" + str(id) + "');")
         else:
             print dict(form.errors)
             dajax = mostraError(dajax, form.errors, '#err')
@@ -502,11 +507,12 @@ def guardarIngreso(request):
             del request.session['medidorRef']
             del request.session['cliente']
             del request.session['medidor']
-        except: pass
+        except:
+            pass
         return dajax.calls
     else:
         return None
-    
+
 
 @ajax()
 def eliminarIngreso(request, pk):
@@ -517,30 +523,33 @@ def eliminarIngreso(request, pk):
         form = ingresoForm(data=QueryDict(request.POST.urlencode(), mutable=True))
         if form.is_valid():
             act = actividad.objects.get(id=int(pk))
-            if int(form.data['id'])==act.id:
-                #borrando detalles de existir
-                    #de medidores...
+            if int(form.data['id']) == act.id:
+            #borrando detalles de existir
+            #de medidores...
                 for m in list(medidor.objects.filter(actividad__id=act.id)):
                     try:
-                        m.actividad=None
+                        m.actividad = None
                         m.save(force_update=True)
-                    except: pass
+                    except:
+                        pass
 
 
                     #de sellos
                 for s in list(sello.objects.filter(utilizado__id=act.id)):
                     try:
-                        s.utilizado=None
-                        s.ubicacion='N/A'
+                        s.utilizado = None
+                        s.ubicacion = 'N/A'
                         s.save(force_update=True)
-                    except: pass
+                    except:
+                        pass
 
 
                     #de rubros
                 for r in list(detalleDeActividad.objects.filter(actividad__id=act.id)):
                     try:
                         r.delete()
-                    except: pass
+                    except:
+                        pass
 
 
                     #de materiales
@@ -559,17 +568,20 @@ def eliminarIngreso(request, pk):
                 dajax.script("newUrl('/listadeingresos');")
                 return dajax.calls
 
-        dajax = mostraError(dajax, {'Error': 'Datos inconsistentes para proceder a eliminacion de actividad...'}, '#err')
+        dajax = mostraError(dajax, {'Error': 'Datos inconsistentes para proceder a eliminacion de actividad...'},
+                            '#err')
         return dajax.calls
-    else: return None
-    
+    else:
+        return None
+
+
 def fotos(request, pk):
     if request.method == 'POST':
         form = FotoForm(request.POST, request.FILES)
         if form.is_valid():
             try:
-                act=actividad.objects.get(id=int(pk))
-                newdoc = foto(foto = request.FILES['foto'], actividad=act)
+                act = actividad.objects.get(id=int(pk))
+                newdoc = foto(foto=request.FILES['foto'], actividad=act)
                 newdoc.save()
             except:
                 pass
@@ -591,14 +603,15 @@ def fotos(request, pk):
             'act': str(pk)
         },
         context_instance=RequestContext(request)
-    )    
+    )
+
 
 def borrarFoto(request, pk):
     try:
-        f=foto.objects.get(id=int(pk))
-        act=str(f.actividad.id)
+        f = foto.objects.get(id=int(pk))
+        act = str(f.actividad.id)
     except:
-        act=str(pk)
+        act = str(pk)
         return HttpResponseRedirect('/fotos/%s/' % str(act))
     if request.method == 'POST':
         f.delete()
@@ -607,18 +620,35 @@ def borrarFoto(request, pk):
         return HttpResponseRedirect('/fotos/%s/' % act)
 
 
-
 #funciones para ingreso en sico...#####################################################################################
 
-def ingresar(act, estado):
+def ingresar(sesion, act, estado, contrato):
     dajax = Dajax()
 
+    scripting = None
     if act.tipoDeSolicitud.id == 1:
-        pass
+        scripting = ingresarServicioNuevo(sesion, contrato)
     elif act.tipoDeSolicitud.id == 13:
-        pass
+        scripting = ingresarCambioDeMedidor(sesion, contrato)
     elif act.tipoDeSolicitud.id == 11:
-        pass
+        scripting = ingresarCambioDeMaterial(sesion, contrato)
+    if scripting is not None:
+        scripting = scripting.elegirPunto(int(estado))
+        if scripting['estado'] > 0:
+            if scripting['estado'] == 13:
+                dajax.script("$('#cargandoForm').addClass('hidden');")
+                dajax.script("newUrl('/ingreso/" + str(act.id) + "');")
+            dajax.assign('id_numeroDeSolicitud', 'value', scripting['solicitud'])
+            dajax.script("$('#lblEspera').html('" + str(scripting['mensaje']) + "');")
+            dajax.script(
+                "continuarIngresoSico('/continuaringreso/" + str(act.id) + "/" + str(scripting['estado']) + "');"
+            )
+        else:
+            dajax.script("$('#cargandoForm').addClass('hidden');")
+            dajax = mostraError(dajax, {'Error': scripting['mensaje']}, '#err')
+    else:
+        dajax.script("$('#cargandoForm').addClass('hidden');")
+        dajax = mostraError(dajax, {'Error': 'No se pudo completar la accion...'}, '#err')
 
     return dajax.calls
 
@@ -628,7 +658,7 @@ def continuar(request, pk, estado):
         print request.POST
         #dajax.script("$('#cargandoForm').addClass('hidden');")
         mydict = QueryDict(request.POST.urlencode(), mutable=True)
-        if len(mydict)>1:
+        if len(mydict) > 3:
             form = ingresoForm(data=mydict)
             if form.is_valid():
                 guardarIngreso(request)
@@ -640,14 +670,14 @@ def continuar(request, pk, estado):
                 return dajax.calls
 
         #dajax.script("continuarIngresoSico('/continuaringreso/"+str(pk)+"/"+str(estado)+"');")
-        act=actividad.objects.get(id = int(pk))
-        return ingresar(act, estado)
+        act = actividad.objects.get(id=int(pk))
+        return ingresar(request.user.sesion_sico, act, estado, request.session['contrato'])
 
     else:
         return None
 
 #######################################################################################################################
-    
+
 
 
 def formatFechas(f):
