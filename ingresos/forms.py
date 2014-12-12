@@ -312,6 +312,11 @@ class ingresoForm(forms.Form):
         widget=forms.TextInput(attrs={'readonly': True, 'placeholder': ''}),
         required=False
     )
+    direccionRef = forms.CharField(
+        max_length=50, label='Dirección',
+        widget=forms.TextInput(attrs={'placeholder': 'Digite una dirección de referencia'}),
+        required=False
+    )
 
 
     #Instalador
@@ -623,6 +628,7 @@ class ingresoForm(forms.Form):
                 cliente=ref.referencia,
                 #medidor=ref.medidorDeReferencia
             ))[0].medidor
+            self.fields['direccionRef'].initial = ref.referencia.ubicacionGeografica.calle.descripcion1
             self.fields['anterior'].initial = ref.medidorDeReferencia
             self.fields['serieAnteriror'].initial = m.serie
             self.fields['marcaAnteriror'].initial = m.marca
@@ -773,6 +779,12 @@ class ingresoForm(forms.Form):
                 if not str(self.data['cuentaAnteriror']):
                     self._errors["Referencia"] = self.error_class(
                         [u"Ingrese la referencia de instalación del Servicio nuevo "])
+                if len(str(self.data['nombreDeCliente']).split(' '))<2:
+                    self._errors["Nombre del Cliente"] = self.error_class(
+                        [u"Ingrese el nombre de cliente completo"])
+                if len(str(self.data['direccionRef']).strip())<6:
+                    self._errors["Direccion"] = self.error_class(
+                        [u"Ingrese una direccion para referenciar la instalacion"])
 
         return cleaned_data
 

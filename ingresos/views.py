@@ -1,4 +1,5 @@
 # coding=utf-8
+
 import datetime
 
 from dajax.core import Dajax
@@ -391,7 +392,9 @@ def guardarIngreso(request):
 
             try:
                 if ts == '1':
+
                     cliref = request.session['clienteRef']
+                    cliref.ubicacionGeografica.calle.descripcion1=form.data['direccionRef']
                     medref = request.session['medidorRef']
                     print 'es s/N (1)'
                 else:
@@ -410,6 +413,7 @@ def guardarIngreso(request):
                         cuenta=(form.data['codigoDeCliente']).strip(),
                         ci_ruc=(form.data['cedula']).strip()
                     )
+                    cli.nombre=form.data['nombreDeCliente']
                     cli.tipo=t
                     cli.telefono=form.data['telefono']
                     print 'cliente a actualizar'
@@ -424,8 +428,14 @@ def guardarIngreso(request):
                         )
                         print enlace
 
-                    elif med.id>0:
-                        med.delete()
+                    else :
+                        if med.id>0:
+                            med.delete()
+
+                        ref = detalleClienteReferencia.objects.get(cliente=cli).referencia
+                        call = ref.ubicacionGeografica.calle
+                        call.descripcion1 = form.data['direccionRef']
+                        call.save(force_update=True)
 
                         #actualizar
                     id = form.save(request.session['contrato'], cliente=cli)

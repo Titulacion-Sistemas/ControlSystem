@@ -193,12 +193,13 @@ class cliente(models.Model):
                     print e.message
                     tipCall=tipoCalle(
                         id=self.ubicacionGeografica.calle.descripcion1[:2],
-                        descripcion=
-                        self.ubicacionGeografica.calle.descripcion1[3:len(self.ubicacionGeografica.calle.descripcion1)]
+                        descripcion=self.ubicacionGeografica.calle.descripcion1[3:]
                     )
+                    self.ubicacionGeografica.calle.descripcion1=self.ubicacionGeografica.calle.descripcion1[3:]
                     print 'BD : Guardando Tipo de Calle (Calle)...'
                     tipCall.save()
                     self.ubicacionGeografica.calle.descripcion1=tipCall.descripcion
+
             try:
                 call=calle.objects.get(
                     tipoDeCalle=tipCall,
@@ -275,17 +276,17 @@ class cliente(models.Model):
             ubi.save()
 
             self.ubicacionGeografica=ubi
+            print self.geocodigo
 
-        print self.geocodigo
         try:
-            self.id = cliente.objects.get(cuenta=str(self.cuenta)).id
-            print 'Actualizar por cuenta'
+            self.id = cliente.objects.get(id=self.id).id
+            print 'Actualizar por ID'
             super(cliente, self).save(force_update=True, *args, **kwargs)
         except Exception as e:
             print e.message
             try:
-                self.id = cliente.objects.get(id=self.id).id
-                print 'Actualizar por id'
+                self.id = cliente.objects.get(cuenta=str(self.cuenta)).id
+                print 'Actualizar por CTA'
                 super(cliente, self).save(force_update=True, *args, **kwargs)
             except Exception as e:
                 print e.message

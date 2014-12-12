@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.contrib.humanize.tests import now
 from ControlSystem.pComm.conexion import manejadorDeConexion
 from ingresos.models import estadoDeSolicitud, materialDeActividad
@@ -6,17 +7,22 @@ from inventario.models import sello, medidor
 __author__ = 'Jhonsson'
 
 
-
 class ingresarCambioDeMedidor():
-    def __init__(self, conexion):
+    def __init__(self, conexion, contrato):
         self.conn = manejadorDeConexion()
         self.conn.setActiveSession(conexion)
         self.sesion = self.conn.activeSession
+        self.contrato = contrato
+        self.ERROR = {
+            'estado': None,
+            'mensaje': 'Error no se pudo completar la acción requerida......',
+            'solicitud': None
+        }
 
     def elegirPunto(self, estado):
         pass
 
-    def pasoUno(self, actividad):
+    def pasoUno(self, actividad, contrato):
         sesion = self.sesion
         opcionSico = False
         sesion.autECLPS.SetCursorPos(9, 12)
@@ -25,12 +31,13 @@ class ingresarCambioDeMedidor():
                 or (str(sesion.autECLPS.GetText(i, 52, 3)).strip() == '42'
                     and str(sesion.autECLPS.GetText(i, 63, 2)).strip() == '50'):
                 self.cambiosDeMedidor = i
+                sesion.autECLPS.SendKeys('5', i, 12)
                 opcionSico = True
                 break
             else:
                 sesion.autECLPS.SendKeys('[down]')
         if opcionSico:
-            sesion.autECLPS.SendKeys('5')
+
             sesion.autECLPS.SendKeys('[enter]')
 
             opcionSico = False
@@ -49,12 +56,13 @@ class ingresarCambioDeMedidor():
                 sesion.autECLPS.SendKeys('[enter]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
-######################################################################################0:16
-                sesion.autECLPS.SendKeys('[up]')
-                sesion.autECLPS.SendKeys('[tab]')
                 sesion.autECLPS.SendKeys('[pf6]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
 
+                sesion.autECLPS.SendKeys('[eraseeof]', 11, 37)
                 sesion.autECLPS.SendKeys(str(actividad.tipoDeSolicitud_id), 11, 37)
+                sesion.autECLPS.SendKeys('[eraseeof]', 13, 37)
                 sesion.autECLPS.SendKeys(str(actividad.motivoDeSolicitud_id), 13, 37)
                 sesion.autECLPS.SendKeys('[enter]')
                 sesion.autECLOIA.WaitForAppAvailable()
@@ -64,29 +72,50 @@ class ingresarCambioDeMedidor():
                 sesion.autECLPS.SendKeys('[enter]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
+
                 sesion.autECLPS.SendKeys('[enter]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
 
-                sesion.autECLPS.SetCursorPos(6, 28)
-                if str(sesion.autECLPS.GetText(6, 28, 2)) == '  ':
+                ts = str(actividad.tipoDeServicio_id)
+
+                sesion.autECLPS.SendKeys(ts[:1], 4, 25)
+                sesion.autECLPS.SendKeys(ts[1:2], 4, 27)
+                sesion.autECLPS.SendKeys(ts[2:3], 4, 29)
+                sesion.autECLPS.SendKeys('[eraseeof]', 6, 27)
+                sesion.autECLPS.SendKeys(str(actividad.ubicacionDelMedidor_id), 6, 27)
+                if str(sesion.autECLPS.GetText(7, 27, 2)) == '  ':
                     sesion.autECLPS.SendKeys('[eraseeof]')
-                    sesion.autECLPS.SendKeys(str(actividad.ubicacionDelMedidor_id))
-                sesion.autECLPS.SendKeys('[down]')
-                if str(sesion.autECLPS.GetText(7, 28, 2)) == '  ':
+                    sesion.autECLPS.SendKeys(str(actividad.usoEspecificoDelInmueble.usoGeneral_id), 7, 27)
                     sesion.autECLPS.SendKeys('[eraseeof]')
-                    sesion.autECLPS.SendKeys(str(actividad.usoEspecificoDelInmueble.usoGeneral_id))
-                    sesion.autECLPS.SetCursorPos(7, 32)
+                    sesion.autECLPS.SendKeys(str(actividad.usoEspecificoDelInmueble_id), 7, 30)
+                if str(sesion.autECLPS.GetText(8, 30, 2)) == '  ':
                     sesion.autECLPS.SendKeys('[eraseeof]')
-                    sesion.autECLPS.SendKeys(str(actividad.usoEspecificoDelInmueble_id))
-                sesion.autECLPS.SendKeys('[down]')
-                if str(sesion.autECLPS.GetText(8, 28, 2)) == '  ':
-                    sesion.autECLPS.SendKeys('[eraseeof]')
-                    sesion.autECLPS.SendKeys('1', 8, 28)
+                    sesion.autECLPS.SendKeys('1', 8, 30)
+                sesion.autECLPS.SendKeys('[enter]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
+
+                medidorInst = list(medidor.objects.filter(utilizado=actividad, contrato=self.contrato))
+                if medidorInst:
+                    modelo = str(medidorInst[0].modelo_id).split('-')
+                else:
+                    modelo = ['NOR', '20']
+
+                sesion.autECLPS.SendKeys('[eraseeof]', 10, 28)
+                sesion.autECLPS.SendKeys(modelo[0], 10, 28)
+                sesion.autECLPS.SendKeys('[eraseeof]', 10, 32)
+                sesion.autECLPS.SendKeys(modelo[1], 10, 32)
+                sesion.autECLPS.SendKeys('[eraseeof]', 12, 28)
+                sesion.autECLPS.SendKeys(str(actividad.formaDeConexion_id), 10, 28)
                 sesion.autECLPS.SendKeys('[enter]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
                 sesion.autECLPS.SendKeys('[pf12]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
+
+                sesion.autECLPS.SendKeys('[pf3]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
 
@@ -96,12 +125,11 @@ class ingresarCambioDeMedidor():
                         or (str(sesion.autECLPS.GetText(i, 58, 8)).strip() == 'PCONGENT'
                             and str(sesion.autECLPS.GetText(i, 62, 2)).strip() == '4'):
                         self.solicitudesTodas = i
+                        sesion.autECLPS.SendKeys('1', i, 3)
                         opcionSico = True
                         break
-                    else:
-                        sesion.autECLPS.SendKeys('[down]')
                 if opcionSico:
-                    sesion.autECLPS.SendKeys('1')
+
                     sesion.autECLPS.SendKeys('[enter]')
                     sesion.autECLOIA.WaitForAppAvailable()
                     sesion.autECLOIA.WaitForInputReady()
@@ -134,7 +162,7 @@ class ingresarCambioDeMedidor():
                             break
                         else:
                             sesion.autECLPS.SendKeys('[down]')
-                    if actividad.numeroDeSolicitud>0:
+                    if actividad.numeroDeSolicitud > 0:
                         actividad.save(force_update=True)
                         sesion.autECLPS.SendKeys('[pf12]')
                         sesion.autECLOIA.WaitForAppAvailable()
@@ -149,16 +177,28 @@ class ingresarCambioDeMedidor():
                         }
 
                     else:
+                        titulo = sesion.autECLPS.GetText(9, 16, 20)
+                        while titulo != 'CONSULTA DE CLIENTES':
+                            sesion.autECLPS.SendKeys('[pf12]')
+                            sesion.autECLOIA.WaitForAppAvailable()
+                            sesion.autECLOIA.WaitForInputReady()
+                            titulo = sesion.autECLPS.GetText(9, 16, 20)
                         return self.ERROR
                 else:
+                    titulo = sesion.autECLPS.GetText(9, 16, 20)
+                    while titulo != 'CONSULTA DE CLIENTES':
+                        sesion.autECLPS.SendKeys('[pf12]')
+                        sesion.autECLOIA.WaitForAppAvailable()
+                        sesion.autECLOIA.WaitForInputReady()
+                        titulo = sesion.autECLPS.GetText(9, 16, 20)
+                    return self.ERROR
+            else:
+                titulo = sesion.autECLPS.GetText(9, 16, 20)
+                while titulo != 'CONSULTA DE CLIENTES':
                     sesion.autECLPS.SendKeys('[pf12]')
                     sesion.autECLOIA.WaitForAppAvailable()
                     sesion.autECLOIA.WaitForInputReady()
-                    return self.ERROR
-            else:
-                sesion.autECLPS.SendKeys('[pf12]')
-                sesion.autECLOIA.WaitForAppAvailable()
-                sesion.autECLOIA.WaitForInputReady()
+                    titulo = sesion.autECLPS.GetText(9, 16, 20)
                 return self.ERROR
         else:
             return self.ERROR
@@ -172,12 +212,12 @@ class ingresarCambioDeMedidor():
                 or (str(sesion.autECLPS.GetText(i, 52, 3)).strip() == '42'
                     and str(sesion.autECLPS.GetText(i, 63, 2)).strip() == '50'):
                 self.cambiosDeMedidor = i
+                sesion.autECLPS.SendKeys('5', i, 12)
                 opcionSico = True
                 break
             else:
                 sesion.autECLPS.SendKeys('[down]')
         if opcionSico:
-            sesion.autECLPS.SendKeys('5')
             sesion.autECLPS.SendKeys('[enter]')
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
@@ -188,13 +228,13 @@ class ingresarCambioDeMedidor():
                     or (str(sesion.autECLPS.GetText(i, 58, 8)).strip() == 'PCLCUIMF'
                         and str(sesion.autECLPS.GetText(i, 62, 2)) == '20'):
                     self.formImpresion = i
+                    sesion.autECLPS.SendKeys('1', i, 3)
                     opcionSico = True
                     break
                 else:
                     sesion.autECLPS.SendKeys('[down]')
             if opcionSico:
 
-                sesion.autECLPS.SendKeys('1')
                 sesion.autECLPS.SendKeys('[enter]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
@@ -209,12 +249,15 @@ class ingresarCambioDeMedidor():
                 sesion.autECLPS.SendKeys('[enter]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
+                actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=6)
+                actividad.save(force_update=True)
                 sesion.autECLPS.SendKeys('[pf12]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
                 sesion.autECLPS.SendKeys('[pf12]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
+
                 return {
                     'estado': actividad.estadoDeSolicitud_id,
                     'mensaje': 'Solicitud enviada para impresion al servidor',
@@ -228,7 +271,7 @@ class ingresarCambioDeMedidor():
         else:
             return self.ERROR
 
-    def tercerPaso(self, actividad, opcion=None):
+    def tercerPaso(self, actividad):
         sesion = self.sesion
         opcionSico = False
         sesion.autECLPS.SetCursorPos(9, 12)
@@ -237,12 +280,13 @@ class ingresarCambioDeMedidor():
                 or (str(sesion.autECLPS.GetText(i, 52, 3)).strip() == '42'
                     and str(sesion.autECLPS.GetText(i, 63, 2)).strip() == '50'):
                 self.cambiosDeMedidor = i
+                sesion.autECLPS.SendKeys('5', i, 12)
                 opcionSico = True
                 break
             else:
                 sesion.autECLPS.SendKeys('[down]')
         if opcionSico:
-            sesion.autECLPS.SendKeys('5')
+
             sesion.autECLPS.SendKeys('[enter]')
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
@@ -253,13 +297,13 @@ class ingresarCambioDeMedidor():
                     or (str(sesion.autECLPS.GetText(i, 58, 8)).strip() == 'PDIINCL'
                         and str(sesion.autECLPS.GetText(i, 62, 2)) == '20'):
                     self.formImpresion = i
+                    sesion.autECLPS.SendKeys('1', i, 3)
                     opcionSico = True
                     break
                 else:
                     sesion.autECLPS.SendKeys('[down]')
             if opcionSico:
 
-                sesion.autECLPS.SendKeys('1')
                 sesion.autECLPS.SendKeys('[enter]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
@@ -273,13 +317,12 @@ class ingresarCambioDeMedidor():
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
 
-                inspector = sello.objects.filter(utilizado=actividad)[
-                    0].detalleMaterialContrato.contrato.codigoInstalador
+                inspector = self.contrato.codigoInstalador
                 sesion.autECLPS.SendKeys('[down]')
                 sesion.autECLPS.SendKeys('[eraseeof]')
                 sesion.autECLPS.SendKeys(str(inspector), 5, 30)
                 sesion.autECLPS.SendKeys('[down]')
-                med = list(medidor.objects.filter(actividad__id=actividad.id))[0]
+                med = list(medidor.objects.filter(actividad__id=actividad.id, contrato__contrato=self.contrato))[0]
                 if int(str(sesion.autECLPS.GetText(6, 30, 5)).strip()) == 0:
                     sesion.autECLPS.SendKeys('[eraseeof]')
                     if int(med.voltaje) == 120:
@@ -334,18 +377,19 @@ class ingresarCambioDeMedidor():
 
                 sesion.autECLPS.SendKeys('[eraseeof]', 6, 26)
                 sesion.autECLPS.SendKeys('[eraseeof]', 6, 30)
-                modelo = med.modelo_id
-                sesion.autECLPS.SendKeys(str(modelo).split('-')[0], 6, 26)
-                sesion.autECLPS.SendKeys(str(modelo).split('-')[1], 6, 30)
-                sesion.autECLPS.SendKeys('[down]')
+                modelo = str(med.modelo_id).split('-')
+                sesion.autECLPS.SendKeys(modelo[0], 6, 26)
+                sesion.autECLPS.SendKeys(modelo[1], 6, 30)
                 sesion.autECLPS.SendKeys('[eraseeof]', 7, 26)
                 if int(med.voltaje) == 120:
                     sesion.autECLPS.SendKeys('3', 7, 26)
                 else:
                     sesion.autECLPS.SendKeys('4', 7, 26)
-                sesion.autECLPS.SendKeys('[down]')
-                sesion.autECLPS.SendKeys('[eraseeof]', 8, 26)
-                sesion.autECLPS.SendKeys(str(actividad.demanda_id), 8, 26)
+                sesion.autECLPS.SendKeys('[pf4]', 8, 26)
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
+
+                sesion.autECLPS.SendKeys('1')
                 sesion.autECLPS.SendKeys('[enter]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
@@ -353,15 +397,20 @@ class ingresarCambioDeMedidor():
                 sesion.autECLPS.SendKeys('[enter]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
-                sesion.autECLPS.SendKeys('[pf12]')
-                sesion.autECLOIA.WaitForAppAvailable()
-                sesion.autECLOIA.WaitForInputReady()
 
-                sesion.autECLPS.SendKeys('[pf12]')
-                sesion.autECLOIA.WaitForAppAvailable()
-                sesion.autECLOIA.WaitForInputReady()
                 actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=7)
                 actividad.save(force_update=True)
+
+                sesion.autECLPS.SendKeys('[enter]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
+
+                titulo = sesion.autECLPS.GetText(9, 16, 20)
+                while titulo != 'CONSULTA DE CLIENTES':
+                    sesion.autECLPS.SendKeys('[pf12]')
+                    sesion.autECLOIA.WaitForAppAvailable()
+                    sesion.autECLOIA.WaitForInputReady()
+                    titulo = sesion.autECLPS.GetText(9, 16, 20)
 
                 return {
                     'estado': actividad.estadoDeSolicitud_id,
@@ -370,11 +419,20 @@ class ingresarCambioDeMedidor():
                 }
 
             else:
+                titulo = sesion.autECLPS.GetText(9, 16, 20)
+                while titulo != 'CONSULTA DE CLIENTES':
+                    sesion.autECLPS.SendKeys('[pf12]')
+                    sesion.autECLOIA.WaitForAppAvailable()
+                    sesion.autECLOIA.WaitForInputReady()
+                    titulo = sesion.autECLPS.GetText(9, 16, 20)
+                return self.ERROR
+        else:
+            titulo = sesion.autECLPS.GetText(9, 16, 20)
+            while titulo != 'CONSULTA DE CLIENTES':
                 sesion.autECLPS.SendKeys('[pf12]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
-                return self.ERROR
-        else:
+                titulo = sesion.autECLPS.GetText(9, 16, 20)
             return self.ERROR
 
     def pasoCuatro(self, actividad):
@@ -399,16 +457,16 @@ class ingresarCambioDeMedidor():
             sesion.autECLPS.SetCursorPos(9, 12)
             for i in range(9, 20):
                 if sesion.autECLPS.GetText(i, 16, 21) == 'ASIGNAR MATERIAL TIPO' \
-                    or (str(sesion.autECLPS.GetText(i, 58, 8)).strip() == 'PDIINCL'
-                        and str(sesion.autECLPS.GetText(i, 62, 2)) == '30'):
+                    or (str(sesion.autECLPS.GetText(i, 58, 8)).strip() == 'PSESOLI'
+                        and str(sesion.autECLPS.GetText(i, 62, 2)) == '40'):
                     self.formImpresion = i
+                    sesion.autECLPS.SendKeys('1', i, 3)
                     opcionSico = True
                     break
                 else:
                     sesion.autECLPS.SendKeys('[down]')
             if opcionSico:
 
-                sesion.autECLPS.SendKeys('1')
                 sesion.autECLPS.SendKeys('[enter]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
@@ -468,12 +526,12 @@ class ingresarCambioDeMedidor():
                 actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=8)
                 actividad.save(force_update=True)
 
-                sesion.autECLPS.SendKeys('[pf12]')
-                sesion.autECLOIA.WaitForAppAvailable()
-                sesion.autECLOIA.WaitForInputReady()
-                sesion.autECLPS.SendKeys('[pf12]')
-                sesion.autECLOIA.WaitForAppAvailable()
-                sesion.autECLOIA.WaitForInputReady()
+                titulo = sesion.autECLPS.GetText(9, 16, 20)
+                while titulo != 'CONSULTA DE CLIENTES':
+                    sesion.autECLPS.SendKeys('[pf12]')
+                    sesion.autECLOIA.WaitForAppAvailable()
+                    sesion.autECLOIA.WaitForInputReady()
+                    titulo = sesion.autECLPS.GetText(9, 16, 20)
 
                 return {
                     'estado': actividad.estadoDeSolicitud.id,
@@ -482,9 +540,12 @@ class ingresarCambioDeMedidor():
                 }
 
             else:
-                sesion.autECLPS.SendKeys('[pf12]')
-                sesion.autECLOIA.WaitForAppAvailable()
-                sesion.autECLOIA.WaitForInputReady()
+                titulo = sesion.autECLPS.GetText(9, 16, 20)
+                while titulo != 'CONSULTA DE CLIENTES':
+                    sesion.autECLPS.SendKeys('[pf12]')
+                    sesion.autECLOIA.WaitForAppAvailable()
+                    sesion.autECLOIA.WaitForInputReady()
+                    titulo = sesion.autECLPS.GetText(9, 16, 20)
                 return self.ERROR
         else:
             return self.ERROR
@@ -498,12 +559,13 @@ class ingresarCambioDeMedidor():
                 or (str(sesion.autECLPS.GetText(i, 52, 3)).strip() == '36'
                     and str(sesion.autECLPS.GetText(i, 63, 2)).strip() == '40'):
                 self.cambiosDeMedidor = i
+                sesion.autECLPS.SendKeys('5', i, 12)
                 opcionSico = True
                 break
             else:
                 sesion.autECLPS.SendKeys('[down]')
         if opcionSico:
-            sesion.autECLPS.SendKeys('5')
+
             sesion.autECLPS.SendKeys('[enter]')
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
@@ -531,7 +593,9 @@ class ingresarCambioDeMedidor():
 
             sesion.autECLPS.SendKeys('[eraseeof]')
             sesion.autECLPS.SendKeys(str(actividad.numeroDeSolicitud))
+            sesion.autECLPS.SendKeys('[eraseeof]', 8, 32)
             sesion.autECLPS.SendKeys('1', 8, 32)
+            sesion.autECLPS.SendKeys('[eraseeof]', 8, 35)
             sesion.autECLPS.SendKeys('2', 8, 35)
             sesion.autECLPS.SendKeys('[enter]')
             sesion.autECLOIA.WaitForAppAvailable()
@@ -539,15 +603,12 @@ class ingresarCambioDeMedidor():
             actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=10)
             actividad.save(force_update=True)
 
-            sesion.autECLPS.SendKeys('[pf12]')
-            sesion.autECLOIA.WaitForAppAvailable()
-            sesion.autECLOIA.WaitForInputReady()
-            sesion.autECLPS.SendKeys('[pf12]')
-            sesion.autECLOIA.WaitForAppAvailable()
-            sesion.autECLOIA.WaitForInputReady()
-            sesion.autECLPS.SendKeys('[pf12]')
-            sesion.autECLOIA.WaitForAppAvailable()
-            sesion.autECLOIA.WaitForInputReady()
+            titulo = sesion.autECLPS.GetText(9, 16, 20)
+            while titulo != 'CONSULTA DE CLIENTES':
+                sesion.autECLPS.SendKeys('[pf12]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
+                titulo = sesion.autECLPS.GetText(9, 16, 20)
 
             return {
                 'estado': actividad.estadoDeSolicitud_id,
@@ -624,23 +685,20 @@ class ingresarCambioDeMedidor():
             sesion.autECLPS.SendKeys('[eraseeof]')
             sesion.autECLPS.SendKeys('%02d%02d%04d' % (now.day, now.month, now.year))
             sesion.autECLPS.SendKeys(str(actividad.horaDeActividad)[:5], 7, 42)
-            inspector = sello.objects.filter(utilizado=actividad)[0].detalleMaterialContrato.contrato.codigoInstalador
-            sesion.autECLPS.SendKeys(str(inspector)[:5], 7, 42)
+            inspector = self.contrato.codigoInstalador
+            sesion.autECLPS.SendKeys(str(inspector), 7, 42)
             sesion.autECLPS.SendKeys('[enter]')
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
             actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=451)
             actividad.save(force_update=True)
 
-            sesion.autECLPS.SendKeys('[pf12]')
-            sesion.autECLOIA.WaitForAppAvailable()
-            sesion.autECLOIA.WaitForInputReady()
-            sesion.autECLPS.SendKeys('[pf12]')
-            sesion.autECLOIA.WaitForAppAvailable()
-            sesion.autECLOIA.WaitForInputReady()
-            sesion.autECLPS.SendKeys('[pf12]')
-            sesion.autECLOIA.WaitForAppAvailable()
-            sesion.autECLOIA.WaitForInputReady()
+            titulo = sesion.autECLPS.GetText(9, 16, 20)
+            while titulo != 'CONSULTA DE CLIENTES':
+                sesion.autECLPS.SendKeys('[pf12]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
+                titulo = sesion.autECLPS.GetText(9, 16, 20)
 
             return {
                 'estado': actividad.estadoDeSolicitud_id,
@@ -738,8 +796,8 @@ class ingresarCambioDeMedidor():
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
 
-            sel=''
-            baja=True
+            sel = ''
+            baja = True
             for s in list(sello.objects.filter(utilizado=actividad)):
                 sesion.autECLPS.SendKeys('[eraseeof]', 11, 26)
                 sesion.autECLPS.SendKeys(s.numero, 11, 26)
@@ -747,8 +805,8 @@ class ingresarCambioDeMedidor():
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
                 if str(s.numero).strip() != str(sesion.autECLPS.GetText(12, 26, 10)).strip():
-                    sel=str(s.numero)
-                    baja=False
+                    sel = str(s.numero)
+                    baja = False
                     break
 
             if baja:
@@ -778,19 +836,12 @@ class ingresarCambioDeMedidor():
                     'solicitud': None
                 }
 
-            sesion.autECLPS.SendKeys('[pf12]')
-            sesion.autECLOIA.WaitForAppAvailable()
-            sesion.autECLOIA.WaitForInputReady()
-
-            sesion.autECLPS.SendKeys('[pf12]')
-            sesion.autECLOIA.WaitForAppAvailable()
-            sesion.autECLOIA.WaitForInputReady()
-            sesion.autECLPS.SendKeys('[pf12]')
-            sesion.autECLOIA.WaitForAppAvailable()
-            sesion.autECLOIA.WaitForInputReady()
-            sesion.autECLPS.SendKeys('[pf12]')
-            sesion.autECLOIA.WaitForAppAvailable()
-            sesion.autECLOIA.WaitForInputReady()
+            titulo = sesion.autECLPS.GetText(9, 16, 20)
+            while titulo != 'CONSULTA DE CLIENTES':
+                sesion.autECLPS.SendKeys('[pf12]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
+                titulo = sesion.autECLPS.GetText(9, 16, 20)
 
             return retorno
 
@@ -798,6 +849,89 @@ class ingresarCambioDeMedidor():
             return self.ERROR
 
     def pasoDiez(self, actividad):
+        if self.pasoAcceso():
+            sesion = self.sesion
+            sesion.autECLPS.SendKeys('5')
+            sesion.autECLPS.SendKeys('[enter]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+
+            sesion.autECLPS.SendKeys('[eraseeof]')
+            sesion.autECLPS.SendKeys(str(actividad.numeroDeSolicitud))
+            sesion.autECLPS.SendKeys('[enter]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+
+            sesion.autECLPS.SendKeys('4')    #454
+            sesion.autECLPS.SendKeys('[enter]')
+            sesion.autECLOIA.WaitForAppAvailable()
+            sesion.autECLOIA.WaitForInputReady()
+
+            i = 10
+            f = str(sesion.autECLPS.GetText(i, 56, 10))
+            returno = self.ERROR
+            while f.strip() != '0/00/0000' or f.strip() != '00/00/0000':
+                i += 1
+
+            if i < 20:
+                sesion.autECLPS.SendKeys('4', i, 4)
+                sesion.autECLPS.SendKeys('[enter]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
+                sesion.autECLPS.SendKeys('s')
+                med = list(medidor.objects
+                .filter(actividad__id=actividad.id)
+                .exclude(contrato__contrato=self.contrato)
+                )[0]
+                sesion.autECLPS.SendKeys('[eraseeof]', 11, 70)
+                sesion.autECLPS.SendKeys(str(med.lectura), 11, 70)
+                sesion.autECLPS.SendKeys('[enter]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
+
+                med=list(medidor.objects
+                .filter(actividad__id=actividad.id, contrato__contrato=self.contrato)
+                )[0]
+                sesion.autECLPS.SendKeys(str(med.tipo)[:1], 6, 9)
+                sesion.autECLPS.SendKeys(str(med.marca.id)[:3], 6, 13)
+                sesion.autECLPS.SendKeys(str(med.fabrica), 6, 18)
+                sesion.autECLPS.SendKeys('[enter]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
+
+                if str(med.fabrica).strip() == str(sesion.autECLPS.GetText(7, 18, 12)).strip():
+                    sesion.autECLPS.SendKeys('1')
+                    sesion.autECLPS.SendKeys('[enter]')
+                    sesion.autECLOIA.WaitForAppAvailable()
+                    sesion.autECLOIA.WaitForInputReady()
+
+                    sesion.autECLPS.SendKeys('s')
+                    sesion.autECLPS.SendKeys('[eraseeof]', 10, 62)
+                    sesion.autECLPS.SendKeys('00000', 10, 62)
+                    sesion.autECLPS.SendKeys('[pf2]')
+                    sesion.autECLOIA.WaitForAppAvailable()
+                    sesion.autECLOIA.WaitForInputReady()
+
+                    actividad.estadoDeSolicitud = estadoDeSolicitud.objects.get(id=454)
+                    actividad.save(force_update=True)
+
+                    returno={
+                        'estado': actividad.estadoDeSolicitud_id,
+                        'mensaje': actividad.estadoDeSolicitud.descripcion,
+                        'solicitud': actividad.numeroDeSolicitud
+                    }
+
+            titulo = sesion.autECLPS.GetText(9, 16, 20)
+            while titulo != 'CONSULTA DE CLIENTES':
+                sesion.autECLPS.SendKeys('[pf12]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
+                titulo = sesion.autECLPS.GetText(9, 16, 20)
+
+        else:
+            return self.ERROR
+
+    def pasoOnce(self, actividad):
         if self.pasoAcceso():
             sesion = self.sesion
             sesion.autECLPS.SendKeys('5')

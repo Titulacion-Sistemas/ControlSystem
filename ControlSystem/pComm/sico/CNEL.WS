@@ -24,7 +24,7 @@ Language=Latin-America(Spanish)
 IBMDefaultKeyboard=N
 DefaultKeyboard=E:\Datos\Documents\GitHub\ControlSystem\ControlSystem\pComm\sico\AS400.KMP
 [LastExitView]
-A=4 156 156 1056 592 3 12 24 400 0 IBM3270— 284
+A=3 104 104 976 492 3 12 14 400 0 IBM3270— 284
 [Window]
 ViewFlags=CE00
 RuleLinePos=0 0

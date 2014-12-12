@@ -9,10 +9,11 @@ from ControlSystem.pComm.conexion import manejadorDeConexion
 
 
 class ingresarCambioDeMaterial():
-    def __init__(self, conexion):
+    def __init__(self, conexion, contrato):
         self.conn = manejadorDeConexion()
         self.conn.setActiveSession(conexion)
         self.sesion = self.conn.activeSession
+        self.contrato=contrato
         self.ERROR = {
             'estado': None,
             'mensaje': 'Error no se pudo completar la acción requerida......',
@@ -58,6 +59,8 @@ class ingresarCambioDeMaterial():
                 sesion.autECLPS.SendKeys('[up]')
                 sesion.autECLPS.SendKeys('[tab]')
                 sesion.autECLPS.SendKeys('[pf6]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
 
                 sesion.autECLPS.SendKeys(str(actividad.tipoDeSolicitud_id), 11, 37)
                 sesion.autECLPS.SendKeys(str(actividad.motivoDeSolicitud_id), 13, 37)
@@ -91,7 +94,7 @@ class ingresarCambioDeMaterial():
                 sesion.autECLPS.SendKeys('[enter]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
-                sesion.autECLPS.SendKeys('[pf12]')
+                sesion.autECLPS.SendKeys('[pf3]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
 
@@ -403,8 +406,8 @@ class ingresarCambioDeMaterial():
             sesion.autECLPS.SetCursorPos(9, 12)
             for i in range(9, 20):
                 if sesion.autECLPS.GetText(i, 16, 21) == 'ASIGNAR MATERIAL TIPO' \
-                    or (str(sesion.autECLPS.GetText(i, 58, 8)).strip() == 'PDIINCL'
-                        and str(sesion.autECLPS.GetText(i, 62, 2)) == '30'):
+                    or (str(sesion.autECLPS.GetText(i, 58, 8)).strip() == 'PSESOLI'
+                        and str(sesion.autECLPS.GetText(i, 62, 2)) == '40'):
                     self.formImpresion = i
                     opcionSico = True
                     break
@@ -628,8 +631,8 @@ class ingresarCambioDeMaterial():
             sesion.autECLPS.SendKeys('[eraseeof]')
             sesion.autECLPS.SendKeys('%02d%02d%04d' % (now.day, now.month, now.year))
             sesion.autECLPS.SendKeys(str(actividad.horaDeActividad)[:5], 7, 42)
-            inspector = sello.objects.filter(utilizado=actividad)[0].detalleMaterialContrato.contrato.codigoInstalador
-            sesion.autECLPS.SendKeys(str(inspector)[:5], 7, 42)
+            inspector = self.contrato.codigoInstalador
+            sesion.autECLPS.SendKeys(str(inspector), 7, 42)
             sesion.autECLPS.SendKeys('[enter]')
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
