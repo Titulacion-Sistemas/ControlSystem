@@ -41,6 +41,15 @@ urlpatterns = patterns('',
     #Fotos
     url(r'^listadefotos$', ListaDeFotos.as_view(), name='listadefotos'),
 
+    #Mapas
+    url(r'^cuadrillas$', 'usuarios.views.cuadrillas', name='cuadrillas'),
+    url(r'^mascuadrillas$', 'usuarios.views.masCuadrillas', name='mascuadrillas'),
+
+    #Reportes
+    url(r'^reportes$', 'usuarios.views.reportes', name='reportes'),
+    url(r'^reportesmateriales$', 'usuarios.views.reporteMateriales', name='reportesmateriales'),
+    url(r'^reportesactividades$', 'usuarios.views.reporteActividades', name='reportesactividades'),
+
     #Ingresos
     url(r'^ingresarsico$', 'ingresos.views.ingresarSico', name='ingresarSico'),
     url(r'^breferencia', 'ingresos.views.buscarReferencia', name='buscarReferencia'),

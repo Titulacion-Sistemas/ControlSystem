@@ -30,6 +30,17 @@ User.add_to_class('usuario_sico', models.ManyToManyField(usuarioSico, blank=True
 
 
 
+#GEOLOCALIZACIÓN
+class posicion(models.Model):
+    fechaHora = models.DateTimeField(verbose_name='Fecha y Hora', auto_now=True, auto_now_add=True)
+    latitud = models.CharField(max_length=25, verbose_name='Latitud')
+    longitud = models.CharField(max_length=25, verbose_name='Longitud')
+    altura = models.CharField(max_length=25, verbose_name='Longitud', null=True, blank=True, default='')
+    usuario = models.ForeignKey(User)
+    cuadrilla = models.ForeignKey('ingresos.cuadrilla', blank=True, null=True, default=None)
+
+
+
 #FORMULARIOS
 class SignUpForm(ModelForm):
     class Meta:

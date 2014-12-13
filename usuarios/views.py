@@ -1,7 +1,10 @@
 # coding=utf-8
 from dajax.core import Dajax
+import datetime
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.humanize.tests import now
+from django.db.models import Sum
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.contrib.auth.models import User
@@ -10,7 +13,10 @@ from django.http.response import HttpResponseRedirect
 from django_ajax.decorators import ajax
 from ControlSystem.pComm.conexion import manejadorDeConexion
 from ControlSystem.settings import BASE_DIR
-from usuarios.models import SignUpForm, LogIn, usuarioSico
+from ingresos.models import cuadrilla, materialDeActividad
+from inventario.models import detalleMaterialContrato
+from usuarios.excel import ExcelResponse
+from usuarios.models import SignUpForm, LogIn, usuarioSico, posicion
 
 # Create your views here.
 
@@ -63,6 +69,7 @@ def salir(request):
     logout(request)
     return HttpResponseRedirect('/login')
 
+
 def cerrarSico(sesionAct):
     c = manejadorDeConexion()
     c.closeProgram(sesionAct)
@@ -113,7 +120,8 @@ def ingreso(request):
 
     form = LogIn()
 
-    return render_to_response('usuarios/login.html', {'f': form, 'errors': error}, context_instance=RequestContext(request))
+    return render_to_response('usuarios/login.html', {'f': form, 'errors': error},
+                              context_instance=RequestContext(request))
 
 
 @login_required()
@@ -123,8 +131,9 @@ def home(request):
     return render_to_response('usuarios/home.html', {}, context_instance=RequestContext(request))
     #return HttpResponseRedirect('/login')
 
+
 def integracion(u, c, user):
-    conn=None
+    conn = None
     while True:
         conn = manejadorDeConexion()
         user.sesion_sico = str(conn.getAvailableConnection())
@@ -133,6 +142,82 @@ def integracion(u, c, user):
             break
 
     return conn.openSession(connectionName=user.sesion_sico, usuario=u, contrasenia=c)
+
+
+@login_required()
+def cuadrillas(request):
+    #pos = posicion.objects.filter(User__usuario_sico__contrato=request.session['contrato'], fechaHora__gt='2014-12-14 0:0')
+    pos = posicion.objects.filter(
+        usuario__usuario_sico__contrato=request.session['contrato'],
+        fechaHora__gt='%s-%s-%s 0:0' % (
+            str(datetime.datetime.today().year),
+            str(datetime.datetime.today().month),
+            str(datetime.datetime.today().day)
+        )
+    ).order_by('-fechaHora')
+
+    data = {
+        'cuadrillas': pos
+    }
+
+    return render_to_response('cuadrillas/cuadrillas.html', data, context_instance=RequestContext(request))
+
+
+@ajax
+def masCuadrillas(request):
+    if request.method == 'POST':
+        print request.POST
+        t = request.POST['fechaHora']
+        dajax = Dajax()
+        pos = posicion.objects.filter(
+            usuario__usuario_sico__contrato=request.session['contrato'],
+            fechaHora__gt=str(t)
+        ).order_by('-fechaHora')
+
+        data = {
+            'cuadrillas': pos
+        }
+        agregar = render_to_response('cuadrillas/renderCuadrilla.html', data)
+        #print agregar
+        dajax.prepend('#listaCuadrillas', 'innerHTML', agregar)
+
+        return dajax.calls
+
+    else:
+        return None
+
+
+def reporteMateriales(request):
+    objs = list(detalleMaterialContrato.objects.filter(contrato=request.session['contrato']))
+    utili = materialDeActividad.objects.filter(material__contrato=request.session['contrato'])
+    milista = []
+    for i in range(len(objs)):
+        try:
+            u = utili.filter(material__id=objs[i].id).aggregate(Sum('cantidad'))
+            cant = u['cantidad__sum']
+            if cant is None:
+                cant = 0
+        except:
+            cant = 0
+        milista.append(
+            {
+                'Item': i + 1,
+                'Material': objs[i].material.__unicode__(),
+                'Inicial': objs[i].stock,
+                'Utilizado': cant,
+                'Restante': objs[i].stock - cant,
+            }
+        )
+
+    return ExcelResponse(milista, output_name='Detalle de Material Utilizado', headers=['Item', 'Material', 'Inicial', 'Utilizado', 'Restante'])
+
+
+def reportes(request):
+    return render_to_response('reportes/reportes.html', {}, context_instance=RequestContext(request))
+
+
+def reporteActividades(request):
+    pass
 
 
 @ajax

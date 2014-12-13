@@ -1,0 +1,18 @@
+{% for c in cuadrillas %}
+    <a id="{{ c.id }}" href="#" class="list-group-item "
+       onclick="addMarker(
+           new google.maps.LatLng({{ c.latitud }}, {{ c.longitud }}),
+           '{{ c.usuario.last_name }} -> {{ c.fechaHora.time }}',
+           $(this)
+       );">
+        <h7 class="list-group-item-heading">{{ c.usuario.username }} {{ c.usuario.last_name }}</h7>
+        <span class="badge">{{ c.fechaHora.time }}</span>
+        <p class="list-group-item-text">
+            {% if c.cuadrilla %}
+                {{ c.cuadrilla }}
+            {% else %}
+                Aun no se registra la cuadrilla del usuario...
+            {% endif %}
+        </p>
+    </a>
+{% endfor %}

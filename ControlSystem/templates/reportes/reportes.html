@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block title %}
+    Reportes
+{% endblock %}
+
+{% block jquery %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+    {% if form.errors %}
+        <p>{{ form.errors }}</p>
+    {% endif %}
+
+    <div class="row" style="margin-top: 120px">
+        <div class="col-md-6 text-center">
+            <button type="button" class="btn btn-link btn-lg btn-block" onclick="newUrl('{% url 'reportesmateriales' %}')">
+                <img class="img-responsive center-block" src="{% static 'icons/Light_Info.png' %}"><h4>Reportes de materiales utilizados</h4>
+            </button>
+        </div>
+        <div class="col-md-6 text-center">
+            <button type="button" class="btn btn-link btn-lg btn-block" onclick="newUrl('{% url 'reportesactividades' %}')">
+                <img class="img-responsive center-block" src="{% static 'icons/Light_File_info.png' %}"><h4>Reportes de actividades realizadas</h4>
+            </button>
+        </div>
+        {% comment %}<div class="col-md-4 text-center">
+            <button type="button" class="btn btn-link btn-lg btn-block" onclick="newUrl('{% url 'listadeingresos' %}')">
+                <img class="img-responsive center-block" src="{% static 'icons/Light_Accept.png' %}"><h4>Actividades Realizadas</h4>
+            </button>
+        </div>{% endcomment %}
+    </div>
+
+{% endblock %}
+
+{% block jqueryfooter %}
+{% endblock %}

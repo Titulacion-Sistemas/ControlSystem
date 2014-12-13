@@ -26,14 +26,14 @@
         </div>
     </div>
 
-    <div class="row" style="margin-top: 30px">
+    <div class="row" style="margin-top: 50px">
         <div class="col-md-4 text-center">
-            <button type="button" class="btn btn-link btn-lg btn-block">
-                <img class="img-responsive center-block" src="{% static 'icons/Light_Users.png' %}"><h4>Cuadrillas</h4>
+            <button type="button" class="btn btn-link btn-lg btn-block" onclick="newUrl('{% url 'cuadrillas' %}')">
+                <img class="img-responsive center-block" src="{% static 'icons/Light_Users.png' %}"><h4>Monitoreo de Cuadrillas</h4>
             </button>
         </div>
         <div class="col-md-4 text-center">
-            <button type="button" class="btn btn-link btn-lg btn-block">
+            <button type="button" class="btn btn-link btn-lg btn-block" onclick="newUrl('{% url 'reportes' %}')">
                 <img class="img-responsive center-block" src="{% static 'icons/Light_File_edit.png' %}"><h4>Reportes</h4>
             </button>
         </div>

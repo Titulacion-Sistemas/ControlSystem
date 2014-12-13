@@ -42,13 +42,13 @@
                     $('#cargandoForm').removeClass('hidden');
                     $('#lblEspera').html('Ingresando, Espere...');
                     deshabilitarBotones(true);
-
+                    cambioDeEstado(false);
                     envioRecepcionAjax
                     (
                         '/continuaringreso/{{ form.id.value }}/{{ form.estadoSolicitud.value }}',
                         $('#ingreso').serialize()
                     );
-
+                    cambioDeEstado(true);
                 });
 
                 $("#id_ubicacionDeSello").find("option[value='Caja']").attr("selected",true);
@@ -483,13 +483,13 @@
 
             function guardarAjax(){
                 $('#cargandoForm').removeClass('hidden');
-                cambioDeEstado(false);
+                //cambioDeEstado(false);
                 envioRecepcionAjax
                 (
                     '{% url 'guardarIngreso' %}',
                     $('#ingreso').serialize()
                 );
-                cambioDeEstado(true);
+                //cambioDeEstado(true);
                 return false;
 
             }

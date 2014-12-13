@@ -79,3 +79,5 @@ def busqueda(request):
         return comprobarFormBusqueda(form, request.user.sesion_sico)
     else:
         cuenta(request)
+
+

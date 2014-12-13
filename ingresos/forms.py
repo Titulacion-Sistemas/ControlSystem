@@ -3,9 +3,7 @@ import datetime
 from django import forms
 from django.forms.extras import *
 from django.utils import timezone
-from django.utils.timezone import now
 from ingresos.models import *
-from ingresos.multiFile import MultiFileField
 from inventario.models import detalleMaterialContrato, medidor, sello, detalleRubro
 
 __author__ = 'Jhonsson'

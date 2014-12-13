@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+{% load tz %}
+
+{% block title %}
+    Ubicación de las cuadrillas
+{% endblock %}
+
+{% block jquery %}
+    {{ block.super }}
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
+
+    <script>
+        var map;
+        var markers={};
+        var ahora
+        $(document).ready(function(){
+            //function initialize(){
+                if (navigator.geolocation){
+                    navigator.geolocation.getCurrentPosition(getCoords, getError)
+                }else{
+                    initial(-3.261049, -79.9361801);
+                }
+            //}
+
+            function getCoords(position){
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+
+                initial(lat, lng);
+            }
+
+            function getError(err){
+                initial(-3.261049, -79.9361801);
+            }
+
+            function initial(lat, lng){
+                var latlng = new google.maps.LatLng(lat, lng);
+                var mapOptions = {
+                    zoom: 13,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    center: latlng
+                };
+                map = new google.maps.Map($('#mapa').get(0), mapOptions);
+            }
+
+
+            ahora = calcularAhora(new Date());
+
+            setInterval('solicitar()',180000);
+
+        });
+
+        function calcularAhora(ahora){
+            return ahora.getFullYear()+'-'+(ahora.getMonth()+1)+'-'+ahora.getDate()+' '+ahora.getHours()+':'+ahora.getMinutes()+':'+ahora.getSeconds();
+        }
+
+        function solicitar(){
+            envioRecepcionAjax
+                    (
+                        '{% url 'mascuadrillas' %}',
+                        {'fechaHora': ahora}
+                    );
+            ahora = calcularAhora(new Date());
+        }
+
+        function addMarker(pos, titulo, el){
+            var id = el.attr('id');
+            if (el.hasClass('active')){
+                markers[''+id+''].setMap(null);
+                delete markers[''+id+''];
+                el.removeClass('active');
+            }
+            else{
+                markers[''+id+''] =
+                    new google.maps.Marker(
+                    {
+                        position: pos,
+                        map: map,
+                        draggable: false,
+                        title: titulo
+                    }
+                );
+                el.addClass('active');
+            }
+
+
+
+            return false;
+        }
+
+        //google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+
+{% endblock %}
+
+{% block content %}
+
+    {% if form.errors %}
+        <p>{{ form.errors }}</p>
+    {% endif %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Monitoreo de Personal
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group" id="listaCuadrillas">
+                            {% for c in cuadrillas %}
+                            <a id="{{ c.id }}" href="#" class="list-group-item "
+                               onclick="addMarker(
+                                   new google.maps.LatLng({{ c.latitud }}, {{ c.longitud }}),
+                                   '{{ c.usuario.last_name }} -> {{ c.fechaHora.time }}',
+                                   $(this)
+                               );">
+                                <h7 class="list-group-item-heading">{{ c.usuario.first_name }} {{ c.usuario.last_name }}</h7>
+                                <span class="badge">{{ c.fechaHora|timezone:"America/Guayaquil"|time }}</span>
+                                <p class="list-group-item-text">
+                                    {% if c.cuadrilla %}
+                                        {{ c.cuadrilla }}
+                                    {% else %}
+                                        Aun no se registra la cuadrilla del usuario...
+                                    {% endif %}
+                                </p>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Mapa
+                    </div>
+                    <div class="panel-body" style="height: 450px;">
+                        <div id="mapa" style="height: 100%; width: 100%;">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+{% endblock %}
+
+{% block jqueryfooter %}
+{% endblock %}
