@@ -30,7 +30,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,11 +40,20 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django_ajax',
     'bootstrap3',
+    'serviciosWeb',
     'busquedas',
     'usuarios',
     'ingresos',
     'inventario',
+    'django_extensions',
 )
+
+
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+}
+
 
 TEMPLATE_CONTEXT_PROCESSORS = TC + (
     'django.core.context_processors.request',
@@ -74,12 +82,7 @@ WSGI_APPLICATION = 'ControlSystem.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
 DATABASES = {
-    #'default': {
-    #    'ENGINE': 'django.db.backends.sqlite3',
-    #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    #}
 
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -93,7 +96,6 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
-
 LANGUAGE_CODE = 'es-ec'
 
 TIME_ZONE = 'America/Guayaquil'

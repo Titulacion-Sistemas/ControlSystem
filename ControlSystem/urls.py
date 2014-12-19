@@ -8,6 +8,7 @@ from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from django.contrib import admin
 from usuarios.views import *
+from serviciosWeb.views import *
 from ingresos.views import ListaDeIngreso
 from ingresos.views import ListaDeFotos
 from serviciosWeb.views import *
@@ -19,6 +20,10 @@ urlpatterns = patterns('',
     # url(r'^$', 'ControlSystem.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
+    #Pruebas
+    url(r'^signup$', 'usuarios.views.signup', name='signup'),
+    url(r'^multiply', multiply),
+
     #Administración
     url(r'^admin/', include(admin.site.urls)),
 
@@ -26,7 +31,6 @@ urlpatterns = patterns('',
     url(r'^$', 'usuarios.views.main', name='main'),
     url(r'^login$', "usuarios.views.ingreso", name='login'),
     url(r'^logout$', 'usuarios.views.salir', name="logout"),
-    url(r'^signup$', 'usuarios.views.signup', name='signup'),
     url(r'^home$', 'usuarios.views.home', name='home'),
 
     #Búsquedas
@@ -35,8 +39,6 @@ urlpatterns = patterns('',
     url(r'^buscar/3$', 'busquedas.views.nombre', name='buscarNombre'),
     url(r'^buscar/4$', 'busquedas.views.geocodigo', name='buscarGeocodigo'),
     url(r'^busqueda$', 'busquedas.views.busqueda', name='busqueda'),
-
-    url(r'^multiply', multiply),
 
     #Fotos
     url(r'^listadefotos$', ListaDeFotos.as_view(), name='listadefotos'),
@@ -61,6 +63,7 @@ urlpatterns = patterns('',
     url(r'^listadeingresos$', ListaDeIngreso.as_view(), name='listadeingresos'),
     url(r'^fotos/(?P<pk>\d+)/$', 'ingresos.views.fotos', name='fotos'),
     url(r'^borrarfoto/(?P<pk>\d+)/$', 'ingresos.views.borrarFoto', name='borrarfoto'),
+
     #Estados de ingreso
     url(r'^continuaringreso/(?P<pk>\d+)/(?P<estado>\d+)/$', 'ingresos.views.continuar', name='continuaringreso'),
 

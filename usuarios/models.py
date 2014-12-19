@@ -23,7 +23,7 @@ class usuarioSico(models.Model):
 
 
 
-#EDICION DE MODELO USER
+#MODICANDO EL USUARIO DE MODELO USER
 User.add_to_class('sesion_sico', models.CharField(max_length=2, null=True, blank=True))
 User.add_to_class('usuario_sico', models.ManyToManyField(usuarioSico, blank=True, null=True))
 #User.add_to_class('amigos', models.ManyToManyField('self', symmetrical=True,  ))
