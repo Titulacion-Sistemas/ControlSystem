@@ -10,7 +10,7 @@ from django.http import HttpResponse
 class ExcelResponse(HttpResponse):
 
     def __init__(self, data, output_name='excel_data', headers=None,
-                 force_csv=False, encoding='utf8'):
+                 force_csv=False, encoding='utf8', rini=0, cini=0):
 
         # Make sure we've got the right type of data to work with
         valid_data = False
@@ -58,7 +58,7 @@ class ExcelResponse(HttpResponse):
                         cell_style = styles['time']
                     else:
                         cell_style = styles['default']
-                    sheet.write(rowx, colx, value, style=cell_style)
+                    sheet.write((rowx + rini), (colx + cini), value, style=cell_style)
             book.save(output)
             mimetype = 'application/vnd.ms-excel'
             file_ext = 'xls'

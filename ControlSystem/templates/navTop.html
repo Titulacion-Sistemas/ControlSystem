@@ -1,7 +1,17 @@
 <ul class="nav navbar-nav">
 
     {% if user.username %}
-
+        <li class="navbar-header hora">
+            <span>
+                <b style="font-size: 13px;">Usuario&nbsp;&nbsp;: </b>
+                <span >{{ user.first_name }} {{ user.last_name }}</span>
+            </span>
+            <br>
+            <span>
+                <b style="font-size: 13px;">Contrato  : </b>
+                <span>{{ request.session.contrato }}</span>
+            </span>
+        </li>
     {% else %}
         <li class="active"><a href="#">Acceso</a></li>
     {% endif %}

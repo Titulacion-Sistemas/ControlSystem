@@ -13,8 +13,8 @@ from django.http.response import HttpResponseRedirect
 from django_ajax.decorators import ajax
 from ControlSystem.pComm.conexion import manejadorDeConexion
 from ControlSystem.settings import BASE_DIR
-from ingresos.models import cuadrilla, materialDeActividad
-from inventario.models import detalleMaterialContrato
+from ingresos.models import cuadrilla, materialDeActividad, detalleDeActividad
+from inventario.models import detalleMaterialContrato, medidor
 from usuarios.excel import ExcelResponse
 from usuarios.models import SignUpForm, LogIn, usuarioSico, posicion
 
@@ -105,14 +105,14 @@ def ingreso(request):
                         except:
                             u = False
                         if isinstance(u, usuarioSico):
-                            if integracion(u.nombre, u.clave, user):
-                                login(request, user)
-                                request.session['contrato'] = contrato
-                                return HttpResponseRedirect('/home')
-                            else:
-                                error = 'El Sistema Comercial(Sico Cnel) no esta disponible por el momento...'
-                                user.sesion_sico=''
-                                user.save()
+                            #if integracion(u.nombre, u.clave, user):
+                            login(request, user)
+                            request.session['contrato'] = contrato
+                            return HttpResponseRedirect('/home')
+                            #else:
+                            #    error = 'El Sistema Comercial(Sico Cnel) no esta disponible por el momento...'
+                            #    user.sesion_sico=''
+                            #    user.save()
                         else:
                             error = 'El Usuario Especificado no cuenta con permisos necesarios para acceder al contarto'
             elif username and password:
@@ -125,9 +125,9 @@ def ingreso(request):
 @login_required()
 def home(request):
     print 'Sesion : %s' % request.user.sesion_sico
-    if request.user.sesion_sico:
-        return render_to_response('usuarios/home.html', {}, context_instance=RequestContext(request))
-    return HttpResponseRedirect('/login')
+    #if request.user.sesion_sico:
+    return render_to_response('usuarios/home.html', {}, context_instance=RequestContext(request))
+    #return HttpResponseRedirect('/login')
 
 
 def integracion(u, c, user):
@@ -207,7 +207,11 @@ def reporteMateriales(request):
             }
         )
 
-    return ExcelResponse(milista, output_name='Detalle de Material Utilizado', headers=['Item', 'Material', 'Inicial', 'Utilizado', 'Restante'])
+    return ExcelResponse(
+        milista,
+        output_name='Detalle de Material Utilizado', headers=['Item', 'Material', 'Inicial', 'Utilizado', 'Restante'],
+       # rini=3, cini=2
+    )
 
 
 def reportes(request):
@@ -215,7 +219,169 @@ def reportes(request):
 
 
 def reporteActividades(request):
-    pass
+    objs=[]
+    try:
+        objs = detalleDeActividad.objects.filter(
+            rubro__contrato=request.session['contrato']
+        ).distinct('actividad').order_by('-activiada.fechaDeActividad')
+    except:
+        d=None
+
+    materialesDeContrato = list(detalleMaterialContrato.objects.filter(contrato=request.session['contrato']))
+    milista = []
+
+    for i in range(len(objs)):
+
+        rub = ['','','','','','','','','','','','','']
+        clie = objs[i].actividad.cliente
+        if objs[i].actividad.tipoDeSolicitud_id == 13:
+            revisado = objs[i].actividad.cliente.detalleclientemedidor_set.last().medidor
+            instalado = objs[i].actividad.medidor_set.exclude(contrato=None).last()
+
+
+        elif objs[i].actividad.tipoDeSolicitud_id == 11:
+            revisado = objs[i].actividad.cliente.detalleclientemedidor_set.last().medidor
+            instalado = medidor(fabrica='', serie='', voltaje='', marca=revisado.marca)
+
+        if objs[i].actividad.tipoDeSolicitud_id == 1 and (not objs[i].actividad.cliente.geocodigo):
+            revisado = medidor(fabrica='', serie='', voltaje='')
+            instalado = objs[i].actividad.medidor_set.exclude(contrato=None).last()
+            clie = objs[i].actividad.cliente.cliente.last().referencia
+
+        sellos=''
+        for sl in objs[i].actividad.sello_set.filter():
+            if not sellos == '':
+                sellos += ' - '
+            sellos += str(sl.numero)
+
+
+        for r in objs[i].actividad.detalledeactividad_set.filter():
+            if r.rubro.servicio_id == 1 and r.rubro.rubro_id == 1:
+                rub[0]='1'
+            if r.rubro.servicio_id == 6 and r.rubro.rubro_id == 2:
+                rub[1]='1'
+            if r.rubro.servicio_id == 2 and r.rubro.rubro_id == 2:
+                rub[2]='1'
+
+            if r.rubro.servicio_id == 3 and r.rubro.rubro_id == 1:
+                rub[4]='1'
+
+            if r.rubro.servicio_id == 4:
+                if r.rubro.rubro_id == 2:
+                    rub[7]='1'
+                if r.rubro.rubro_id == 3:
+                    rub[8]='1'
+                if r.rubro.rubro_id == 4:
+                    rub[9]='SI'
+                if r.rubro.rubro_id == 5:
+                    rub[10]='1'
+
+            if r.rubro.servicio_id == 5:
+                if r.rubro.rubro_id == 6:
+                    rub[11]='1'
+                if r.rubro.rubro_id == 7:
+                    rub[12]='1'
+                if r.rubro.rubro_id == 8:
+                    rub[11]='1'
+
+        data = {
+            'Item': i + 1,
+            'Fecha': objs[i].actividad.fechaDeActividad,
+            'Agencia': clie.ubicacionGeografica.parroquia.canton.descripcion,
+            'Direccion': clie.ubicacionGeografica.calle.descripcion1,
+            'Provincia': '%02d' % clie.ubicacionGeografica.parroquia.canton.provincia.id,
+            'Canton': '%02d' % clie.ubicacionGeografica.parroquia.canton.num,
+            'Sector': '%02d' % clie.geocodigo.ruta.sector.num,
+            'Ruta': '%03d' % clie.geocodigo.ruta.num,
+            'Secuencia': '%07d' % clie.geocodigo.num,
+            'Cuenta': objs[i].actividad.cliente.cuenta,
+            'Titular': objs[i].actividad.cliente.nombre,
+            'RFabrica': revisado.fabrica,
+            'RFSerie': revisado.serie,
+            'RPlan': '',
+            'RVoltaje': revisado.voltaje,
+            'IFabrica': instalado.fabrica,
+            'IFSerie': instalado.serie,
+            'IPlan': '',
+            'IVoltaje': instalado.voltaje,
+            'Marca': instalado.marca.descripcion,
+            'Sello': sellos,
+            'ServicioNuevo': rub[0],
+            'Directo': rub[1],
+            'CambioDeMedidor ': rub[2],
+            'ConCaja': rub[3],
+            'Acometida': rub[4],
+            'ConMedidor': rub[5],
+            'MantenimientoMedidor': rub[6],
+            'CambioDeCaja': rub[7],
+            'SoloAcometida': rub[8],
+            'Contrastacion': rub[9],
+            'Revision': rub[10],
+            'TramiteSico': rub[11],
+            'TrammiteSig': rub[12],
+        }
+
+
+
+        for m in materialesDeContrato:
+            existe = materialDeActividad.objects.filter(material=m, actividad=objs[i].actividad)
+            if existe:
+                data[''+str(m.material)]=str(existe.last().cantidad)
+            else:
+                data[''+str(m.material)]=''
+
+        milista.append(data)
+
+
+    encabezados = [
+        'Item',
+        'Fecha',
+        'Agencia',
+        'Direccion',
+        'Provincia',
+        'Canton',
+        'Sector',
+        'Ruta',
+        'Secuencia',
+        'Cuenta',
+        'Titular',
+        'RFabrica',
+        'RFSerie',
+        'RPlan',
+        'RVoltaje',
+        'IFabrica',
+        'IFSerie',
+        'IPlan',
+        'IVoltaje',
+        'Marca',
+        'Sello',
+        'ServicioNuevo',
+        'Directo',
+        'CambioDeMedidor ',
+        'ConCaja',
+        'Acometida',
+        'ConMedidor',
+        'MantenimientoMedidor',
+        'CambioDeCaja',
+        'SoloAcometida',
+        'Contrastacion',
+        'Revision',
+        'TramiteSico',
+        'TrammiteSig'
+    ]
+
+    for m in materialesDeContrato:
+        encabezados.append(str(m.material))
+
+    print milista
+
+    return ExcelResponse(
+        milista,
+        output_name='Detalle de Actividades Realizadas', headers=encabezados,
+        rini=7, cini=0
+    )
+
+
 
 
 @ajax
