@@ -32,6 +32,10 @@ urlpatterns = patterns('',
     url(r'^login$', "usuarios.views.ingreso", name='login'),
     url(r'^logout$', 'usuarios.views.salir', name="logout"),
     url(r'^home$', 'usuarios.views.home', name='home'),
+    url(r'^perfil$', 'usuarios.views.perfil', name='perfil'),
+    url(r'^password', 'usuarios.views.password', name='password'),
+    url(r'^change_done', 'usuarios.views.my_password_change_done', name='change_done'),
+
 
     #Búsquedas
     url(r'^buscar/1$', 'busquedas.views.cuenta', name='buscarCuenta'),
@@ -74,4 +78,5 @@ urlpatterns = patterns('',
     (r'^sw/usuarios.wsdl', 'serviciosWeb.views.sw_usuarios'),
     (r'^sw/busquedas', 'serviciosWeb.views.sw_busquedas'),
     (r'^sw/busquedas.wsdl', 'serviciosWeb.views.sw_busquedas'),
+
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

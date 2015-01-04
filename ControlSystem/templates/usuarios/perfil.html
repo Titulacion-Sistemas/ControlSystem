@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block title %}
+    {{ user.first_name }} {{ user.last_name }}
+{% endblock %}
+
+{% block content %}
+ 
+
+    <div class="container-fluid">
+        {% if form.errors %}
+            <p>{{ form.errors }}</p>
+        {% endif %}
+        <form role="form" class="form-group" id="b" name="b" method="post" action="{{ action }}">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="panel panel-info">
+                        <div class="panel-heading text-center">
+                            <b>Perfil de usuario</b>
+                        </div>
+                        <div class="panel-body">
+
+
+                            {% bootstrap_form form layout="horizontal" %}
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="panel panel-info">
+                        <div class="panel-body center-block">
+                            {% buttons %}
+                                <button type="submit" class="btn btn-primary center-block">
+                                    {% bootstrap_icon "save" %} Guardar
+                                </button>
+                            {% endbuttons %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+{% endblock %}

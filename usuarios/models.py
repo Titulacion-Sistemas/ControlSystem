@@ -2,10 +2,12 @@
 # Create your models here.
 import datetime
 from django import forms
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django.db import models
 from inventario.models import contrato
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 
 class usuarioSico(models.Model):
@@ -24,6 +26,9 @@ class usuarioSico(models.Model):
 
 
 #MODICANDO EL USUARIO DE MODELO USER
+User.add_to_class('direccion', models.CharField(max_length=100, null=True, blank=True))
+User.add_to_class('telefono', models.CharField(max_length=10, null=True, blank=True))
+User.add_to_class('celular', models.CharField(max_length=10, null=True, blank=True))
 User.add_to_class('sesion_sico', models.CharField(max_length=2, null=True, blank=True))
 User.add_to_class('usuario_sico', models.ManyToManyField(usuarioSico, blank=True, null=True))
 #User.add_to_class('amigos', models.ManyToManyField('self', symmetrical=True,  ))
@@ -72,3 +77,34 @@ class LogIn(forms.Form):
         #initial=contrato.objects.first().num,
         label='Contrato Nro.'
     )
+
+
+class MyUserChangeForm(forms.ModelForm):
+    username = forms.RegexField(
+        label=_("Username"), max_length=30, regex=r"^[\w.@+-]+$",
+        help_text=_("Required. 30 characters or fewer. Letters, digits and "
+                      "@/./+/-/_ only."),
+        error_messages={
+            'invalid': _("This value may contain only letters, numbers and "
+                         "@/./+/-/_ characters.")})
+    password = ReadOnlyPasswordHashField(label=_("Password"),
+        help_text=_("Raw passwords are not stored, so there is no way to see "
+                    "this user's password, but you can change the password "
+                    "using <a href=\"password/\">this form</a>."))
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'direccion', 'telefono', 'celular', 'email', 'password']
+
+    def __init__(self, *args, **kwargs):
+        super(MyUserChangeForm, self).__init__(*args, **kwargs)
+        f = self.fields.get('user_permissions', None)
+        if f is not None:
+            f.queryset = f.queryset.select_related('content_type')
+
+    def clean_password(self):
+        # Regardless of what the user provides, return the initial value.
+        # This is done here, rather than on the field, because the
+        # field does not have access to the initial value
+        return self.instance.password
+

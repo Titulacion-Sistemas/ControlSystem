@@ -3,6 +3,8 @@ from dajax.core import Dajax
 import datetime
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.views import password_change, password_change_done
 from django.contrib.humanize.tests import now
 from django.db.models import Sum
 from django.shortcuts import render_to_response
@@ -16,7 +18,7 @@ from ControlSystem.settings import BASE_DIR
 from ingresos.models import cuadrilla, materialDeActividad, detalleDeActividad
 from inventario.models import detalleMaterialContrato, medidor
 from usuarios.excel import ExcelResponse
-from usuarios.models import SignUpForm, LogIn, usuarioSico, posicion
+from usuarios.models import SignUpForm, LogIn, usuarioSico, posicion, MyUserChangeForm
 
 # Create your views here.
 
@@ -141,6 +143,41 @@ def integracion(u, c, user):
 
     return conn.openSession(connectionName=user.sesion_sico, usuario=u, contrasenia=c)
 
+
+@login_required()
+def perfil(request):
+    u = User.objects.get(id=request.user.id)
+    if request.method == "POST":
+        form = MyUserChangeForm(request.POST)
+        if form.is_valid():
+            u.username = form.cleaned_data["username"]
+            #u.password = form.cleaned_data["password"]
+            u.email = form.cleaned_data["email"]
+            u.first_name = form.cleaned_data["first_name"]
+            u.last_name = form.cleaned_data["last_name"]
+            u.direccion = form.cleaned_data["direccion"]
+            u.telefono = form.cleaned_data["telefono"]
+            u.celular = form.cleaned_data["celular"]
+            u.save(force_update=True)
+            request.user = u
+            return render_to_response('usuarios/password_change_done.html', {}, context_instance=RequestContext(request))
+    else:
+        form = MyUserChangeForm(instance=u)
+
+    data = {
+        'form': form,
+        'action':'/perfil',
+    }
+    return render_to_response('usuarios/perfil.html', data, context_instance=RequestContext(request))
+
+
+@login_required()
+def password(request):
+    return password_change(request, template_name='usuarios/perfil.html', post_change_redirect='/change_done', extra_context={'action':'/password'})
+
+
+def my_password_change_done(request):
+    return password_change_done(request, template_name='usuarios/password_change_done.html', extra_context=request)
 
 @login_required()
 def cuadrillas(request):

@@ -10,6 +10,7 @@ class contrato(models.Model):
     codigoInstalador = models.PositiveSmallIntegerField(verbose_name='Código de Instalador')
     inicioVigencia = models.DateField(verbose_name='Vigente Desde')
     finalVigencia = models.DateField(verbose_name='Vigente Hasta')
+    monto = models.DecimalField(max_digits=20, decimal_places=2)
 
     def __unicode__(self):
         return self.num
