@@ -418,7 +418,8 @@ def reporteActividades(request):
         rini=7, cini=0
     )
 
-
+def acercade(request):
+    return render_to_response('usuarios/acercade.html', {}, context_instance=RequestContext(request))
 
 
 @ajax

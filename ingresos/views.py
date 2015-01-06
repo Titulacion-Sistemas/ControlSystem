@@ -6,6 +6,7 @@ from dajax.core import Dajax
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
+from django.db.models import Sum
 from django.http import HttpResponseRedirect, QueryDict
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -678,6 +679,28 @@ def continuar(request, pk, estado):
 
 #######################################################################################################################
 
+def avance(request):
+
+    contrato = request.session['contrato']
+    utili = detalleDeActividad.objects.filter(rubro__contrato=contrato)
+
+    sn = utili.filter(actividad__tipoDeSolicitud__id=1).aggregate(Sum('rubro__precioUnitario'))['rubro__precioUnitario__sum']
+    cmat = utili.filter(actividad__tipoDeSolicitud__id=11).aggregate(Sum('rubro__precioUnitario'))['rubro__precioUnitario__sum']
+    cmed = utili.filter(actividad__tipoDeSolicitud__id=13).aggregate(Sum('rubro__precioUnitario'))['rubro__precioUnitario__sum']
+
+    diferencia = contrato.monto - (sn + cmat + cmed)
+
+    total = contrato.monto
+
+    data = {
+        'sn': str(sn).replace(',','.'),
+        'cmed': str(cmed).replace(',','.'),
+        'cmat': str(cmat).replace(',','.'),
+        'dif': str(diferencia).replace(',','.'),
+        'tot': str(total).replace(',','.')
+    }
+
+    return render_to_response('avancedeobra/avance.html', data, context_instance=RequestContext(request))
 
 
 def formatFechas(f):

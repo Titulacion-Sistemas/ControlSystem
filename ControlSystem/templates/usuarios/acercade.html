@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block title %}
+    Acerca de
+{% endblock %}
+
+
+{% block content %}
+ 
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div id="past" class="panel panel-info">
+                    <div class="panel-heading text-center">
+                        <b id="tit">Acerca de Coniel System</b>
+                    </div>
+                    <div class="panel-body">
+
+
+                        <div id='estadistica' style="height: 300px; width: 100%;"></div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

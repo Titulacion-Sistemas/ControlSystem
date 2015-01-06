@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block title %}
+    Avance de Obra
+{% endblock %}
+
+{% block jquery %}
+    {{ block.super }}
+    <style>
+        .myrow {
+            font-size: 20px;
+        }
+
+        .titulos {
+            font-size: 25px;
+            text-align: center;
+        }
+    </style>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1', {'packages':['corechart']});
+      google.load("visualization", "1", {'packages':["table"]});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.setOnLoadCallback(drawChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Monto');
+        data.addColumn('number', 'Valor en Dolares ($)');
+        data.addRows([
+          ['Servicios Nuevos', {{ sn }}],
+          ['Cambios de Material', {{ cmat }}],
+          ['Cambios de Medidor', {{ cmed }}],
+          ['Restante', {{ dif }}]
+        ]);
+
+        // Set chart options
+        var options = {
+                       pieSliceText: 'label',
+                       'title':'Totales de Actividades Realizadas y faltante para concluir el Contrato',
+                       pieStartAngle: 100,
+                       pieHole: 0.4,
+                       sliceVisibilityThreshold: 0
+
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('estadistica'));
+        chart.draw(data, options);
+
+        var options2 = {
+                       'title':'Totales de Actividades Realizadas y faltante para concluir el Contrato',
+                       vAxis: {
+            logScale: true
+        }
+        };
+
+        var chart1 = new google.visualization.ColumnChart(document.getElementById('estadistica1'));
+        chart1.draw(data, options2);
+
+        var cssClassNames = {
+            'headerRow': 'titulos',
+            'tableRow': 'myrow',
+            'oddTableRow': 'myrow'
+        };
+
+        data.addRows([
+          ['Total', {{ tot }}]]);
+
+        var options3 = {
+                       showRowNumber: true, 'allowHtml': true, 'cssClassNames': cssClassNames
+        };
+
+        var chart2 = new google.visualization.Table(document.getElementById('estadistica2'));
+        chart2.draw(data, options3);
+
+        $('#pastel').click();
+
+      }
+
+        $(document).ready(function(){
+
+            $('#pastel').click(function(){
+                $('#past').removeClass('hidden');
+                $('#bar').addClass('hidden');
+                $('#tab').addClass('hidden');
+
+                $('#barras').removeClass('active');
+                $('#tabla').removeClass('active');
+                $('#pastel').addClass('active');
+
+                return false;
+            });
+
+            $('#barras').click(function(){
+                $('#bar').removeClass('hidden');
+                $('#past').addClass('hidden');
+                $('#tab').addClass('hidden');
+
+
+                $('#pastel').removeClass('active');
+                $('#tabla').removeClass('active');
+                $('#barras').addClass('active');
+
+                return false;
+            });
+
+            $('#tabla').click(function(){
+                $('#tab').removeClass('hidden');
+                $('#bar').addClass('hidden');
+                $('#past').addClass('hidden');
+
+                $('#barras').removeClass('active');
+                $('#pastel').removeClass('active');
+                $('#tabla').addClass('active');
+
+                return false;
+            });
+
+        });
+    </script>
+
+{% endblock %}
+
+{% block content %}
+ 
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs">
+                    <li id="pastel" class="active"><a href="#">Pastel</a></li>
+                    <li id="barras" ><a href="#">Barras</a></li>
+                    <li id="tabla" ><a href="#">Tabla</a></li>
+                </ul>
+                <div id="past" class="panel panel-info">
+                    <div class="panel-heading text-center">
+                        <b id="tit">Avcance de Obra (Pastel)</b>
+                    </div>
+                    <div class="panel-body">
+
+
+                        <div id='estadistica' style="height: 500px; width: 100%;"></div>
+
+
+                    </div>
+                </div>
+                <div id="bar" class="panel panel-info">
+                    <div class="panel-heading text-center">
+                        <b id="tit">Avcance de Obra (Barras)</b>
+                    </div>
+                    <div class="panel-body">
+
+
+                        <div id='estadistica1' style="height: 500px; width: 100%;"></div>
+
+
+                    </div>
+                </div>
+                <div id="tab" class="panel panel-info">
+                    <div class="panel-heading text-center">
+                        <b id="tit">Avcance de Obra (Tabla)</b>
+                    </div>
+                    <div class="panel-body">
+
+
+                        <div id='estadistica2' style="height: 500px; width: 100%;"></div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

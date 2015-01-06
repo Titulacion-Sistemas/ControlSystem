@@ -35,6 +35,7 @@ urlpatterns = patterns('',
     url(r'^perfil$', 'usuarios.views.perfil', name='perfil'),
     url(r'^password', 'usuarios.views.password', name='password'),
     url(r'^change_done', 'usuarios.views.my_password_change_done', name='change_done'),
+    url(r'^acercade$', 'usuarios.views.acercade', name='acercade'),
 
 
     #Búsquedas
@@ -46,6 +47,8 @@ urlpatterns = patterns('',
 
     #Fotos
     url(r'^listadefotos$', ListaDeFotos.as_view(), name='listadefotos'),
+    url(r'^fotos/(?P<pk>\d+)/$', 'ingresos.views.fotos', name='fotos'),
+    url(r'^borrarfoto/(?P<pk>\d+)/$', 'ingresos.views.borrarFoto', name='borrarfoto'),
 
     #Mapas
     url(r'^cuadrillas$', 'usuarios.views.cuadrillas', name='cuadrillas'),
@@ -65,8 +68,9 @@ urlpatterns = patterns('',
     url(r'^ingreso/(?P<pk>\d+)/$', 'ingresos.views.ingreso', name='ingreso'),
     url(r'^eliminaringreso/(?P<pk>\d+)/$', 'ingresos.views.eliminarIngreso', name='eliminaringreso'),
     url(r'^listadeingresos$', ListaDeIngreso.as_view(), name='listadeingresos'),
-    url(r'^fotos/(?P<pk>\d+)/$', 'ingresos.views.fotos', name='fotos'),
-    url(r'^borrarfoto/(?P<pk>\d+)/$', 'ingresos.views.borrarFoto', name='borrarfoto'),
+
+    #Avance de Obra
+    url(r'^avance$', 'ingresos.views.avance', name='avance'),
 
     #Estados de ingreso
     url(r'^continuaringreso/(?P<pk>\d+)/(?P<estado>\d+)/$', 'ingresos.views.continuar', name='continuaringreso'),
