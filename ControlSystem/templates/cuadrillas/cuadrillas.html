@@ -129,8 +129,8 @@
                                 <h7 class="list-group-item-heading">{{ c.usuario.first_name }} {{ c.usuario.last_name }}</h7>
                                 <span class="badge">{{ c.fechaHora|timezone:"America/Guayaquil"|time }}</span>
                                 <p class="list-group-item-text">
-                                    {% if c.cuadrilla %}
-                                        {{ c.cuadrilla }}
+                                    {% if c.actividad.instalador.cuadrilla %}
+                                        {{ c.actividad.instalador.cuadrilla }}
                                     {% else %}
                                         Aun no se registra la cuadrilla del usuario...
                                     {% endif %}

@@ -8,10 +8,8 @@ from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from django.contrib import admin
 from usuarios.views import *
-from serviciosWeb.views import *
 from ingresos.views import ListaDeIngreso
 from ingresos.views import ListaDeFotos
-from serviciosWeb.views import *
 
 admin.autodiscover()
 

@@ -42,7 +42,7 @@ class posicion(models.Model):
     longitud = models.CharField(max_length=25, verbose_name='Longitud')
     altura = models.CharField(max_length=25, verbose_name='Longitud', null=True, blank=True, default='')
     usuario = models.ForeignKey(User)
-    cuadrilla = models.ForeignKey('ingresos.cuadrilla', blank=True, null=True, default=None)
+    actividad = models.ForeignKey('ingresos.actividad', blank=True, null=True, default=None)
 
 
 

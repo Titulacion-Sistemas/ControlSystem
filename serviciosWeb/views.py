@@ -10,7 +10,9 @@ from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar
 from ControlSystem.pComm.busquedas.SW_scriptsBusquedas import buscar as SW_buscar
 from busquedas.models import vitacoraBusquedas
 from handler import DjangoSoapApp
-from usuarios.models import usuarioSico, contrato
+from ingresos.models import actividad, empleado, tipoDeSolicitud, cuadrilla, materialDeLaRed, formaDeConexion, estadoDeUnaInstalacion, tipoDeConstruccion, ubicacionDelMedidor, tipoDeAcometidaRed, calibreDeLaRed, usoDeEnergia, claseRed, tipoDeServicio, usoEspecificoDelInmueble, demanda, nivelSocieconomico
+from inventario.models import detalleMaterialContrato, sello, medidor
+from usuarios.models import usuarioSico, contrato, posicion
 from usuarios.views import integracion, cerrarSico
 
 #servicio web de ejemplo
@@ -50,19 +52,19 @@ class SW_Usuarios(DefinitionBase):
                     except:
                         u = False
                     if isinstance(u, usuarioSico):
-                        if integracion(u.nombre, u.clave, user):
-                            error = [
-                                'True',
-                                str(user.id),
-                                str(user.username),
-                                str(user.sesion_sico),
-                                ('%s %s' % (user.first_name, user.last_name)).encode('utf-8')
-                            ]
-                        else:
-                            error = ['El Sistema Comercial(Sico Cnel) no esta disponible por el momento, '
-                                     'intentelo nuevamente mas tarde...']
-                            user.sesion_sico=''
-                            user.save()
+                        #if integracion(u.nombre, u.clave, user):
+                        error = [
+                            'True',
+                            str(user.id),
+                            str(user.username),
+                            str(user.sesion_sico),
+                            ('%s %s' % (user.first_name, user.last_name)).encode('utf-8')
+                        ]
+                        #else:
+                        #    error = ['El Sistema Comercial(Sico Cnel) no esta disponible por el momento, '
+                        #             'intentelo nuevamente mas tarde...']
+                        #    user.sesion_sico=''
+                        #    user.save()
                     else:
                         error = ['El Usuario Especificado no cuenta con permisos necesarios para acceder al contarto']
 
@@ -125,3 +127,90 @@ class SW_Busquedas(DefinitionBase):
 
 
 sw_busquedas = DjangoSoapApp([SW_Busquedas], __name__)
+
+
+
+class SW_Ingresos(DefinitionBase):
+    @rpc(primitive.Integer, primitive.String, _returns=Array(Array(primitive.String)))
+    def realizados(self, idUsuario, contrato):
+        rel = posicion.objects.filter(actividad__detalledeactividad__rubro__contrato=contrato)\
+            .filter(usuario_id=idUsuario, fechaHora__gte='%s-%s-%s 0:0' % (
+            str(datetime.datetime.today().year),
+            str(datetime.datetime.today().month),
+            str(datetime.datetime.today().day)
+        )).distinct('actividad').exclude(actividad=None)
+
+        ret = [[]]
+
+        for r in rel:
+            act = r.actividad
+            ret.append(
+                [
+                    '%s' % str(act.id),
+                    act.cliente.cuenta,
+                    act.cliente.nombre,
+                    act.tipoDeSolicitud.descripcion,
+                    act.medidor_set.filter(contrato=None).first().fabrica
+                ]
+            )
+
+        return ret
+
+
+    @rpc( _returns=Array(Array(primitive.String)))
+    def ingresoActividadInstalador(self, ):
+
+        return [
+            [v for v in empleado.objects.all()],
+            [v for v in cuadrilla.objects.all()],
+            [v for v in tipoDeSolicitud.objects.all()]
+        ]
+
+
+    @rpc(_returns=Array(Array(primitive.String)))
+    def ingresoDetalleInstalacion(self, ):
+
+        return [
+            [v for v in materialDeLaRed.objects.all()],
+            [v for v in formaDeConexion.objects.all()],
+            [v for v in estadoDeUnaInstalacion.objects.all()],
+            [v for v in tipoDeConstruccion.objects.all()],
+            [v for v in ubicacionDelMedidor.objects.all()],
+            [v for v in tipoDeAcometidaRed.objects.all()],
+            [v for v in calibreDeLaRed.objects.all()],
+            [v for v in usoDeEnergia.objects.all()],
+            [v for v in claseRed.objects.all()],
+            [v for v in tipoDeServicio.objects.all()],
+            [v for v in usoEspecificoDelInmueble.objects.all()],
+            [v for v in demanda.objects.all()],
+            [v for v in nivelSocieconomico.objects.all()]
+        ]
+
+    @rpc(primitive.String, _returns=Array(Array(primitive.String)))
+    def ingresoMateriales(self, contrato):
+
+        return [
+            [v for v in detalleMaterialContrato.objects.filter(contrato=contrato)
+                .exclude(material__tipoDeMaterial__material__descripcion='KIT ')],
+            [v for v in sello.objects.filter(detalleMaterialContrato__contrato=contrato, utilizado=None)],
+            [
+                'Caja',
+                'Bornera',
+                'Panel',
+                'N/A'
+            ]
+        ]
+
+    @rpc(primitive.String, _returns=Array(Array(primitive.String)))
+    def ingresoMedidorInstalado(self, contrato):
+
+        return [
+            [v for v in medidor.objects.filter(
+                contrato__contrato=contrato,
+                est=True,
+                actividad=None
+            )]
+        ]
+
+
+sw_ingresos = DjangoSoapApp([SW_Ingresos], __name__)
