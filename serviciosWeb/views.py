@@ -29,10 +29,9 @@ hello_world_service = DjangoSoapApp([HelloWorldService], __name__)
 
 
 class SW_Usuarios(DefinitionBase):
-
     @rpc(_returns=Array(Array(primitive.String)))
     def getContratos(self, ):
-        m=[]
+        m = []
         r = contrato.objects.filter(finalVigencia__gte=datetime.date.today())
         for cont in r:
             m.append([cont.num, cont.zonas])
@@ -105,8 +104,6 @@ class SW_Busquedas(DefinitionBase):
         res = operaciones[str(tipo)](dato)
         if res:
             busc.save()
-            #return str((((res['cMedidores'])[0]).save(commit=False)).digitos)
-        #return str((((res['cMedidores'])[0]).fields['marc'].initial))
         return str(res)
 
     @rpc(primitive.String, primitive.String, primitive.String, primitive.String,
@@ -118,7 +115,7 @@ class SW_Busquedas(DefinitionBase):
             usuario=User.objects.get(id=int(idUsuario), sesion_sico=sesion),
             estadoRetorno=True
         )
-        print 'buscando por %s , %s'%(str(tipo), str(dato))
+        print 'buscando por %s , %s' % (str(tipo), str(dato))
         movilBusqueda = SW_buscar(sesion)
         if movilBusqueda:
             busc.save()
@@ -129,70 +126,73 @@ class SW_Busquedas(DefinitionBase):
 sw_busquedas = DjangoSoapApp([SW_Busquedas], __name__)
 
 
-
 class SW_Ingresos(DefinitionBase):
-    @rpc(primitive.Integer, primitive.String, _returns=Array(Array(primitive.String)))
+    @rpc(primitive.String, primitive.String, _returns=Array(Array(primitive.String)))
     def realizados(self, idUsuario, contrato):
-        rel = posicion.objects.filter(actividad__detalledeactividad__rubro__contrato=contrato)\
-            .filter(usuario_id=idUsuario, fechaHora__gte='%s-%s-%s 0:0' % (
-            str(datetime.datetime.today().year),
-            str(datetime.datetime.today().month),
-            str(datetime.datetime.today().day)
-        )).distinct('actividad').exclude(actividad=None)
+        rel = posicion.objects.filter(
+            actividad__detalledeactividad__rubro__contrato=contrato
+        ).filter(
+            usuario_id=int(idUsuario), fechaHora__gte='%s-%s-%s 00:00:00' % (
+                str(datetime.datetime.today().year),
+                str(datetime.datetime.today().month),
+                str(datetime.datetime.today().day)
+            )
+        ).distinct('actividad').exclude(actividad=None)
 
-        ret = [[]]
+        ret = []
 
         for r in rel:
             act = r.actividad
+            try:
+                med = str(act.medidor_set.filter(contrato=None).first().fabrica)
+            except:
+                med = 'Sin Medidor Desc.'
             ret.append(
                 [
-                    '%s' % str(act.id),
-                    act.cliente.cuenta,
-                    act.cliente.nombre,
-                    act.tipoDeSolicitud.descripcion,
-                    act.medidor_set.filter(contrato=None).first().fabrica
+                    str(act.id),
+                    str(act.cliente.cuenta),
+                    str(act.cliente.nombre),
+                    str(act.tipoDeSolicitud.descripcion),
+                    med
                 ]
             )
-
+        print ret
         return ret
 
 
-    @rpc( _returns=Array(Array(primitive.String)))
+    @rpc(_returns=Array(Array(primitive.String)))
     def ingresoActividadInstalador(self, ):
-
         return [
-            [v for v in empleado.objects.all()],
-            [v for v in cuadrilla.objects.all()],
-            [v for v in tipoDeSolicitud.objects.all()]
+            [str(v) for v in empleado.objects.all()],
+            [str(v) for v in cuadrilla.objects.all()],
+            [str(v) for v in tipoDeSolicitud.objects.all()]
         ]
 
 
     @rpc(_returns=Array(Array(primitive.String)))
     def ingresoDetalleInstalacion(self, ):
-
         return [
-            [v for v in materialDeLaRed.objects.all()],
-            [v for v in formaDeConexion.objects.all()],
-            [v for v in estadoDeUnaInstalacion.objects.all()],
-            [v for v in tipoDeConstruccion.objects.all()],
-            [v for v in ubicacionDelMedidor.objects.all()],
-            [v for v in tipoDeAcometidaRed.objects.all()],
-            [v for v in calibreDeLaRed.objects.all()],
-            [v for v in usoDeEnergia.objects.all()],
-            [v for v in claseRed.objects.all()],
-            [v for v in tipoDeServicio.objects.all()],
-            [v for v in usoEspecificoDelInmueble.objects.all()],
-            [v for v in demanda.objects.all()],
-            [v for v in nivelSocieconomico.objects.all()]
+            [str(v) for v in materialDeLaRed.objects.all()],
+            [str(v) for v in formaDeConexion.objects.all()],
+            [str(v) for v in estadoDeUnaInstalacion.objects.all()],
+            [str(v) for v in tipoDeConstruccion.objects.all()],
+            [str(v) for v in ubicacionDelMedidor.objects.all()],
+            [str(v) for v in tipoDeAcometidaRed.objects.all()],
+            [str(v) for v in calibreDeLaRed.objects.all()],
+            [str(v) for v in usoDeEnergia.objects.all()],
+            [str(v) for v in claseRed.objects.all()],
+            [str(v) for v in tipoDeServicio.objects.all()],
+            [str(v) for v in usoEspecificoDelInmueble.objects.all()],
+            [str(v) for v in demanda.objects.all()],
+            [str(v) for v in nivelSocieconomico.objects.all()]
         ]
 
     @rpc(primitive.String, _returns=Array(Array(primitive.String)))
     def ingresoMateriales(self, contrato):
-
         return [
-            [v for v in detalleMaterialContrato.objects.filter(contrato=contrato)
-                .exclude(material__tipoDeMaterial__material__descripcion='KIT ')],
-            [v for v in sello.objects.filter(detalleMaterialContrato__contrato=contrato, utilizado=None)],
+            [str(v) for v in detalleMaterialContrato.objects.filter(contrato=contrato)
+            .exclude(material__tipoDeMaterial__material__descripcion='KIT ')],
+            [str(v) for v in sello.objects.filter(detalleMaterialContrato__contrato=contrato, utilizado=None)],
             [
                 'Caja',
                 'Bornera',
@@ -201,16 +201,35 @@ class SW_Ingresos(DefinitionBase):
             ]
         ]
 
-    @rpc(primitive.String, _returns=Array(Array(primitive.String)))
+    @rpc(primitive.String, _returns=Array(primitive.String))
     def ingresoMedidorInstalado(self, contrato):
-
         return [
-            [v for v in medidor.objects.filter(
+            str(v) for v in medidor.objects.filter(
                 contrato__contrato=contrato,
                 est=True,
                 actividad=None
-            )]
+            )
         ]
+
+
+
+    @rpc(primitive.String, primitive.String, _returns=Array(primitive.String))
+    def ingresoMedidorInstaladoSeleccionado(self, contrato, med):
+        medidores = medidor.objects.filter(
+            contrato__contrato=contrato,
+            est=True
+        )
+        for m in medidores:
+            if med == str(m.__unicode__()):
+                return [
+                    str(m.id),
+                    str(m.fabrica),
+                    str(m.serie),
+                    str(m.marca),
+                    str(m.tipo)
+                ]
+
+        return []
 
 
 sw_ingresos = DjangoSoapApp([SW_Ingresos], __name__)

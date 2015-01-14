@@ -8,6 +8,7 @@ from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from django.contrib import admin
 from usuarios.views import *
+from serviciosWeb.views import *
 from ingresos.views import ListaDeIngreso
 from ingresos.views import ListaDeFotos
 
@@ -80,5 +81,7 @@ urlpatterns = patterns('',
     (r'^sw/usuarios.wsdl', 'serviciosWeb.views.sw_usuarios'),
     (r'^sw/busquedas', 'serviciosWeb.views.sw_busquedas'),
     (r'^sw/busquedas.wsdl', 'serviciosWeb.views.sw_busquedas'),
+    (r'^sw/ingresos', 'serviciosWeb.views.sw_ingresos'),
+    (r'^sw/ingresos.wsdl', 'serviciosWeb.views.sw_ingresos'),
 
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
