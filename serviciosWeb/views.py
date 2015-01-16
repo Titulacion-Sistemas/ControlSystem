@@ -169,6 +169,18 @@ class SW_Ingresos(DefinitionBase):
         ]
 
 
+    @rpc(primitive.String, _returns=Array(primitive.String))
+    def ingresoActividadInstaladorActividadSeleccionada(self, ide):
+        act = actividad.objects.get(id=int(ide))
+        return [
+            str(act.instalador.nombre),
+            str(act.instalador.cuadrilla),
+            str(act.tipoDeSolicitud),
+            str(act.fechaDeActividad),
+            str(act.horaDeActividad)
+        ]
+
+
     @rpc(_returns=Array(Array(primitive.String)))
     def ingresoDetalleInstalacion(self, ):
         return [

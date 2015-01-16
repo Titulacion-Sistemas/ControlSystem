@@ -4,12 +4,12 @@
     <list default="true" id="4a00e047-e965-4656-a541-b5f54dea118e" name="Default" comment="" />
     <ignored path="ControlSystem.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1421103058165" ignored="false" />
+    <file path="/Dummy.txt" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1421381330078" ignored="false" />
     <file path="/models.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1420849649570" ignored="false" />
     <file path="/ingresarSico.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1418436953260" ignored="false" />
     <file path="/urls.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1421119474917" ignored="false" />
     <file path="/cuadrillas.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1420853784514" ignored="false" />
-    <file path="/views.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1421215379674" ignored="false" />
+    <file path="/views.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1421388526503" ignored="false" />
     <file path="/Django Console" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1421214972300" ignored="false" />
     <file path="/navLeft.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1420517935916" ignored="false" />
     <file path="/home.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1420517855337" ignored="false" />
@@ -64,9 +64,7 @@
         <entry file="file://$PROJECT_DIR$/ingresos/forms.py">
           <provider selected="true" editor-type-id="text-editor">
             <state line="77" column="24" selection-start="2779" selection-end="2787" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#15#30#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -74,7 +72,7 @@
       <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/serviciosWeb/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="229" column="17" selection-start="8794" selection-end="8794" vertical-scroll-proportion="0.6063158">
+            <state line="173" column="47" selection-start="6655" selection-end="6655" vertical-scroll-proportion="0.17857143">
               <folding>
                 <element signature="e#41#56#0" expanded="true" />
               </folding>
@@ -95,9 +93,7 @@
         <entry file="file://$PROJECT_DIR$/ControlSystem/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state line="84" column="19" selection-start="3797" selection-end="3805" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#16#55#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -205,6 +201,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -749,7 +746,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="AndroidView" />
       <pane id="PackagesPane" />
     </panes>
@@ -1018,8 +1014,8 @@
       <method />
     </configuration>
     <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="Django server.ControlSystem" />
-      <item index="1" class="java.lang.String" itemvalue="Python.views" />
+      <item index="0" class="java.lang.String" itemvalue="Python.views" />
+      <item index="1" class="java.lang.String" itemvalue="Django server.ControlSystem" />
     </list>
     <recent_temporary>
       <list size="1">
@@ -1080,18 +1076,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="0" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="1" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20194986" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14696969" sideWeight="0.7311978" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13320464" sideWeight="0.7841226" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23359074" sideWeight="0.7158774" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24002574" sideWeight="0.7172702" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39972144" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1969697" sideWeight="0.18197279" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21448468" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28412256" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2827298" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1239,9 +1235,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../PythonTitulacion-EV/Lib/site-packages/django/utils/timezone.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="136" column="57" selection-start="3676" selection-end="3685" vertical-scroll-proportion="0.71516395">
-          <folding />
-        </state>
+        <state line="136" column="57" selection-start="3676" selection-end="3685" vertical-scroll-proportion="0.71516395" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/usuarios/views.py">
@@ -1254,18 +1248,14 @@
     <entry file="file://$PROJECT_DIR$/ControlSystem/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="84" column="19" selection-start="3797" selection-end="3805" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#16#55#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ingresos/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="77" column="24" selection-start="2779" selection-end="2787" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#15#30#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1278,7 +1268,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/serviciosWeb/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="229" column="17" selection-start="8794" selection-end="8794" vertical-scroll-proportion="0.6063158">
+        <state line="173" column="47" selection-start="6655" selection-end="6655" vertical-scroll-proportion="0.17857143">
           <folding>
             <element signature="e#41#56#0" expanded="true" />
           </folding>
