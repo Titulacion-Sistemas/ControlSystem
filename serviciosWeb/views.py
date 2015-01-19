@@ -10,7 +10,7 @@ from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar
 from ControlSystem.pComm.busquedas.SW_scriptsBusquedas import buscar as SW_buscar
 from busquedas.models import vitacoraBusquedas
 from handler import DjangoSoapApp
-from ingresos.models import actividad, empleado, tipoDeSolicitud, cuadrilla, materialDeLaRed, formaDeConexion, estadoDeUnaInstalacion, tipoDeConstruccion, ubicacionDelMedidor, tipoDeAcometidaRed, calibreDeLaRed, usoDeEnergia, claseRed, tipoDeServicio, usoEspecificoDelInmueble, demanda, nivelSocieconomico
+from ingresos.models import actividad, empleado, tipoDeSolicitud, cuadrilla, materialDeLaRed, formaDeConexion, estadoDeUnaInstalacion, tipoDeConstruccion, ubicacionDelMedidor, tipoDeAcometidaRed, calibreDeLaRed, usoDeEnergia, claseRed, tipoDeServicio, usoEspecificoDelInmueble, demanda, nivelSocieconomico, detalleClienteMedidor
 from inventario.models import detalleMaterialContrato, sello, medidor
 from usuarios.models import usuarioSico, contrato, posicion
 from usuarios.views import integracion, cerrarSico
@@ -181,6 +181,26 @@ class SW_Ingresos(DefinitionBase):
         ]
 
 
+    @rpc(primitive.String, _returns=Array(primitive.String))
+    def ingresoDatosAbonadoSeleccionado(self, ide):
+        act = actividad.objects.get(id=int(ide))
+        m = act.medidor_set.get(contrato=None)
+        return [
+            str(act.cliente.cuenta),
+            str(act.cliente.ci_ruc),
+            str(act.cliente.nombre),
+            str(act.cliente.estado),
+            str(act.cliente.telefono),
+            str(act.cliente.ubicacionGeografica.parroquia.descripcion),
+            str(act.cliente.ubicacionGeografica.calle.descripcion1),
+            str(act.cliente.geocodigo),
+            str(m.fabrica),
+            str(m.serie),
+            str(m.marca),
+            str(m.lectura)
+        ]
+
+
     @rpc(_returns=Array(Array(primitive.String)))
     def ingresoDetalleInstalacion(self, ):
         return [
@@ -198,6 +218,28 @@ class SW_Ingresos(DefinitionBase):
             [str(v) for v in demanda.objects.all()],
             [str(v) for v in nivelSocieconomico.objects.all()]
         ]
+
+
+    @rpc(primitive.String, _returns=Array(primitive.String))
+    def ingresoDetalleInstalacionSeleccionada(self, ide):
+        act = actividad.objects.get(id=int(ide))
+
+        return [
+            str(act.materialDeLaRed),
+            str(act.formaDeConexion),
+            str(act.estadoDeLaInstalacion),
+            str(act.tipoDeConstruccion),
+            str(act.ubicacionDelMedidor),
+            str(act.tipoDeAcometidaRed),
+            str(act.calibreDeLaRed),
+            str(act.usoDeEnergia),
+            str(act.claseRed),
+            str(act.tipoDeServicio),
+            str(act.usoEspecificoDelInmueble),
+            str(act.demanda),
+            str(act.nivelSocieconomico)
+        ]
+
 
     @rpc(primitive.String, _returns=Array(Array(primitive.String)))
     def ingresoMateriales(self, contrato):
