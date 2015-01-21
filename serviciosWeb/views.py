@@ -10,8 +10,8 @@ from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar
 from ControlSystem.pComm.busquedas.SW_scriptsBusquedas import buscar as SW_buscar
 from busquedas.models import vitacoraBusquedas
 from handler import DjangoSoapApp
-from ingresos.models import actividad, empleado, tipoDeSolicitud, cuadrilla, materialDeLaRed, formaDeConexion, estadoDeUnaInstalacion, tipoDeConstruccion, ubicacionDelMedidor, tipoDeAcometidaRed, calibreDeLaRed, usoDeEnergia, claseRed, tipoDeServicio, usoEspecificoDelInmueble, demanda, nivelSocieconomico, detalleClienteMedidor
-from inventario.models import detalleMaterialContrato, sello, medidor
+from ingresos.models import actividad, empleado, tipoDeSolicitud, cuadrilla, materialDeLaRed, formaDeConexion, estadoDeUnaInstalacion, tipoDeConstruccion, ubicacionDelMedidor, tipoDeAcometidaRed, calibreDeLaRed, usoDeEnergia, claseRed, tipoDeServicio, usoEspecificoDelInmueble, demanda, nivelSocieconomico, detalleClienteMedidor, detalleDeActividad
+from inventario.models import detalleMaterialContrato, sello, medidor, detalleRubro
 from usuarios.models import usuarioSico, contrato, posicion
 from usuarios.views import integracion, cerrarSico
 
@@ -47,6 +47,7 @@ class SW_Usuarios(DefinitionBase):
                     error = ["El Usuario especificado ya esta en uso."]
                 else:
                     try:
+                        print c
                         u = usuarioSico.objects.get(user=user, contrato=c)
                     except:
                         u = False
@@ -254,6 +255,65 @@ class SW_Ingresos(DefinitionBase):
                 'N/A'
             ]
         ]
+
+    @rpc(primitive.String, primitive.String, _returns=Array(Array(primitive.String)))
+    def ingresoMaterialesSeleccionados(self, ide, cont):
+        act = actividad.objects.get(id=int(ide))
+        deta = act.detalledeactividad_set.all()
+        mat = act.materialdeactividad_set.all()
+        sell = act.sello_set.all()
+
+        print act.cliente.cuenta
+        print cont
+
+        try:
+            if len(list(deta.filter(
+                        actividad=act,
+                        rubro=detalleRubro.objects.get(
+                                servicio__id=3,
+                                rubro__id=1
+                        )))) > 0:
+                reubicacion = True
+            else: reubicacion = False
+        except:
+            reubicacion = False
+
+        try:
+            if len(list(deta.filter(
+                        actividad=act,
+                        rubro=detalleRubro.objects.get(
+                                servicio__id=4,
+                                rubro__id=4
+                        )))) > 0:
+                contrastacion = True
+            else: contrastacion = False
+        except:
+            contrastacion = False
+
+        try:
+            if len(list(deta.filter(
+                        actividad=act,
+                        rubro=detalleRubro.objects.get(
+                                servicio__id=6,
+                                rubro__id=2
+                        )))) > 0:
+                directo = True
+            else: directo = False
+        except:
+            directo = False
+
+        b =  [
+            [str(reubicacion),""],
+            [str(contrastacion),""],
+            [str(directo),""],
+            [str(v.cantidad) for v in mat],
+            [str(v.material) for v in mat],
+            [str(v) for v in sell],
+            [str(v.ubicacion) for v in sell]
+        ]
+        print b
+        return b
+
 
     @rpc(primitive.String, _returns=Array(primitive.String))
     def ingresoMedidorInstalado(self, contrato):
