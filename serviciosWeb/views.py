@@ -10,7 +10,7 @@ from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar
 from ControlSystem.pComm.busquedas.SW_scriptsBusquedas import buscar as SW_buscar
 from busquedas.models import vitacoraBusquedas
 from handler import DjangoSoapApp
-from ingresos.models import actividad, empleado, tipoDeSolicitud, cuadrilla, materialDeLaRed, formaDeConexion, estadoDeUnaInstalacion, tipoDeConstruccion, ubicacionDelMedidor, tipoDeAcometidaRed, calibreDeLaRed, usoDeEnergia, claseRed, tipoDeServicio, usoEspecificoDelInmueble, demanda, nivelSocieconomico, detalleClienteMedidor, detalleDeActividad
+from ingresos.models import actividad, empleado, tipoDeSolicitud, cuadrilla, materialDeLaRed, formaDeConexion, estadoDeUnaInstalacion, tipoDeConstruccion, ubicacionDelMedidor, tipoDeAcometidaRed, calibreDeLaRed, usoDeEnergia, claseRed, tipoDeServicio, usoEspecificoDelInmueble, demanda, nivelSocieconomico, detalleClienteMedidor, detalleDeActividad, detalleClienteReferencia
 from inventario.models import detalleMaterialContrato, sello, medidor, detalleRubro
 from usuarios.models import usuarioSico, contrato, posicion
 from usuarios.views import integracion, cerrarSico
@@ -327,12 +327,20 @@ class SW_Ingresos(DefinitionBase):
 
 
 
-    @rpc(primitive.String, primitive.String, _returns=Array(primitive.String))
-    def ingresoMedidorInstaladoSeleccionado(self, contrato, med):
+    @rpc(primitive.String, primitive.String, primitive.String, _returns=Array(primitive.String))
+    def ingresoMedidorInstaladoSel(self, contrato, med, ide):
         medidores = medidor.objects.filter(
             contrato__contrato=contrato,
             est=True
         )
+        print ide
+        print med
+        if ide:
+            medidores = medidor.objects.filter(
+            contrato__contrato=contrato,
+            actividad=actividad.objects.get(id=int(ide))
+        )
+
         for m in medidores:
             if med == str(m.__unicode__()):
                 return [
@@ -340,10 +348,57 @@ class SW_Ingresos(DefinitionBase):
                     str(m.fabrica),
                     str(m.serie),
                     str(m.marca),
-                    str(m.tipo)
+                    str(m.tipo),
+                    str(m.lectura)
                 ]
 
         return []
+
+
+    @rpc(primitive.String, primitive.String, _returns=Array(primitive.String))
+    def ingresoMedidorInstaladoSeleccionado(self, contrato, ide):
+        medidores = medidor.objects.filter(
+            contrato__contrato=contrato,
+            actividad=actividad.objects.get(id=int(ide))
+        )
+        print ide
+        if medidores.first():
+            m = medidores.first()
+            return [
+                str(m)
+            ]
+
+        return []
+
+
+    @rpc(primitive.String, _returns=Array(primitive.String))
+    def ingresosReferenciaSeleccionada(self, ide):
+        act = actividad.objects.get(id=int(ide))
+        deta = detalleClienteReferencia.objects.get(cliente=act.cliente)
+        medidores = deta.referencia.detalleclientemedidor_set.all()
+        for m in medidores:
+            if m.fecha_desinstalacion == None or \
+                            m.fecha_desinstalacion == '' or \
+                            m.fecha_desinstalacion == '00/00/0000' or \
+                            m.fecha_desinstalacion == '0/00/0000':
+                actual=m.medidor
+                break
+
+        if actual:
+            return [
+                str(actual.fabrica),
+                str(actual.serie),
+                str(actual.marca),
+                str(deta.referencia.cuenta)
+            ]
+        else:
+            return [
+                '',
+                '',
+                '',
+                str(deta.referencia.cuenta)
+            ]
+
 
 
 sw_ingresos = DjangoSoapApp([SW_Ingresos], __name__)
