@@ -1,6 +1,7 @@
 # coding=utf-8
 # Create your views here.
 import datetime
+from django.utils import timezone
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from soaplib.serializers import primitive
@@ -11,7 +12,7 @@ from ControlSystem.pComm.busquedas.SW_scriptsBusquedas import buscar as SW_busca
 from busquedas.models import vitacoraBusquedas
 from handler import DjangoSoapApp
 from ingresos.models import actividad, empleado, tipoDeSolicitud, cuadrilla, materialDeLaRed, formaDeConexion, estadoDeUnaInstalacion, tipoDeConstruccion, ubicacionDelMedidor, tipoDeAcometidaRed, calibreDeLaRed, usoDeEnergia, claseRed, tipoDeServicio, usoEspecificoDelInmueble, demanda, nivelSocieconomico, detalleClienteMedidor, detalleDeActividad, detalleClienteReferencia
-from inventario.models import detalleMaterialContrato, sello, medidor, detalleRubro
+from inventario.models import detalleMaterialContrato, sello, medidor, detalleRubro, marca
 from usuarios.models import usuarioSico, contrato, posicion
 from usuarios.views import integracion, cerrarSico
 
@@ -52,19 +53,19 @@ class SW_Usuarios(DefinitionBase):
                     except:
                         u = False
                     if isinstance(u, usuarioSico):
-                        #if integracion(u.nombre, u.clave, user):
-                        error = [
-                            'True',
-                            str(user.id),
-                            str(user.username),
-                            str(user.sesion_sico),
-                            ('%s %s' % (user.first_name, user.last_name)).encode('utf-8')
-                        ]
-                        #else:
-                        #    error = ['El Sistema Comercial(Sico Cnel) no esta disponible por el momento, '
-                        #             'intentelo nuevamente mas tarde...']
-                        #    user.sesion_sico=''
-                        #    user.save()
+                        if integracion(u.nombre, u.clave, user):
+                            error = [
+                                'True',
+                                str(user.id),
+                                str(user.username),
+                                str(user.sesion_sico),
+                                ('%s %s' % (user.first_name, user.last_name)).encode('utf-8')
+                            ]
+                        else:
+                            error = ['El Sistema Comercial(Sico Cnel) no esta disponible por el momento, '
+                                     'intentelo nuevamente mas tarde...']
+                            user.sesion_sico = ''
+                            user.save()
                     else:
                         error = ['El Usuario Especificado no cuenta con permisos necesarios para acceder al contarto']
 
@@ -87,7 +88,8 @@ sw_usuarios = DjangoSoapApp([SW_Usuarios], __name__)
 
 
 class SW_Busquedas(DefinitionBase):
-    @rpc(primitive.Integer, primitive.String, primitive.Integer, primitive.String, _returns=primitive.String)
+    @rpc(primitive.Integer, primitive.String, primitive.Integer, primitive.String,
+         _returns=Array(Array(primitive.String)))
     def buscarDjango(self, idUsuario, sesion, tipo, dato):
         busc = vitacoraBusquedas(
             tipoBusq=str(tipo),
@@ -103,9 +105,81 @@ class SW_Busquedas(DefinitionBase):
             '4': b.porGeocodigo
         }
         res = operaciones[str(tipo)](dato)
+
+        coincidencias = []
+        cli = []
+        medidores = []
+
         if res:
             busc.save()
-        return str(res)
+
+            for c in res['cClientes']:
+
+                if tipo == 1:
+                    coincidencias.append(c.cuenta)
+                    coincidencias.append(c.nombre)
+                    coincidencias.append(c.ubicacionGeografica.calle.descripcion1)
+                    coincidencias.append(c.deuda)
+                    coincidencias.append(c.meses)
+                elif tipo == 2:
+                    coincidencias.append(c.ubicacionGeografica.urbanizacion.descripcion)
+                    coincidencias.append(c.estado)
+                    coincidencias.append(c.cuenta)
+                    coincidencias.append(c.nombre)
+                    coincidencias.append(c.ubicacionGeografica.calle.descripcion1)
+                elif tipo == 3:
+                    coincidencias.append(c.nombre)
+                    coincidencias.append(c.ubicacionGeografica.calle.descripcion1)
+                    coincidencias.append(c.cuenta)
+                    coincidencias.append(c.deuda)
+                    coincidencias.append(c.meses)
+                elif tipo == 4:
+                    coincidencias.append(c.ubicacionGeografica.interseccion.descripcion1)
+                    coincidencias.append(c.cuenta)
+                    coincidencias.append(c.nombre)
+                    coincidencias.append(c.ubicacionGeografica.calle.descripcion1)
+                    coincidencias.append(c.ubicacionGeografica.urbanizacion.descripcion)
+                    coincidencias.append(c.deuda)
+
+            c = res['formCliente']
+
+            cli.append(c.instance.ci_ruc)
+            cli.append(c.instance.cuenta)
+            cli.append(c.instance.nombre)
+            cli.append(c.fields['direccion'].initial)
+            cli.append(c.fields['interseccion'].initial)
+            cli.append(c.fields['urbanizacion'].initial)
+            cli.append(c.instance.estado)
+            cli.append(c.fields['geo'].initial)
+            cli.append("")
+            cli.append(c.fields['parroquia'].initial)
+            cli.append(c.instance.meses)
+            cli.append(c.instance.deuda)
+
+            for c in res['cMedidores']:
+
+                medidores.append(c.fields['marc'].initial)
+                medidores.append(c.fields['tecnologia'].initial)
+                medidores.append(c.fields['tension'].initial)
+                medidores.append(c.fields['amperaje'].initial)
+                medidores.append(c.fields['fi'].initial)
+                medidores.append(c.fields['fd'].initial)
+                medidores.append(c.fields['li'].initial)
+                medidores.append(c.fields['ld'].initial)
+                medidores.append(c.instance.fabrica)
+                medidores.append(c.instance.serie)
+                medidores.append(c.instance.tipo)
+                medidores.append(c.instance.digitos)
+                medidores.append(c.instance.fases)
+                medidores.append(c.instance.hilos)
+
+        return [
+            coincidencias,
+            cli,
+            medidores
+        ]
+
+
 
     @rpc(primitive.String, primitive.String, primitive.String, primitive.String,
          _returns=Array(Array(primitive.String)))
@@ -154,7 +228,8 @@ class SW_Ingresos(DefinitionBase):
                     str(act.cliente.cuenta),
                     str(act.cliente.nombre),
                     str(act.tipoDeSolicitud.descripcion),
-                    med
+                    med,
+                    str(act.tipoDeSolicitud.id)
                 ]
             )
         print ret
@@ -185,16 +260,29 @@ class SW_Ingresos(DefinitionBase):
     @rpc(primitive.String, _returns=Array(primitive.String))
     def ingresoDatosAbonadoSeleccionado(self, ide):
         act = actividad.objects.get(id=int(ide))
-        m = act.medidor_set.get(contrato=None)
+        m = act.medidor_set.all().filter(contrato=None)
+
+        if m.count() <= 0:
+            m = medidor(fabrica='', serie='', marca=marca(id='   '), lectura='')
+            parrokia = ""
+            direccion = ""
+            geo = ""
+        else:
+            parrokia = str(act.cliente.ubicacionGeografica.parroquia.descripcion)
+            direccion = str(act.cliente.ubicacionGeografica.calle.descripcion1)
+            geo = str(act.cliente.geocodigo)
+
+
+
         return [
             str(act.cliente.cuenta),
             str(act.cliente.ci_ruc),
             str(act.cliente.nombre),
             str(act.cliente.estado),
             str(act.cliente.telefono),
-            str(act.cliente.ubicacionGeografica.parroquia.descripcion),
-            str(act.cliente.ubicacionGeografica.calle.descripcion1),
-            str(act.cliente.geocodigo),
+            parrokia,
+            direccion,
+            geo,
             str(m.fabrica),
             str(m.serie),
             str(m.marca),
@@ -268,44 +356,47 @@ class SW_Ingresos(DefinitionBase):
 
         try:
             if len(list(deta.filter(
-                        actividad=act,
-                        rubro=detalleRubro.objects.get(
-                                servicio__id=3,
-                                rubro__id=1
-                        )))) > 0:
+                    actividad=act,
+                    rubro=detalleRubro.objects.get(
+                            servicio__id=3,
+                            rubro__id=1
+                    )))) > 0:
                 reubicacion = True
-            else: reubicacion = False
+            else:
+                reubicacion = False
         except:
             reubicacion = False
 
         try:
             if len(list(deta.filter(
-                        actividad=act,
-                        rubro=detalleRubro.objects.get(
-                                servicio__id=4,
-                                rubro__id=4
-                        )))) > 0:
+                    actividad=act,
+                    rubro=detalleRubro.objects.get(
+                            servicio__id=4,
+                            rubro__id=4
+                    )))) > 0:
                 contrastacion = True
-            else: contrastacion = False
+            else:
+                contrastacion = False
         except:
             contrastacion = False
 
         try:
             if len(list(deta.filter(
-                        actividad=act,
-                        rubro=detalleRubro.objects.get(
-                                servicio__id=6,
-                                rubro__id=2
-                        )))) > 0:
+                    actividad=act,
+                    rubro=detalleRubro.objects.get(
+                            servicio__id=6,
+                            rubro__id=2
+                    )))) > 0:
                 directo = True
-            else: directo = False
+            else:
+                directo = False
         except:
             directo = False
 
-        b =  [
-            [str(reubicacion),""],
-            [str(contrastacion),""],
-            [str(directo),""],
+        b = [
+            [str(reubicacion), ""],
+            [str(contrastacion), ""],
+            [str(directo), ""],
             [str(v.cantidad) for v in mat],
             [str(v.material) for v in mat],
             [str(v) for v in sell],
@@ -326,7 +417,6 @@ class SW_Ingresos(DefinitionBase):
         ]
 
 
-
     @rpc(primitive.String, primitive.String, primitive.String, _returns=Array(primitive.String))
     def ingresoMedidorInstaladoSel(self, contrato, med, ide):
         medidores = medidor.objects.filter(
@@ -337,9 +427,9 @@ class SW_Ingresos(DefinitionBase):
         print med
         if ide:
             medidores = medidor.objects.filter(
-            contrato__contrato=contrato,
-            actividad=actividad.objects.get(id=int(ide))
-        )
+                contrato__contrato=contrato,
+                actividad=actividad.objects.get(id=int(ide))
+            )
 
         for m in medidores:
             if med == str(m.__unicode__()):
@@ -381,7 +471,7 @@ class SW_Ingresos(DefinitionBase):
                             m.fecha_desinstalacion == '' or \
                             m.fecha_desinstalacion == '00/00/0000' or \
                             m.fecha_desinstalacion == '0/00/0000':
-                actual=m.medidor
+                actual = m.medidor
                 break
 
         if actual:
@@ -398,6 +488,54 @@ class SW_Ingresos(DefinitionBase):
                 '',
                 str(deta.referencia.cuenta)
             ]
+
+    @rpc(Array(Array(primitive.String)), _returns=Array(Array(primitive.String)))
+    def prueba_array(self, arr):
+        print arr
+        return arr
+
+
+    @rpc(_returns=Array(Array(primitive.String)))
+    def ubicacion(self, ):
+        rel = posicion.objects.filter(
+            fechaHora__gte='%s-%s-%s 00:00:00' % (
+                str(datetime.datetime.today().year),
+                str(datetime.datetime.today().month),
+                str(datetime.datetime.today().day)
+            )
+        ).order_by('-fechaHora').distinct('fechaHora')
+
+        ret = []
+
+        for r in rel:
+            ret.append(
+                [
+                    '%s %s' % (r.usuario.first_name, r.usuario.last_name),
+                    str((timezone.localtime(r.fechaHora).time())),
+                    str(r.latitud),
+                    str(r.longitud),
+                ]
+            )
+        print ret
+        return ret
+
+    @rpc(primitive.String, primitive.String, primitive.String, primitive.String, _returns=primitive.Boolean)
+    def guardarUbicacion(self, idUsuario, fechahora, latitud, longitud):
+        rel = posicion(
+            fechaHora = fechahora,
+            latitud = latitud,
+            longitud = longitud,
+            usuario =User.objects.get(id=int(idUsuario))
+        )
+
+        if isinstance(rel.save(), posicion):
+            return True
+        else:
+            return False
+
+    @rpc(primitive.String, primitive.String, primitive.String, primitive.String, _returns=primitive.Boolean)
+    def guardarActividad(self, idUsuario, fechahora, latitud, longitud):
+        pass
 
 
 

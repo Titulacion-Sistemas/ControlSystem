@@ -25,6 +25,8 @@ def llenarCliente(sesion):
             )
         )
     )
+    cli.append(str(sesion.autECLPS.GetText(13, 13, 2).strip()))
+    cli.append(str(sesion.autECLPS.GetText(13, 17, 35).strip()))
     #print(cli.geocodigo)
     sesion.autECLPS.SendKeys('[pf2]')
     sesion.autECLOIA.WaitForAppAvailable()

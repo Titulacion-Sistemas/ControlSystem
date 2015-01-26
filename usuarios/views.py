@@ -107,14 +107,14 @@ def ingreso(request):
                         except:
                             u = False
                         if isinstance(u, usuarioSico):
-                            #if integracion(u.nombre, u.clave, user):
-                            login(request, user)
-                            request.session['contrato'] = contrato
-                            return HttpResponseRedirect('/home')
-                            #else:
-                            #    error = 'El Sistema Comercial(Sico Cnel) no esta disponible por el momento...'
-                            #    user.sesion_sico=''
-                            #    user.save()
+                            if integracion(u.nombre, u.clave, user):
+                                login(request, user)
+                                request.session['contrato'] = contrato
+                                return HttpResponseRedirect('/home')
+                            else:
+                                error = 'El Sistema Comercial(Sico Cnel) no esta disponible por el momento...'
+                                user.sesion_sico=''
+                                user.save()
                         else:
                             error = 'El Usuario Especificado no cuenta con permisos necesarios para acceder al contarto'
             elif username and password:
