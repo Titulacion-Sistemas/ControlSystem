@@ -88,9 +88,10 @@ sw_usuarios = DjangoSoapApp([SW_Usuarios], __name__)
 
 
 class SW_Busquedas(DefinitionBase):
-    @rpc(primitive.Integer, primitive.String, primitive.Integer, primitive.String,
+    @rpc(primitive.Integer, primitive.String, primitive.Integer, primitive.String, primitive.Boolean,
          _returns=Array(Array(primitive.String)))
-    def buscarDjango(self, idUsuario, sesion, tipo, dato):
+    def buscarDjango(self, idUsuario, sesion, tipo, dato, esIngreso):
+        global client
         busc = vitacoraBusquedas(
             tipoBusq=str(tipo),
             consulta=dato,
@@ -156,6 +157,10 @@ class SW_Busquedas(DefinitionBase):
             cli.append(c.instance.meses)
             cli.append(c.instance.deuda)
 
+            client = c.instance
+            if esIngreso:
+                client.save()
+
             for c in res['cMedidores']:
 
                 medidores.append(c.fields['marc'].initial)
@@ -172,13 +177,32 @@ class SW_Busquedas(DefinitionBase):
                 medidores.append(c.instance.digitos)
                 medidores.append(c.instance.fases)
                 medidores.append(c.instance.hilos)
+                med = c.instance
+                if esIngreso:
+                    med.save()
+                    d = detalleClienteMedidor(
+                        #lectura_instalacion=c.fields['li'].initial,
+                        #lectura_desinstalacion=c.fields['ld'].initial,
+                        #fecha_instalacion=c.fields['fi'].initial,
+                        #fecha_desinstalacion=c.fields['fd'].initial,
+                        medidor=med.id,
+                        cliente=client.id
+                    )
+                    d.save()
+
+        if esIngreso:
+            return [
+                coincidencias,
+                cli,
+                medidores,
+                [client.id],
+            ]
 
         return [
             coincidencias,
             cli,
             medidores
         ]
-
 
 
     @rpc(primitive.String, primitive.String, primitive.String, primitive.String,
@@ -263,31 +287,38 @@ class SW_Ingresos(DefinitionBase):
         m = act.medidor_set.all().filter(contrato=None)
 
         if m.count() <= 0:
-            m = medidor(fabrica='', serie='', marca=marca(id='   '), lectura='')
-            parrokia = ""
-            direccion = ""
-            geo = ""
+            return [
+                str(act.cliente.cuenta),
+                str(act.cliente.ci_ruc),
+                str(act.cliente.nombre),
+                str(act.cliente.estado),
+                str(act.cliente.telefono),
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
+
         else:
-            parrokia = str(act.cliente.ubicacionGeografica.parroquia.descripcion)
-            direccion = str(act.cliente.ubicacionGeografica.calle.descripcion1)
-            geo = str(act.cliente.geocodigo)
+            return [
+                str(act.cliente.cuenta),
+                str(act.cliente.ci_ruc),
+                str(act.cliente.nombre),
+                str(act.cliente.estado),
+                str(act.cliente.telefono),
+                str(act.cliente.ubicacionGeografica.parroquia.descripcion),
+                str(act.cliente.ubicacionGeografica.calle.descripcion1),
+                str(act.cliente.geocodigo),
+                str(m.first().fabrica),
+                str(m.first().serie),
+                str(m.first().marca),
+                str(m.first().lectura)
+            ]
 
 
-
-        return [
-            str(act.cliente.cuenta),
-            str(act.cliente.ci_ruc),
-            str(act.cliente.nombre),
-            str(act.cliente.estado),
-            str(act.cliente.telefono),
-            parrokia,
-            direccion,
-            geo,
-            str(m.fabrica),
-            str(m.serie),
-            str(m.marca),
-            str(m.lectura)
-        ]
 
 
     @rpc(_returns=Array(Array(primitive.String)))
@@ -522,10 +553,10 @@ class SW_Ingresos(DefinitionBase):
     @rpc(primitive.String, primitive.String, primitive.String, primitive.String, _returns=primitive.Boolean)
     def guardarUbicacion(self, idUsuario, fechahora, latitud, longitud):
         rel = posicion(
-            fechaHora = fechahora,
-            latitud = latitud,
-            longitud = longitud,
-            usuario =User.objects.get(id=int(idUsuario))
+            fechaHora=fechahora,
+            latitud=latitud,
+            longitud=longitud,
+            usuario=User.objects.get(id=int(idUsuario))
         )
 
         if isinstance(rel.save(), posicion):
@@ -536,7 +567,6 @@ class SW_Ingresos(DefinitionBase):
     @rpc(primitive.String, primitive.String, primitive.String, primitive.String, _returns=primitive.Boolean)
     def guardarActividad(self, idUsuario, fechahora, latitud, longitud):
         pass
-
 
 
 sw_ingresos = DjangoSoapApp([SW_Ingresos], __name__)
