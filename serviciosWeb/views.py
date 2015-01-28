@@ -1,6 +1,7 @@
 # coding=utf-8
 # Create your views here.
 import datetime
+from decimal import *
 from django.utils import timezone
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
@@ -180,11 +181,31 @@ class SW_Busquedas(DefinitionBase):
                 med = c.instance
                 if esIngreso:
                     med.save()
+                    try:
+                        li = Decimal((str(c.fields['li'].initial).strip()))
+                    except:
+                        li = Decimal('0000')
+
+                    try:
+                        ld = Decimal((str(c.fields['ld'].initial).strip()))
+                    except:
+                        ld = Decimal('0000')
+
+                    try:
+                        fi = datetime.datetime.strptime((str(c.fields['fi'].initial).strip()), "%d/%m/%Y").date()
+                    except:
+                        fi = datetime.datetime.strptime('1/01/1900', "%d/%m/%Y").date()
+
+                    try:
+                        fd = datetime.datetime.strptime((str(c.fields['fd'].initial).strip()), "%d/%m/%Y").date()
+                    except:
+                        fd = datetime.datetime.strptime('1/01/1900', "%d/%m/%Y").date()
+
                     d = detalleClienteMedidor(
-                        #lectura_instalacion=c.fields['li'].initial,
-                        #lectura_desinstalacion=c.fields['ld'].initial,
-                        #fecha_instalacion=c.fields['fi'].initial,
-                        #fecha_desinstalacion=c.fields['fd'].initial,
+                        lectura_instalacion=li,
+                        lectura_desinstalacion=ld,
+                        fecha_instalacion=fi,
+                        fecha_desinstalacion=fd,
                         medidor=med.id,
                         cliente=client.id
                     )
