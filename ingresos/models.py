@@ -285,9 +285,23 @@ class cliente(models.Model):
         except Exception as e:
             print e.message
             try:
-                self.id = cliente.objects.get(cuenta=str(self.cuenta)).id
-                print 'Actualizar por CTA'
-                super(cliente, self).save(force_update=True, *args, **kwargs)
+                if self.cuenta !='S/N':
+                    self.id = cliente.objects.get(cuenta=str(self.cuenta)).id
+                    print 'Actualizar por CTA'
+                    super(cliente, self).save(force_update=True, *args, **kwargs)
+                else:
+                    try:
+                        self.id = cliente.objects.get(
+                            ci_ruc=self.ci_ruc,
+                            cuenta=self.cuenta,
+                            nombre=self.nombre,
+                            telefono=self.telefono
+                        ).id
+                        print 'Actualizar por CTA SN'
+                        super(cliente, self).save(force_update=True, *args, **kwargs)
+                    except:
+                        print 'Gurdar Cliente de Servicio Nuevo'
+                        super(cliente, self).save(*args, **kwargs)
             except Exception as e:
                 print e.message
                 print 'Gurdar Cliente'
@@ -477,7 +491,7 @@ class calibreDeLaRed(models.Model):
     descripcion=models.CharField(max_length=25)
 
     def __unicode__(self):
-        return u'%d %s' % (self.id, self.descripcion)
+        return '%d %s' % (self.id, self.descripcion)
 
     class Meta:
         verbose_name_plural="Calibres de Red"
@@ -684,11 +698,12 @@ class foto(models.Model):
     upload_to = '%s/%s/%s/%s'
 
     def _get_upload_to(self, filename):
+        act = actividad.objects.get(id=self.actividad.id)
         try:
-            contrato = sello.objects.filter(utilizado=actividad)[0].detalleMaterialContrato.contrato.id
+            contrato = sello.objects.filter(utilizado=act).first().detalleMaterialContrato.contrato.num
         except:
             contrato = 'Sin contrato'
-        act=actividad.objects.get(id=self.actividad.id)
+
         if len(act.cliente.cuenta)>4:
             identificador= str(act.cliente.cuenta)
         else:

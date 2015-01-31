@@ -253,12 +253,12 @@ class buscar:
 
         medidores = llenarMedidores(sesion, paraIngreso=paraIngreso)
 
-        titulo = sesion.autECLPS.GetText(9, 16, 20)
-        while titulo != 'CONSULTA DE CLIENTES':
+        titulo = sesion.autECLPS.GetText(5, 1, 11)
+        while titulo != '5=Programas':
             sesion.autECLPS.SendKeys('[pf12]')
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
-            titulo = sesion.autECLPS.GetText(9, 16, 20)
+            titulo = sesion.autECLPS.GetText(5, 1, 11)
 
         formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica,
                                instance=coincidencias[0])
@@ -349,12 +349,12 @@ class buscar:
 
         medidores = llenarMedidores(sesion, paraIngreso=paraIngreso)
 
-        titulo = sesion.autECLPS.GetText(9, 16, 20)
-        while titulo != 'CONSULTA DE CLIENTES':
+        titulo = sesion.autECLPS.GetText(5, 1, 11)
+        while titulo != '5=Programas':
             sesion.autECLPS.SendKeys('[pf12]')
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
-            titulo = sesion.autECLPS.GetText(9, 16, 20)
+            titulo = sesion.autECLPS.GetText(5, 1, 11)
 
         formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica,
                                instance=coincidencias[0])
@@ -437,12 +437,12 @@ class buscar:
 
         medidores = llenarMedidores(sesion, paraIngreso=paraIngreso)
 
-        titulo = sesion.autECLPS.GetText(9, 16, 20)
-        while titulo != 'CONSULTA DE CLIENTES':
+        titulo = sesion.autECLPS.GetText(5, 1, 11)
+        while titulo != '5=Programas':
             sesion.autECLPS.SendKeys('[pf12]')
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
-            titulo = sesion.autECLPS.GetText(9, 16, 20)
+            titulo = sesion.autECLPS.GetText(5, 1, 11)
 
         formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica,
                                instance=coincidencias[0])
@@ -556,12 +556,12 @@ class buscar:
 
         medidores = llenarMedidores(sesion, paraIngreso=paraIngreso)
 
-        titulo = sesion.autECLPS.GetText(9, 16, 20)
-        while titulo != 'CONSULTA DE CLIENTES':
+        titulo = sesion.autECLPS.GetText(5, 1, 11)
+        while titulo != '5=Programas':
             sesion.autECLPS.SendKeys('[pf12]')
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
-            titulo = sesion.autECLPS.GetText(9, 16, 20)
+            titulo = sesion.autECLPS.GetText(5, 1, 11)
 
         formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica,
                                instance=coincidencias[0])

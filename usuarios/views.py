@@ -184,7 +184,7 @@ def cuadrillas(request):
     #pos = posicion.objects.filter(User__usuario_sico__contrato=request.session['contrato'], fechaHora__gt='2014-12-14 0:0')
     pos = posicion.objects.filter(
         actividad__detalledeactividad__rubro__contrato=request.session['contrato'],
-        fechaHora__gte='%s-%s-%s 0:0:0-05' % (
+        fechaHora__gte='%s-%s-%s 0:0:0' % (
             str(datetime.datetime.today().year),
             str(datetime.datetime.today().month),
             str(datetime.datetime.today().day)

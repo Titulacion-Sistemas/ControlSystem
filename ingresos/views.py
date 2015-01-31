@@ -4,13 +4,14 @@ import datetime
 
 from dajax.core import Dajax
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnInteger
-from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Sum
 from django.http import HttpResponseRedirect, QueryDict
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django_ajax.decorators import ajax
+from django.views.generic.base import TemplateView
+
 from ControlSystem.pComm.cambiosDeMateriales.scriptCambiosDeMateriales import ingresarCambioDeMaterial
 from ControlSystem.pComm.cambiosDeMedidor.scriptCambiosDeMedidor import ingresarCambioDeMedidor
 from ControlSystem.pComm.serviciosNuevos.scriptServiciosNuevos import ingresarServicioNuevo
@@ -18,14 +19,7 @@ from busquedas.models import BusquedaForm, vitacoraBusquedas
 from ingresos.forms import ingresoForm, BuscarActividad, FotoForm
 from ControlSystem.pComm.busquedas.scriptsBusquedas import buscar as b
 from ingresos.models import *
-from inventario.models import medidor, sello, detalleMaterialContrato
-from django.core.files.storage import default_storage
-
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.db.models.fields.files import FieldFile
-from django.views.generic import FormView
-from django.views.generic.base import TemplateView
-from django.contrib import messages
+from inventario.models import medidor, sello
 
 
 class ListaDeFotos(TemplateView):
@@ -564,6 +558,10 @@ def eliminarIngreso(request, pk):
                 for fot in list(foto.objects.filter(actividad=act)):
                     fot.delete()
 
+                for p in act.posicion_set.all():
+                    p.actividad=None
+                    p.save(force_update=True)
+
                 act.delete()
 
                 dajax.script("newUrl('/listadeingresos');")
@@ -580,6 +578,7 @@ def fotos(request, pk):
     if request.method == 'POST':
         form = FotoForm(request.POST, request.FILES)
         if form.is_valid():
+            print 'es valido...'
             try:
                 act = actividad.objects.get(id=int(pk))
                 newdoc = foto(foto=request.FILES['foto'], actividad=act)
