@@ -1,3 +1,4 @@
+{% load tz %}
 {% for c in cuadrillas %}
     <a id="{{ c.id }}" href="#" class="list-group-item "
        onclick="addMarker(
@@ -6,7 +7,7 @@
            $(this)
        );">
         <h7 class="list-group-item-heading">{{ c.usuario.username }} {{ c.usuario.last_name }}</h7>
-        <span class="badge">{{ c.fechaHora.time }}</span>
+        <span class="badge">{{ c.fechaHora|timezone:"America/Guayaquil"|time }}</span>
         <p class="list-group-item-text">
             {% if c.actividad.instalador.cuadrilla %}
                 {{ c.actividad.instalador.cuadrilla }}

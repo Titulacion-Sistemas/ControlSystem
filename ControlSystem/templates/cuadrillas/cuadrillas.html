@@ -22,7 +22,8 @@
     <script>
         var map;
         var markers={};
-        var ahora
+        var ahora;
+
         $(document).ready(function(){
             //function initialize(){
                 if (navigator.geolocation){
@@ -36,7 +37,7 @@
                 var lat = position.coords.latitude;
                 var lng = position.coords.longitude;
 
-                initial(lat, lng);
+                initial(-3.261049, -79.9361801);
             }
 
             function getError(err){
@@ -56,7 +57,7 @@
 
             ahora = calcularAhora(new Date());
 
-            setInterval('solicitar()',180000);
+            setInterval('solicitar()',60000);
 
         });
 
@@ -117,7 +118,7 @@
                     <div class="panel-heading">
                         Monitoreo de Personal
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" style="height: 450px; overflow: scroll;">
                         <div class="list-group" id="listaCuadrillas">
                             {% for c in cuadrillas %}
                             <a id="{{ c.id }}" href="#" class="list-group-item "

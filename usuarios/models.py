@@ -95,6 +95,10 @@ class MyUserChangeForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'direccion', 'telefono', 'celular', 'email', 'password']
+        widgets = {
+            'password': forms.HiddenInput(),
+            #'contrasenia_sico': forms.PasswordInput(),
+        }
 
     def __init__(self, *args, **kwargs):
         super(MyUserChangeForm, self).__init__(*args, **kwargs)

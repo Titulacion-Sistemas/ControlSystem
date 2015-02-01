@@ -32,21 +32,59 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ingresos/views.py">
+      <file leaf-file-name="fotos.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ControlSystem/templates/fotos/fotos.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="594" column="58" selection-start="23356" selection-end="23398" vertical-scroll-proportion="0.0" vertical-offset="9820" max-vertical-offset="12325">
+            <state line="57" column="42" selection-start="1533" selection-end="1536" vertical-scroll-proportion="-1.9615384" vertical-offset="918" max-vertical-offset="2244">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/usuarios/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="188" column="54" selection-start="7294" selection-end="7294" vertical-scroll-proportion="-0.7647059" vertical-offset="3157" max-vertical-offset="7684">
               <folding>
-                <element signature="e#16#31#0" expanded="true" />
+                <element signature="e#15#48#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fotos.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ControlSystem/templates/fotos/fotos.html">
+      <file leaf-file-name="navLeft.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ControlSystem/templates/navLeft.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="42" selection-start="1533" selection-end="1536" vertical-scroll-proportion="-5.8846154" vertical-offset="816" max-vertical-offset="2244">
+            <state line="16" column="102" selection-start="719" selection-end="719" vertical-scroll-proportion="0.669697" vertical-offset="51" max-vertical-offset="1122">
+              <folding>
+                <element signature="n#style#0;n#form#0;n#li#0;n#ul#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="home.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ControlSystem/templates/usuarios/home.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="1.9615384" vertical-offset="51" max-vertical-offset="952">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ingresarSico.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ControlSystem/templates/ingresos/ingresarSico.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="41" column="33" selection-start="1216" selection-end="1234" vertical-scroll-proportion="-1.3076923" vertical-offset="663" max-vertical-offset="16133">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="renderCuadrilla.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ControlSystem/templates/cuadrillas/renderCuadrilla.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="47" selection-start="438" selection-end="438" vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="408">
               <folding />
             </state>
           </provider>
@@ -61,40 +99,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/serviciosWeb/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="870" column="89" selection-start="30393" selection-end="30393" vertical-scroll-proportion="0.8131868" vertical-offset="14494" max-vertical-offset="20077">
+            <state line="61" column="38" selection-start="2654" selection-end="2665" vertical-scroll-proportion="0.0" vertical-offset="918" max-vertical-offset="20077">
               <folding>
                 <element signature="e#41#56#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ControlSystem/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="54" selection-start="1847" selection-end="1852" vertical-scroll-proportion="0.0" vertical-offset="558" max-vertical-offset="1394">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="scriptsBusquedas.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/busquedas/scriptsBusquedas.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="260" column="54" selection-start="9655" selection-end="9938" vertical-scroll-proportion="0.0" vertical-offset="4131" max-vertical-offset="10064">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SW_scriptsBusquedas.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/busquedas/SW_scriptsBusquedas.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="285" column="4" selection-start="10578" selection-end="10578" vertical-scroll-proportion="0.0" vertical-offset="4696" max-vertical-offset="6545">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -120,22 +131,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/ControlSystem/templates/avancedeobra/avance.html" />
-        <option value="$PROJECT_DIR$/ControlSystem/templates/navLeft.html" />
-        <option value="$PROJECT_DIR$/ControlSystem/templates/base.html" />
-        <option value="$PROJECT_DIR$/ControlSystem/templates/usuarios/acercade.html" />
-        <option value="$PROJECT_DIR$/ControlSystem/templates/cuadrillas/cuadrillas.html" />
-        <option value="$PROJECT_DIR$/ControlSystem/templates/cuadrillas/renderCuadrilla.html" />
-        <option value="$PROJECT_DIR$/usuarios/models.py" />
         <option value="$PROJECT_DIR$/ControlSystem/urls.py" />
         <option value="$PROJECT_DIR$/../PythonTitulacion-EV/Lib/site-packages/django/utils/timezone.py" />
-        <option value="$PROJECT_DIR$/usuarios/views.py" />
         <option value="$PROJECT_DIR$/ControlSystem/pComm/busquedas/scriptsBusquedas.py" />
         <option value="$PROJECT_DIR$/busquedas/models.py" />
         <option value="$PROJECT_DIR$/ControlSystem/pComm/busquedas/SW_scriptsBusquedas.py" />
         <option value="$PROJECT_DIR$/ingresos/views.py" />
         <option value="$PROJECT_DIR$/ingresos/models.py" />
         <option value="$PROJECT_DIR$/serviciosWeb/views.py" />
+        <option value="$PROJECT_DIR$/usuarios/models.py" />
+        <option value="$PROJECT_DIR$/ControlSystem/templates/usuarios/perfil.html" />
+        <option value="$PROJECT_DIR$/ControlSystem/pComm/conexion.py" />
+        <option value="$PROJECT_DIR$/ControlSystem/templates/usuarios/acercade.html" />
+        <option value="$PROJECT_DIR$/ControlSystem/templates/cuadrillas/renderCuadrilla.html" />
+        <option value="$PROJECT_DIR$/ControlSystem/templates/cuadrillas/cuadrillas.html" />
+        <option value="$PROJECT_DIR$/usuarios/views.py" />
+        <option value="$PROJECT_DIR$/ControlSystem/templates/navLeft.html" />
       </list>
     </option>
   </component>
@@ -321,6 +332,50 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="usuarios" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControlSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControlSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControlSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ingresos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControlSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControlSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControlSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="fotos" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -339,7 +394,73 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cuadrillas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControlSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControlSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControlSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="pComm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControlSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControlSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControlSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pComm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sico" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControlSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControlSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ControlSystem" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pComm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="busquedas" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -725,86 +846,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/.PyCharm30/system/python_stubs/180583372/__builtin__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4198" column="8" selection-start="143648" selection-end="143648" vertical-scroll-proportion="7.7983427" vertical-offset="68543" max-vertical-offset="86887" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/serviciosWeb/handler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="38" selection-start="380" selection-end="392" vertical-scroll-proportion="0.33274022" vertical-offset="0" max-vertical-offset="562" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/usuarios/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="186" column="38" selection-start="7325" selection-end="7325" vertical-scroll-proportion="0.51657456" vertical-offset="2652" max-vertical-offset="7106">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/busquedas/SW_scriptsBusquedas.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="285" column="4" selection-start="10578" selection-end="10578" vertical-scroll-proportion="0.0" vertical-offset="4696" max-vertical-offset="6545">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/busquedas/scriptsBusquedas.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="260" column="54" selection-start="9655" selection-end="9938" vertical-scroll-proportion="0.0" vertical-offset="4131" max-vertical-offset="10064">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/busquedas/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="36" selection-start="5353" selection-end="5377" vertical-scroll-proportion="0.0" vertical-offset="2146" max-vertical-offset="3655">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/inventario/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="9" selection-start="1426" selection-end="1431" vertical-scroll-proportion="0.37866667" vertical-offset="470" max-vertical-offset="3094">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../PythonTitulacion-EV/Lib/site-packages/django/core/handlers/wsgi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="162" column="8" selection-start="5713" selection-end="5713" vertical-scroll-proportion="0.33184856" vertical-offset="2367" max-vertical-offset="3519">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../PythonTitulacion-EV/Lib/site-packages/django/core/files/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="135" column="8" selection-start="4027" selection-end="4027" vertical-scroll-proportion="0.33184856" vertical-offset="2010" max-vertical-offset="2652">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ControlSystem/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="171" column="44" selection-start="4334" selection-end="4334" vertical-scroll-proportion="0.5596817" vertical-offset="2696" max-vertical-offset="3145">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ControlSystem/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="54" selection-start="1847" selection-end="1852" vertical-scroll-proportion="0.0" vertical-offset="558" max-vertical-offset="1394">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/fotos/fotos.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="42" selection-start="1533" selection-end="1536" vertical-scroll-proportion="-5.8846154" vertical-offset="816" max-vertical-offset="2244">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ingresos/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="702" column="17" selection-start="27193" selection-end="27193" vertical-scroll-proportion="0.0" vertical-offset="11762" max-vertical-offset="12954">
@@ -812,27 +853,118 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ingresos/forms.py">
+    <entry file="file://$PROJECT_DIR$/../PythonTitulacion-EV/Lib/site-packages/django/contrib/auth/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="50" selection-start="2779" selection-end="2813" vertical-scroll-proportion="0.28651685" vertical-offset="1122" max-vertical-offset="13702">
+        <state line="29" column="22" selection-start="1082" selection-end="1082" vertical-scroll-proportion="0.16011237" vertical-offset="113" max-vertical-offset="6018">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ingresos/views.py">
+    <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/sico/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="594" column="58" selection-start="23356" selection-end="23398" vertical-scroll-proportion="0.0" vertical-offset="9820" max-vertical-offset="12325">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="356">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/usuarios/perfil.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="40" selection-start="451" selection-end="451" vertical-scroll-proportion="0.7948718" vertical-offset="61" max-vertical-offset="1258">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/usuarios/acercade.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="61" selection-start="1498" selection-end="1498" vertical-scroll-proportion="0.6125356" vertical-offset="584" max-vertical-offset="1343">
           <folding>
-            <element signature="e#16#31#0" expanded="true" />
+            <element signature="e#592#636#0" expanded="true" />
+            <element signature="e#851#899#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/conexion.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="73" column="21" selection-start="2423" selection-end="2423" vertical-scroll-proportion="0.19628647" vertical-offset="1167" max-vertical-offset="2074">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/usuarios/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="12" selection-start="1596" selection-end="1604" vertical-scroll-proportion="0.0" vertical-offset="402" max-vertical-offset="1921">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/serviciosWeb/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="870" column="89" selection-start="30393" selection-end="30393" vertical-scroll-proportion="0.8131868" vertical-offset="14494" max-vertical-offset="20077">
+        <state line="61" column="38" selection-start="2654" selection-end="2665" vertical-scroll-proportion="0.0" vertical-offset="918" max-vertical-offset="20077">
           <folding>
             <element signature="e#41#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/cuadrillas/renderCuadrilla.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="47" selection-start="438" selection-end="438" vertical-scroll-proportion="-5.8846154" vertical-offset="0" max-vertical-offset="408">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ingresos/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="0" selection-start="90" selection-end="123" vertical-scroll-proportion="-1.0983146" vertical-offset="459" max-vertical-offset="13787">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/fotos/fotos.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="42" selection-start="1533" selection-end="1536" vertical-scroll-proportion="-1.9615384" vertical-offset="918" max-vertical-offset="2244">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/usuarios/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="188" column="54" selection-start="7294" selection-end="7294" vertical-scroll-proportion="-0.7647059" vertical-offset="3157" max-vertical-offset="7684">
+          <folding>
+            <element signature="e#15#48#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/cuadrillas/cuadrillas.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="37" selection-start="545" selection-end="574" vertical-scroll-proportion="26.153847" vertical-offset="1122" max-vertical-offset="2941">
+          <folding>
+            <element signature="e#3288#3328#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/ingresos/ingresarSico.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="33" selection-start="1216" selection-end="1234" vertical-scroll-proportion="-1.3076923" vertical-offset="663" max-vertical-offset="16133">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/usuarios/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="1.9615384" vertical-offset="51" max-vertical-offset="952">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ControlSystem/templates/navLeft.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="102" selection-start="719" selection-end="719" vertical-scroll-proportion="0.669697" vertical-offset="51" max-vertical-offset="1122">
+          <folding>
+            <element signature="n#style#0;n#form#0;n#li#0;n#ul#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

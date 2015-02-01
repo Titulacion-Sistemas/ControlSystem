@@ -71,7 +71,7 @@ class manejadorDeConexion:
         else:
             self.setActiveSession(self.getAvailableConnection())
 
-        segundos = 10
+        segundos = 20
 
         while not self.activeSession.Ready and segundos >= 0:
             print "la session no esta lista aun ..."

@@ -1,4 +1,5 @@
 # coding=utf-8
+from django.utils import timezone
 from dajax.core import Dajax
 import datetime
 from django.contrib.auth import logout, authenticate, login
@@ -181,15 +182,21 @@ def my_password_change_done(request):
 
 @login_required()
 def cuadrillas(request):
-    #pos = posicion.objects.filter(User__usuario_sico__contrato=request.session['contrato'], fechaHora__gt='2014-12-14 0:0')
+    nuw = '%s-%s-%s %s' % (
+        str(datetime.datetime.today().year),
+        str(datetime.datetime.today().month),
+        str(datetime.datetime.today().day),
+        str(timezone.localtime(timezone.now()).time())
+    )
     pos = posicion.objects.filter(
-        actividad__detalledeactividad__rubro__contrato=request.session['contrato'],
+        usuario__usuario_sico__contrato=request.session['contrato'],
         fechaHora__gte='%s-%s-%s 0:0:0' % (
             str(datetime.datetime.today().year),
             str(datetime.datetime.today().month),
             str(datetime.datetime.today().day)
-        )
-    ).order_by('-fechaHora')
+        ),
+        fechaHora__lte=nuw
+    ).order_by('-fechaHora').distinct('fechaHora', 'latitud', 'longitud')
 
     data = {
         'cuadrillas': pos
@@ -201,13 +208,21 @@ def cuadrillas(request):
 @ajax
 def masCuadrillas(request):
     if request.method == 'POST':
+        nuw = '%s-%s-%s %s' % (
+            str(datetime.datetime.today().year),
+            str(datetime.datetime.today().month),
+            str(datetime.datetime.today().day),
+            str(timezone.localtime(timezone.now()).time())
+        )
         print request.POST
+        print nuw
         t = request.POST['fechaHora']
         dajax = Dajax()
         pos = posicion.objects.filter(
             usuario__usuario_sico__contrato=request.session['contrato'],
-            fechaHora__gt=str(t)
-        ).order_by('-fechaHora')
+            fechaHora__gt=str(t),
+            fechaHora__lte=nuw
+        ).order_by('-fechaHora').distinct('fechaHora', 'latitud', 'longitud')
 
         data = {
             'cuadrillas': pos

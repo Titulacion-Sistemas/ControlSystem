@@ -13,6 +13,17 @@
     {{ user.first_name }} {{ user.last_name }}
 {% endblock %}
 
+{% block jquery %}
+    {{ block.super }}
+        <script>
+
+            $(document).ready(function(){
+                $('#id_password').html('');
+            });
+
+        </script>
+{% endblock %}
+
 {% block content %}
  
 
