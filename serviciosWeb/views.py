@@ -160,8 +160,8 @@ class SW_Busquedas(DefinitionBase):
             cli.append(c.fields['urbanizacion'].initial)
             cli.append(c.instance.estado)
             cli.append(c.fields['geo'].initial)
-            cli.append(c.fields['nparr'].initial)
-            cli.append(c.fields['parroquia'].initial)
+            #cli.append(c.fields['nparr'].initial)
+            #cli.append(c.fields['parroquia'].initial)
             cli.append(str(c.instance.meses))
             cli.append(str(c.instance.deuda))
 
@@ -374,7 +374,7 @@ class SW_Ingresos(DefinitionBase):
     def ingresoDetalleInstalacionSeleccionada(self, ide):
         act = actividad.objects.get(id=int(ide))
 
-        return [
+        r = [
             str(act.materialDeLaRed),
             str(act.formaDeConexion),
             str(act.estadoDeLaInstalacion),
@@ -389,6 +389,8 @@ class SW_Ingresos(DefinitionBase):
             str(act.demanda),
             str(act.nivelSocieconomico)
         ]
+        print r
+        return r
 
 
     @rpc(primitive.String, _returns=Array(Array(primitive.String)))
@@ -576,7 +578,7 @@ class SW_Ingresos(DefinitionBase):
             ret.append(
                 [
                     '%s %s' % (r.usuario.first_name, r.usuario.last_name),
-                    str((timezone.localtime(r.fechaHora).time())),
+                    str((timezone.localtime(r.fechaHora).time()))[:8],
                     str(r.latitud),
                     str(r.longitud),
                 ]

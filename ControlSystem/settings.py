@@ -37,7 +37,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'suit',
-    'django.contrib.admin',
     'django_ajax',
     'bootstrap3',
     'serviciosWeb',
@@ -46,6 +45,7 @@ INSTALLED_APPS = (
     'ingresos',
     'inventario',
     'django_extensions',
+    'django.contrib.admin',
 )
 
 
