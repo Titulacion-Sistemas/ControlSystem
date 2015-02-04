@@ -15,6 +15,8 @@
 
 {% block jquery %}
     {{ block.super }}
+        <script src="{% static 'js/jquery.PrintArea.js' %}"></script>
+        <link type="text/css" rel="stylesheet" href="{% static 'css/PrintArea.css' %}" />                <!-- Y : rel is stylesheet and media is in [all,print,empty,undefined] -->
         <script>
             var matSeleccionado=0;
             var sellSeleccionado=0;
@@ -37,6 +39,19 @@
             //**********************************************************************************************************
 
             $(document).ready(function(){
+
+                $("#btnImprimir").click(function(){
+                    var options = { mode : 'iframe', popClose : false, extraCss : '', retainAttr : '', extraHead : '' };
+                    $( "#aImprimirActividad," +
+                            "#aImprimirSolicitud," +
+                            "#aImprimirAbonado," +
+                            "#medidorInstalado," +
+                            "#aImprimirMateriales," +
+                            "#aImprimirSellos," +
+                            "#aImprimirDetaInsta," +
+                            "#Referencia," +
+                            "#aImprimirObservaciones" ).printArea( options );
+                });
 
                 $('#btnIngresarSico').click(function(){
                     $('#cargandoForm').removeClass('hidden');
@@ -543,7 +558,7 @@
               method="post" action="" enctype="multipart/form-data"
         onsubmit="return guardarAjax();"
         >{% csrf_token %}
-        <div class="row">
+        <div id="aImprimir" class="row">
             <div class="col-md-5">
                 <div id="erroresB" class="row">
                     <div class="col-md-12">
@@ -552,7 +567,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div id="aImprimirAbonado" class="row">
                     <div class="col-md-12">
                         <div class="panel panel-info">
                             <div class="panel-heading text-center">
@@ -571,7 +586,7 @@
                                     </div>
                                     <div class="col-md-3 center-block" style="margin: 0; padding: 0;">
                                         {% buttons %}
-                                            <button id="buscarCliente" type="button" class="btn btn-default">
+                                            <button id="buscarCliente" type="button" class="hidden-print btn btn-default">
                                                 {% bootstrap_icon "search" %} Buscar
                                             </button>
                                         {% endbuttons %}
@@ -603,7 +618,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="page-break"></div>
+                <div id="aImprimirMateriales" class="row">
                     <div class="col-md-12">
                         <div class="panel panel-info">
                             <div class="panel-heading text-center">
@@ -617,7 +633,7 @@
                                     </div>
                                     <div class="col-md-4 center-block" style="margin-top: 5px;">
                                         {% buttons %}
-                                            <button type="button" class="btn btn-default"
+                                            <button type="button" class="hidden-print btn btn-default"
                                                     title="Agregar a la lista de materiales"
                                                     id="masMaterial">
                                                 {% bootstrap_icon "plus" %}
@@ -673,7 +689,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="page-break"></div>
+                <div id="aImprimirSellos" class="row">
                     <div class="col-md-12">
                         <div class="panel panel-info">
                             <div class="panel-heading text-center">
@@ -687,7 +704,7 @@
                                     </div>
                                     <div class="col-md-4 center-block" style="margin-top: 5px;">
                                         {% buttons %}
-                                            <button type="button" id="masSellos" class="btn btn-default" title="Agregar a la lista de sellos">
+                                            <button type="button" id="masSellos" class="hidden-print btn btn-default" title="Agregar a la lista de sellos">
                                                 {% bootstrap_icon "plus" %}
                                             </button>
                                         {% endbuttons %}
@@ -728,6 +745,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="page-break"></div>
                 <div class="row hidden" id="Referencia">
                     <div class="col-md-12">
                         <div class="panel panel-info">
@@ -754,7 +772,7 @@
                                     </div>
                                     <div class="col-md-3 center-block" style="margin: 0; padding: 0;">
                                         {% buttons %}
-                                            <button id="buscarReferencia" type="button" class="btn btn-default">
+                                            <button id="buscarReferencia" type="button" class="hidden-print btn btn-default">
                                                 {% bootstrap_icon "search" %} Buscar
                                             </button>
                                         {% endbuttons %}
@@ -782,7 +800,7 @@
                             <div class="panel-body center-block">
                                 {% buttons %}
                                     <button id="misFotos" type="button" onclick="newUrl('/fotos/{{ form.id.value }}')"
-                                            class="btn btn-default center-block">
+                                            class="hidden-print btn btn-default center-block">
                                         {% bootstrap_icon "picture" %} Fotos de Actividad...
                                     </button>
                                 {% endbuttons %}
@@ -796,7 +814,7 @@
             {#                                      Barra separadora de columnas                                      #}
 
             <div class="col-md-5">
-                <div class="row">
+                <div id="aImprimirActividad" class="row">
                     <div class="col-md-12">
                         <div class="panel panel-info">
                             <div class="panel-heading text-center">
@@ -829,7 +847,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="page-break"></div>
+                <div id="aImprimirDetaInsta" class="row">
                     <div class="col-md-12">
                         <div class="panel panel-info">
                             <div class="panel-heading text-center">
@@ -866,7 +885,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div id="aImprimirObservaciones" class="row">
                     <div class="col-md-12" style="margin-top: 0;">
                         <div class="panel panel-info" style="margin-top: -5px; margin-bottom: 10px;">
                             <div class="panel-heading text-center">
@@ -884,7 +903,7 @@
 
             <div class="col-md-2" style="margin-top: 50px;">
                 <div class="row center-block">
-                    <div class="panel panel-info">
+                    <div id="aImprimirSolicitud" class="panel panel-info">
                         <div class="panel-heading text-center">
                             <b>{{ form.numeroDeSolicitud.label }}</b>
                         </div>
@@ -928,6 +947,11 @@
                                             class="btn btn-default btn-lg center-block "
                                             style="width: 100%; margin: 20px 0 20px 0;">
                                         {% bootstrap_icon "trash" %} Eliminar
+                                    </button>
+                                    <button id="btnImprimir" type="button"
+                                            class="btn btn-default btn-lg center-block "
+                                            style="width: 100%; margin: 20px 0 20px 0;">
+                                        {% bootstrap_icon "print" %} Imprimir
                                     </button>
                                 {% endif %}
                             {% endif %}
