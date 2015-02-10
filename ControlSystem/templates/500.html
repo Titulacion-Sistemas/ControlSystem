@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block title %}
+    Acceso al Sistema
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-11 col-md-9">
+        <form role="form" class="form-signin">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h8>
+                        <span class="glyphicon glyphicon-exclamation-sign icon-white"></span>
+                        Error 500
+                    </h8>
+                </div>
+                <div class="panel-body text-center">
+                    <div class="form-row control-group">
+                        Error inesperado...
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        </div>
+        <div class="col-sm-1 col-md-3"></div>
+
+    </div>
+{% endblock %}
