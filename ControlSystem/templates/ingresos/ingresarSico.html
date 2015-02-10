@@ -16,6 +16,7 @@
 {% block jquery %}
     {{ block.super }}
         <script src="{% static 'js/jquery.PrintArea.js' %}"></script>
+        <script src="{% static 'js/ruc_jquery_validator.min.js' %}"></script>
         <link type="text/css" rel="stylesheet" href="{% static 'css/PrintArea.css' %}" />                <!-- Y : rel is stylesheet and media is in [all,print,empty,undefined] -->
         <script>
             var matSeleccionado=0;
@@ -174,6 +175,17 @@
                         $('#Referencia').removeClass('hidden');
                         $('#medRevisado').addClass('hidden');
                         $('#id_nivelSocieconomico').removeClass('hidden');
+                        $("#id_cedula").validarCedulaEC({
+                          onValid: function () {
+                            //window.alert("cédula válida.");
+                            //console.log(this);
+                          },
+                          onInvalid: function () {
+                              window.alert("Ruc / Cédula NO válida.");
+                              $("#id_cedula").val("");
+                            console.log(this);
+                          }
+                        });
                         $("[for='id_nivelSocieconomico']").removeClass('hidden');
                     }else{
                         $('#id_nombreDeCliente').attr('placeholder', 'Buscar por Nombre');

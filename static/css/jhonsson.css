@@ -76,3 +76,12 @@
         border-top:none; !important
     }
 }
+
+
+.invalid {
+  color: red;
+}
+
+.color_blue {
+  color: blue;
+}

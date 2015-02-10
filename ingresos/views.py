@@ -177,7 +177,7 @@ class ListaDeIngreso(TemplateView):
         lines = []
         for i in entrada:
             lines.append(i)
-        paginator = Paginator(lines, 20)
+        paginator = Paginator(lines, 10)
         page = request.GET.get('page')
         try:
             show_lines = paginator.page(page)
