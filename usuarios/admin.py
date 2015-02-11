@@ -7,5 +7,6 @@ from usuarios.models import *
 
 
 admin.site.register(usuarioSico)
+admin.site.register(posicion)
 #admin.site.register(User)
 #admin.site.register(Group)

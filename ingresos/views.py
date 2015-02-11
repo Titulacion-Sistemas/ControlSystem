@@ -681,13 +681,15 @@ def continuar(request, pk, estado):
 def avance(request):
 
     contrato = request.session['contrato']
-    utili = detalleDeActividad.objects.filter(rubro__contrato=contrato)
-
-    sn = utili.filter(actividad__tipoDeSolicitud__id=1).aggregate(Sum('rubro__precioUnitario'))['rubro__precioUnitario__sum']
-    cmat = utili.filter(actividad__tipoDeSolicitud__id=11).aggregate(Sum('rubro__precioUnitario'))['rubro__precioUnitario__sum']
-    cmed = utili.filter(actividad__tipoDeSolicitud__id=13).aggregate(Sum('rubro__precioUnitario'))['rubro__precioUnitario__sum']
-
-    diferencia = contrato.monto - (sn + cmat + cmed)
+    try:
+        utili = detalleDeActividad.objects.filter(rubro__contrato=contrato)
+        sn = utili.filter(actividad__tipoDeSolicitud__id=1).aggregate(Sum('rubro__precioUnitario'))['rubro__precioUnitario__sum']
+        cmat = utili.filter(actividad__tipoDeSolicitud__id=11).aggregate(Sum('rubro__precioUnitario'))['rubro__precioUnitario__sum']
+        cmed = utili.filter(actividad__tipoDeSolicitud__id=13).aggregate(Sum('rubro__precioUnitario'))['rubro__precioUnitario__sum']
+        diferencia = contrato.monto - (sn + cmat + cmed)
+    except:
+        sn = cmat = cmed = '0.0'
+        diferencia = contrato.monto
 
     total = contrato.monto
 
