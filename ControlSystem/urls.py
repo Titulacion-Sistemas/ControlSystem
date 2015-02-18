@@ -72,7 +72,7 @@ urlpatterns = patterns('',
     url(r'^avance$', 'ingresos.views.avance', name='avance'),
 
     #Estados de ingreso
-    url(r'^continuaringreso/(?P<pk>\d+)/(?P<estado>\d+)/$', 'ingresos.views.continuar', name='continuaringreso'),
+    url(r'^continuaringreso/(?P<pk>\d+)/$', 'ingresos.views.continuar', name='continuaringreso'),
 
     #Servicios Web
     (r"^hello_world/", 'serviciosWeb.views.hello_world_service'),

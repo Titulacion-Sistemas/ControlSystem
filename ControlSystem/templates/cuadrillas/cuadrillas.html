@@ -20,11 +20,38 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
 
     <script>
+        var solicitarHoy = true;
         var map;
         var markers={};
         var ahora;
 
         $(document).ready(function(){
+
+            $("#fexas").change(function(){
+                var seleccion = $('#fexas option:selected').val()+'';
+                if (seleccion == 'Hoy'){
+                    newUrl('/cuadrillas');
+                }
+                else{
+                    for(var i=0;i<markers.length;i++){
+                        markers[''+i+''].setMap(null);
+                    }
+                    markers={};
+                    $("#listaCuadrillas").html('');
+
+                    seleccion = seleccion.substring(6,10)+'-'+seleccion.substring(3,5)+'-'+seleccion.substring(0,2);
+                    envioRecepcionAjax
+                            (
+                                '{% url 'mascuadrillas' %}',
+                                {
+                                    'fechaHora': seleccion+' 00:10:00',
+                                    'fhFin': seleccion+' 23:59:59'
+                                }
+                            );
+                }
+                solicitarHoy=false;
+            });
+
             //function initialize(){
                 if (navigator.geolocation){
                     navigator.geolocation.getCurrentPosition(getCoords, getError)
@@ -66,12 +93,17 @@
         }
 
         function solicitar(){
-            envioRecepcionAjax
-                    (
-                        '{% url 'mascuadrillas' %}',
-                        {'fechaHora': ahora}
-                    );
-            ahora = calcularAhora(new Date());
+            if (solicitarHoy){
+                envioRecepcionAjax
+                        (
+                            '{% url 'mascuadrillas' %}',
+                            {
+                                'fechaHora': ahora,
+                                'fhFin': null
+                            }
+                        );
+                ahora = calcularAhora(new Date());
+            }
         }
 
         function addMarker(pos, titulo, el){
@@ -94,8 +126,6 @@
                 el.addClass('active');
             }
 
-
-
             return false;
         }
 
@@ -116,9 +146,26 @@
             <div class="col-md-3">
                 <div class="panel panel-info">
                     <div class="panel-heading">
-                        Monitoreo de Personal
+                        Fechas
                     </div>
-                    <div class="panel-body" style="height: 450px; overflow: scroll;">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <select id="fexas" class="form-control">
+                                <option value="{{ nuw }}">{{ nuw }}</option>
+                                {% if fechas %}
+                                    {% for fecha in fechas %}
+                                        <option value="{{ fecha }}">{{ fecha }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Personal
+                    </div>
+                    <div class="panel-body" style="height: 320px; overflow: scroll;">
                         <div class="list-group" id="listaCuadrillas">
                             {% for c in cuadrillas %}
                             <a id="{{ c.id }}" href="#" class="list-group-item "

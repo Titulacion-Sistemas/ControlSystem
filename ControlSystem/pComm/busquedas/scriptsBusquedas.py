@@ -76,22 +76,24 @@ def llenarCliente(sesion, cli):
                 )
             )
         )
+
         cli.ubicacionGeografica = ubicacion(
             parroquia=parroquia(
                 num=int(sesion.autECLPS.GetText(13, 13, 2).strip()),
-                descripcion=sesion.autECLPS.GetText(13, 17, 35).strip()
+                descripcion=(sesion.autECLPS.GetText(13, 17, 35)).encode('utf-8').strip()
             ),
             calle=calle(
-                descripcion1=sesion.autECLPS.GetText(14, 18, 50).strip(),
+                descripcion1=(sesion.autECLPS.GetText(14, 18, 50)).encode('utf-8').strip(),
             ),
             interseccion=calle(
-                descripcion1=sesion.autECLPS.GetText(15, 18, 50).strip(),
+                descripcion1=(sesion.autECLPS.GetText(15, 18, 50)).encode('utf-8').strip(),
             ),
             urbanizacion=urbanizacion(
-                descripcion=sesion.autECLPS.GetText(16, 18, 50).strip()
+                descripcion=(sesion.autECLPS.GetText(16, 18, 50)).encode('utf-8').strip()
             )
         )
-        #print(cli.geocodigo)
+        #print cli.ubicacionGeografica
+
     sesion.autECLPS.SendKeys('[pf2]')
     sesion.autECLOIA.WaitForAppAvailable()
     sesion.autECLOIA.WaitForInputReady()
@@ -135,6 +137,8 @@ def llenarMedidores(sesion, paraIngreso=False):
             sesion.autECLPS.SendKeys("[down]")
             miSerie = sesion.autECLPS.GetText(10, 29, 11).strip()
             miVoltaje = newVoltaje(miSerie)
+            if not miSerie:
+                miSerie='-'
             if miVoltaje==120:
                 miModelo = modeloDeMedidor.objects.get(id='NOR-10')
             else:
@@ -259,6 +263,8 @@ class buscar:
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
             titulo = sesion.autECLPS.GetText(5, 1, 11)
+
+        #print titulo
 
         formC = ClienteBuscado(coincidencias[0].geocodigo, coincidencias[0].ubicacionGeografica,
                                instance=coincidencias[0])
@@ -582,6 +588,7 @@ class buscar:
             '3': self.porNombre,
             '4': self.porGeocodigo
         }
+
         return operaciones[str(tipo)](data, paraIngreso=paraIngreso)
 
 
@@ -589,5 +596,6 @@ class buscar:
 
         data = self.busquedaDeTipo(tipo, data)
         data['tipo'] = tipo
+
 
         return render_to_response('busqueda/renderBusqueda.html', data)

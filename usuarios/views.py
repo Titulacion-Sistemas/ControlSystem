@@ -182,10 +182,10 @@ def my_password_change_done(request):
 
 @login_required()
 def cuadrillas(request):
-    nuw = '%s-%s-%s %s' % (
-        str(datetime.datetime.today().year),
-        str(datetime.datetime.today().month),
-        str(datetime.datetime.today().day),
+    nuw = '%04d-%02d-%02d %s' % (
+        int(datetime.datetime.today().year),
+        int(datetime.datetime.today().month),
+        int(datetime.datetime.today().day),
         str(timezone.localtime(timezone.now()).time())
     )
     pos = posicion.objects.filter(
@@ -198,8 +198,40 @@ def cuadrillas(request):
         fechaHora__lte=nuw
     ).order_by('-fechaHora').distinct('fechaHora', 'latitud', 'longitud')
 
+    fechas = list(posicion.objects.filter(
+        usuario__usuario_sico__contrato=request.session['contrato'],
+        fechaHora__lt='%s-%s-%s 0:0:0' % (
+            str(datetime.datetime.today().year),
+            str(datetime.datetime.today().month),
+            str(datetime.datetime.today().day)
+        )
+    ).order_by('-fechaHora').distinct('fechaHora', 'usuario', 'latitud', 'longitud'))
+    f = []
+    if len(fechas)>=2:
+        for i in range(len(fechas)-1):
+            if i == 0:
+                f.append('%02d-%02d-%04d' % (
+                        int(fechas[i].fechaHora.day),
+                        int(fechas[i].fechaHora.month),
+                        int(fechas[i].fechaHora.year)
+                    ))
+            if fechas[i+1].fechaHora.date() != fechas[i].fechaHora.date():
+                f.append('%02d-%02d-%04d' % (
+                    int(fechas[i].fechaHora.day),
+                    int(fechas[i].fechaHora.month),
+                    int(fechas[i].fechaHora.year)
+                ))
+    elif len(fechas)==1:
+        f.append('%02d-%02d-%04d' % (
+                    int(fechas[0].fechaHora.day),
+                    int(fechas[0].fechaHora.month),
+                    int(fechas[0].fechaHora.year)
+                ))
+
     data = {
-        'cuadrillas': pos
+        'cuadrillas': pos,
+        'fechas': f,
+        'nuw': 'Hoy'
     }
 
     return render_to_response('cuadrillas/cuadrillas.html', data, context_instance=RequestContext(request))
@@ -217,6 +249,8 @@ def masCuadrillas(request):
         print request.POST
         print nuw
         t = request.POST['fechaHora']
+        if request.POST['fhFin']:
+            nuw=str(request.POST['fhFin'])
         dajax = Dajax()
         pos = posicion.objects.filter(
             usuario__usuario_sico__contrato=request.session['contrato'],

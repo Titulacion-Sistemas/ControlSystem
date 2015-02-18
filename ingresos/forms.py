@@ -609,6 +609,7 @@ class ingresoForm(forms.Form):
 
     def rellenarDetalle(self, actividad, contrato):
         #try:
+        self.fields['numeroDeSolicitud'].initial = actividad.numeroDeSolicitud
         self.fields['codigoDeCliente'].initial = actividad.cliente.cuenta
         self.fields['nombreDeCliente'].initial = actividad.cliente.nombre
         self.fields['cedula'].initial = actividad.cliente.ci_ruc

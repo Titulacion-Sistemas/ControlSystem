@@ -19,7 +19,7 @@ class ingresarServicioNuevo():
             'solicitud': None
         }
 
-    def elegirPunto(self, estado):
+    def elegirPunto(self, estado, actividad):
         operaciones = {
             0: self.pasoUno,
             1: self.pasoDos,
@@ -186,7 +186,7 @@ class ingresarServicioNuevo():
                 return {
                     'estado': actividad.estadoDeSolicitud_id,
                     'mensaje': 'Solicitud creada correctamente',
-                    'solicitud': actividad.numeroDeSolicitud
+                    'solicitud': actividad.numeroDeSolicitud,
                 }
 
             else:

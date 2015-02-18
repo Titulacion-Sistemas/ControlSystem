@@ -56,7 +56,16 @@ class manejadorDeConexion:
 
     def getAvailableConnection(self):
         self.connList.Refresh()
-        self.activeConnection = chr(self.connList.Count + 65)
+        letra = self.connList.Count + 65
+        #self.activeConnection = chr(self.connList.Count + 65)
+        v = self.connList.FindConnectionByName(chr(letra))
+
+        while v is not None:
+            #print v
+            letra += 1
+            v = self.connList.FindConnectionByName(chr(letra))
+
+        self.activeConnection = chr(letra)
         self.openProgram()
         self.connList.Refresh()
         return self.activeConnection

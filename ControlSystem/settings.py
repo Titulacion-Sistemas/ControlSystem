@@ -22,14 +22,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'v15s+33@y3x@v0zt3-m0)5+9k@(^1j8ldah64o&jmv07q@o2v('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = [
+    'coniel.servehttp.com',
     '127.0.0.1',
+    '192.168.8.5',
     'localhost',
-    'coniel.servehttp.com'
 ]
 
 

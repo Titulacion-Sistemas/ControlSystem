@@ -363,7 +363,7 @@ class ubicacion(models.Model):
     parroquia=models.ForeignKey('parroquia')
     calle=models.ForeignKey('calle', verbose_name='Dirección o Calle', related_name='calle', blank=True, null=True, default='')
     interseccion=models.ForeignKey("calle", related_name='interseccion', blank=True, null=True, default='')
-    urbanizacion=models.ForeignKey("urbanizacion", blank=True, null=True, default=None)
+    urbanizacion=models.ForeignKey("urbanizacion", blank=True, null=True, default='')
     caserio=models.ForeignKey("caserio", blank=True, null=True, default='')
 
     def __unicode__(self):

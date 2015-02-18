@@ -57,14 +57,15 @@
                 $('#btnIngresarSico').click(function(){
                     $('#cargandoForm').removeClass('hidden');
                     $('#lblEspera').html('Ingresando, Espere...');
-                    deshabilitarBotones(true);
-                    cambioDeEstado(false);
+                    //deshabilitarBotones(true);
+                    //cambioDeEstado(false);
                     envioRecepcionAjax
                     (
-                        '/continuaringreso/{{ form.id.value }}/{{ form.estadoSolicitud.value }}',
+                        '/continuaringreso/{{ form.id.value }}/',
                         $('#ingreso').serialize()
                     );
-                    cambioDeEstado(true);
+                    //deshabilitarBotones(false);
+                    //cambioDeEstado(true);
                 });
 
                 $("#id_ubicacionDeSello").find("option[value='Caja']").attr("selected",true);
@@ -556,6 +557,31 @@
 
             }
 
+
+            function GuardadoCorrectamenteAjax(url){
+                $('<div></div>').appendTo('#preg')
+                .html('<div><h6>Actividad guardada correctamente</h6></div>')
+                .dialog({
+                    modal: true,
+                    title: 'Exito',
+                    zIndex: 10000,
+                    autoOpen: true,
+                    width: 'auto',
+                    resizable: false,
+                    buttons: {
+                        Aceptar: function () {
+                            $(this).dialog("close");
+                            newUrl(url);
+                        }
+                    },
+                    close: function (event, ui) {
+                        $(this).remove();
+                        newUrl(url);
+                    }
+                });
+
+            }
+
         </script>
 {% endblock %}
 
@@ -929,10 +955,12 @@
                         </div>
                     </div>
 
-                    <button id="btnGuardar" type="submit" class="btn btn-default btn-lg center-block"
-                            style="width: 100%; margin: 20px 0 20px 0;">
-                        {% bootstrap_icon "save" %} Guardar
-                    </button>
+                    {% if form.estadoSolicitud.value != 13 %}
+                        <button id="btnGuardar" type="submit" class="btn btn-default btn-lg center-block"
+                                style="width: 100%; margin: 20px 0 20px 0;">
+                            {% bootstrap_icon "save" %} Guardar
+                        </button>
+                    {% endif %}
 
                     <div id="cargandoForm" class="col-md-2 center-block hidden"
                          style="padding: 0; width: 100%; margin: 0 0 20px 0;">
@@ -946,7 +974,7 @@
                         {% if form.estadoSolicitud.value != 13 %}
                             {% if form.id.value > 0 %}
                                 <button id="btnIngresarSico" type="button" class="btn btn-default btn-lg center-block "
-                                        style="width: 100%; margin: 20px 0 20px 0;">
+                                        style="width: 100%; margin: 20px 0 20px 0;" onclick="return false;">
                                     {% bootstrap_icon "send" %}
                                     {% if form.estadoSolicitud.value == 0 %}
                                         Ingresar
@@ -960,14 +988,19 @@
                                             style="width: 100%; margin: 20px 0 20px 0;">
                                         {% bootstrap_icon "trash" %} Eliminar
                                     </button>
-                                    <button id="btnImprimir" type="button"
-                                            class="btn btn-default btn-lg center-block "
-                                            style="width: 100%; margin: 20px 0 20px 0;">
-                                        {% bootstrap_icon "print" %} Imprimir
-                                    </button>
                                 {% endif %}
+
                             {% endif %}
                         {% endif %}
+
+                        {% if form.estadoSolicitud.value > 0 %}
+                            <button id="btnImprimir" type="button"
+                                    class="btn btn-default btn-lg center-block "
+                                    style="width: 100%; margin: 20px 0 20px 0;">
+                                {% bootstrap_icon "print" %} Imprimir
+                            </button>
+                        {% endif %}
+
                     <div id="preg"></div>
                 </div>
             </div>

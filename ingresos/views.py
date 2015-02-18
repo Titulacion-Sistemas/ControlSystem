@@ -243,6 +243,7 @@ def buscarCliente(request):
 
                 #data = MedidorBuscado('marca','tecnologia', 'tension', 'amp', 'fi', 'fd', 'li', 'ld',
                 #instance=medidor.objects.first())
+
                 if data != None:
                     dajax.assign('#id_codigoDeCliente', 'value', '' + str(data['formCliente'].instance.cuenta) + '')
                     dajax.assign('#id_nombreDeCliente', 'value', '' + str(data['formCliente'].instance.nombre) + '')
@@ -257,6 +258,7 @@ def buscarCliente(request):
                     dajax.assign('#id_lecturaRev', 'value', '' + str(data['cMedidores'][0].instance.lectura) + '')
                     request.session['cliente'] = data['formCliente'].instance
                     request.session['medidor'] = data['cMedidores'][0]
+
                 else:
                     dajax = mostraError(dajax, {'Cliente': 'No Encontrato'}, '#err')
 
@@ -439,7 +441,7 @@ def guardarIngreso(request):
 
                         #actualizar
                     id = form.save(request.session['contrato'], cliente=cli)
-                    dajax.script("newUrl('/ingreso/" + str(id) + "');")
+                    dajax.script("GuardadoCorrectamenteAjax('/ingreso/" + str(id) + "');")
                     return dajax.calls
 
                 except:
@@ -493,7 +495,8 @@ def guardarIngreso(request):
             print 'Correcto...'
 
             id = form.save(request.session['contrato'], cliente=cli)
-            dajax.script("newUrl('/ingreso/" + str(id) + "');")
+            dajax.script("GuardadoCorrectamenteAjax('/ingreso/" + str(id) + "');")
+            #dajax.script("window.setTimeout(\"newUrl('/ingreso/" + str(id) + "')\",5000);")
         else:
             print dict(form.errors)
             dajax = mostraError(dajax, form.errors, '#err')
@@ -524,6 +527,8 @@ def eliminarIngreso(request, pk):
                 for m in list(medidor.objects.filter(actividad__id=act.id)):
                     try:
                         m.actividad = None
+                        if m.contrato:
+                            m.est = True
                         m.save(force_update=True)
                     except:
                         pass
@@ -633,16 +638,20 @@ def ingresar(sesion, act, estado, contrato):
     elif act.tipoDeSolicitud.id == 11:
         scripting = ingresarCambioDeMaterial(sesion, contrato)
     if scripting is not None:
-        scripting = scripting.elegirPunto(int(estado))
-        if scripting['estado'] > 0:
-            if scripting['estado'] == 13:
+        scripting = scripting.elegirPunto(estado, act)
+        print scripting
+        if scripting['estado']:
+            if str(scripting['estado']) == '13':
                 dajax.script("$('#cargandoForm').addClass('hidden');")
                 dajax.script("newUrl('/ingreso/" + str(act.id) + "');")
-            dajax.assign('id_numeroDeSolicitud', 'value', scripting['solicitud'])
-            dajax.script("$('#lblEspera').html('" + str(scripting['mensaje']) + "');")
-            dajax.script(
-                "continuarIngresoSico('/continuaringreso/" + str(act.id) + "/" + str(scripting['estado']) + "');"
-            )
+            else:
+
+                dajax.assign('id_numeroDeSolicitud', 'value', scripting['solicitud'])
+                dajax.script("$('#lblEspera').html('" + str(scripting['mensaje']) + "');")
+                dajax.script(
+                    "continuarIngresoSico('/continuaringreso/" + str(act.id) + "');"
+                )
+
         else:
             dajax.script("$('#cargandoForm').addClass('hidden');")
             dajax = mostraError(dajax, {'Error': scripting['mensaje']}, '#err')
@@ -652,8 +661,8 @@ def ingresar(sesion, act, estado, contrato):
 
     return dajax.calls
 
-
-def continuar(request, pk, estado):
+@ajax()
+def continuar(request, pk):
     if request.method == 'POST':
         print request.POST
         #dajax.script("$('#cargandoForm').addClass('hidden');")
@@ -661,7 +670,8 @@ def continuar(request, pk, estado):
         if len(mydict) > 3:
             form = ingresoForm(data=mydict)
             if form.is_valid():
-                guardarIngreso(request)
+                pass
+                #guardarIngreso(request)
                 #detectar estado
             else:
                 dajax = Dajax()
@@ -671,7 +681,7 @@ def continuar(request, pk, estado):
 
         #dajax.script("continuarIngresoSico('/continuaringreso/"+str(pk)+"/"+str(estado)+"');")
         act = actividad.objects.get(id=int(pk))
-        return ingresar(request.user.sesion_sico, act, estado, request.session['contrato'])
+        return ingresar(request.user.sesion_sico, act, int(act.estadoDeSolicitud_id), request.session['contrato'])
 
     else:
         return None
@@ -684,8 +694,14 @@ def avance(request):
     try:
         utili = detalleDeActividad.objects.filter(rubro__contrato=contrato)
         sn = utili.filter(actividad__tipoDeSolicitud__id=1).aggregate(Sum('rubro__precioUnitario'))['rubro__precioUnitario__sum']
+        if not sn:
+            sn = 0
         cmat = utili.filter(actividad__tipoDeSolicitud__id=11).aggregate(Sum('rubro__precioUnitario'))['rubro__precioUnitario__sum']
+        if not cmat:
+            cmat = 0
         cmed = utili.filter(actividad__tipoDeSolicitud__id=13).aggregate(Sum('rubro__precioUnitario'))['rubro__precioUnitario__sum']
+        if not cmed:
+            cmed = 0
         diferencia = contrato.monto - (sn + cmat + cmed)
     except:
         sn = cmat = cmed = '0.0'
