@@ -591,7 +591,7 @@
         <p>{{ form.errors }}</p>
     {% endif %}
 
-    <div class="container-fluid">
+    <div class="container-fluid" ng-controller="practica_1">
         <form role="form" class="form-group" id="ingreso" name="ingreso"
               method="post" action="" enctype="multipart/form-data"
         onsubmit="return guardarAjax();"
@@ -608,10 +608,11 @@
                 <div id="aImprimirAbonado" class="row">
                     <div class="col-md-12">
                         <div class="panel panel-info">
-                            <div class="panel-heading text-center">
+                            <div ng-click="togle('abonado')" class="panel-heading text-center" style="cursor: pointer;">
                                 <b>Abonado</b>
+                               <span ng-class="divs.abonado.clase"></span>
                             </div>
-                            <div class="panel-body">
+                            <div ng-hide="divs.abonado.estado" class="panel-body">
                                 <div class="row">
                                     <div class="col-md-7 center-block" style="margin: 0; padding: 0 0 0 13px;">
                                         {% bootstrap_field form.codigoDeCliente layout="horizontal" %}
@@ -660,10 +661,11 @@
                 <div id="aImprimirMateriales" class="row">
                     <div class="col-md-12">
                         <div class="panel panel-info">
-                            <div class="panel-heading text-center">
+                            <div ng-click="togle('materiales')" class="panel-heading text-center" style="cursor: pointer;">
                                 <b>Materiales</b>
+                                <span ng-class="divs.materiales.clase"></span>
                             </div>
-                            <div class="panel-body">
+                            <div ng-hide="divs.materiales.estado" class="panel-body">
                                 {% bootstrap_field form.material layout="horizontal" %}
                                 <div class="row">
                                     <div class="col-md-8 center-block" style="margin-top: 5px;">
@@ -733,6 +735,7 @@
                         <div class="panel panel-info">
                             <div class="panel-heading text-center">
                                 <b>Sello(s)</b>
+
                             </div>
                             <div class="panel-body">
                                 {% bootstrap_field form.selloInst layout="horizontal" %}
@@ -894,7 +897,7 @@
                             </div>
                             <div class="panel-body form-horizontal small">
                                 <div class="row" >
-                                    <div class="col-md-12" style="margin-bottom: 0px;">
+                                    <div class="col-md-12" style="margin-bottom: 0;">
                                         <div class="panel panel-info" style="margin-top: -5px; margin-bottom: 10px;">
                                             <div class="panel-heading text-center">
                                                 <b>Instalador</b>
@@ -1007,6 +1010,33 @@
         </div>
         </form>
     </div>
+
+    <script>
+        var cs = angular.module("cs", []);
+        cs.controller('practica_1', ['$scope', function($scope){
+
+            $scope.divs = {
+                'abonado':{
+                    'estado': true,
+                    'clase': 'navbar-right glyphicon glyphicon-plus icon-white'
+                },
+                'materiales':{
+                    'estado': true,
+                    'clase': 'navbar-right glyphicon glyphicon-plus icon-white'
+                }
+            };
+
+            $scope.togle=function(div){
+                $scope.divs[div].estado = !!($scope.divs[div].estado === false);
+                if($scope.divs[div].estado)
+                    $scope.divs[div].clase = 'navbar-right glyphicon glyphicon-plus icon-white';
+                else
+                    $scope.divs[div].clase = 'navbar-right glyphicon glyphicon-minus icon-white';
+            }
+
+        }]);
+
+    </script>
 
 {% endblock %}
 
