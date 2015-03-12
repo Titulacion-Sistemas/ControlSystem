@@ -643,13 +643,13 @@ def ingresar(sesion, act, estado, contrato):
         if scripting['estado']:
             if str(scripting['estado']) == '13':
                 dajax.script("$('#cargandoForm').addClass('hidden');")
-                dajax.script("newUrl('/ingreso/" + str(act.id) + "');")
+                dajax.script("newUrl('/ingreso/" + str(act.id) + "/');")
             else:
 
                 dajax.assign('id_numeroDeSolicitud', 'value', scripting['solicitud'])
                 dajax.script("$('#lblEspera').html('" + str(scripting['mensaje']) + "');")
                 dajax.script(
-                    "continuarIngresoSico('/continuaringreso/" + str(act.id) + "');"
+                    "continuarIngresoSico('/continuaringreso/" + str(act.id) + "/');"
                 )
 
         else:
@@ -658,6 +658,9 @@ def ingresar(sesion, act, estado, contrato):
     else:
         dajax.script("$('#cargandoForm').addClass('hidden');")
         dajax = mostraError(dajax, {'Error': 'No se pudo completar la accion...'}, '#err')
+
+    dajax.script("deshabilitarBotones(false);")
+    dajax.script("cambioDeEstado(true);")
 
     return dajax.calls
 

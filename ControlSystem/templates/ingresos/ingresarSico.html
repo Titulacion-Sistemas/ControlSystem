@@ -27,8 +27,8 @@
             function continuarIngresoSico(url){
                 envioRecepcionAjax
                     (
-                        url,
-                        {}
+                        '/continuaringreso/{{ form.id.value }}/',
+                        $('#ingreso').serialize()
                     );
             }
             function deshabilitarBotones(bul){

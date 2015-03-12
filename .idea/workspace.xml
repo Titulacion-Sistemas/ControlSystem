@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4a00e047-e965-4656-a541-b5f54dea118e" name="Default" comment="" />
+    <list default="true" id="4a00e047-e965-4656-a541-b5f54dea118e" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ControlSystem/templates/ingresos/ingresarSico.html" afterPath="$PROJECT_DIR$/ControlSystem/templates/ingresos/ingresarSico.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ControlSystem/pComm/cambiosDeMedidor/scriptCambiosDeMedidor.py" afterPath="$PROJECT_DIR$/ControlSystem/pComm/cambiosDeMedidor/scriptCambiosDeMedidor.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ingresos/views.py" afterPath="$PROJECT_DIR$/ingresos/views.py" />
+    </list>
     <ignored path="ControlSystem.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1426090492816" ignored="false" />
-    <file path="$PROJECT_DIR$/../JhonssonCordovaDev/JhonssonCordovaDev/settings.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425308291834" ignored="false" />
-    <file path="/settings.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425307466635" ignored="false" />
-    <file path="$PROJECT_DIR$/../JhonssonCordovaDev/JhonssonCordovaDev/urls.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425306934129" ignored="false" />
-    <file path="/urls.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425150389860" ignored="false" />
-    <file path="$PROJECT_DIR$/../JhonssonCordovaDev/inicial/views.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425153930809" ignored="false" />
-    <file path="$PROJECT_DIR$/../JhonssonCordovaDev/templates/main.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425153757073" ignored="false" />
-    <file path="/main.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425152868693" ignored="false" />
-    <file path="$PROJECT_DIR$/../JhonssonCordovaDev/JhonssonCordovaDev/templates/index.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425307420072" ignored="false" />
-    <file path="/index.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425307301809" ignored="false" />
-    <file path="/ingresarSico.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1426109311252" ignored="false" />
-    <file path="/base.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425938649401" ignored="false" />
-    <file path="$USER_HOME$/PycharmProjects/CrearPdfs/script.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1426027871848" ignored="false" />
-    <file path="/script.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1426027862311" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +40,7 @@
       <file leaf-file-name="scriptCambiosDeMedidor.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/cambiosDeMedidor/scriptCambiosDeMedidor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="604" column="31" selection-start="30000" selection-end="30000" vertical-scroll-proportion="0.0">
+            <state line="604" column="31" selection-start="30183" selection-end="30183" vertical-scroll-proportion="0.0" vertical-offset="10268" max-vertical-offset="19380">
               <folding />
             </state>
           </provider>
@@ -58,13 +49,23 @@
       <file leaf-file-name="ingresarSico.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ControlSystem/templates/ingresos/ingresarSico.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="669" column="49" selection-start="32050" selection-end="32050" vertical-scroll-proportion="0.4390863">
+            <state line="30" column="49" selection-start="1089" selection-end="1089" vertical-scroll-proportion="-2.0244274" vertical-offset="1836" max-vertical-offset="17816">
               <folding>
-                <element signature="e#27875#27899#0" expanded="true" />
-                <element signature="e#31637#31661#0" expanded="true" />
-                <element signature="e#47489#47535#0" expanded="true" />
-                <element signature="e#48127#48152#0" expanded="true" />
+                <marker date="1426135484765" expanded="true" signature="27031:52721" placeholder="{% block content ... %}" />
+                <marker date="1426135484765" expanded="true" signature="27056:27125" placeholder="{% if form.errors ... %}" />
+                <marker date="1426135484765" expanded="true" signature="49044:49398" placeholder="{% if form.estadoSolicitud.value != 13 ... %}" />
+                <marker date="1426135484765" expanded="true" signature="50657:51144" placeholder="{% if form.estadoSolicitud.value == 0 ... %}" />
+                <marker date="1426135484765" expanded="true" signature="51247:51659" placeholder="{% if form.estadoSolicitud.value &gt; 0 ... %}" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ingresarSico.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../ControlSystem - copia/ControlSystem/templates/ingresos/ingresarSico.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="65" column="21" selection-start="2586" selection-end="2586" vertical-scroll-proportion="30.076923" vertical-offset="1887" max-vertical-offset="17323">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -72,7 +73,7 @@
       <file leaf-file-name="base.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ControlSystem/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="81" selection-start="143" selection-end="143" vertical-scroll-proportion="13.076923">
+            <state line="4" column="70" selection-start="132" selection-end="132" vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="2057">
               <folding />
             </state>
           </provider>
@@ -121,8 +122,8 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="744" />
+    <option name="width" value="1616" />
+    <option name="height" value="876" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -172,6 +173,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -354,7 +356,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="AndroidView" />
       <pane id="PackagesPane" />
     </panes>
@@ -362,16 +363,16 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
     <property name="ChangesBrowser.SHOW_FLATTEN" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
+    <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -501,29 +502,6 @@
       <option name="PARAMETERS" value="" />
       <method />
     </configuration>
-    <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="" />
-      <option name="launchJavascriptDebuger" value="false" />
-      <option name="port" value="8000" />
-      <option name="host" value="" />
-      <option name="additionalOptions" value="" />
-      <option name="browserUrl" value="" />
-      <option name="runTestServer" value="false" />
-      <option name="runNoReload" value="false" />
-      <option name="useCustomRunCommand" value="false" />
-      <option name="customRunCommand" value="" />
-      <method />
-    </configuration>
     <configuration default="true" type="tests" factoryName="Unittests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -547,6 +525,29 @@
       <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
+    <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method />
+    </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -565,13 +566,6 @@
       <option name="TEST_TYPE" value="TEST_SCRIPT" />
       <option name="PATTERN" value="" />
       <option name="USE_PATTERN" value="false" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
-      <JSDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Attests">
@@ -685,14 +679,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20194986" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2840136" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14696969" sideWeight="0.7311978" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13257575" sideWeight="0.7176871" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29393938" sideWeight="0.78327644" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2979408" sideWeight="0.78327644" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39972144" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1969697" sideWeight="0.18197279" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16836734" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
@@ -707,7 +702,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2840136" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32451254" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -728,59 +722,12 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="CHECK_NEW_TODO" value="true" />
     <option name="myTodoPanelSettings">
-      <value>
-        <are-packages-shown value="false" />
-        <are-modules-shown value="false" />
-        <flatten-packages value="false" />
-        <is-autoscroll-to-source value="false" />
-      </value>
+      <TodoPanelSettings />
     </option>
-    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
-    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
-    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
-    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
-    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
-    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
-    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
-    <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
-    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
-    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
-    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
-    <option name="SHORT_DIFF_HORIZONTALLY" value="true" />
-    <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
-    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
-    <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
-    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="false" />
-    <option name="SHOW_DIRTY_RECURSIVELY" value="false" />
-    <option name="LIMIT_HISTORY" value="true" />
-    <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
-    <option name="UPDATE_FILTER_SCOPE_NAME" />
-    <option name="USE_COMMIT_MESSAGE_MARGIN" value="false" />
-    <option name="COMMIT_MESSAGE_MARGIN_SIZE" value="72" />
-    <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
-    <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="control en oficina" />
-    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
-    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
-    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
-    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
-    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
-    <option name="ACTIVE_VCS_NAME" />
-    <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
-    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
-    <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
-    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
-    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
     <MESSAGE value="control en oficina" />
+    <option name="LAST_COMMIT_MESSAGE" value="control en oficina" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -790,103 +737,104 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/cuadrillas/cuadrillas.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="54" selection-start="955" selection-end="955" vertical-scroll-proportion="0.47965115" />
+        <state line="36" column="54" selection-start="955" selection-end="955" vertical-scroll-proportion="0.47965115" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/busqueda/buscar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="39" selection-start="2353" selection-end="2353" vertical-scroll-proportion="2.120448" />
+        <state line="85" column="39" selection-start="2353" selection-end="2353" vertical-scroll-proportion="2.120448" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/busquedas/scriptsBusquedas.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="272" column="9" selection-start="10284" selection-end="10284" vertical-scroll-proportion="0.0" />
+        <state line="272" column="9" selection-start="10284" selection-end="10284" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/ingresos/error.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/serviciosNuevos/scriptServiciosNuevos.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="8" selection-start="631" selection-end="631" vertical-scroll-proportion="0.44930875" />
+        <state line="21" column="8" selection-start="631" selection-end="631" vertical-scroll-proportion="0.44930875" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ingresos/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="44" selection-start="1156" selection-end="1156" vertical-scroll-proportion="0.0" />
+        <state line="27" column="44" selection-start="1156" selection-end="1156" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="36" selection-start="820" selection-end="872" vertical-scroll-proportion="0.42803738">
+        <state line="29" column="36" selection-start="820" selection-end="872" vertical-scroll-proportion="0.42803738" vertical-offset="0" max-vertical-offset="0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/usuarios/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="9" selection-start="2384" selection-end="2384" vertical-scroll-proportion="0.03107861">
+        <state line="52" column="9" selection-start="2384" selection-end="2384" vertical-scroll-proportion="0.03107861" vertical-offset="0" max-vertical-offset="0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="173" column="0" selection-start="4248" selection-end="4714" vertical-scroll-proportion="0.48392856">
+        <state line="173" column="0" selection-start="4248" selection-end="4714" vertical-scroll-proportion="0.48392856" vertical-offset="0" max-vertical-offset="0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/conexion.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="0" selection-start="2895" selection-end="2895" vertical-scroll-proportion="0.030357143" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/angular.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="89" column="0" selection-start="2895" selection-end="2895" vertical-scroll-proportion="0.030357143" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/usuarios/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/pComm/cambiosDeMedidor/scriptCambiosDeMedidor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="604" column="31" selection-start="30000" selection-end="30000" vertical-scroll-proportion="0.0">
+        <state line="604" column="31" selection-start="30183" selection-end="30183" vertical-scroll-proportion="0.0" vertical-offset="10268" max-vertical-offset="19380">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/usuarios/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="43" selection-start="1328" selection-end="1347" vertical-scroll-proportion="1.3120393">
+        <state line="35" column="43" selection-start="1328" selection-end="1347" vertical-scroll-proportion="1.3120393" vertical-offset="0" max-vertical-offset="0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="81" selection-start="143" selection-end="143" vertical-scroll-proportion="13.076923">
+        <state line="4" column="70" selection-start="132" selection-end="132" vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="2006">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../ControlSystem - copia/ControlSystem/templates/ingresos/ingresarSico.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="21" selection-start="2586" selection-end="2586" vertical-scroll-proportion="30.076923" vertical-offset="1887" max-vertical-offset="17323">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/ingresos/ingresarSico.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="669" column="49" selection-start="32050" selection-end="32050" vertical-scroll-proportion="0.4390863">
+        <state line="30" column="49" selection-start="1089" selection-end="1089" vertical-scroll-proportion="-2.0244274" vertical-offset="1836" max-vertical-offset="17816">
           <folding>
-            <element signature="e#27875#27899#0" expanded="true" />
-            <element signature="e#31637#31661#0" expanded="true" />
-            <element signature="e#47489#47535#0" expanded="true" />
-            <element signature="e#48127#48152#0" expanded="true" />
+            <marker date="1426135484765" expanded="true" signature="27031:52721" placeholder="{% block content ... %}" />
+            <marker date="1426135484765" expanded="true" signature="27056:27125" placeholder="{% if form.errors ... %}" />
+            <marker date="1426135484765" expanded="true" signature="49044:49398" placeholder="{% if form.estadoSolicitud.value != 13 ... %}" />
+            <marker date="1426135484765" expanded="true" signature="50657:51144" placeholder="{% if form.estadoSolicitud.value == 0 ... %}" />
+            <marker date="1426135484765" expanded="true" signature="51247:51659" placeholder="{% if form.estadoSolicitud.value &gt; 0 ... %}" />
           </folding>
         </state>
       </provider>

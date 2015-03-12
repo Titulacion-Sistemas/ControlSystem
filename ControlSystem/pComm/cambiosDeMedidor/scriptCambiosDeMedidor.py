@@ -34,7 +34,7 @@ class ingresarCambioDeMedidor():
             457: self.pasoDiez,
             454: self.pasoOnce
         }
-        #return self.ERROR
+        act.horaDeActividad = str(act.horaDeActividad)[:8]
         return operaciones[estado](act)
 
     def pasoUno(self, actividad):
@@ -147,6 +147,12 @@ class ingresarCambioDeMedidor():
                 sesion.autECLPS.SendKeys('[pf12]')
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
+                sesion.autECLPS.SendKeys('[enter]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
+                sesion.autECLPS.SendKeys('[enter]')
+                sesion.autECLOIA.WaitForAppAvailable()
+                sesion.autECLOIA.WaitForInputReady()
 
                 opcionSico = False
                 for i in range(9, 20):
@@ -196,8 +202,6 @@ class ingresarCambioDeMedidor():
                             sesion.autECLPS.SendKeys('[down]')
 
                     if int(actividad.numeroDeSolicitud) > 0:
-
-                        actividad.horaDeActividad = str(actividad.horaDeActividad)[:8]
                         actividad.save(force_update=True)
                         sesion.autECLPS.SendKeys('[pf12]')
                         sesion.autECLOIA.WaitForAppAvailable()
@@ -266,6 +270,7 @@ class ingresarCambioDeMedidor():
             opcionSico = False
             sesion.autECLPS.SetCursorPos(9, 12)
             for i in range(9, 20):
+                print str(sesion.autECLPS.GetText(i, 7, 38)).strip()
                 if sesion.autECLPS.GetText(i, 7, 38) == 'IMPRESION DE FORMULARIOS DE INSPECCION' \
                     or (str(sesion.autECLPS.GetText(i, 58, 8)).strip() == 'PCLCUIMF'
                         and str(sesion.autECLPS.GetText(i, 69, 2)) == '20'):
@@ -281,7 +286,7 @@ class ingresarCambioDeMedidor():
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
                 print 'Impresion de formularios de inspeccion'
-                sesion.autECLPS.SendKeys('[up')
+                sesion.autECLPS.SendKeys('[up]')
                 sesion.autECLPS.SendKeys('[tab]')
                 sesion.autECLPS.SendKeys('[eraseeof]')
                 sesion.autECLPS.SendKeys(str(actividad.numeroDeSolicitud))
@@ -342,7 +347,8 @@ class ingresarCambioDeMedidor():
             opcionSico = False
             sesion.autECLPS.SetCursorPos(9, 12)
             for i in range(9, 20):
-                if sesion.autECLPS.GetText(i, 7, 38) == 'DIGITAR INSPECCION DE CLIENTE' \
+                print str(sesion.autECLPS.GetText(i, 7, 38)).strip()
+                if str(sesion.autECLPS.GetText(i, 7, 38)).strip() == 'DIGITAR INSPECCION DE CLIENTE' \
                     or (str(sesion.autECLPS.GetText(i, 58, 8)).strip() == 'PDIINCL'
                         and str(sesion.autECLPS.GetText(i, 69, 2)) == '20'):
                     self.formImpresion = i
@@ -357,7 +363,7 @@ class ingresarCambioDeMedidor():
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
                 print 'Digitar inspeccion de cliente'
-                sesion.autECLPS.SendKeys('[up')
+                sesion.autECLPS.SendKeys('[up]')
                 sesion.autECLPS.SendKeys('[tab]')
                 sesion.autECLPS.SendKeys('[eraseeof]')
                 sesion.autECLPS.SendKeys(str(actividad.numeroDeSolicitud))
@@ -370,6 +376,13 @@ class ingresarCambioDeMedidor():
                 sesion.autECLOIA.WaitForInputReady()
                 print 'Actualizar datos de inspeccion'
 
+                sesion.autECLPS.SendKeys('[eraseeof]', 4, 30)
+                sesion.autECLPS.SendKeys('%02d%02d%04d' % (
+                    int(actividad.fechaDeActividad.day),
+                    int(actividad.fechaDeActividad.month),
+                    int(actividad.fechaDeActividad.year)
+                ), 4, 30)
+
                 inspector = self.contrato.codigoInstalador
                 sesion.autECLPS.SendKeys('[eraseeof]', 5, 30)
                 sesion.autECLPS.SendKeys(str(inspector), 5, 30)
@@ -380,33 +393,40 @@ class ingresarCambioDeMedidor():
                         sesion.autECLPS.SendKeys('3', 6, 30)
                     else:
                         sesion.autECLPS.SendKeys('4', 6, 30)
+                sesion.autECLPS.SendKeys('[eraseeof]', 7, 30)
                 sesion.autECLPS.SendKeys(str(actividad.materialDeLaRed_id), 7, 30)
+                sesion.autECLPS.SendKeys('[eraseeof]', 7, 70)
                 sesion.autECLPS.SendKeys('S', 7, 70)
-                sesion.autECLPS.SendKeys(str(actividad.estadoDeLaInstalacion_id), 9, 30)
+                sesion.autECLPS.SendKeys('[eraseeof]', 9, 30)
+                sesion.autECLPS.SendKeys(str(actividad.estadoDeLaInstalacion_id)[0], 9, 30)
                 if str(sesion.autECLPS.GetText(10, 30, 2)).strip() == '0':
                     sesion.autECLPS.SendKeys('[eraseeof]', 10, 30)
                     sesion.autECLPS.SendKeys(str(actividad.tipoDeConstruccion_id), 10, 30)
-                if str(sesion.autECLPS.GetText(11, 30, 2)).strip() == '0':
+                if str(sesion.autECLPS.GetText(11, 30, 2)).strip() == '' or str(sesion.autECLPS.GetText(11, 30, 2)).strip() == '0':
                     sesion.autECLPS.SendKeys('[eraseeof]', 11, 30)
                     sesion.autECLPS.SendKeys(str(actividad.ubicacionDelMedidor_id), 11, 30)
-                if str(sesion.autECLPS.GetText(12, 30, 2)).strip() == '':
+                if str(sesion.autECLPS.GetText(12, 30, 2)).strip() == '' or str(sesion.autECLPS.GetText(12, 30, 2)).strip() == '0':
+                    sesion.autECLPS.SendKeys('[eraseeof]', 12, 30)
                     sesion.autECLPS.SendKeys(str(actividad.tipoDeAcometidaRed_id), 12, 30)
                 if str(sesion.autECLPS.GetText(13, 30, 2)).strip() == '':
+                    sesion.autECLPS.SendKeys('[eraseeof]', 13, 30)
                     sesion.autECLPS.SendKeys(str(actividad.tipoDeAcometidaRed_id), 13, 30)
                 if str(sesion.autECLPS.GetText(14, 30, 2)).strip() == '0':
                     sesion.autECLPS.SendKeys('[eraseeof]', 14, 30)
                     sesion.autECLPS.SendKeys(str(actividad.calibreDeLaRed_id), 14, 30)
                 if str(sesion.autECLPS.GetText(15, 30, 1)).strip() == '':
+                    sesion.autECLPS.SendKeys('[eraseeof]', 15, 30)
                     sesion.autECLPS.SendKeys(str(actividad.claseRed_id), 15, 30)
-                if str(sesion.autECLPS.GetText(16, 30, 1)).strip() == '0':
-                    ts = str(actividad.tipoDeConstruccion_id)
-                    sesion.autECLPS.SendKeys('[eraseeof]', 16, 30)
-                    sesion.autECLPS.SendKeys(ts[0], 16, 30)
-                    sesion.autECLPS.SendKeys('[eraseeof]', 16, 34)
-                    sesion.autECLPS.SendKeys(ts[1], 16, 34)
-                    sesion.autECLPS.SendKeys('[eraseeof]', 16, 38)
-                    sesion.autECLPS.SendKeys(ts[2], 16, 38)
-                if str(sesion.autECLPS.GetText(17, 30, 2)).strip() == '0':
+
+                ts = str(actividad.tipoDeServicio_id)
+                sesion.autECLPS.SendKeys('[eraseeof]', 16, 30)
+                sesion.autECLPS.SendKeys(ts[0], 16, 30)
+                sesion.autECLPS.SendKeys('[eraseeof]', 16, 34)
+                sesion.autECLPS.SendKeys(ts[1], 16, 34)
+                sesion.autECLPS.SendKeys('[eraseeof]', 16, 38)
+                sesion.autECLPS.SendKeys(ts[2], 16, 38)
+
+                if str(sesion.autECLPS.GetText(17, 30, 2)).strip() == '' or str(sesion.autECLPS.GetText(17, 30, 2)).strip() == '0':
                     sesion.autECLPS.SendKeys('[eraseeof]', 17, 30)
                     sesion.autECLPS.SendKeys(str(actividad.usoEspecificoDelInmueble.usoGeneral_id), 17, 30)
                     sesion.autECLPS.SendKeys('[eraseeof]', 17, 34)
@@ -416,10 +436,10 @@ class ingresarCambioDeMedidor():
                 sesion.autECLOIA.WaitForInputReady()
 
                 print 'Medidor - Modelo'
-                sesion.autECLPS.SendKeys('[eraseeof]', 6, 26)
-                sesion.autECLPS.SendKeys('[eraseeof]', 6, 30)
                 modelo = str(med.modelo_id).split('-')
+                sesion.autECLPS.SendKeys('[eraseeof]', 6, 26)
                 sesion.autECLPS.SendKeys(modelo[0], 6, 26)
+                sesion.autECLPS.SendKeys('[eraseeof]', 6, 30)
                 sesion.autECLPS.SendKeys(modelo[1], 6, 30)
                 sesion.autECLPS.SendKeys('[eraseeof]', 7, 26)
                 if int(med.voltaje) == 120:
@@ -503,7 +523,8 @@ class ingresarCambioDeMedidor():
             opcionSico = False
             sesion.autECLPS.SetCursorPos(9, 12)
             for i in range(9, 20):
-                if sesion.autECLPS.GetText(i, 7, 21) == 'ASIGNAR MATERIAL TIPO' \
+                print str(sesion.autECLPS.GetText(i, 7, 21)).strip()
+                if str(sesion.autECLPS.GetText(i, 7, 21)).strip() == 'ASIGNAR MATERIAL TIPO' \
                     or (str(sesion.autECLPS.GetText(i, 58, 8)).strip() == 'PSESOLI'
                         and str(sesion.autECLPS.GetText(i, 69, 2)) == '40'):
                     self.formImpresion = i
@@ -518,7 +539,7 @@ class ingresarCambioDeMedidor():
                 sesion.autECLOIA.WaitForAppAvailable()
                 sesion.autECLOIA.WaitForInputReady()
                 print 'Asignar material tipo'
-                sesion.autECLPS.SendKeys('[up')
+                sesion.autECLPS.SendKeys('[up]')
                 sesion.autECLPS.SendKeys('[tab]')
                 sesion.autECLPS.SendKeys('[eraseeof]')
                 sesion.autECLPS.SendKeys(str(actividad.numeroDeSolicitud))
@@ -547,12 +568,24 @@ class ingresarCambioDeMedidor():
 
                     sesion.autECLPS.SendKeys('[eraseeof]', i, 18)
                     sesion.autECLPS.SendKeys(m.material.material.claveEnSico[6:9], i, 18)
+
+                    sesion.autECLPS.SendKeys('[eraseeof]', i, 67)
+                    #sesion.autECLPS.SendKeys('0', i, 72)
                     if m.material.material.claveEnSico == '079058500':
-                        sesion.autECLPS.SendKeys(',', 8, 73)
-                    sesion.autECLPS.SendKeys('%02d' % m.cantidad, 8, 74)
-                    sesion.autECLPS.SendKeys('[enter]')
-                    i = sesion.autECLPS.GetCursorPosRow()
+                        sesion.autECLPS.SendKeys('0,'+'%02d' % m.cantidad, i, 72)
+                    else:
+                        sesion.autECLPS.SendKeys('0.'+'%02d' % m.cantidad, i, 72)
+                    #sesion.autECLPS.SendKeys('%02d' % m.cantidad, i, 74)
+
+                    if i == 17:
+                        i = 8
+                    else:
+                        i = 1+i
                     print u'Descargado '+unicode(m)
+
+                    sesion.autECLPS.SendKeys('[enter]')
+                    sesion.autECLOIA.WaitForAppAvailable()
+                    sesion.autECLOIA.WaitForInputReady()
 
                 sesion.autECLPS.SendKeys('[pf12]')
                 sesion.autECLOIA.WaitForAppAvailable()
@@ -614,7 +647,7 @@ class ingresarCambioDeMedidor():
         print 'Para acceso'
         sesion.autECLPS.SetCursorPos(9, 12)
         for i in range(9, 20):
-            if sesion.autECLPS.GetText(i, 16, 25) == 'INSTALACION - DESCONEXION' \
+            if str(sesion.autECLPS.GetText(i, 16, 25)).strip() == 'INSTALACION - DESCONEXION' \
                 or (str(sesion.autECLPS.GetText(i, 51, 3)).strip() == '36'
                     and str(sesion.autECLPS.GetText(i, 62, 2)).strip() == '40'):
                 self.cambiosDeMedidor = i
@@ -719,13 +752,13 @@ class ingresarCambioDeMedidor():
             sesion.autECLPS.SendKeys('[pf12]')
             sesion.autECLOIA.WaitForAppAvailable()
             sesion.autECLOIA.WaitForInputReady()
-            sesion.autECLPS.SendKeys('[pf12]')
-            sesion.autECLOIA.WaitForAppAvailable()
-            sesion.autECLOIA.WaitForInputReady()
+            #sesion.autECLPS.SendKeys('[pf12]')
+            #sesion.autECLOIA.WaitForAppAvailable()
+            #sesion.autECLOIA.WaitForInputReady()
             print 'Pantalla Principal'
             return {
                 'estado': str(actividad.estadoDeSolicitud_id),
-                'mensaje': actividad.estadoDeSolicitud.descripcion,
+                'mensaje': actividad.estadoDeSolicitud.descripcion.encode('utf-8'),
                 'solicitud': actividad.numeroDeSolicitud
             }
         else:
@@ -781,7 +814,7 @@ class ingresarCambioDeMedidor():
             print 'Pantalla Principal'
             return {
                 'estado': str(actividad.estadoDeSolicitud_id),
-                'mensaje': actividad.estadoDeSolicitud.descripcion,
+                'mensaje': actividad.estadoDeSolicitud.descripcion.encode('utf-8'),
                 'solicitud': actividad.numeroDeSolicitud
             }
 
@@ -852,7 +885,7 @@ class ingresarCambioDeMedidor():
             print 'Pantalla principal'
             return {
                 'estado': str(actividad.estadoDeSolicitud_id),
-                'mensaje': actividad.estadoDeSolicitud.descripcion,
+                'mensaje': actividad.estadoDeSolicitud.descripcion.encode('utf-8'),
                 'solicitud': actividad.numeroDeSolicitud
             }
 
@@ -909,7 +942,7 @@ class ingresarCambioDeMedidor():
                 actividad.save(force_update=True)
                 retorno = {
                     'estado': str(actividad.estadoDeSolicitud_id),
-                    'mensaje': actividad.estadoDeSolicitud.descripcion,
+                    'mensaje': actividad.estadoDeSolicitud.descripcion.encode('utf-8'),
                     'solicitud': actividad.numeroDeSolicitud
                 }
 
@@ -1005,7 +1038,7 @@ class ingresarCambioDeMedidor():
 
                     returno={
                         'estado': str(actividad.estadoDeSolicitud_id),
-                        'mensaje': actividad.estadoDeSolicitud.descripcion,
+                        'mensaje': actividad.estadoDeSolicitud.descripcion.encode('utf-8'),
                         'solicitud': actividad.numeroDeSolicitud
                     }
                 else:
@@ -1094,7 +1127,7 @@ class ingresarCambioDeMedidor():
 
             return {
                 'estado': str(actividad.estadoDeSolicitud_id),
-                'mensaje': actividad.estadoDeSolicitud.descripcion,
+                'mensaje': actividad.estadoDeSolicitud.descripcion.encode('utf-8'),
                 'solicitud': actividad.numeroDeSolicitud
             }
 
