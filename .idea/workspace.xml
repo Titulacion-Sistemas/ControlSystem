@@ -4,7 +4,7 @@
     <list default="true" id="4a00e047-e965-4656-a541-b5f54dea118e" name="Default" comment="" />
     <ignored path="ControlSystem.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1426172172089" ignored="false" />
+    <file path="/Dummy.txt" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1426090492816" ignored="false" />
     <file path="$PROJECT_DIR$/../JhonssonCordovaDev/JhonssonCordovaDev/settings.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425308291834" ignored="false" />
     <file path="/settings.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425307466635" ignored="false" />
     <file path="$PROJECT_DIR$/../JhonssonCordovaDev/JhonssonCordovaDev/urls.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425306934129" ignored="false" />
@@ -14,7 +14,7 @@
     <file path="/main.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425152868693" ignored="false" />
     <file path="$PROJECT_DIR$/../JhonssonCordovaDev/JhonssonCordovaDev/templates/index.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425307420072" ignored="false" />
     <file path="/index.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425307301809" ignored="false" />
-    <file path="/ingresarSico.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1426174996752" ignored="false" />
+    <file path="/ingresarSico.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1426109311252" ignored="false" />
     <file path="/base.html" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1425938649401" ignored="false" />
     <file path="$USER_HOME$/PycharmProjects/CrearPdfs/script.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1426027871848" ignored="false" />
     <file path="/script.py" changelist="4a00e047-e965-4656-a541-b5f54dea118e" time="1426027862311" ignored="false" />
@@ -58,42 +58,12 @@
       <file leaf-file-name="ingresarSico.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ControlSystem/templates/ingresos/ingresarSico.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1068" column="83" selection-start="54896" selection-end="54896" vertical-scroll-proportion="0.8705584">
+            <state line="669" column="49" selection-start="32050" selection-end="32050" vertical-scroll-proportion="0.4390863">
               <folding>
                 <element signature="e#27875#27899#0" expanded="true" />
-                <element signature="e#28262#28301#0" expanded="true" />
-                <element signature="e#28582#28620#0" expanded="true" />
-                <element signature="e#28966#28996#0" expanded="true" />
-                <element signature="e#30196#30221#0" expanded="true" />
-                <element signature="e#30293#30321#0" expanded="true" />
                 <element signature="e#31637#31661#0" expanded="true" />
-                <element signature="e#32122#32146#0" expanded="true" />
-                <element signature="e#32358#32382#0" expanded="true" />
-                <element signature="e#33117#33141#0" expanded="true" />
-                <element signature="e#35908#35932#0" expanded="true" />
-                <element signature="e#36382#36406#0" expanded="true" />
-                <element signature="e#36626#36650#0" expanded="true" />
-                <element signature="e#37294#37318#0" expanded="true" />
-                <element signature="e#39336#39360#0" expanded="true" />
-                <element signature="e#40048#40087#0" expanded="true" />
-                <element signature="e#40364#40402#0" expanded="true" />
-                <element signature="e#40748#40778#0" expanded="true" />
-                <element signature="e#42072#42096#0" expanded="true" />
-                <element signature="e#43342#43366#0" expanded="true" />
-                <element signature="e#44445#44469#0" expanded="true" />
-                <element signature="e#45685#45709#0" expanded="true" />
-                <element signature="e#46108#46133#0" expanded="true" />
-                <element signature="e#46205#46251#0" expanded="true" />
-                <element signature="e#48379#48401#0" expanded="true" />
-                <element signature="e#48457#48503#0" expanded="true" />
-                <element signature="e#48606#48630#0" expanded="true" />
-                <element signature="e#49272#49297#0" expanded="true" />
-                <element signature="e#50309#50352#0" expanded="true" />
-                <element signature="e#50590#50642#0" expanded="true" />
-                <element signature="e#50862#50882#0" expanded="true" />
-                <element signature="e#51264#51307#0" expanded="true" />
-                <element signature="e#52017#52060#0" expanded="true" />
-                <element signature="e#52556#52599#0" expanded="true" />
+                <element signature="e#47489#47535#0" expanded="true" />
+                <element signature="e#48127#48152#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -102,7 +72,7 @@
       <file leaf-file-name="base.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ControlSystem/templates/base.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="81" selection-start="143" selection-end="143" vertical-scroll-proportion="0.0">
+            <state line="4" column="81" selection-start="143" selection-end="143" vertical-scroll-proportion="13.076923">
               <folding />
             </state>
           </provider>
@@ -392,16 +362,16 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="ChangesBrowser.SHOW_FLATTEN" value="false" />
-    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
     <property name="recentsLimit" value="5" />
-    <property name="restartRequiresConfirmation" value="true" />
+    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
+    <property name="ChangesBrowser.SHOW_FLATTEN" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="restartRequiresConfirmation" value="true" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -531,29 +501,6 @@
       <option name="PARAMETERS" value="" />
       <method />
     </configuration>
-    <configuration default="true" type="tests" factoryName="Unittests">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="ControlSystem" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PUREUNITTEST" value="true" />
-      <option name="PARAMS" value="" />
-      <option name="USE_PARAM" value="false" />
-      <method />
-    </configuration>
     <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -575,6 +522,29 @@
       <option name="runNoReload" value="false" />
       <option name="useCustomRunCommand" value="false" />
       <option name="customRunCommand" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="ControlSystem" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -716,13 +686,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20194986" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32993197" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14696969" sideWeight="0.7311978" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13257575" sideWeight="0.7176871" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29848486" sideWeight="0.78327644" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29393938" sideWeight="0.78327644" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39972144" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1969697" sideWeight="0.18197279" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16836734" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
@@ -876,7 +846,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/static/js/angular.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/usuarios/home.html">
@@ -902,49 +874,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="81" selection-start="143" selection-end="143" vertical-scroll-proportion="0.0">
+        <state line="4" column="81" selection-start="143" selection-end="143" vertical-scroll-proportion="13.076923">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ControlSystem/templates/ingresos/ingresarSico.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1068" column="83" selection-start="54896" selection-end="54896" vertical-scroll-proportion="0.8705584">
+        <state line="669" column="49" selection-start="32050" selection-end="32050" vertical-scroll-proportion="0.4390863">
           <folding>
             <element signature="e#27875#27899#0" expanded="true" />
-            <element signature="e#28262#28301#0" expanded="true" />
-            <element signature="e#28582#28620#0" expanded="true" />
-            <element signature="e#28966#28996#0" expanded="true" />
-            <element signature="e#30196#30221#0" expanded="true" />
-            <element signature="e#30293#30321#0" expanded="true" />
             <element signature="e#31637#31661#0" expanded="true" />
-            <element signature="e#32122#32146#0" expanded="true" />
-            <element signature="e#32358#32382#0" expanded="true" />
-            <element signature="e#33117#33141#0" expanded="true" />
-            <element signature="e#35908#35932#0" expanded="true" />
-            <element signature="e#36382#36406#0" expanded="true" />
-            <element signature="e#36626#36650#0" expanded="true" />
-            <element signature="e#37294#37318#0" expanded="true" />
-            <element signature="e#39336#39360#0" expanded="true" />
-            <element signature="e#40048#40087#0" expanded="true" />
-            <element signature="e#40364#40402#0" expanded="true" />
-            <element signature="e#40748#40778#0" expanded="true" />
-            <element signature="e#42072#42096#0" expanded="true" />
-            <element signature="e#43342#43366#0" expanded="true" />
-            <element signature="e#44445#44469#0" expanded="true" />
-            <element signature="e#45685#45709#0" expanded="true" />
-            <element signature="e#46108#46133#0" expanded="true" />
-            <element signature="e#46205#46251#0" expanded="true" />
-            <element signature="e#48379#48401#0" expanded="true" />
-            <element signature="e#48457#48503#0" expanded="true" />
-            <element signature="e#48606#48630#0" expanded="true" />
-            <element signature="e#49272#49297#0" expanded="true" />
-            <element signature="e#50309#50352#0" expanded="true" />
-            <element signature="e#50590#50642#0" expanded="true" />
-            <element signature="e#50862#50882#0" expanded="true" />
-            <element signature="e#51264#51307#0" expanded="true" />
-            <element signature="e#52017#52060#0" expanded="true" />
-            <element signature="e#52556#52599#0" expanded="true" />
+            <element signature="e#47489#47535#0" expanded="true" />
+            <element signature="e#48127#48152#0" expanded="true" />
           </folding>
         </state>
       </provider>

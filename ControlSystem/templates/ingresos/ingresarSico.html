@@ -612,7 +612,7 @@
                                 <b>Abonado</b>
                                <span ng-class="divs.abonado.clase"></span>
                             </div>
-                            <div ng-show="divs.abonado.estado" class="panel-body">
+                            <div ng-hide="divs.abonado.estado" class="panel-body">
                                 <div class="row">
                                     <div class="col-md-7 center-block" style="margin: 0; padding: 0 0 0 13px;">
                                         {% bootstrap_field form.codigoDeCliente layout="horizontal" %}
@@ -665,7 +665,7 @@
                                 <b>Materiales</b>
                                 <span ng-class="divs.materiales.clase"></span>
                             </div>
-                            <div ng-show="divs.materiales.estado" class="panel-body">
+                            <div ng-hide="divs.materiales.estado" class="panel-body">
                                 {% bootstrap_field form.material layout="horizontal" %}
                                 <div class="row">
                                     <div class="col-md-8 center-block" style="margin-top: 5px;">
@@ -733,11 +733,11 @@
                 <div id="aImprimirSellos" class="row">
                     <div class="col-md-12">
                         <div class="panel panel-info">
-                            <div ng-click="togle('sello')" class="panel-heading text-center" style="cursor: pointer;">
+                            <div class="panel-heading text-center">
                                 <b>Sello(s)</b>
-                                <span ng-class="divs.sello.clase"></span>
+
                             </div>
-                            <div ng-show="divs.sello.estado" class="panel-body">
+                            <div class="panel-body">
                                 {% bootstrap_field form.selloInst layout="horizontal" %}
                                 <div class="row">
                                     <div class="col-md-8 center-block" style="margin-top: 5px;">
@@ -790,11 +790,10 @@
                 <div class="row hidden" id="Referencia">
                     <div class="col-md-12">
                         <div class="panel panel-info">
-                            <div ng-click="togle('referencia')" class="panel-heading text-center" style="cursor: pointer;">
+                            <div class="panel-heading text-center">
                                 <b>Referencia(s)</b>
-                                <span ng-class="divs.referencia.clase"></span>
                             </div>
-                            <div ng-show="divs.referencia.estado" class="panel-body">
+                            <div class="panel-body">
                                 <div id="erroresR" class="row">
                                     <div class="col-md-12">
                                         <div id="errRef">
@@ -836,11 +835,10 @@
                 ">
                     <div class="col-md-12">
                         <div class="panel panel-info">
-                            <div ng-click="togle('fotos')" class="panel-heading text-center" style="cursor: pointer;">
+                            <div class="panel-heading text-center">
                                 <b>Fotos</b>
-                                <span ng-class="divs.fotos.clase"></span>
                             </div>
-                            <div ng-show="divs.fotos.estado" class="panel-body center-block">
+                            <div class="panel-body center-block">
                                 {% buttons %}
                                     <button id="misFotos" type="button" onclick="newUrl('/fotos/{{ form.id.value }}')"
                                             class="hidden-print btn btn-default center-block">
@@ -860,11 +858,10 @@
                 <div id="aImprimirActividad" class="row">
                     <div class="col-md-12">
                         <div class="panel panel-info">
-                            <div ng-click="togle('actividad')" class="panel-heading text-center" style="cursor: pointer;">
+                            <div class="panel-heading text-center">
                                 <b>Actividad</b>
-                                <span ng-class="divs.actividad.clase"></span>
                             </div>
-                            <div ng-show="divs.actividad.estado" class="panel-body form-horizontal">
+                            <div class="panel-body form-horizontal">
                                 {% bootstrap_field form.id layout="inline" %}
                                 {% bootstrap_field form.tipoDeSolicitud layout="horizontal" %}
                                 {% bootstrap_field form.motivoParaSolicitud layout="horizontal" %}
@@ -877,11 +874,10 @@
                 <div id="medidorInstalado" class="row hidden">
                     <div class="col-md-12">
                         <div class="panel panel-info">
-                            <div ng-click="togle('medidor')" class="panel-heading text-center" style="cursor: pointer;">
+                            <div class="panel-heading text-center">
                                 <b>Medidor - (Instalado)</b>
-                                <span ng-class="divs.medidor.clase"></span>
                             </div>
-                            <div ng-show="divs.medidor.estado" class="panel-body">
+                            <div class="panel-body">
                                 {% bootstrap_field form.medidor layout="horizontal" %}
                                 {% bootstrap_field form.fabricaInst layout="horizontal" %}
                                 {% bootstrap_field form.serieInst layout="horizontal" %}
@@ -896,11 +892,10 @@
                 <div id="aImprimirDetaInsta" class="row">
                     <div class="col-md-12">
                         <div class="panel panel-info">
-                            <div ng-click="togle('instalacion')" class="panel-heading text-center" style="cursor: pointer;">
+                            <div class="panel-heading text-center">
                                 <b>Detalles de Instalacion</b>
-                                <span ng-class="divs.instalacion.clase"></span>
                             </div>
-                            <div ng-show="divs.instalacion.estado" class="panel-body form-horizontal small">
+                            <div class="panel-body form-horizontal small">
                                 <div class="row" >
                                     <div class="col-md-12" style="margin-bottom: 0;">
                                         <div class="panel panel-info" style="margin-top: -5px; margin-bottom: 10px;">
@@ -934,11 +929,10 @@
                 <div id="aImprimirObservaciones" class="row">
                     <div class="col-md-12" style="margin-top: 0;">
                         <div class="panel panel-info" style="margin-top: -5px; margin-bottom: 10px;">
-                            <div ng-click="togle('observaciones')" class="panel-heading text-center" style="cursor: pointer;">
+                            <div class="panel-heading text-center">
                                 <b>Observaciones</b>
-                                <span ng-class="divs.observaciones.clase"></span>
                             </div>
-                            <div ng-show="divs.observaciones.estado" class="panel-body">
+                            <div class="panel-body">
                                 {% bootstrap_field form.observaciones layout="inline" %}
                             </div>
                         </div>
@@ -1024,49 +1018,20 @@
             $scope.divs = {
                 'abonado':{
                     'estado': true,
-                    'clase': 'navbar-right glyphicon glyphicon-minus icon-white'
+                    'clase': 'navbar-right glyphicon glyphicon-plus icon-white'
                 },
                 'materiales':{
                     'estado': true,
-                    'clase': 'navbar-right glyphicon glyphicon-minus icon-white'
-                },
-                'sello':{
-                    'estado': true,
-                    'clase': 'navbar-right glyphicon glyphicon-minus icon-white'
-                },
-                'actividad':{
-                    'estado': true,
-                    'clase': 'navbar-right glyphicon glyphicon-minus icon-white'
-                },
-                'instalacion':{
-                    'estado': true,
-                    'clase': 'navbar-right glyphicon glyphicon-minus icon-white'
-                },
-                'observaciones':{
-                    'estado': true,
-                    'clase': 'navbar-right glyphicon glyphicon-minus icon-white'
-                },
-                'fotos':{
-                    'estado': true,
-                    'clase': 'navbar-right glyphicon glyphicon-minus icon-white'
-                },
-                'referencia':{
-                    'estado': true,
-                    'clase': 'navbar-right glyphicon glyphicon-minus icon-white'
-                },
-                'medidor':{
-                    'estado': true,
-                    'clase': 'navbar-right glyphicon glyphicon-minus icon-white'
+                    'clase': 'navbar-right glyphicon glyphicon-plus icon-white'
                 }
-
             };
 
             $scope.togle=function(div){
                 $scope.divs[div].estado = !!($scope.divs[div].estado === false);
                 if($scope.divs[div].estado)
-                    $scope.divs[div].clase = 'navbar-right glyphicon glyphicon-minus icon-white';
-                else
                     $scope.divs[div].clase = 'navbar-right glyphicon glyphicon-plus icon-white';
+                else
+                    $scope.divs[div].clase = 'navbar-right glyphicon glyphicon-minus icon-white';
             }
 
         }]);
